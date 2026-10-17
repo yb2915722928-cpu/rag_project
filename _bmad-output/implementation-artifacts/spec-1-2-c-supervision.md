@@ -2,7 +2,7 @@
 title: '1.2 C 单 call 监督与集成'
 type: feature
 created: '2026-10-18'
-status: draft
+status: in-progress
 route: dispatch
 review_loop_iteration: 0
 ---
@@ -38,11 +38,11 @@ review_loop_iteration: 0
 
 ## Code Map
 
-复用 A 的 `application/call_lifecycle.py` 与 B 的 `modules/execution/egress.py`/`adapters/egress.py`；C 开工前主控确认具体签名。不得修改 A/B 文件；契约问题回报主控。
+复用 A 的 `application/call_lifecycle.py` 与 B 的 `modules/execution/egress.py`/`adapters/egress.py`；调用集成前主控确认具体签名。不得修改 A/B 文件；契约问题回报主控。
 
 ## Implementation Notes
 
-唯一 DeepSeek 默认；文件归属仅上列九件。A/B 公共端口稳定后实施；主控核实际模型才写入。只在主控分配的 Netcatty 时段从 Gitee 固定提交运行；原始证据存桶。无意图空缺。
+唯一 DeepSeek 默认；文件归属仅 Tasks 所列八件。先只读提出监督端口简短签名，等待 `IMPLEMENTATION_MODEL_RELEASE` 后开始无依赖的 child/IPC/监督部分；A 持久端口登记前不写依赖 A 的调用集成。B/C 端口已登记于 [公共契约](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-2-public-contracts.md:1)，grant 使用已核 EgressPlan，不能在 child 重新 DNS。主控核实际模型才写入。只在主控分配的 Netcatty 时段从 Gitee 固定提交运行；原始证据存桶。无意图空缺。
 
 ## Spec Change Log
 

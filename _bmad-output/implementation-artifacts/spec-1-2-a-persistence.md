@@ -44,6 +44,8 @@ review_loop_iteration: 0
 
 唯一实现者 DeepSeek 默认；独占本规格列举的源/测试/交付文档。其他实现者拥有 egress/supervisor 文件，不得修改。第一阶段仅只读，向主控返回供 C 集成的精确模型/方法签名并等待 `IMPLEMENTATION_MODEL_RELEASE`；主控核实际模型及契约后才写入。不启动 C 的工作。代码先冻结、主控提交同步，随后分配 Netcatty 时段运行开发者测试。
 
+主控已登记 [公共签名与唯一归属](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-2-public-contracts.md:1)：execution/calls 与 ledger/facts 及 CallLifecycle 按已回报签名实现。A追加拥有共享 errors.py 的必要有限错误/revision文案；B/C不写此文件。仓储/epoch构造可自行决定，交付给出C可复用的真实PG上下文夹具和组装入口。epoch文件读取/OS等待不跨PG事务，迟到事实不受旧epoch业务fence限制。收到release后直接编码，不继续长方案阶段。
+
 ## Spec Change Log
 
 ## Review Triage Log

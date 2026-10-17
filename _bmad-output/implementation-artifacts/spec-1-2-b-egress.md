@@ -40,7 +40,9 @@ review_loop_iteration: 0
 
 ## Implementation Notes
 
-唯一 DeepSeek 默认；只写本规格五个文件，不改依赖锁/入口/其他实现者文件。第一阶段只读并回报对外签名，等待主控核实际模型后发送 `IMPLEMENTATION_MODEL_RELEASE` 才写入。接口需让 C 的受监督单 call 使用；可以实现生产连接构件，但 S0 运行入口显式禁真实供应方。主控同步 GitHub/Gitee 后，分配 Netcatty Linux 开发者测试时段。
+唯一 DeepSeek 默认；只写 Tasks 列举的四个文件，不改依赖锁/入口/其他实现者文件。第一阶段只读并回报对外签名，等待主控核实际模型后发送 `IMPLEMENTATION_MODEL_RELEASE` 才写入。接口需让 C 的受监督单 call 使用；可以实现生产连接构件，但 S0 运行入口显式禁真实供应方。主控同步 GitHub/Gitee 后，分配 Netcatty Linux 开发者测试时段。
+
+主控已核实际模型并登记 [公共契约](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-2-public-contracts.md:1)：独立有限 EgressError、不修改共享错误文件；可见ASCII wire URL、原样query；选定一个已核IP、无自动回退；C复用OneShotHttpTransport。收到release后直接编码，代码冻结后等待主控发布固定提交；本地不运行应用/测试。
 
 ## Spec Change Log
 

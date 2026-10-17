@@ -964,7 +964,7 @@
         "observed_timestamp": "2026-10-17T19:16:25Z",
         "spec": "_bmad-output/implementation-artifacts/spec-1-2-a-persistence.md",
         "active_claim": true,
-        "state": "read_only_signature_preflight"
+        "state": "implementation_model_released_public_contract_recorded"
       },
       {
         "agent_id": "01a14b4b-41ea-7bd0-9b61-0e9475aadae8",
@@ -977,10 +977,38 @@
         "observed_timestamp": "2026-10-17T19:16:26Z",
         "spec": "_bmad-output/implementation-artifacts/spec-1-2-b-egress.md",
         "active_claim": true,
-        "state": "read_only_signature_preflight"
+        "state": "implementation_model_released_public_contract_recorded"
+      },
+      {
+        "agent_id": "01a14b57-dbf8-7e11-8a3f-f678f9146dd0",
+        "nickname": "Heisenberg",
+        "role": "C_child_supervision_and_dispatch_integration",
+        "requested_model": "zayuapi/deepseek-v4.1-flash",
+        "requested_reasoning_effort": null,
+        "observed_model": "zayuapi/deepseek-v4.1-flash",
+        "observed_effort": "max",
+        "observed_timestamp": "2026-10-17T19:30:12Z",
+        "spec": "_bmad-output/implementation-artifacts/spec-1-2-c-supervision.md",
+        "active_claim": true,
+        "state": "supervision_model_released_A_integration_waits_A_contract"
       }
     ],
     "terminal_holder": null,
+    "linux_preparation": {
+      "source_commit": "1c7aaf704f313b352125f7cf5e50999baafa4e39",
+      "github_gitee_main_verified_equal": true,
+      "server_clone_remote": "Gitee",
+      "server_checkout": "/opt/rag-story-1-2/repo",
+      "filesystem": "ext4",
+      "developer_venv": "/opt/rag-story-1-2/venv-dev",
+      "python": "3.12.8",
+      "uvicorn": "0.37.0",
+      "locked_sync": "passed",
+      "backend_tree": "610e5c112bdba71e11ce7c12c08ccd5aa2e5f6f1",
+      "contracts_tree": "de2eab25188b7c935c978ea212f6a3c4e72d299b",
+      "lock_sha256": "7ad33ac08870a9dfb0fccf3716207c4503d5fc745e0215b2adb7baadcea408ed",
+      "test_status": "not-executed"
+    },
     "review_policy": "one fresh GPT6.1Sol medium current-AC review; zero findings allowed; no quotas or speculative gates"
   }
 }

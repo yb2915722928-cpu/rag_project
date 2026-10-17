@@ -9,8 +9,8 @@
 - 初始合并诊断已完成；实际 `turn_context` 为 `2026-10-17T19:06:47.666Z group/auto-gpt-6-1-sol effort=max`；仅核实路由记录，不宣称底层供应方身份。已核对 relay 的目标会话/Story/接力 ID 和 1.1 passed 门。无需重做相同诊断。
 - 接手后主会话完成当前Story分析、公共契约和拆分，用bmad-build；规格风险线1600自动拆分并保留父Story全部义务。主会话不编写应用/测试/部署实现。
 - 当前剩余：原 AC1 epoch/fence；AC2 child/IPC/一次 grant/崩溃；AC3 EgressTarget；AC4 迟到事实/冲突/PG 锁序；全部开发者测试、独立验证和一次全新审查及修复。无新环境阻塞。
-- [母规格](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-2-isolated-calls.md:1)已按预授权进入开发；A持久化、B目标守卫、C监督分段均低于1600 tokens，A/B并行只读就绪后核模型再开放写入，C等公共签名稳定。
-- A 唯一认领 Euclid `01a14b4b-3d07-7a12-a4ea-8ae0f9db0540`；B 唯一认领 Faraday `01a14b4b-41ea-7bd0-9b61-0e9475aadae8`，各按子规格文件集；两者实际路由 `zayuapi/deepseek-v4.1-flash / max`，未传推理覆盖，仍在只读签名阶段。C 尚未派发。
+- [母规格](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-2-isolated-calls.md:1)已按预授权进入开发；A持久化、B目标守卫、C监督分段均低于1600 tokens，A/B/C公共签名已登记。
+- A 唯一认领 Euclid `01a14b4b-3d07-7a12-a4ea-8ae0f9db0540`；B 唯一认领 Faraday `01a14b4b-41ea-7bd0-9b61-0e9475aadae8`；C 唯一认领 Heisenberg `01a14b57-dbf8-7e11-8a3f-f678f9146dd0`。均已按[公共契约](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-2-public-contracts.md:1)收到编码release。A额外唯一拥有共享errors.py的必要有限错误/revision文案；B/C不修改。C的PG组装/夹具等A实际交付，其余集成接口已开放。三者各按子规格文件集；实际路由均为 `zayuapi/deepseek-v4.1-flash / max`，未传推理覆盖。
 
 ## 已核实可复用的基线
 
