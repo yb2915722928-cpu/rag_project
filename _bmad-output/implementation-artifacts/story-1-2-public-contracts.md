@@ -39,6 +39,8 @@ C 先写无 A 依赖的监督/child/专题测试；A 的调用集成签名登记
 - I3：IPC deadline是绝对时间。分段recv或InterruptedError之后重新计算剩余时间；不能只设置一次socket timeout让持续小块输入无限延长阶段。Linux socketpair慢速分段输入须在原deadline有限超时。
 - 初次四文件冻结hash保留为未运行草稿来源；C重新打开自己的四文件完成上述修正、补必要测试后再次冻结。无需新增外部服务或泛化防护；公开ChildSupervisor方法不变。此处只修正已有明确义务。
 
+C已交付增量并由主控读取：`LinuxChildSupervisor(*,state_root,child_executable=None)`要求明确绝对本地FS根；实际物理键deployment+slot，同一部署的控制器/boot必须共用此根，不按每个boot另建目录。测试正文慢发前先完整发送帧头，确保可检出旧deadline错误。四文件代码冻结，Linux运行门尚待固定提交实测。
+
 ## A：持久调用
 
 2026-10-18 采纳 Euclid 的最小签名：

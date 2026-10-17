@@ -1,43 +1,43 @@
 # Story 1.2 当前工作集
 
-状态：实现中。B169真实通过；A的52ccb1f真实PG失败，2文件本地修补已冻结，服务器覆盖试跑不计固定提交通过，待新干净Gitee检出重测；C修正I2/I3；B另接D必要epoch启动接线两文件。父Story完成门未过。唯一主控 `01a14b42-689c-7533-90a3-9bd187d93039`，接力ID `3dff3d78-c0f5-42cf-9860-fc2ad4250ab4`；2026-10-18已收到释放信号。原1.1写者均释放，认领以 [relay](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/sprint-relay-state.json:1) 为准。
+状态：B169和A canonical151（88+48非PG/15PG）开发者通过且主控核原始证据；C四源+D两文件已冻待发布/实测，C调用集成未冻；父Story完成门未过。唯一主控 `01a14b42-689c-7533-90a3-9bd187d93039`，实际 `group/auto-gpt-6-1-sol / max`；接力ID `3dff3d78-c0f5-42cf-9860-fc2ad4250ab4` 已认领。[relay](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/sprint-relay-state.json:1)为当前事实。
 
-## 当前目标与下一步
+## 当前目标与唯一认领
 
-- 只处理 [Story 1.2：隔离执行并保存每次调用事实](/E:/aaa-project/rag/_bmad-output/planning-artifacts/epics.md:197)，不在同一会话开始1.3。原AC与必要架构在规格分析时按需回读，工作集不替代验收分母。
-- 依赖1.1已done/passed，见 [验收快照](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-acceptance-snapshot-2026-10-18.md:1)。不要重新开发或全量重验1.1；只有1.2实际变更影响到的回归才执行。
-- 初始合并诊断已完成；实际 `turn_context` 为 `2026-10-17T19:06:47.666Z group/auto-gpt-6-1-sol effort=max`；仅核实路由记录，不宣称底层供应方身份。已核对 relay 的目标会话/Story/接力 ID 和 1.1 passed 门。无需重做相同诊断。
-- 主会话已用bmad-build完成分析、公共契约和拆分；规格风险线1600自动拆分并保留父Story全部义务。主会话不编写应用/测试/部署实现。
-- 当前剩余：原 AC1 epoch/fence；AC2 child/IPC/一次 grant/崩溃；AC3 EgressTarget；AC4 迟到事实/冲突/PG 锁序；全部开发者测试、独立验证和一次全新审查及修复。无新环境阻塞。
-- [母规格](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-2-isolated-calls.md:1)已按预授权进入开发；A持久化、B目标守卫、C监督分段均低于1600 tokens，A/B/C公共签名已登记。
-- A 唯一认领 Euclid `01a14b4b-3d07-7a12-a4ea-8ae0f9db0540`；B 唯一认领 Faraday `01a14b4b-41ea-7bd0-9b61-0e9475aadae8`；C 唯一认领 Heisenberg `01a14b57-dbf8-7e11-8a3f-f678f9146dd0`。均已按[公共契约](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-2-public-contracts.md:1)收到编码release。A额外唯一拥有共享errors.py的必要有限错误/revision文案；B/C不修改。C的PG组装/夹具等A实际交付，其余集成接口已开放。三者各按子规格文件集；实际路由均为 `zayuapi/deepseek-v4.1-flash / max`，未传推理覆盖。
-- I1（原AC1）代码已补并冻结：持久context、3个受控入口、prepare/mark/result锁后DB时钟及实际PG跨lease等待负例，原5方法不变。主控已完整读初稿和所有增量；运行前不关闭I1。A源hash见[A快照](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-2-a-source-snapshot.json:1)，19文件仅test_call_persistence.py工作区CRLF→Git LF，双hash及纯换行映射保留，服务器按canonical sha256核对。A19已提交，index已释放；C初稿仅保存tree来源、未暂存，未动其工作区。
-- A已发布固定提交 `52ccb1ff69b1d7f07d9f482b2035ca71e2db12ad`，GitHub/Gitee main实测一致，A现独占Netcatty从Gitee检出/核19源码hash/精确Python后执行开发者当前专题、相关回归和真实PG必跑。主控/B/C/Pascal此时不调用terminal。I1运行证据仍待回报；未开1.3。
-- A首轮实测已归还terminal：52ccb1f在新CallRepository的`text(sql,params)`错误绑定处PG失败；本地已修为`execute(text(sql),params)`，另把epoch轮换后“非冲突观察”测试输入改为相同usage，保留冲突测试。A违反固定提交指令覆盖了服务器两源试跑，7PG/722全后端通过仅为草稿来源，不计门通过；主控已直接核旧repo HEAD=52ccb1f且两源dirty，与本地修补hash一致。7原始日志及hash在relay，保留失败/覆盖证据。主控下一步发布修补并新建 `/opt/rag-story-1-2/repo-fixed` + `venv-fixed`，所有后续活动从Gitee固定提交/干净源运行；旧repo/venv-dev仅草稿保留、不重置/删。任何失败仅本地修补后重发，禁止再临改server源。
-- B三份源/测试已冻结，主控完整读取2201行实际diff，暂存/工作区均LF、hash见[B快照](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-2-b-source-snapshot.json:1)。固定提交 `78402858fb003dfd62d57ed481f4f131e69424bf`，两远端main实测一致；B在Linux3.12.8实测169 passed（专题153/架构3/UoW13），JUnit零失败/错误/跳过，源码hash一致且未修改。已归还terminal；[B交付](/E:/aaa-project/rag/docs/story-1-2-b-delivery.md:1)待主控核原始证据并纳入下一提交。
-- C初次四文件已冻结并被主控读取实际差异，尚未发布/运行；原hash保留为草稿来源。I2（物理槽仅内存/按boot分离、proc未知/身份错绑停止）和I3（分段recv未保持绝对deadline）均属原AC2/R1，已交回C在原四文件修正并补对应Linux测试后再冻结。C的本地py_compile仅静态语法，不计Linux证据；调用集成/PG矩阵未冻结。B/C实例保留，不关闭重开。
-- 独立验证Pascal `01a14b8d-7d2f-7b62-875b-a324944c561c`（实际stepfun/step-5-preview/high默认）只读ready，未给VERIFICATION_MODEL_RELEASE或terminal；最终固定源码与开发者测试稳定后才运行，原4AC全部子句为分母，不按表行计数。正式全新6.1Sol/medium审查尚未派发。
-- D [epoch接线规格](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-2-d-epoch-deploy.md:1)由B同一未关闭实例认领，实际DeepSeek/max默认已核并release；只写Compose和[部署说明](/E:/aaa-project/rag/docs/story-1-2-epoch-deploy.md:1)。当前调用路径缺RAG_EPOCH_CONTROL_FILE会使新worker隔离，补当前必要回归；普通RO epoch目录0550/文件0400服务UID，首次维护显式init，1.5总资格/探路工具不前移。D尚无terminal。
+只完成原 [Story 1.2 四条AC全部实质子句](/E:/aaa-project/rag/_bmad-output/planning-artifacts/epics.md:197)，不在此会话启动1.3。行数不是验收分母。主控只编排/文档/提交/验收，不改应用、测试或部署实现。
 
-## 已核实可复用的基线
+| 认领 | 实例 | 范围与状态 |
+| --- | --- | --- |
+| A Euclid | `01a14b4b-3d07-7a12-a4ea-8ae0f9db0540` | [A规格](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-2-a-persistence.md:1)开发者151已过；source冻结、只补交付文档，terminal归还 |
+| B/D Faraday | `01a14b4b-41ea-7bd0-9b61-0e9475aadae8` | B出网源冻结；[D规格](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-2-d-epoch-deploy.md:1)Compose+部署说明已冻待启动回归 |
+| C Heisenberg | `01a14b57-dbf8-7e11-8a3f-f678f9146dd0` | [C规格](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-2-c-supervision.md:1)I2/I3四源已冻待Linux；call_dispatch/PG矩阵继续 |
+| 独立验证 Pascal | `01a14b8d-7d2f-7b62-875b-a324944c561c` | [验证规格](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-2-independent-verification.md:1)，只读ready，未release/未分terminal |
 
-- 功能源码25232d0；本地和两远端交接基线 `96e7fb3ee94c025c3fae804ddabf8ad71d8b08d5`（只读查询两远端一致）。GitHub/Gitee正常无人值守push已成功，服务器只从Gitee拉固定提交并核源码。
-- GitHub凭据已存keyring并绑定稳定 [gh.exe](/C:/Users/29157/.codex/tools/gh/2.102.0/gh.exe)。本机GitHub访问复用Windows现有代理的进程配置；代理地址变化时读当前设置，不重新设备登录。Gitee公开读取不需凭据，既有写凭据实测有效；不输出token/DSN。
-- Netcatty主机120.53.251.166，实际使用先get_environment。应用/构建/测试只在Linux，精确CPython3.12.8/Uvicorn0.37.0、PG18.6/vector0.8.7。活动目录 `/opt/rag-story-1-1` 为本地FS，证据 `/fileOfRag/testOfRAG`，不换大小写、不把桶当DB/锁盘。
-- 此次 `get_environment` 已核连接，首选 session `0d682d12-5a9c-4260-85b5-86713c7d4304`；发生重连才刷新。terminal按relay持有者互斥，A已归还，当前主控准备干净检出；B/D/C/Pascal不得调用。
-- 工具已实际拒绝含 `$(` 的命令替换，改为直接输出/分步核对后成功；这是已解决的命令语法限制，不是服务器/权限阻塞。后续RPC避免此语法。服务端uv绝对路径 `/root/.local/bin/uv`，默认PATH没有；开发venv为 `/opt/rag-story-1-2/venv-dev`。
-- 四服务保留healthy，gateway为同机 `https://127.0.0.1:8443`；API/worker共用已验镜像，最终gateway含R1修复。隔离测试PG在127.0.0.1:55432，凭据只从既有0400文件加载（位置见已发布setup），不要打印。旧数据/镜像/缓存不因换Story自动删除。
-- 原clean wrapper退出码未记录、测试浏览器缺CJK字体均已如实登记；前者有BuildKit完成与实际内容指纹直接证据，后者不改变1.1布局/交互结果。不因此重开1.1或循环空会话。
+A/B/C实际路由均已核 `zayuapi/deepseek-v4.1-flash / max`，未传推理覆盖；Pascal实际 `stepfun/step-5-preview / high`默认。角色实例均未关闭，不恢复旧1.1写者。正式审查尚未派发，须全新6.1Sol/medium，零发现允许。
 
-## 角色、并发与节流
+## 剩余工作与已证问题
 
-- 遵守最新 [AGENTS.md](/E:/aaa-project/rag/AGENTS.md:1)：主控6.1Sol/max；全部后端/部署/RAG为DeepSeek默认；前端需要时Kimi默认；独立Step5默认；正式审查全新6.1Sol/medium。派发稳定ID，父会话核turn_context，不假定恢复关闭实例仍保留模型。
-- 1.1的实现/审查实例均冻结关闭，不复用旧写者。1.2的新任务需明确范围/接口/依赖/验收/文件唯一归属，再并行无依赖实现。
-- Netcatty terminal在整个外部chat互斥，独立terminal不能解决并发RPC。短批次分配工具时段，后台进程可保留运行后让出调用工具，不让下载等待阻塞其他独立工作。
-- 用户长期禁止过度防御性审查：只当前明确AC/已证缺陷/必要回归；允许零发现，不凑问题、不追加泛化硬化或新门。未来任务缺代码按实际归属延期，当前已有缺陷仍最小修复。不以全部未来测试通过作为当前Story前置。
-- 完成1.2全部原门后，同样保存短工作集/快照/提示词与唯一认领，自动新建下一Amelia接1.3，核实接手后释放写入；仅循环当前Sprint至完成或用户停止。没有定时自动化。
+- [公共契约](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-2-public-contracts.md:1)已固定A原5方法+3受控context入口、B EgressPlan、C grant消费已核plan。各实现者文件集不重叠；共享契约变更由主控协调。
+- I1与SQL绑定F1已按af6 canonical开发者151和主控原始证据关闭，待父Story独立门；代码为持久context/context→call锁后DB时钟。52ccb1f失败及覆盖草稿不重标通过，非冲突测试使用相同usage且冲突测试保留。
+- A违反固定提交指令直接覆盖旧server repo两源，覆盖后7PG/722后端通过仅草稿，不作52ccb1f或新提交通过。7原始日志/实际dirty状态/hash在relay及桶中保留。旧 `/opt/rag-story-1-2/repo`、`venv-dev`只保留草稿，禁止再运行或重置/删除它们。
+- I2/I3代码已修并由主控完整读增量：`LinuxChildSupervisor(state_root=...)`明确共用本地绝对根、deployment+slot持久占用、proc未知/错绑无证明无信号、逐段收发绝对deadline；慢发测试先完整header再慢正文可检出旧错。四文件当前snapshot见[CD快照](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-2-cd-source-snapshot.json:1)，待Linux后关闭。旧草稿tree `7d9f05959370f17ae4a3532d882b2e11100b1c0d`保留、不计运行。
+- D：现有Compose未传新epoch文件导致新worker隔离，补当前必要启动接线/首次显式init说明并验受影响启动重启。普通epoch目录0550、文件0400服务UID；不前移1.5完整S0资格/探路工具，不改旧1.1资源。
+- 父AC2崩溃矩阵、AC4真实PG/迟到事实、C集成、D当前回归、独立验证、一次正式审查及具体修复尚未全部通过；不以子规格完成替代父Story。
+
+## 当前固定源码与运行时段
+
+- 最新发布 `af6ce5099166960e714a1e8b45f004cc8ac9f77a`，GitHub/Gitee main实测一致；服务器只从Gitee拉固定提交。[A修补快照](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-2-a-fix1-source-snapshot.json:1)含19 canonical源码SHA。主控已实际建干净 `/opt/rag-story-1-2/repo-fixed`，核HEAD/19 hash/锁与新venv精确3.12.8；后续只用此canonical根。
+- Netcatty session `0d682d12-5a9c-4260-85b5-86713c7d4304`、主机120.53.251.166。A已归还，主控发布CD后分配C，其他角色无租约不得并发terminal RPC；只重连刷新环境。源码前后必须Git干净/hash不变；失败只本地修补→主控双远端发布→固定提交重测，禁临改server源。
+- CPython3.12.8/PG18.6/vector0.8.7；venv `/opt/rag-story-1-2/venv-fixed`，uv `/root/.local/bin/uv`（默认PATH没有）。PG测试凭据仅source既有0400文件，位置见已发布setup；不输出DSN。活动目录在ext4，证据归 `/fileOfRag/testOfRAG/metadata/story-1-2`，大小写不能换。
+- Netcatty已实际拒绝 `$(` 命令替换，改直接输出/分步核对已成功；这是已解决的命令语法限制，不是环境阻塞。
+
+## 已核证据与下一步
+
+- B在固定 `78402858fb003dfd62d57ed481f4f131e69424bf`：169通过（153出网/3架构/13 UoW），0失败/错误/跳过；主控直接读过桶中JUnit、exit、source记录及hash。[B交付](/E:/aaa-project/rag/docs/story-1-2-b-delivery.md:1)保持原工件来源，不重标到后续共享UoW变更。
+- A canonical证据根 `/fileOfRag/testOfRAG/metadata/story-1-2/A-canonical-af6ce50`：主控已核3份JUnit/退出码/15具体PG节点/HEAD/status/19hash。原`/A`七日志保留失败/覆盖。下一步发布CD并给C Linux child时段；D可随后跑最小新后端启动回归，C完成剩余调用集成/PG矩阵。
+- 所有开发者当前必需项稳定后，给Pascal最终固定提交/时段；再派全新6.1Sol/medium读原AC、真实diff、证据审查。只具体当前缺陷/必要回归，不凑数量、不自动追加泛化轮；适度检查通过后停止补强。
+- 1.1已done/passed，见[验收快照](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-acceptance-snapshot-2026-10-18.md:1)，不重开全套。当前完成后保存快照/工作集/唯一认领，自动在同一项目创建下一Amelia接首个依赖满足Story；未全部完成不能放行。无定时自动化，无外部阻塞空转交接。
 
 ## 需回读条件
 
-- 规格分析首次读取原 Story 1.2 和有效 Epic 1 缓存；确认公共接口时只补读 C4/C5、R1/R2、实施契约 §2.5 及对应验收分派。
-- 只有实际契约/验收/文件归属变动才回读受影响原文。运行环境、认证和 1.1 基线无变化时复用既有证据，不重新全量探测。
+先读本工作集；只有契约/AC/归属/实际代码或环境变化才按需回读原Story、C4/C5、R1/R2、实施契约§2.5及对应分派。不重复加载全部规划，不重探已核且未触发变化的外部环境。无新触发时复用relay中的实际模型/环境证据。

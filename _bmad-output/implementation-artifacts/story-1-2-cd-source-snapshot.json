@@ -1,0 +1,57 @@
+{
+  "story": "1.2",
+  "segments": [
+    "C_child",
+    "D_epoch_startup"
+  ],
+  "captured_at": "2026-10-18T05:38:19.867958+08:00",
+  "base_commit": "af6ce5099166960e714a1e8b45f004cc8ac9f77a",
+  "C_initial_draft_tree": "7d9f05959370f17ae4a3532d882b2e11100b1c0d",
+  "parent_C_delta_and_D_diff_read": true,
+  "runtime_status": "not-executed",
+  "remaining_C_scope": "call_dispatch and unit/PG integration not yet frozen",
+  "files": [
+    {
+      "path": "backend/src/rag_app/modules/execution/supervision.py",
+      "sha256": "c3de6c829265f34305927b120bb66838644613af2640d147709c5bf0027c569a",
+      "workspace_sha256": "c3de6c829265f34305927b120bb66838644613af2640d147709c5bf0027c569a",
+      "workspace_matches_index": true,
+      "owner": "C"
+    },
+    {
+      "path": "backend/src/rag_app/adapters/child_supervisor.py",
+      "sha256": "c647ecd9da5d94f9a3f9bd658c490d1adb9e20ad6fecc64f42b3b8ab86851d10",
+      "workspace_sha256": "c647ecd9da5d94f9a3f9bd658c490d1adb9e20ad6fecc64f42b3b8ab86851d10",
+      "workspace_matches_index": true,
+      "owner": "C"
+    },
+    {
+      "path": "backend/src/rag_app/entrypoints/call_child.py",
+      "sha256": "522a673d90899fad5e31d351c7b3a0a8bd1e84a3987934e9902eeb98c339f89a",
+      "workspace_sha256": "522a673d90899fad5e31d351c7b3a0a8bd1e84a3987934e9902eeb98c339f89a",
+      "workspace_matches_index": true,
+      "owner": "C"
+    },
+    {
+      "path": "backend/tests/test_child_supervisor.py",
+      "sha256": "95480b94297031367e921ee5a3d00c238a3bc31f37d906a24f64e22b89de94e4",
+      "workspace_sha256": "95480b94297031367e921ee5a3d00c238a3bc31f37d906a24f64e22b89de94e4",
+      "workspace_matches_index": true,
+      "owner": "C"
+    },
+    {
+      "path": "deploy/compose.yaml",
+      "sha256": "c05e4594a939432e87bba40dd57307d89e185176ecfa852da82efc2e168f77db",
+      "workspace_sha256": "c05e4594a939432e87bba40dd57307d89e185176ecfa852da82efc2e168f77db",
+      "workspace_matches_index": true,
+      "owner": "D"
+    },
+    {
+      "path": "docs/story-1-2-epoch-deploy.md",
+      "sha256": "26e7a07db095ccb712356cd98e6802f8f331a43a6ad23bffb9962c6263169377",
+      "workspace_sha256": "26e7a07db095ccb712356cd98e6802f8f331a43a6ad23bffb9962c6263169377",
+      "workspace_matches_index": true,
+      "owner": "D"
+    }
+  ]
+}

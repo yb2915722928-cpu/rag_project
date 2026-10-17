@@ -92,6 +92,10 @@ services:
       RAG_API_HOST: "0.0.0.0"
       RAG_API_PORT: "8000"
       PGPASSFILE: /run/secrets/postgres_pgpass
+      # One independent epoch record shared by API and worker. The default
+      # lives inside the read-only /var/lib/rag/epoch bind mount below; first
+      # initialization is an explicit host-side maintenance step.
+      RAG_EPOCH_CONTROL_FILE: ${RAG_EPOCH_CONTROL_FILE:-/var/lib/rag/epoch/epoch-control.json}
     secrets:
       # File-based Compose secret = host bind mount. uid/gid/mode are omitted
       # because Compose does not reliably apply them locally; the host file's
@@ -140,6 +144,9 @@ services:
       RAG_DATABASE_URL: ${RAG_DATABASE_URL:?set RAG_DATABASE_URL}
       RAG_DATABASE_SCHEMA: ${RAG_DATABASE_SCHEMA:-public}
       PGPASSFILE: /run/secrets/postgres_pgpass
+      # Must match the API value exactly; a divergent path would isolate the
+      # worker from the control record used for business dispatch.
+      RAG_EPOCH_CONTROL_FILE: ${RAG_EPOCH_CONTROL_FILE:-/var/lib/rag/epoch/epoch-control.json}
     secrets:
       # Same host-file ownership/mode requirement as the API service.
       - postgres_pgpass
