@@ -1,0 +1,47 @@
+{
+  "$id": "https://rag.local/contracts/schemas/operation.v1/Money.serialization.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "amount": {
+      "anyOf": [
+        {
+          "pattern": "^\\d+(?:\\.\\d+)?$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Amount"
+    },
+    "currency": {
+      "anyOf": [
+        {
+          "pattern": "^[A-Z]{3}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Currency"
+    },
+    "source": {
+      "enum": [
+        "estimate",
+        "bill",
+        "unknown"
+      ],
+      "title": "Source",
+      "type": "string"
+    }
+  },
+  "required": [
+    "amount",
+    "currency",
+    "source"
+  ],
+  "title": "Money",
+  "type": "object"
+}

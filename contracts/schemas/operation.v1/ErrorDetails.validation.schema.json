@@ -1,0 +1,60 @@
+{
+  "$id": "https://rag.local/contracts/schemas/operation.v1/ErrorDetails.validation.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "field": {
+      "anyOf": [
+        {
+          "enum": [
+            "schema_version",
+            "question",
+            "operation_id",
+            "targets",
+            "body"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Field"
+    },
+    "reason": {
+      "anyOf": [
+        {
+          "enum": [
+            "invalid_format",
+            "out_of_range",
+            "unknown_field",
+            "unavailable"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Reason"
+    },
+    "retry_after_seconds": {
+      "anyOf": [
+        {
+          "maximum": 86400,
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Retry After Seconds"
+    }
+  },
+  "title": "ErrorDetails",
+  "type": "object"
+}

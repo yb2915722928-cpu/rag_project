@@ -1,0 +1,261 @@
+{
+  "$defs": {
+    "ConflictSides": {
+      "additionalProperties": false,
+      "properties": {
+        "side_a": {
+          "items": {
+            "maxLength": 64,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "title": "Side A",
+          "type": "array"
+        },
+        "side_b": {
+          "items": {
+            "maxLength": 64,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "title": "Side B",
+          "type": "array"
+        }
+      },
+      "required": [
+        "side_a",
+        "side_b"
+      ],
+      "title": "ConflictSides",
+      "type": "object"
+    },
+    "Fact": {
+      "additionalProperties": false,
+      "properties": {
+        "applicability": {
+          "maxLength": 256,
+          "title": "Applicability",
+          "type": "string"
+        },
+        "conflict_sides": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ConflictSides"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "evidence_ids": {
+          "items": {
+            "maxLength": 64,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "process",
+            "material",
+            "condition",
+            "owner",
+            "cause",
+            "check",
+            "step",
+            "parameter",
+            "limitation"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "order": {
+          "maximum": 16,
+          "minimum": 1,
+          "title": "Order",
+          "type": "integer"
+        },
+        "quantity": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Quantity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "text": {
+          "maxLength": 512,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "order",
+        "text",
+        "applicability",
+        "evidence_ids",
+        "quantity",
+        "conflict_sides"
+      ],
+      "title": "Fact",
+      "type": "object"
+    },
+    "Gap": {
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "enum": [
+            "process",
+            "material",
+            "condition",
+            "owner",
+            "cause",
+            "check",
+            "step",
+            "parameter",
+            "limitation",
+            "object_identity",
+            "version",
+            "environment",
+            "log_context",
+            "evidence",
+            "source_locator"
+          ],
+          "title": "Field",
+          "type": "string"
+        },
+        "text": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "field",
+        "text"
+      ],
+      "title": "Gap",
+      "type": "object"
+    },
+    "Outcome": {
+      "enum": [
+        "answered",
+        "insufficient",
+        "clarify",
+        "conflict"
+      ],
+      "title": "Outcome",
+      "type": "string"
+    },
+    "Quantity": {
+      "additionalProperties": false,
+      "properties": {
+        "unit": {
+          "maxLength": 32,
+          "minLength": 1,
+          "title": "Unit",
+          "type": "string"
+        },
+        "value_text": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Value Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "value_text",
+        "unit"
+      ],
+      "title": "Quantity",
+      "type": "object"
+    },
+    "Summary": {
+      "additionalProperties": false,
+      "properties": {
+        "fact_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 16,
+          "title": "Fact Ids",
+          "type": "array"
+        },
+        "text": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text",
+        "fact_ids"
+      ],
+      "title": "Summary",
+      "type": "object"
+    }
+  },
+  "$id": "https://rag.local/contracts/schemas/answer.v1/AnswerPayload.validation.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "clarifications": {
+      "items": {
+        "$ref": "#/$defs/Gap"
+      },
+      "maxItems": 4,
+      "title": "Clarifications",
+      "type": "array"
+    },
+    "facts": {
+      "items": {
+        "$ref": "#/$defs/Fact"
+      },
+      "maxItems": 16,
+      "title": "Facts",
+      "type": "array"
+    },
+    "gaps": {
+      "items": {
+        "$ref": "#/$defs/Gap"
+      },
+      "maxItems": 8,
+      "title": "Gaps",
+      "type": "array"
+    },
+    "outcome": {
+      "$ref": "#/$defs/Outcome"
+    },
+    "summary": {
+      "$ref": "#/$defs/Summary"
+    }
+  },
+  "required": [
+    "outcome",
+    "summary",
+    "facts",
+    "gaps",
+    "clarifications"
+  ],
+  "title": "AnswerPayload",
+  "type": "object"
+}

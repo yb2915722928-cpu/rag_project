@@ -24,7 +24,7 @@
   "acceptance_gate": "not_passed",
   "next_story_key": null,
   "next_thread_id": null,
-  "dispatch_state": "frontend_active_in_parallel_B_short_regression_and_deploy_current_requirements_only",
+  "dispatch_state": "B_developer_gate_passed_artifacts_publishing_frontend_active_PG_eight_pending",
   "handoff_id": "story-1-1-continued-01a14973",
   "handoff_kind": "same_story_serial_continuation",
   "handoff_source_thread_id": "01a148e2-1e11-7322-9626-6cbafb956f12",
@@ -168,9 +168,9 @@
     "old_docker_resources": "cleaned_by_explicit_user_authorization",
     "rag_runtime_acceptance": "A1 developer tests and H developer/independent unit tests recorded; PG, new HTTP/runtime, frontend and four-service gates not passed",
     "netcatty_terminal_lease": {
-      "holder_agent_id": "01a14a3e-989e-7c72-b98c-90c3a9e9b5c9",
-      "holder_nickname": "Confucius",
-      "scope": "a70 fixed-Gitee source verification and short non-PG/B regressions, generation/check/samples",
+      "holder_agent_id": null,
+      "holder_nickname": "unassigned",
+      "scope": "awaiting_controller_next_runtime_slot",
       "global_mutex": "__external_mcp__",
       "controller_and_backend_terminal_calls": "controller_and_Mencius_paused_until_Confucius_returns_slot",
       "backend_exclusive_session": "1eaffce6-3c45-45cb-84bd-18bd6fc84ea9",
@@ -190,7 +190,7 @@
       "secret_value": "not_recorded"
     }
   },
-  "updated_at": "2026-10-17T23:32:34.3172399+08:00",
+  "updated_at": "2026-10-17T23:48:17.3898634+08:00",
   "handoff_registered_at": "2026-10-17T16:02:45.7798854+08:00",
   "handoff_acceptance_evidence": "Current rollout turn_context records group/auto-gpt-6-1-sol/max at 2026-10-17T10:41:11.525Z; source write released; unique current rag chat accepted Story 1.1. See story-1-1-amelia-control-2026-10-17.md.",
   "implementation_claims": [
@@ -440,7 +440,7 @@
       ],
       "spec": "_bmad-output/implementation-artifacts/spec-1-1-linux-developer-gates.md",
       "active_claim": true,
-      "status": "a70_fixed_commit_remote_non_PG_and_B_regression_in_progress",
+      "status": "B_complete_generated_files_frozen_waiting_current_story_PG_tests",
       "requested_model": "zayuapi/deepseek-v4.1-flash",
       "requested_reasoning_effort": null,
       "actual_model": "zayuapi/deepseek-v4.1-flash",
@@ -592,7 +592,23 @@
     "future_comparison_v1": "deferred_as_original_plan_not_in_current_sample_denominator",
     "evidence_root": "/opt/rag-story-1-1/linux-developer-gates-work/evidence",
     "frontend_spec_token_count": 1266,
-    "postgres_infrastructure_spec_token_count": 907
+    "postgres_infrastructure_spec_token_count": 907,
+    "current_a70_result": {
+      "commit": "a70a7e250ffda803f1e69e5ae5ce61615a2c02b7",
+      "non_pg_passed": 514,
+      "conditional_skip": 1,
+      "PG_deselected": 8,
+      "non_target_runtime_passed": 1,
+      "contract_topic_passed": 395,
+      "runtime_topic_passed": 47,
+      "generated_artifacts": 51,
+      "samples_passed": 52,
+      "samples_failed": 0,
+      "samples_blocked": 0,
+      "generation_check": "passed",
+      "local_manifest_sha256": "ad877ebbaf7b56fe33e657d546240c0a34da368aacfc9a20f892db0e313a5515",
+      "independent_parent_gate": "not-executed"
+    }
   },
   "pending_HTTP_envelope_release": {
     "baseline_commit": "a269d492fb33b3b13d95265fa11589d39260c4e0",
@@ -602,7 +618,7 @@
       "backend/tests/test_contract_http.py": "f3929ae78d4d240403224b429b00619976a9077909ac13b28c526c88f6817526"
     },
     "controller_diff_review": "completed",
-    "runtime_regression": "developer_running_fixed_a70_after_exclusive_remote_slot_granted",
+    "runtime_regression": "passed_a70_HTTP_and_relevant_regressions_52_of_52_samples_generation_and_check",
     "current_story_scope": "AC4 mandatory response envelope; future comparison remains deferred",
     "published_commit": "a70a7e250ffda803f1e69e5ae5ce61615a2c02b7",
     "both_main_refs_verified": true

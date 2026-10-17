@@ -1,0 +1,25 @@
+{
+  "$id": "https://rag.local/contracts/schemas/answer.v1/Quantity.serialization.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "unit": {
+      "maxLength": 32,
+      "minLength": 1,
+      "title": "Unit",
+      "type": "string"
+    },
+    "value_text": {
+      "maxLength": 64,
+      "minLength": 1,
+      "title": "Value Text",
+      "type": "string"
+    }
+  },
+  "required": [
+    "value_text",
+    "unit"
+  ],
+  "title": "Quantity",
+  "type": "object"
+}

@@ -1,0 +1,212 @@
+{
+  "$defs": {
+    "ErrorDetails": {
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "anyOf": [
+            {
+              "enum": [
+                "schema_version",
+                "question",
+                "operation_id",
+                "targets",
+                "body"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Field"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "enum": [
+                "invalid_format",
+                "out_of_range",
+                "unknown_field",
+                "unavailable"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reason"
+        },
+        "retry_after_seconds": {
+          "anyOf": [
+            {
+              "maximum": 86400,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Retry After Seconds"
+        }
+      },
+      "title": "ErrorDetails",
+      "type": "object"
+    },
+    "OperationState": {
+      "enum": [
+        "accepted",
+        "running",
+        "completed",
+        "failed"
+      ],
+      "title": "OperationState",
+      "type": "string"
+    },
+    "PublicError": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "enum": [
+            "AUTH_CHANNEL_CONFLICT",
+            "VALIDATION_ERROR",
+            "AUTH_REQUIRED",
+            "CREDENTIAL_INVALID",
+            "ACTION_FORBIDDEN",
+            "RESOURCE_UNAVAILABLE",
+            "IDEMPOTENCY_CONFLICT",
+            "OPERATION_EXPIRED",
+            "REQUEST_BODY_LIMIT_EXCEEDED",
+            "PROTOCOL_STRUCTURE_LIMIT_EXCEEDED",
+            "INPUT_LIMIT_EXCEEDED",
+            "CONCURRENCY_LIMIT_EXCEEDED",
+            "QUERY_RATE_LIMIT_EXCEEDED",
+            "DEPENDENCY_UNAVAILABLE",
+            "DEPENDENCY_TIMEOUT",
+            "ANSWER_VALIDATION_FAILED",
+            "ANSWER_TRUNCATED",
+            "REQUEST_HEADERS_LIMIT_EXCEEDED",
+            "UNSUPPORTED_MEDIA_TYPE",
+            "UNSUPPORTED_CONTENT_ENCODING",
+            "REQUEST_STREAM_ERROR",
+            "CONFIGURATION_INVALID",
+            "DATABASE_VERSION_MISMATCH",
+            "DATABASE_OPERATION_FAILED",
+            "DATABASE_CLEANUP_FAILED",
+            "ONLINE_VALIDATION_REQUIRED",
+            "RUNTIME_VERSION_MISMATCH",
+            "DATABASE_REVISION_MISMATCH",
+            "DATABASE_NAMESPACE_UNAVAILABLE",
+            "STARTUP_DEPENDENCY_UNAVAILABLE",
+            "METHOD_NOT_ALLOWED",
+            "INTERNAL_ERROR"
+          ],
+          "title": "Code",
+          "type": "string"
+        },
+        "details": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ErrorDetails"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "http_status": {
+          "maximum": 599,
+          "minimum": 400,
+          "title": "Http Status",
+          "type": "integer"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        },
+        "retry_mode": {
+          "$ref": "#/$defs/RetryMode"
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "http_status",
+        "retry_mode"
+      ],
+      "title": "PublicError",
+      "type": "object"
+    },
+    "RetryMode": {
+      "enum": [
+        "none",
+        "same_key_or_status",
+        "new_operation",
+        "manual_reconcile"
+      ],
+      "title": "RetryMode",
+      "type": "string"
+    },
+    "Status": {
+      "enum": [
+        "completed",
+        "in_progress",
+        "failed"
+      ],
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "$id": "https://rag.local/contracts/schemas/operation.v1/OperationResponse.serialization.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "error": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PublicError"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "operation_id": {
+      "pattern": "^[A-Za-z0-9_-]+$",
+      "title": "Operation Id",
+      "type": "string"
+    },
+    "operation_state": {
+      "$ref": "#/$defs/OperationState"
+    },
+    "request_id": {
+      "pattern": "^[A-Za-z0-9_-]+$",
+      "title": "Request Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "operation.v1",
+      "default": "operation.v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "$ref": "#/$defs/Status"
+    }
+  },
+  "required": [
+    "request_id",
+    "status",
+    "operation_id",
+    "operation_state",
+    "error"
+  ],
+  "title": "OperationResponse",
+  "type": "object"
+}

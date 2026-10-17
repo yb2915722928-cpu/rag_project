@@ -1,0 +1,35 @@
+{
+  "$id": "https://rag.local/contracts/schemas/answer.v1/ConflictSides.validation.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "side_a": {
+      "items": {
+        "maxLength": 64,
+        "minLength": 1,
+        "type": "string"
+      },
+      "maxItems": 5,
+      "minItems": 1,
+      "title": "Side A",
+      "type": "array"
+    },
+    "side_b": {
+      "items": {
+        "maxLength": 64,
+        "minLength": 1,
+        "type": "string"
+      },
+      "maxItems": 5,
+      "minItems": 1,
+      "title": "Side B",
+      "type": "array"
+    }
+  },
+  "required": [
+    "side_a",
+    "side_b"
+  ],
+  "title": "ConflictSides",
+  "type": "object"
+}

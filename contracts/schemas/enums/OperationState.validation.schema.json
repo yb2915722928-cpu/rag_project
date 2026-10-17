@@ -1,0 +1,12 @@
+{
+  "$id": "https://rag.local/contracts/schemas/enums/OperationState.validation.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "enum": [
+    "accepted",
+    "running",
+    "completed",
+    "failed"
+  ],
+  "title": "OperationState",
+  "type": "string"
+}

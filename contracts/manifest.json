@@ -1,0 +1,165 @@
+{
+  "artifacts": {
+    "openapi.json": "8f04bacde45ef4cb98c3f927cb76ab3f242c4706ced81b3fde5f0df3450368cf",
+    "schemas/answer.v1/AnswerPayload.serialization.schema.json": "5a739dcda9286f1a73fa646566eddab2a642b21f937b1fcc079df4db516a5ddb",
+    "schemas/answer.v1/AnswerPayload.validation.schema.json": "ff2f09eeba6dd49e2f31ec18fcc770d07e50e7eb3662e422005ebbbe7784a553",
+    "schemas/answer.v1/CompletedResponse.serialization.schema.json": "9ae02523afd24cb13f88f03ad2c2fdef6d18d92aa9811f8a28c5a6e3de92e73d",
+    "schemas/answer.v1/CompletedResponse.validation.schema.json": "9de589b2d934db380e334d4e305f844e3da53cbce168a8945c82b55459bb52d3",
+    "schemas/answer.v1/ConflictSides.serialization.schema.json": "00139914748141be96d563c31d2fc5b8c5faa066d92b1e488db0086fdbc53093",
+    "schemas/answer.v1/ConflictSides.validation.schema.json": "d41e95ed5fa274e7c41df671d34e42da99435b0a3cb5488bf29a2535c4be6217",
+    "schemas/answer.v1/EvidenceBlock.serialization.schema.json": "e6939bd48b1e4c1ddb712e17be92fb0f5de192bb81b7261c313acde98b8eb394",
+    "schemas/answer.v1/EvidenceBlock.validation.schema.json": "84b2a8674a43687972aa64d065014bb8a6985b08cd11529b3733fcb9f8c61727",
+    "schemas/answer.v1/Fact.serialization.schema.json": "c38e269785a7a9386b1638ee343e5d3f45bd465e78e7cdd021a19b6c021a0eb8",
+    "schemas/answer.v1/Fact.validation.schema.json": "3f07f97d874cdd7032ba90e79006667696b28c02e403f522f3c803c78ea44b86",
+    "schemas/answer.v1/Gap.serialization.schema.json": "9b8de1fffe322c404e4b28834c8e9e22cf66de70daac60f2245c40e586606fb1",
+    "schemas/answer.v1/Gap.validation.schema.json": "4dd0af07206580560f0db56f99888b0cc34ff133e155bf3bec1e9060fdc21510",
+    "schemas/answer.v1/Quantity.serialization.schema.json": "3b42fc602eca422dbefdad702863e7b7b60a663fdd60a752b4ccfbd05718b3d0",
+    "schemas/answer.v1/Quantity.validation.schema.json": "23746390795813be3197c1f343052c74de1998b7763477e1b27d42c246952076",
+    "schemas/answer.v1/Summary.serialization.schema.json": "99df32dba8932e8df2ad28f0b3ab355f06f790cc24e2397f078b9a736fd39e4c",
+    "schemas/answer.v1/Summary.validation.schema.json": "412acd18b41ddcf6d1e48e59a4a8f28f96f8d116801e34c28178f57b644cda13",
+    "schemas/capabilities.json": "7752cc855d49f262856eb9ceb249f5b80dd7983da2f8221c1abb282166693d32",
+    "schemas/enums/JobState.serialization.schema.json": "eba79ea432168ad3a3c066cfe45b552667180f23c5f94bc1b216419e61581eca",
+    "schemas/enums/JobState.validation.schema.json": "78b851fa611285c90b31997f9ac3057690809f456efa3da74698a764f98df92b",
+    "schemas/enums/OperationState.serialization.schema.json": "e19fdaacc6991dd37a3c473969db5b44d3ef643949523106496d645334c0eff7",
+    "schemas/enums/OperationState.validation.schema.json": "4d856efd4d8c6b96834eea3352ddaf2e8d911260744cc00ea76509dd8c8c4d99",
+    "schemas/enums/Outcome.serialization.schema.json": "05720a7b98f0d46592dede6224828a7901a26f2d1b185eaa11f126531e970599",
+    "schemas/enums/Outcome.validation.schema.json": "bc434bc57692a44791d63236ee4fb48956a3cd91529368dd4e95ef5e0bb645af",
+    "schemas/enums/RetryMode.serialization.schema.json": "96de3632bf4cbd927b7b43c73b0a7dd523527c6effa704c1f50f2ac285ccca86",
+    "schemas/enums/RetryMode.validation.schema.json": "18ae1a955c6413c6d4fe47e0c474ccc6f748213062ecd84285a59123a93e631c",
+    "schemas/enums/Status.serialization.schema.json": "6d42c9556a8701b344263bf7e475e3943ea0520de97c2bd808def4e7bdbbfb8f",
+    "schemas/enums/Status.validation.schema.json": "bbb7cc20cf945b6a5d393231d26edc114ad25b62b79c3e37559446f43be42f7a",
+    "schemas/operation.v1/AcceptedResponse.serialization.schema.json": "63e06535d392e28681ff761585471b9eaf533066ae4316fa13b90ad786a1e866",
+    "schemas/operation.v1/AcceptedResponse.validation.schema.json": "6162b2f82d5bc7f6d8f5ea36c445da55b7cf59e6736184c61839bc93b552186b",
+    "schemas/operation.v1/ErrorDetails.serialization.schema.json": "b306e714b82cf6e7d4d22451f7b84365b29447901107b27e57dce0457254e4bc",
+    "schemas/operation.v1/ErrorDetails.validation.schema.json": "3a94b5d12a28f5ab5c5d34ddec45dbf0b19ef3e0c095f6af6f3b1c5f37b23a70",
+    "schemas/operation.v1/FailedResponse.serialization.schema.json": "7774b8d347fc5f806535ec9d18708b3568c85b81ceb1f4054591bca6b0226f41",
+    "schemas/operation.v1/FailedResponse.validation.schema.json": "ea0d7216f5c2b2722c6f586c5f0534d6edfe724bb98d10be39091d5b0632a0d3",
+    "schemas/operation.v1/Money.serialization.schema.json": "7135251c61dd07df0fdffa2fb5b58813a8f3359526adbf6ae3574cdf19dfdec8",
+    "schemas/operation.v1/Money.validation.schema.json": "146331ae1b15577059134a7e70294033109e9448f167713a0b4f74ffa4622360",
+    "schemas/operation.v1/OperationResponse.serialization.schema.json": "2c504798ab02ae647e381e50086dfd8ba9eefe7113f69490665d9f4a6a1fc951",
+    "schemas/operation.v1/OperationResponse.validation.schema.json": "2cd61afa04691685d0a4a6bedf0187cff39062bd152a66d512e366a2304704aa",
+    "schemas/operation.v1/PublicError.serialization.schema.json": "e3018b4cd2d0ad323f9c9bf4dcc6f1a7b9ac8d446b15b538c2b6837c0b0322c7",
+    "schemas/operation.v1/PublicError.validation.schema.json": "33c0b52b71085e60f5805236e69b8e986b5cf12b06c09394bf8d0ab613f8eeb4",
+    "schemas/operation.v1/Usage.serialization.schema.json": "6807708b5a4afc4124ffb82a60b6b5025dd89f280410bec3ca0b9dd8b73ca715",
+    "schemas/operation.v1/Usage.validation.schema.json": "fa8d21679e10488bb96d9b2609836bd109e9e70bda374af8cb4403ef8ad68a27",
+    "schemas/retrieval.v1/EvidenceBlock.serialization.schema.json": "b60afd3471244198235ae0a54ee50f9f6feca1897ea04a031ad50d6219a49bf5",
+    "schemas/retrieval.v1/EvidenceBlock.validation.schema.json": "fcf9e338613490a33c4bfdaeb226d10e6b8f40d27f71150686fd997b68e39bff",
+    "schemas/retrieval.v1/RetrievalPayload.serialization.schema.json": "a05344a88dcce28e9f2a0d7000989a40b69409062a6d21d4456eb18726a07d70",
+    "schemas/retrieval.v1/RetrievalPayload.validation.schema.json": "e4657db3ad1075f0802770d88bdb0ebdca3117d91247651f6ca9af2110284908",
+    "schemas/retrieval.v1/RetrievalResponse.serialization.schema.json": "925d7c9a6165fe6d6f8fb1bedde9037a957104d6fc5870a67e0455c419a895b5",
+    "schemas/retrieval.v1/RetrievalResponse.validation.schema.json": "b3d4730b1a509bf751b04a1e8b99b374815fd9f2639456151fa4398ae4963aa9",
+    "typescript/contracts.input.ts": "9de305ce3e4c047934432810857d7a9a0f7447731ba6b0c9951b65e1823dbe48",
+    "typescript/contracts.ts": "9809d71003d740e5e42c5b8d3f3df484fbe65c77491a95ea6bca2d61053332dd"
+  },
+  "capabilities": {
+    "answer.v1": [
+      "AnswerPayload",
+      "CompletedResponse",
+      "ConflictSides",
+      "EvidenceBlock",
+      "Fact",
+      "Gap",
+      "Quantity",
+      "Summary"
+    ],
+    "operation.v1": [
+      "AcceptedResponse",
+      "ErrorDetails",
+      "FailedResponse",
+      "Money",
+      "OperationResponse",
+      "PublicError",
+      "Usage"
+    ],
+    "retrieval.v1": [
+      "EvidenceBlock",
+      "RetrievalPayload",
+      "RetrievalResponse"
+    ]
+  },
+  "enums": {
+    "JobState": [
+      "queued",
+      "running",
+      "awaiting_reconciliation",
+      "succeeded",
+      "failed",
+      "cancelled",
+      "expired"
+    ],
+    "OperationState": [
+      "accepted",
+      "running",
+      "completed",
+      "failed"
+    ],
+    "Outcome": [
+      "answered",
+      "insufficient",
+      "clarify",
+      "conflict"
+    ],
+    "RetryMode": [
+      "none",
+      "same_key_or_status",
+      "new_operation",
+      "manual_reconcile"
+    ],
+    "Status": [
+      "completed",
+      "in_progress",
+      "failed"
+    ]
+  },
+  "generator": {
+    "path": "generate.py",
+    "sha256": "7076c07e4b1648f0e61c2361d970a2ef18828d6c58a11847397afd10a06bc1ed"
+  },
+  "models": [
+    "AcceptedResponse",
+    "AnswerPayload",
+    "CompletedResponse",
+    "ConflictSides",
+    "ErrorDetails",
+    "EvidenceBlock",
+    "Fact",
+    "FailedResponse",
+    "Gap",
+    "Money",
+    "OperationResponse",
+    "PublicError",
+    "Quantity",
+    "RetrievalPayload",
+    "RetrievalResponse",
+    "Summary",
+    "Usage"
+  ],
+  "not_generated": {
+    "comparison.v1": "PUBLIC_MODELS has no comparison.v1 response or payload model; no hand-written substitute is generated."
+  },
+  "openapi": {
+    "api_version": "0.1.0",
+    "title": "RAG_all API",
+    "version": "3.1.0"
+  },
+  "packages": {
+    "fastapi": "0.143.2",
+    "pydantic": "2.14.1"
+  },
+  "runtime": {
+    "implementation": "CPython",
+    "python": "3.12.8"
+  },
+  "schema_version": "contracts-export.v1",
+  "source_files": {
+    "backend/src/rag_app/application/health.py": "23230b3a55219feaa4dcddba3c004cef9b39e8124fef9ff98128c3f207e47939",
+    "backend/src/rag_app/bootstrap/config.py": "230dbff524437a35341948ef0c516f6fa6bcbfba57b324dd5111d20cb3596474",
+    "backend/src/rag_app/bootstrap/runtime.py": "91ba02a7a87d95ac376ee2f22d99156afe0cdd4830d1b66b801be29dbb7de4a6",
+    "backend/src/rag_app/contracts/errors.py": "ad239632bb857f2d11dae6843784118e04d754fc4dfa045abe3370a533d6b97c",
+    "backend/src/rag_app/contracts/public.py": "2a90008315939dae54a191ae929f67f76edca8eadcdb34e3fab6461e33ed58cb",
+    "backend/src/rag_app/contracts/scalars.py": "20891e0360637ff38b289735d879ac805fdefc0d4f6eb99ba277783d77ed4fd6",
+    "backend/src/rag_app/entrypoints/api.py": "a98f78c228b61f272a46dcb4e16970a0afe726e99879a970ae6ac7277d47ada3",
+    "backend/src/rag_app/entrypoints/contract_probe.py": "079a9952c487cada067b30ba70ad08f64e20dd93d4a2fce84997b870564dc545",
+    "backend/src/rag_app/entrypoints/json_guard.py": "6e7964607cfd6407c3fef08c5f6140f810da8dd07ae23341062ac602b15d373b"
+  }
+}

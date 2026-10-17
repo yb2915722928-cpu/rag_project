@@ -1,0 +1,142 @@
+{
+  "$defs": {
+    "ConflictSides": {
+      "additionalProperties": false,
+      "properties": {
+        "side_a": {
+          "items": {
+            "pattern": "^[A-Za-z0-9_-]+$",
+            "type": "string"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "title": "Side A",
+          "type": "array"
+        },
+        "side_b": {
+          "items": {
+            "pattern": "^[A-Za-z0-9_-]+$",
+            "type": "string"
+          },
+          "maxItems": 5,
+          "minItems": 1,
+          "title": "Side B",
+          "type": "array"
+        }
+      },
+      "required": [
+        "side_a",
+        "side_b"
+      ],
+      "title": "ConflictSides",
+      "type": "object"
+    },
+    "Quantity": {
+      "additionalProperties": false,
+      "properties": {
+        "unit": {
+          "maxLength": 32,
+          "minLength": 1,
+          "title": "Unit",
+          "type": "string"
+        },
+        "value_text": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Value Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "value_text",
+        "unit"
+      ],
+      "title": "Quantity",
+      "type": "object"
+    }
+  },
+  "$id": "https://rag.local/contracts/schemas/answer.v1/Fact.serialization.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "applicability": {
+      "maxLength": 256,
+      "title": "Applicability",
+      "type": "string"
+    },
+    "conflict_sides": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ConflictSides"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "evidence_ids": {
+      "items": {
+        "pattern": "^[A-Za-z0-9_-]+$",
+        "type": "string"
+      },
+      "maxItems": 5,
+      "minItems": 1,
+      "title": "Evidence Ids",
+      "type": "array"
+    },
+    "id": {
+      "pattern": "^f(?:[1-9]|1[0-6])$",
+      "title": "Id",
+      "type": "string"
+    },
+    "kind": {
+      "enum": [
+        "process",
+        "material",
+        "condition",
+        "owner",
+        "cause",
+        "check",
+        "step",
+        "parameter",
+        "limitation"
+      ],
+      "title": "Kind",
+      "type": "string"
+    },
+    "order": {
+      "maximum": 16,
+      "minimum": 1,
+      "title": "Order",
+      "type": "integer"
+    },
+    "quantity": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Quantity"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "text": {
+      "maxLength": 512,
+      "minLength": 1,
+      "title": "Text",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "kind",
+    "order",
+    "text",
+    "applicability",
+    "evidence_ids",
+    "quantity",
+    "conflict_sides"
+  ],
+  "title": "Fact",
+  "type": "object"
+}

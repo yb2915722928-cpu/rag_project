@@ -1,0 +1,33 @@
+{
+  "$id": "https://rag.local/contracts/schemas/answer.v1/ConflictSides.serialization.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "side_a": {
+      "items": {
+        "pattern": "^[A-Za-z0-9_-]+$",
+        "type": "string"
+      },
+      "maxItems": 5,
+      "minItems": 1,
+      "title": "Side A",
+      "type": "array"
+    },
+    "side_b": {
+      "items": {
+        "pattern": "^[A-Za-z0-9_-]+$",
+        "type": "string"
+      },
+      "maxItems": 5,
+      "minItems": 1,
+      "title": "Side B",
+      "type": "array"
+    }
+  },
+  "required": [
+    "side_a",
+    "side_b"
+  ],
+  "title": "ConflictSides",
+  "type": "object"
+}

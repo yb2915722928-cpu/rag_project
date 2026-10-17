@@ -1,0 +1,63 @@
+{
+  "$id": "https://rag.local/contracts/schemas/operation.v1/AcceptedResponse.serialization.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "accepted_at": {
+      "format": "date-time",
+      "pattern": "Z$",
+      "title": "Accepted At",
+      "type": "string"
+    },
+    "operation_id": {
+      "pattern": "^[A-Za-z0-9_-]+$",
+      "title": "Operation Id",
+      "type": "string"
+    },
+    "operation_state": {
+      "enum": [
+        "accepted",
+        "running"
+      ],
+      "title": "Operation State",
+      "type": "string"
+    },
+    "request_id": {
+      "pattern": "^[A-Za-z0-9_-]+$",
+      "title": "Request Id",
+      "type": "string"
+    },
+    "retry_mode": {
+      "const": "same_key_or_status",
+      "default": "same_key_or_status",
+      "title": "Retry Mode",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "operation.v1",
+      "default": "operation.v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "const": "in_progress",
+      "default": "in_progress",
+      "title": "Status",
+      "type": "string"
+    },
+    "status_url": {
+      "pattern": "^/operations/[A-Za-z0-9_-]{1,64}$",
+      "title": "Status Url",
+      "type": "string"
+    }
+  },
+  "required": [
+    "request_id",
+    "operation_id",
+    "operation_state",
+    "accepted_at",
+    "status_url"
+  ],
+  "title": "AcceptedResponse",
+  "type": "object"
+}

@@ -18,11 +18,11 @@
 
 | 分段 | 状态 |
 | --- | --- |
-| A | 固定a269非PG513passed/1条件skip/8PG筛除；真实3.12.3负例另1passed，runtime/Uvicorn专题47passed/2PG筛除。主控已读JUnit。新HTTP修复待回归；六项PG+两项worker PG、迁移/回滚/namespace仍未执行。 |
-| B | a269契约/HTTP/H/金额专题394passed；生成51工件、check通过；52样例44passed/8failed/0blocked。八项均为现有failure_response遗漏status，归当前AC4。a70修复错误响应及合法省略默认字段时的成功回显三元组，保留输入/缺省/null语义；尚无新回归通过。comparison.v1按原计划后续增量延期。 |
+| A | a70开发者非PG514passed/1条件skip/8PG筛除；真实3.12.3负例另1passed，runtime/Uvicorn专题47passed/2PG筛除。源102项逐项匹配。六项PG+两项worker PG、迁移/回滚/namespace仍未执行；父Story独立门未开始。 |
+| B | a70契约专题395passed；51工件生成/check通过，52样例52passed/0failed/0blocked。原八项错误及成功回显三元组同类问题已在开发者门闭合，不追加测试。Confucius仅把51生成输出批量回传本地contracts并冻结，由主控入Git供C；原44/8日志保留。comparison.v1按原计划后续增量延期。 |
 | H | 历史165开发者/259独立通过与审查闭环保留其原hash；不自动重标新提交整体通过。 |
 | C | Singer已派发骨架/健康页。用户明确禁止过度防御性串行门，规范/脚手架/页面先做；B工件到位后接类型并验证，不手写DTO，未完成项不伪记通过。PG/镜像归档/工具补强不阻塞C编码。 |
-| D | F5-F8静态修复保留。三个准确digest镜像已在daemon，完整receipt/实际版本待核；uv仍缺完整层。允许现有腾讯云官方缓存传输官方实核digest原始内容，须分别记发布方与缓存，不伪称官方直连、不新改全局配置。四服务/重建仍未验。 |
+| D | 基础四镜像完整工件/归档已获，PG18.6/vector0.8.7隔离服务已就绪；预发布setup证据仅按原hash保留，待最小digest修复Git发布后正式复核。发布方与腾讯云官方缓存传输分开记录，不伪称官方直连。完整四服务/生命周期/干净重建仍未验。 |
 | E | 历史依赖/许可证metadata可用；前端peer、镜像/原生层、完整hash/digest与干净重建证据未齐。 |
 
 ## 下一步与测试分类

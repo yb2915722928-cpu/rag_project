@@ -1,0 +1,42 @@
+{
+  "$id": "https://rag.local/contracts/schemas/operation.v1/Usage.validation.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "input_tokens": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Input Tokens"
+    },
+    "output_tokens": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Output Tokens"
+    },
+    "unknown": {
+      "title": "Unknown",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "input_tokens",
+    "output_tokens",
+    "unknown"
+  ],
+  "title": "Usage",
+  "type": "object"
+}

@@ -1,0 +1,40 @@
+{
+  "$id": "https://rag.local/contracts/schemas/answer.v1/Gap.validation.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "field": {
+      "enum": [
+        "process",
+        "material",
+        "condition",
+        "owner",
+        "cause",
+        "check",
+        "step",
+        "parameter",
+        "limitation",
+        "object_identity",
+        "version",
+        "environment",
+        "log_context",
+        "evidence",
+        "source_locator"
+      ],
+      "title": "Field",
+      "type": "string"
+    },
+    "text": {
+      "maxLength": 256,
+      "minLength": 1,
+      "title": "Text",
+      "type": "string"
+    }
+  },
+  "required": [
+    "field",
+    "text"
+  ],
+  "title": "Gap",
+  "type": "object"
+}

@@ -1,0 +1,44 @@
+{
+  "$id": "https://rag.local/contracts/schemas/retrieval.v1/EvidenceBlock.validation.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "chunk_id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "title": "Chunk Id",
+      "type": "string"
+    },
+    "end": {
+      "exclusiveMinimum": 0,
+      "title": "End",
+      "type": "integer"
+    },
+    "evidence_id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "title": "Evidence Id",
+      "type": "string"
+    },
+    "excerpt": {
+      "maxLength": 4096,
+      "minLength": 1,
+      "title": "Excerpt",
+      "type": "string"
+    },
+    "start": {
+      "minimum": 0,
+      "title": "Start",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "evidence_id",
+    "chunk_id",
+    "excerpt",
+    "start",
+    "end"
+  ],
+  "title": "EvidenceBlock",
+  "type": "object"
+}

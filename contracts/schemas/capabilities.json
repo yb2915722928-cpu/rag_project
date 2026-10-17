@@ -1,0 +1,140 @@
+{
+  "capabilities": {
+    "answer.v1": {
+      "models": [
+        "AnswerPayload",
+        "CompletedResponse",
+        "ConflictSides",
+        "EvidenceBlock",
+        "Fact",
+        "Gap",
+        "Quantity",
+        "Summary"
+      ],
+      "serialization_schemas": [
+        "schemas/answer.v1/AnswerPayload.serialization.schema.json",
+        "schemas/answer.v1/CompletedResponse.serialization.schema.json",
+        "schemas/answer.v1/ConflictSides.serialization.schema.json",
+        "schemas/answer.v1/EvidenceBlock.serialization.schema.json",
+        "schemas/answer.v1/Fact.serialization.schema.json",
+        "schemas/answer.v1/Gap.serialization.schema.json",
+        "schemas/answer.v1/Quantity.serialization.schema.json",
+        "schemas/answer.v1/Summary.serialization.schema.json"
+      ],
+      "validation_schemas": [
+        "schemas/answer.v1/AnswerPayload.validation.schema.json",
+        "schemas/answer.v1/CompletedResponse.validation.schema.json",
+        "schemas/answer.v1/ConflictSides.validation.schema.json",
+        "schemas/answer.v1/EvidenceBlock.validation.schema.json",
+        "schemas/answer.v1/Fact.validation.schema.json",
+        "schemas/answer.v1/Gap.validation.schema.json",
+        "schemas/answer.v1/Quantity.validation.schema.json",
+        "schemas/answer.v1/Summary.validation.schema.json"
+      ]
+    },
+    "operation.v1": {
+      "models": [
+        "AcceptedResponse",
+        "ErrorDetails",
+        "FailedResponse",
+        "Money",
+        "OperationResponse",
+        "PublicError",
+        "Usage"
+      ],
+      "serialization_schemas": [
+        "schemas/operation.v1/AcceptedResponse.serialization.schema.json",
+        "schemas/operation.v1/ErrorDetails.serialization.schema.json",
+        "schemas/operation.v1/FailedResponse.serialization.schema.json",
+        "schemas/operation.v1/Money.serialization.schema.json",
+        "schemas/operation.v1/OperationResponse.serialization.schema.json",
+        "schemas/operation.v1/PublicError.serialization.schema.json",
+        "schemas/operation.v1/Usage.serialization.schema.json"
+      ],
+      "validation_schemas": [
+        "schemas/operation.v1/AcceptedResponse.validation.schema.json",
+        "schemas/operation.v1/ErrorDetails.validation.schema.json",
+        "schemas/operation.v1/FailedResponse.validation.schema.json",
+        "schemas/operation.v1/Money.validation.schema.json",
+        "schemas/operation.v1/OperationResponse.validation.schema.json",
+        "schemas/operation.v1/PublicError.validation.schema.json",
+        "schemas/operation.v1/Usage.validation.schema.json"
+      ]
+    },
+    "retrieval.v1": {
+      "models": [
+        "EvidenceBlock",
+        "RetrievalPayload",
+        "RetrievalResponse"
+      ],
+      "serialization_schemas": [
+        "schemas/retrieval.v1/EvidenceBlock.serialization.schema.json",
+        "schemas/retrieval.v1/RetrievalPayload.serialization.schema.json",
+        "schemas/retrieval.v1/RetrievalResponse.serialization.schema.json"
+      ],
+      "validation_schemas": [
+        "schemas/retrieval.v1/EvidenceBlock.validation.schema.json",
+        "schemas/retrieval.v1/RetrievalPayload.validation.schema.json",
+        "schemas/retrieval.v1/RetrievalResponse.validation.schema.json"
+      ]
+    }
+  },
+  "enums": {
+    "JobState": {
+      "serialization_schema": "schemas/enums/JobState.serialization.schema.json",
+      "validation_schema": "schemas/enums/JobState.validation.schema.json",
+      "values": [
+        "queued",
+        "running",
+        "awaiting_reconciliation",
+        "succeeded",
+        "failed",
+        "cancelled",
+        "expired"
+      ]
+    },
+    "OperationState": {
+      "serialization_schema": "schemas/enums/OperationState.serialization.schema.json",
+      "validation_schema": "schemas/enums/OperationState.validation.schema.json",
+      "values": [
+        "accepted",
+        "running",
+        "completed",
+        "failed"
+      ]
+    },
+    "Outcome": {
+      "serialization_schema": "schemas/enums/Outcome.serialization.schema.json",
+      "validation_schema": "schemas/enums/Outcome.validation.schema.json",
+      "values": [
+        "answered",
+        "insufficient",
+        "clarify",
+        "conflict"
+      ]
+    },
+    "RetryMode": {
+      "serialization_schema": "schemas/enums/RetryMode.serialization.schema.json",
+      "validation_schema": "schemas/enums/RetryMode.validation.schema.json",
+      "values": [
+        "none",
+        "same_key_or_status",
+        "new_operation",
+        "manual_reconcile"
+      ]
+    },
+    "Status": {
+      "serialization_schema": "schemas/enums/Status.serialization.schema.json",
+      "validation_schema": "schemas/enums/Status.validation.schema.json",
+      "values": [
+        "completed",
+        "in_progress",
+        "failed"
+      ]
+    }
+  },
+  "not_generated": {
+    "comparison.v1": "PUBLIC_MODELS has no comparison.v1 response or payload model; no hand-written substitute is generated."
+  },
+  "schema_version": "contracts-capabilities.v1"
+}

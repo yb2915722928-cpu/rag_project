@@ -1,0 +1,75 @@
+{
+  "$defs": {
+    "EvidenceBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "chunk_id": {
+          "pattern": "^[A-Za-z0-9_-]+$",
+          "title": "Chunk Id",
+          "type": "string"
+        },
+        "end": {
+          "exclusiveMinimum": 0,
+          "title": "End",
+          "type": "integer"
+        },
+        "evidence_id": {
+          "pattern": "^[A-Za-z0-9_-]+$",
+          "title": "Evidence Id",
+          "type": "string"
+        },
+        "excerpt": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Excerpt",
+          "type": "string"
+        },
+        "start": {
+          "minimum": 0,
+          "title": "Start",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "evidence_id",
+        "chunk_id",
+        "excerpt",
+        "start",
+        "end"
+      ],
+      "title": "EvidenceBlock",
+      "type": "object"
+    }
+  },
+  "$id": "https://rag.local/contracts/schemas/retrieval.v1/RetrievalPayload.serialization.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "deadline": {
+      "format": "date-time",
+      "pattern": "Z$",
+      "title": "Deadline",
+      "type": "string"
+    },
+    "evidence_catalog": {
+      "items": {
+        "$ref": "#/$defs/EvidenceBlock"
+      },
+      "maxItems": 5,
+      "title": "Evidence Catalog",
+      "type": "array"
+    },
+    "retrieval_execution_id": {
+      "pattern": "^[A-Za-z0-9_-]+$",
+      "title": "Retrieval Execution Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "retrieval_execution_id",
+    "deadline",
+    "evidence_catalog"
+  ],
+  "title": "RetrievalPayload",
+  "type": "object"
+}

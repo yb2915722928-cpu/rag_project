@@ -1,0 +1,97 @@
+{
+  "$defs": {
+    "EvidenceBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "chunk_id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Chunk Id",
+          "type": "string"
+        },
+        "end": {
+          "exclusiveMinimum": 0,
+          "title": "End",
+          "type": "integer"
+        },
+        "evidence_id": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Evidence Id",
+          "type": "string"
+        },
+        "excerpt": {
+          "maxLength": 4096,
+          "minLength": 1,
+          "title": "Excerpt",
+          "type": "string"
+        },
+        "start": {
+          "minimum": 0,
+          "title": "Start",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "evidence_id",
+        "chunk_id",
+        "excerpt",
+        "start",
+        "end"
+      ],
+      "title": "EvidenceBlock",
+      "type": "object"
+    }
+  },
+  "$id": "https://rag.local/contracts/schemas/retrieval.v1/RetrievalResponse.validation.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "deadline": {
+      "format": "date-time",
+      "pattern": "Z$",
+      "title": "Deadline",
+      "type": "string"
+    },
+    "evidence_catalog": {
+      "items": {
+        "$ref": "#/$defs/EvidenceBlock"
+      },
+      "maxItems": 5,
+      "title": "Evidence Catalog",
+      "type": "array"
+    },
+    "request_id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "title": "Request Id",
+      "type": "string"
+    },
+    "retrieval_execution_id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "title": "Retrieval Execution Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "retrieval.v1",
+      "default": "retrieval.v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "const": "completed",
+      "default": "completed",
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "retrieval_execution_id",
+    "deadline",
+    "evidence_catalog",
+    "request_id"
+  ],
+  "title": "RetrievalResponse",
+  "type": "object"
+}

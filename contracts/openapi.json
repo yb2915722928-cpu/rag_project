@@ -1,0 +1,1702 @@
+{
+  "components": {
+    "schemas": {
+      "AcceptedResponse-Input": {
+        "additionalProperties": false,
+        "properties": {
+          "accepted_at": {
+            "format": "date-time",
+            "pattern": "Z$",
+            "title": "Accepted At",
+            "type": "string"
+          },
+          "operation_id": {
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Operation Id",
+            "type": "string"
+          },
+          "operation_state": {
+            "enum": [
+              "accepted",
+              "running"
+            ],
+            "title": "Operation State",
+            "type": "string"
+          },
+          "request_id": {
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Request Id",
+            "type": "string"
+          },
+          "retry_mode": {
+            "const": "same_key_or_status",
+            "default": "same_key_or_status",
+            "title": "Retry Mode",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "operation.v1",
+            "default": "operation.v1",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "status": {
+            "const": "in_progress",
+            "default": "in_progress",
+            "title": "Status",
+            "type": "string"
+          },
+          "status_url": {
+            "title": "Status Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "request_id",
+          "operation_id",
+          "operation_state",
+          "accepted_at",
+          "status_url"
+        ],
+        "title": "AcceptedResponse",
+        "type": "object"
+      },
+      "AcceptedResponse-Output": {
+        "additionalProperties": false,
+        "properties": {
+          "accepted_at": {
+            "format": "date-time",
+            "pattern": "Z$",
+            "title": "Accepted At",
+            "type": "string"
+          },
+          "operation_id": {
+            "pattern": "^[A-Za-z0-9_-]+$",
+            "title": "Operation Id",
+            "type": "string"
+          },
+          "operation_state": {
+            "enum": [
+              "accepted",
+              "running"
+            ],
+            "title": "Operation State",
+            "type": "string"
+          },
+          "request_id": {
+            "pattern": "^[A-Za-z0-9_-]+$",
+            "title": "Request Id",
+            "type": "string"
+          },
+          "retry_mode": {
+            "const": "same_key_or_status",
+            "default": "same_key_or_status",
+            "title": "Retry Mode",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "operation.v1",
+            "default": "operation.v1",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "status": {
+            "const": "in_progress",
+            "default": "in_progress",
+            "title": "Status",
+            "type": "string"
+          },
+          "status_url": {
+            "pattern": "^/operations/[A-Za-z0-9_-]{1,64}$",
+            "title": "Status Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "request_id",
+          "operation_id",
+          "operation_state",
+          "accepted_at",
+          "status_url"
+        ],
+        "title": "AcceptedResponse",
+        "type": "object"
+      },
+      "AnswerPayload-Input": {
+        "additionalProperties": false,
+        "properties": {
+          "clarifications": {
+            "items": {
+              "$ref": "#/components/schemas/Gap"
+            },
+            "maxItems": 4,
+            "title": "Clarifications",
+            "type": "array"
+          },
+          "facts": {
+            "items": {
+              "$ref": "#/components/schemas/Fact-Input"
+            },
+            "maxItems": 16,
+            "title": "Facts",
+            "type": "array"
+          },
+          "gaps": {
+            "items": {
+              "$ref": "#/components/schemas/Gap"
+            },
+            "maxItems": 8,
+            "title": "Gaps",
+            "type": "array"
+          },
+          "outcome": {
+            "$ref": "#/components/schemas/Outcome"
+          },
+          "summary": {
+            "$ref": "#/components/schemas/Summary-Input"
+          }
+        },
+        "required": [
+          "outcome",
+          "summary",
+          "facts",
+          "gaps",
+          "clarifications"
+        ],
+        "title": "AnswerPayload",
+        "type": "object"
+      },
+      "AnswerPayload-Output": {
+        "additionalProperties": false,
+        "properties": {
+          "clarifications": {
+            "items": {
+              "$ref": "#/components/schemas/Gap"
+            },
+            "maxItems": 4,
+            "title": "Clarifications",
+            "type": "array"
+          },
+          "facts": {
+            "items": {
+              "$ref": "#/components/schemas/Fact-Output"
+            },
+            "maxItems": 16,
+            "title": "Facts",
+            "type": "array"
+          },
+          "gaps": {
+            "items": {
+              "$ref": "#/components/schemas/Gap"
+            },
+            "maxItems": 8,
+            "title": "Gaps",
+            "type": "array"
+          },
+          "outcome": {
+            "$ref": "#/components/schemas/Outcome"
+          },
+          "summary": {
+            "$ref": "#/components/schemas/Summary-Output"
+          }
+        },
+        "required": [
+          "outcome",
+          "summary",
+          "facts",
+          "gaps",
+          "clarifications"
+        ],
+        "title": "AnswerPayload",
+        "type": "object"
+      },
+      "CompletedResponse-Input": {
+        "additionalProperties": false,
+        "properties": {
+          "accepted_at": {
+            "format": "date-time",
+            "pattern": "Z$",
+            "title": "Accepted At",
+            "type": "string"
+          },
+          "clarifications": {
+            "items": {
+              "$ref": "#/components/schemas/Gap"
+            },
+            "maxItems": 4,
+            "title": "Clarifications",
+            "type": "array"
+          },
+          "completed_at": {
+            "format": "date-time",
+            "pattern": "Z$",
+            "title": "Completed At",
+            "type": "string"
+          },
+          "evidence_catalog": {
+            "items": {
+              "$ref": "#/components/schemas/EvidenceBlock-Input"
+            },
+            "maxItems": 5,
+            "title": "Evidence Catalog",
+            "type": "array"
+          },
+          "execution_snapshot_id": {
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Execution Snapshot Id",
+            "type": "string"
+          },
+          "facts": {
+            "items": {
+              "$ref": "#/components/schemas/Fact-Input"
+            },
+            "maxItems": 16,
+            "title": "Facts",
+            "type": "array"
+          },
+          "gaps": {
+            "items": {
+              "$ref": "#/components/schemas/Gap"
+            },
+            "maxItems": 8,
+            "title": "Gaps",
+            "type": "array"
+          },
+          "operation_id": {
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Operation Id",
+            "type": "string"
+          },
+          "outcome": {
+            "$ref": "#/components/schemas/Outcome"
+          },
+          "replayed": {
+            "title": "Replayed",
+            "type": "boolean"
+          },
+          "request_id": {
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Request Id",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "answer.v1",
+            "default": "answer.v1",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "status": {
+            "const": "completed",
+            "default": "completed",
+            "title": "Status",
+            "type": "string"
+          },
+          "summary": {
+            "$ref": "#/components/schemas/Summary-Input"
+          }
+        },
+        "required": [
+          "outcome",
+          "summary",
+          "facts",
+          "gaps",
+          "clarifications",
+          "request_id",
+          "operation_id",
+          "replayed",
+          "accepted_at",
+          "completed_at",
+          "execution_snapshot_id",
+          "evidence_catalog"
+        ],
+        "title": "CompletedResponse",
+        "type": "object"
+      },
+      "CompletedResponse-Output": {
+        "additionalProperties": false,
+        "properties": {
+          "accepted_at": {
+            "format": "date-time",
+            "pattern": "Z$",
+            "title": "Accepted At",
+            "type": "string"
+          },
+          "clarifications": {
+            "items": {
+              "$ref": "#/components/schemas/Gap"
+            },
+            "maxItems": 4,
+            "title": "Clarifications",
+            "type": "array"
+          },
+          "completed_at": {
+            "format": "date-time",
+            "pattern": "Z$",
+            "title": "Completed At",
+            "type": "string"
+          },
+          "evidence_catalog": {
+            "items": {
+              "$ref": "#/components/schemas/EvidenceBlock-Output"
+            },
+            "maxItems": 5,
+            "title": "Evidence Catalog",
+            "type": "array"
+          },
+          "execution_snapshot_id": {
+            "pattern": "^[A-Za-z0-9_-]+$",
+            "title": "Execution Snapshot Id",
+            "type": "string"
+          },
+          "facts": {
+            "items": {
+              "$ref": "#/components/schemas/Fact-Output"
+            },
+            "maxItems": 16,
+            "title": "Facts",
+            "type": "array"
+          },
+          "gaps": {
+            "items": {
+              "$ref": "#/components/schemas/Gap"
+            },
+            "maxItems": 8,
+            "title": "Gaps",
+            "type": "array"
+          },
+          "operation_id": {
+            "pattern": "^[A-Za-z0-9_-]+$",
+            "title": "Operation Id",
+            "type": "string"
+          },
+          "outcome": {
+            "$ref": "#/components/schemas/Outcome"
+          },
+          "replayed": {
+            "title": "Replayed",
+            "type": "boolean"
+          },
+          "request_id": {
+            "pattern": "^[A-Za-z0-9_-]+$",
+            "title": "Request Id",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "answer.v1",
+            "default": "answer.v1",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "status": {
+            "const": "completed",
+            "default": "completed",
+            "title": "Status",
+            "type": "string"
+          },
+          "summary": {
+            "$ref": "#/components/schemas/Summary-Output"
+          }
+        },
+        "required": [
+          "outcome",
+          "summary",
+          "facts",
+          "gaps",
+          "clarifications",
+          "request_id",
+          "operation_id",
+          "replayed",
+          "accepted_at",
+          "completed_at",
+          "execution_snapshot_id",
+          "evidence_catalog"
+        ],
+        "title": "CompletedResponse",
+        "type": "object"
+      },
+      "ConflictSides-Input": {
+        "additionalProperties": false,
+        "properties": {
+          "side_a": {
+            "items": {
+              "maxLength": 64,
+              "minLength": 1,
+              "type": "string"
+            },
+            "maxItems": 5,
+            "minItems": 1,
+            "title": "Side A",
+            "type": "array"
+          },
+          "side_b": {
+            "items": {
+              "maxLength": 64,
+              "minLength": 1,
+              "type": "string"
+            },
+            "maxItems": 5,
+            "minItems": 1,
+            "title": "Side B",
+            "type": "array"
+          }
+        },
+        "required": [
+          "side_a",
+          "side_b"
+        ],
+        "title": "ConflictSides",
+        "type": "object"
+      },
+      "ConflictSides-Output": {
+        "additionalProperties": false,
+        "properties": {
+          "side_a": {
+            "items": {
+              "pattern": "^[A-Za-z0-9_-]+$",
+              "type": "string"
+            },
+            "maxItems": 5,
+            "minItems": 1,
+            "title": "Side A",
+            "type": "array"
+          },
+          "side_b": {
+            "items": {
+              "pattern": "^[A-Za-z0-9_-]+$",
+              "type": "string"
+            },
+            "maxItems": 5,
+            "minItems": 1,
+            "title": "Side B",
+            "type": "array"
+          }
+        },
+        "required": [
+          "side_a",
+          "side_b"
+        ],
+        "title": "ConflictSides",
+        "type": "object"
+      },
+      "ErrorDetails": {
+        "additionalProperties": false,
+        "properties": {
+          "field": {
+            "anyOf": [
+              {
+                "enum": [
+                  "schema_version",
+                  "question",
+                  "operation_id",
+                  "targets",
+                  "body"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Field"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "enum": [
+                  "invalid_format",
+                  "out_of_range",
+                  "unknown_field",
+                  "unavailable"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Reason"
+          },
+          "retry_after_seconds": {
+            "anyOf": [
+              {
+                "maximum": 86400,
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Retry After Seconds"
+          }
+        },
+        "title": "ErrorDetails",
+        "type": "object"
+      },
+      "EvidenceBlock-Input": {
+        "additionalProperties": false,
+        "properties": {
+          "chunk_id": {
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Chunk Id",
+            "type": "string"
+          },
+          "end": {
+            "exclusiveMinimum": 0,
+            "title": "End",
+            "type": "integer"
+          },
+          "evidence_id": {
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Evidence Id",
+            "type": "string"
+          },
+          "excerpt": {
+            "maxLength": 4096,
+            "minLength": 1,
+            "title": "Excerpt",
+            "type": "string"
+          },
+          "start": {
+            "minimum": 0,
+            "title": "Start",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "evidence_id",
+          "chunk_id",
+          "excerpt",
+          "start",
+          "end"
+        ],
+        "title": "EvidenceBlock",
+        "type": "object"
+      },
+      "EvidenceBlock-Output": {
+        "additionalProperties": false,
+        "properties": {
+          "chunk_id": {
+            "pattern": "^[A-Za-z0-9_-]+$",
+            "title": "Chunk Id",
+            "type": "string"
+          },
+          "end": {
+            "exclusiveMinimum": 0,
+            "title": "End",
+            "type": "integer"
+          },
+          "evidence_id": {
+            "pattern": "^[A-Za-z0-9_-]+$",
+            "title": "Evidence Id",
+            "type": "string"
+          },
+          "excerpt": {
+            "maxLength": 4096,
+            "minLength": 1,
+            "title": "Excerpt",
+            "type": "string"
+          },
+          "start": {
+            "minimum": 0,
+            "title": "Start",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "evidence_id",
+          "chunk_id",
+          "excerpt",
+          "start",
+          "end"
+        ],
+        "title": "EvidenceBlock",
+        "type": "object"
+      },
+      "Fact-Input": {
+        "additionalProperties": false,
+        "properties": {
+          "applicability": {
+            "maxLength": 256,
+            "title": "Applicability",
+            "type": "string"
+          },
+          "conflict_sides": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ConflictSides-Input"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "evidence_ids": {
+            "items": {
+              "maxLength": 64,
+              "minLength": 1,
+              "type": "string"
+            },
+            "maxItems": 5,
+            "minItems": 1,
+            "title": "Evidence Ids",
+            "type": "array"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "process",
+              "material",
+              "condition",
+              "owner",
+              "cause",
+              "check",
+              "step",
+              "parameter",
+              "limitation"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "order": {
+            "maximum": 16,
+            "minimum": 1,
+            "title": "Order",
+            "type": "integer"
+          },
+          "quantity": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Quantity"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "text": {
+            "maxLength": 512,
+            "minLength": 1,
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "order",
+          "text",
+          "applicability",
+          "evidence_ids",
+          "quantity",
+          "conflict_sides"
+        ],
+        "title": "Fact",
+        "type": "object"
+      },
+      "Fact-Output": {
+        "additionalProperties": false,
+        "properties": {
+          "applicability": {
+            "maxLength": 256,
+            "title": "Applicability",
+            "type": "string"
+          },
+          "conflict_sides": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ConflictSides-Output"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "evidence_ids": {
+            "items": {
+              "pattern": "^[A-Za-z0-9_-]+$",
+              "type": "string"
+            },
+            "maxItems": 5,
+            "minItems": 1,
+            "title": "Evidence Ids",
+            "type": "array"
+          },
+          "id": {
+            "pattern": "^f(?:[1-9]|1[0-6])$",
+            "title": "Id",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "process",
+              "material",
+              "condition",
+              "owner",
+              "cause",
+              "check",
+              "step",
+              "parameter",
+              "limitation"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "order": {
+            "maximum": 16,
+            "minimum": 1,
+            "title": "Order",
+            "type": "integer"
+          },
+          "quantity": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Quantity"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "text": {
+            "maxLength": 512,
+            "minLength": 1,
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "order",
+          "text",
+          "applicability",
+          "evidence_ids",
+          "quantity",
+          "conflict_sides"
+        ],
+        "title": "Fact",
+        "type": "object"
+      },
+      "FailedResponse-Input": {
+        "additionalProperties": false,
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/PublicError"
+          },
+          "operation_id": {
+            "anyOf": [
+              {
+                "maxLength": 64,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Operation Id"
+          },
+          "request_id": {
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Request Id",
+            "type": "string"
+          },
+          "schema_version": {
+            "enum": [
+              "answer.v1",
+              "comparison.v1",
+              "retrieval.v1",
+              "operation.v1"
+            ],
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "status": {
+            "const": "failed",
+            "default": "failed",
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "schema_version",
+          "request_id",
+          "error"
+        ],
+        "title": "FailedResponse",
+        "type": "object"
+      },
+      "FailedResponse-Output": {
+        "additionalProperties": false,
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/PublicError"
+          },
+          "operation_id": {
+            "anyOf": [
+              {
+                "pattern": "^[A-Za-z0-9_-]+$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Operation Id"
+          },
+          "request_id": {
+            "pattern": "^[A-Za-z0-9_-]+$",
+            "title": "Request Id",
+            "type": "string"
+          },
+          "schema_version": {
+            "enum": [
+              "answer.v1",
+              "comparison.v1",
+              "retrieval.v1",
+              "operation.v1"
+            ],
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "status": {
+            "const": "failed",
+            "default": "failed",
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "schema_version",
+          "request_id",
+          "error"
+        ],
+        "title": "FailedResponse",
+        "type": "object"
+      },
+      "Gap": {
+        "additionalProperties": false,
+        "properties": {
+          "field": {
+            "enum": [
+              "process",
+              "material",
+              "condition",
+              "owner",
+              "cause",
+              "check",
+              "step",
+              "parameter",
+              "limitation",
+              "object_identity",
+              "version",
+              "environment",
+              "log_context",
+              "evidence",
+              "source_locator"
+            ],
+            "title": "Field",
+            "type": "string"
+          },
+          "text": {
+            "maxLength": 256,
+            "minLength": 1,
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "field",
+          "text"
+        ],
+        "title": "Gap",
+        "type": "object"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "HealthStatus": {
+        "properties": {
+          "check": {
+            "default": "liveness",
+            "title": "Check",
+            "type": "string"
+          },
+          "service": {
+            "default": "rag-api",
+            "title": "Service",
+            "type": "string"
+          },
+          "status": {
+            "default": "alive",
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "title": "HealthStatus",
+        "type": "object"
+      },
+      "Money-Input": {
+        "additionalProperties": false,
+        "properties": {
+          "amount": {
+            "anyOf": [
+              {
+                "pattern": "^\\d+(?:\\.\\d+)?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Amount"
+          },
+          "currency": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Currency"
+          },
+          "source": {
+            "enum": [
+              "estimate",
+              "bill",
+              "unknown"
+            ],
+            "title": "Source",
+            "type": "string"
+          }
+        },
+        "required": [
+          "amount",
+          "currency",
+          "source"
+        ],
+        "title": "Money",
+        "type": "object"
+      },
+      "Money-Output": {
+        "additionalProperties": false,
+        "properties": {
+          "amount": {
+            "anyOf": [
+              {
+                "pattern": "^\\d+(?:\\.\\d+)?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Amount"
+          },
+          "currency": {
+            "anyOf": [
+              {
+                "pattern": "^[A-Z]{3}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Currency"
+          },
+          "source": {
+            "enum": [
+              "estimate",
+              "bill",
+              "unknown"
+            ],
+            "title": "Source",
+            "type": "string"
+          }
+        },
+        "required": [
+          "amount",
+          "currency",
+          "source"
+        ],
+        "title": "Money",
+        "type": "object"
+      },
+      "OperationResponse-Input": {
+        "additionalProperties": false,
+        "properties": {
+          "error": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PublicError"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "operation_id": {
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Operation Id",
+            "type": "string"
+          },
+          "operation_state": {
+            "$ref": "#/components/schemas/OperationState"
+          },
+          "request_id": {
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Request Id",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "operation.v1",
+            "default": "operation.v1",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/Status"
+          }
+        },
+        "required": [
+          "request_id",
+          "status",
+          "operation_id",
+          "operation_state",
+          "error"
+        ],
+        "title": "OperationResponse",
+        "type": "object"
+      },
+      "OperationResponse-Output": {
+        "additionalProperties": false,
+        "properties": {
+          "error": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PublicError"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "operation_id": {
+            "pattern": "^[A-Za-z0-9_-]+$",
+            "title": "Operation Id",
+            "type": "string"
+          },
+          "operation_state": {
+            "$ref": "#/components/schemas/OperationState"
+          },
+          "request_id": {
+            "pattern": "^[A-Za-z0-9_-]+$",
+            "title": "Request Id",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "operation.v1",
+            "default": "operation.v1",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/Status"
+          }
+        },
+        "required": [
+          "request_id",
+          "status",
+          "operation_id",
+          "operation_state",
+          "error"
+        ],
+        "title": "OperationResponse",
+        "type": "object"
+      },
+      "OperationState": {
+        "enum": [
+          "accepted",
+          "running",
+          "completed",
+          "failed"
+        ],
+        "title": "OperationState",
+        "type": "string"
+      },
+      "Outcome": {
+        "enum": [
+          "answered",
+          "insufficient",
+          "clarify",
+          "conflict"
+        ],
+        "title": "Outcome",
+        "type": "string"
+      },
+      "PublicError": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "enum": [
+              "AUTH_CHANNEL_CONFLICT",
+              "VALIDATION_ERROR",
+              "AUTH_REQUIRED",
+              "CREDENTIAL_INVALID",
+              "ACTION_FORBIDDEN",
+              "RESOURCE_UNAVAILABLE",
+              "IDEMPOTENCY_CONFLICT",
+              "OPERATION_EXPIRED",
+              "REQUEST_BODY_LIMIT_EXCEEDED",
+              "PROTOCOL_STRUCTURE_LIMIT_EXCEEDED",
+              "INPUT_LIMIT_EXCEEDED",
+              "CONCURRENCY_LIMIT_EXCEEDED",
+              "QUERY_RATE_LIMIT_EXCEEDED",
+              "DEPENDENCY_UNAVAILABLE",
+              "DEPENDENCY_TIMEOUT",
+              "ANSWER_VALIDATION_FAILED",
+              "ANSWER_TRUNCATED",
+              "REQUEST_HEADERS_LIMIT_EXCEEDED",
+              "UNSUPPORTED_MEDIA_TYPE",
+              "UNSUPPORTED_CONTENT_ENCODING",
+              "REQUEST_STREAM_ERROR",
+              "CONFIGURATION_INVALID",
+              "DATABASE_VERSION_MISMATCH",
+              "DATABASE_OPERATION_FAILED",
+              "DATABASE_CLEANUP_FAILED",
+              "ONLINE_VALIDATION_REQUIRED",
+              "RUNTIME_VERSION_MISMATCH",
+              "DATABASE_REVISION_MISMATCH",
+              "DATABASE_NAMESPACE_UNAVAILABLE",
+              "STARTUP_DEPENDENCY_UNAVAILABLE",
+              "METHOD_NOT_ALLOWED",
+              "INTERNAL_ERROR"
+            ],
+            "title": "Code",
+            "type": "string"
+          },
+          "details": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ErrorDetails"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "http_status": {
+            "maximum": 599,
+            "minimum": 400,
+            "title": "Http Status",
+            "type": "integer"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "retry_mode": {
+            "$ref": "#/components/schemas/RetryMode"
+          }
+        },
+        "required": [
+          "code",
+          "message",
+          "http_status",
+          "retry_mode"
+        ],
+        "title": "PublicError",
+        "type": "object"
+      },
+      "Quantity": {
+        "additionalProperties": false,
+        "properties": {
+          "unit": {
+            "maxLength": 32,
+            "minLength": 1,
+            "title": "Unit",
+            "type": "string"
+          },
+          "value_text": {
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Value Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "value_text",
+          "unit"
+        ],
+        "title": "Quantity",
+        "type": "object"
+      },
+      "RetrievalPayload-Input": {
+        "additionalProperties": false,
+        "properties": {
+          "deadline": {
+            "format": "date-time",
+            "pattern": "Z$",
+            "title": "Deadline",
+            "type": "string"
+          },
+          "evidence_catalog": {
+            "items": {
+              "$ref": "#/components/schemas/EvidenceBlock-Input"
+            },
+            "maxItems": 5,
+            "title": "Evidence Catalog",
+            "type": "array"
+          },
+          "retrieval_execution_id": {
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Retrieval Execution Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "retrieval_execution_id",
+          "deadline",
+          "evidence_catalog"
+        ],
+        "title": "RetrievalPayload",
+        "type": "object"
+      },
+      "RetrievalPayload-Output": {
+        "additionalProperties": false,
+        "properties": {
+          "deadline": {
+            "format": "date-time",
+            "pattern": "Z$",
+            "title": "Deadline",
+            "type": "string"
+          },
+          "evidence_catalog": {
+            "items": {
+              "$ref": "#/components/schemas/EvidenceBlock-Output"
+            },
+            "maxItems": 5,
+            "title": "Evidence Catalog",
+            "type": "array"
+          },
+          "retrieval_execution_id": {
+            "pattern": "^[A-Za-z0-9_-]+$",
+            "title": "Retrieval Execution Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "retrieval_execution_id",
+          "deadline",
+          "evidence_catalog"
+        ],
+        "title": "RetrievalPayload",
+        "type": "object"
+      },
+      "RetrievalResponse-Input": {
+        "additionalProperties": false,
+        "properties": {
+          "deadline": {
+            "format": "date-time",
+            "pattern": "Z$",
+            "title": "Deadline",
+            "type": "string"
+          },
+          "evidence_catalog": {
+            "items": {
+              "$ref": "#/components/schemas/EvidenceBlock-Input"
+            },
+            "maxItems": 5,
+            "title": "Evidence Catalog",
+            "type": "array"
+          },
+          "request_id": {
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Request Id",
+            "type": "string"
+          },
+          "retrieval_execution_id": {
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Retrieval Execution Id",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "retrieval.v1",
+            "default": "retrieval.v1",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "status": {
+            "const": "completed",
+            "default": "completed",
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "retrieval_execution_id",
+          "deadline",
+          "evidence_catalog",
+          "request_id"
+        ],
+        "title": "RetrievalResponse",
+        "type": "object"
+      },
+      "RetrievalResponse-Output": {
+        "additionalProperties": false,
+        "properties": {
+          "deadline": {
+            "format": "date-time",
+            "pattern": "Z$",
+            "title": "Deadline",
+            "type": "string"
+          },
+          "evidence_catalog": {
+            "items": {
+              "$ref": "#/components/schemas/EvidenceBlock-Output"
+            },
+            "maxItems": 5,
+            "title": "Evidence Catalog",
+            "type": "array"
+          },
+          "request_id": {
+            "pattern": "^[A-Za-z0-9_-]+$",
+            "title": "Request Id",
+            "type": "string"
+          },
+          "retrieval_execution_id": {
+            "pattern": "^[A-Za-z0-9_-]+$",
+            "title": "Retrieval Execution Id",
+            "type": "string"
+          },
+          "schema_version": {
+            "const": "retrieval.v1",
+            "default": "retrieval.v1",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "status": {
+            "const": "completed",
+            "default": "completed",
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "retrieval_execution_id",
+          "deadline",
+          "evidence_catalog",
+          "request_id"
+        ],
+        "title": "RetrievalResponse",
+        "type": "object"
+      },
+      "RetryMode": {
+        "enum": [
+          "none",
+          "same_key_or_status",
+          "new_operation",
+          "manual_reconcile"
+        ],
+        "title": "RetryMode",
+        "type": "string"
+      },
+      "Status": {
+        "enum": [
+          "completed",
+          "in_progress",
+          "failed"
+        ],
+        "title": "Status",
+        "type": "string"
+      },
+      "Summary-Input": {
+        "additionalProperties": false,
+        "properties": {
+          "fact_ids": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 16,
+            "title": "Fact Ids",
+            "type": "array"
+          },
+          "text": {
+            "maxLength": 1024,
+            "minLength": 1,
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "text",
+          "fact_ids"
+        ],
+        "title": "Summary",
+        "type": "object"
+      },
+      "Summary-Output": {
+        "additionalProperties": false,
+        "properties": {
+          "fact_ids": {
+            "items": {
+              "pattern": "^f(?:[1-9]|1[0-6])$",
+              "type": "string"
+            },
+            "maxItems": 16,
+            "title": "Fact Ids",
+            "type": "array"
+          },
+          "text": {
+            "maxLength": 1024,
+            "minLength": 1,
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "text",
+          "fact_ids"
+        ],
+        "title": "Summary",
+        "type": "object"
+      },
+      "Usage": {
+        "additionalProperties": false,
+        "properties": {
+          "input_tokens": {
+            "anyOf": [
+              {
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Input Tokens"
+          },
+          "output_tokens": {
+            "anyOf": [
+              {
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Output Tokens"
+          },
+          "unknown": {
+            "title": "Unknown",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "input_tokens",
+          "output_tokens",
+          "unknown"
+        ],
+        "title": "Usage",
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "title": "RAG_all API",
+    "version": "0.1.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/__maintenance/contracts/{model_name}": {
+      "post": {
+        "description": "Isolated DTO validation only; requires an explicit in-memory test token in X-RAG-Contract-Test. Disabled by default. No business authorization, database access, provider calls, or operation execution. Keep this path off private/public production gateways. Response-envelope request_id is replaced by a fresh server ID. Only the five C2 response models are accepted; helper DTOs are schema components only. OperationResponse models GET-state projection semantics; this POST probe does not register a business GET operation endpoint.",
+        "operationId": "contract_probe___maintenance_contracts__model_name__post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "model_name",
+            "required": true,
+            "schema": {
+              "enum": [
+                "AcceptedResponse",
+                "CompletedResponse",
+                "FailedResponse",
+                "OperationResponse",
+                "RetrievalResponse"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/AcceptedResponse-Input"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CompletedResponse-Input"
+                  },
+                  {
+                    "$ref": "#/components/schemas/FailedResponse-Input"
+                  },
+                  {
+                    "$ref": "#/components/schemas/OperationResponse-Input"
+                  },
+                  {
+                    "$ref": "#/components/schemas/RetrievalResponse-Input"
+                  }
+                ]
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/CompletedResponse-Output"
+                    },
+                    {
+                      "$ref": "#/components/schemas/OperationResponse-Output"
+                    },
+                    {
+                      "$ref": "#/components/schemas/RetrievalResponse-Output"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "Validated fixture DTO, including operation state projection."
+          },
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AcceptedResponse-Output"
+                }
+              }
+            },
+            "description": "Validated AcceptedResponse fixture; no operation is created."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FailedResponse-Output"
+                }
+              }
+            },
+            "description": "Finite private error or validated FailedResponse fixture."
+          }
+        },
+        "summary": "Contract Probe",
+        "tags": [
+          "isolated-contract-fixtures"
+        ]
+      }
+    },
+    "/health": {
+      "get": {
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthStatus"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Health"
+      }
+    }
+  }
+}

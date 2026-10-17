@@ -1,0 +1,27 @@
+{
+  "$id": "https://rag.local/contracts/schemas/answer.v1/Summary.validation.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "fact_ids": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 16,
+      "title": "Fact Ids",
+      "type": "array"
+    },
+    "text": {
+      "maxLength": 1024,
+      "minLength": 1,
+      "title": "Text",
+      "type": "string"
+    }
+  },
+  "required": [
+    "text",
+    "fact_ids"
+  ],
+  "title": "Summary",
+  "type": "object"
+}
