@@ -1,6 +1,6 @@
 ---
 title: 'Story 1.1 C 可构建的前端基线'
-status: draft
+status: in-progress
 route: dispatch
 baseline_commit: 0b576b65d3824e7f4319c39c38e80398caf08fb8
 context:
@@ -12,11 +12,13 @@ context:
 
 ## Intent 与前置
 
-交付AC1的Vue骨架、健康状态页及可复现构建。只有主控确认B正式生成、检查、52条样例和B0a/B0c通过后才派发本规格；当前draft不表示已满足依赖。
+交付AC1的Vue骨架、健康状态页及可复现构建。用户已要求减少防御性串行门：立即执行不依赖B工件的规范核查、官方脚手架和健康页；B的17个DTO接口已冻结，既有51工件生成/check已通过，a70修复只改HTTP投影和测试，不改DTO定义。
+
+B生成物尚未同步本地时，只等待类型接入这一步，不手写替代DTO；正式类型检查/构建与C完成仍须使用当前B交付。HTTP样例修复、PG准备、镜像归档和父Story独立门并行，不作为骨架编码前置，也不伪记通过。
 
 ## 唯一归属
 
-Kimi K3默认，独占 `frontend/**`、`docs/story-1-1-frontend-standards.md` 与 `docs/story-1-1-frontend-delivery.md`。不改backend/contracts/deploy或主控状态，不自行Git提交推送。后端DTO仅使用B的生成物。
+Kimi K3默认，独占 `frontend/**`、`docs/story-1-1-frontend-standards.md` 与 `docs/story-1-1-frontend-delivery.md`。先等主控核对实际模型再写入。不改backend/contracts/deploy或主控状态，不自行Git提交推送。后端DTO仅使用B的生成物。
 
 ## Tasks & Acceptance
 
@@ -29,6 +31,6 @@ Kimi K3默认，独占 `frontend/**`、`docs/story-1-1-frontend-standards.md` �
 
 ## 环境与交付
 
-Netcatty先get_environment，项目活动目录在 `/opt/rag-story-1-1` 的Linux本地文件系统；测试与最终证据归档 `/fileOfRag/testOfRAG/metadata/story-1-1/frontend-baseline`。浏览器访问方式由主控协调，不改全局代理或公开额外服务。
+Netcatty先get_environment，terminal在整个chat互斥，须主控授予调用时段后再用；等待时先完成本地开发/官方来源记录，不空转探测锁。脚手架生成属于开发工具操作，应用安装/构建/测试仍仅Linux。项目活动目录在 `/opt/rag-story-1-1` 本地文件系统，证据归档 `/fileOfRag/testOfRAG/metadata/story-1-1/frontend-baseline`。浏览器访问由主控协调，不改全局代理或公开额外服务。
 
 报告准确commit、文件/hash、依赖/peer、Node/npm及官方来源、全部命令/计数、浏览器证据和未通过项。D四服务、真实PG、E及独立验证/审查仍保留。
