@@ -1,0 +1,16 @@
+{
+  "files_checked": [
+    "ARCHITECTURE-SPINE.md",
+    "shared-contracts.md",
+    "runtime-operations.md",
+    "technology-evidence.md",
+    "requirements-architecture-traceability.md",
+    "reviews/finalize-gate.md",
+    "reviews/review-technology.md",
+    "reviews/review-adversarial.md",
+    "winston-a-debate.md",
+    "winston-b-debate.md"
+  ],
+  "links_checked": 157,
+  "errors": []
+}

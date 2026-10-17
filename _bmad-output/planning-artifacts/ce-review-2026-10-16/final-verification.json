@@ -1,0 +1,28 @@
+{
+  "checks": {
+    "story_count_42": true,
+    "all_23_original_ac_allocated": true,
+    "story_4_2_only_source_data_then_4_3_view": true,
+    "story_7_1_source_then_7_2_answer": true,
+    "story_8_3_prep_then_8_4_recovery": true,
+    "no_universal_future_full_ac_gate": true,
+    "s2_doc_gate_dependency": true,
+    "doc_gate_no_generation_budget": true,
+    "mix_gate_has_budget_and_doc": true,
+    "f0_no_code_dependencies": true,
+    "s0_no_p0_or_s7": true,
+    "s1_can_run_without_p0": true,
+    "s3_has_budget_and_mix": true,
+    "egress_explicit_in_s0": true,
+    "ui_expiry_explicit": true,
+    "credential_secret_lifecycle_explicit": true,
+    "schema_export_and_h_explicit": true,
+    "frozen_draft_epics.md_matches_review": true,
+    "frozen_draft_story-traceability.md_matches_review": true,
+    "all_13_upstream_inputs_unchanged": true
+  },
+  "failed": [],
+  "verified_counterexamples": "document/dependency checks only",
+  "product_runtime_tests": "not-executed",
+  "reviewers_rereviewed_final": false
+}

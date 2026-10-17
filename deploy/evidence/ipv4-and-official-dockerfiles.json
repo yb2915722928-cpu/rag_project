@@ -1,0 +1,27 @@
+{
+  "registry_ipv4": {
+    "url": "https://registry-1.docker.io/v2/",
+    "exit_code": 28,
+    "stdout": "",
+    "stderr": "curl: (28) Failed to connect to registry-1.docker.io port 443 after 4002 ms: Timeout was reached\n"
+  },
+  "auth_ipv4": {
+    "url": "https://auth.docker.io/token?service=registry.docker.io&scope=repository:library/python:pull",
+    "exit_code": 28,
+    "stdout": "",
+    "stderr": "curl: (28) Failed to connect to auth.docker.io port 443 after 4002 ms: Timeout was reached\n"
+  },
+  "pg18_dockerfile": {
+    "url": "https://raw.githubusercontent.com/docker-library/postgres/master/18/bookworm/Dockerfile",
+    "exit_code": 28,
+    "stdout": "",
+    "stderr": "curl: (28) Operation timed out after 8002 milliseconds with 0 bytes received\n"
+  },
+  "nginx_dockerfile": {
+    "url": "https://raw.githubusercontent.com/nginx/docker-nginx/master/stable/alpine-slim/Dockerfile",
+    "exit_code": 28,
+    "stdout": "",
+    "stderr": "curl: (28) Operation timed out after 8002 milliseconds with 0 bytes received\n"
+  },
+  "recorded_at": "2026-10-17T08:19:18.831126+00:00"
+}

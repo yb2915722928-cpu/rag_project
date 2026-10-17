@@ -1,0 +1,17 @@
+[
+  {
+    "claim": "MinerU upload PUT triggers parsing; data_id is business correlation without inspected idempotency promise",
+    "class": "api-protocol",
+    "pub_date": "2026-10-15"
+  },
+  {
+    "claim": "fixed source implementation observations at two SHAs",
+    "class": "fixed-source",
+    "pub_date": "2026-10-15"
+  },
+  {
+    "claim": "PG locks, Python child stop, Linux flock/unlink boundary",
+    "class": "patterns",
+    "pub_date": "2026-10-15"
+  }
+]

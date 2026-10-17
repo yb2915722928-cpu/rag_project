@@ -1,0 +1,5 @@
+[
+  {"claim":"MinerU云API读取快照；实际接入前核对","class":"compatibility","pub_date":"2026-10-15"},
+  {"claim":"4.0输出文档读取快照；不能代替云包实取","class":"compatibility","pub_date":"2026-10-15"},
+  {"claim":"PG领取、唯一约束、事务文档读取快照","class":"pattern","pub_date":"2026-10-15"}
+]

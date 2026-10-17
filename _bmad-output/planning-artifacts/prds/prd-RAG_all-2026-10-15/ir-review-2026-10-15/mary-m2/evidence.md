@@ -1,0 +1,22 @@
+# M2 · 首轮必要证据
+
+读取：2026-10-15。Publisher：Tencent／WeKnora、1Panel-dev／MaxKB、OpenDataLab／MinerU。两仓库固定 SHA 分别为 a37a1bc51ad85d096df341f6d3a098f60d586f52、0fa9a0dae8850c1878f087f0d81c974c1d424b06；源码发布日期不猜。可信官方单源静态观察，medium，未独立第二源验证、未运行；不声称最新版本或效果达标。项目 PRD 仅设约束，不作为上游事实证据。
+
+## TR 核心（四行）
+
+| 项目／边界 | 已读原文支持的事实；不能外推的结论 | 永久来源 |
+|---|---|---|
+| WeKnora／配置与定位 | KB 保存 embedding 模型 ID；来源类型区分 1 起 PDF 页、可选归一 bbox、DOCX body block、文本偏移及 quote／source_hash。字段本身不能证明不可变 profile 或候选索引切代。 | [KB 配置](https://github.com/Tencent/WeKnora/blob/a37a1bc51ad85d096df341f6d3a098f60d586f52/internal/types/knowledgebase.go#L78-L87)、[来源契约](https://github.com/Tencent/WeKnora/blob/a37a1bc51ad85d096df341f6d3a098f60d586f52/internal/types/source_locator.go#L9-L71) |
+| WeKnora／图意链 | 图像 OCR／caption 创建不同子块，继承父块及 SourceLocators。证明可检索文字与来源衔接，不证明箭头、连接关系正确或 SC-4 达标。 | [caption／OCR 子块](https://github.com/Tencent/WeKnora/blob/a37a1bc51ad85d096df341f6d3a098f60d586f52/internal/application/service/image_multimodal.go#L381-L418) |
+| MaxKB／多库与重向量化 | 多库模型 ID 不一致抛错；同一模型生成查询向量并传全部库 ID。refresh 更新状态并提交文档向量任务。调用点不能证明保旧切新、重建快照或并发写入政策。 | [一致性及检索](https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/application/chat_pipeline/step/search_dataset_step/impl/base_search_dataset_step.py#L36-L73)、[refresh](https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/knowledge/serializers/document.py#L838-L877) |
+| MaxKB／原件与图像 | 分段上传保存原件并附 source_file_id；普通 PDF 分支写图片链接；独立图像理解节点组织图像消息并调用模型。不能由图片链接证明原页定位或自动 caption 入库链完整，也未证解析修正 UI。 | [原件关联](https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/knowledge/serializers/document.py#L1255-L1284)、[PDF 图像链接](https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/common/handle/impl/text/pdf_split_handle.py#L122-L158)、[图像理解](https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/application/flow/step_node/image_understand_step_node/impl/base_image_understand_node.py#L164-L187) |
+
+## 本轮复读的官方快照
+
+上述事实分别定位于 [knowledgebase.go.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/research/technical-document-parsing-2026-10-15/imports/implementation-r1/WeKnora/internal/types/knowledgebase.go.md:78)、[source_locator.go.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/research/technical-document-parsing-2026-10-15/imports/implementation-r1/WeKnora/internal/types/source_locator.go.md:9)、[image_multimodal.go.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/research/technical-document-parsing-2026-10-15/imports/implementation-r1/WeKnora/internal/application/service/image_multimodal.go.md:381)、[maxkb-search.py.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/decision-review-2026-10-15/q3/imports/maxkb-search.py.md:39)（导入头偏移 3 行）、[document.py.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/research/technical-document-parsing-2026-10-15/imports/implementation-r1/MaxKB/apps/knowledge/serializers/document.py.md:838)、[pdf_split_handle.py.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/research/technical-document-parsing-2026-10-15/imports/implementation-r1/MaxKB/apps/common/handle/impl/text/pdf_split_handle.py.md:122)、[base_image_understand_node.py.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/research/technical-document-parsing-2026-10-15/imports/implementation-r1/MaxKB/apps/application/flow/step_node/image_understand_step_node/impl/base_image_understand_node.py.md:164)。MaxKB 段落字段的已读范围见 [knowledge.py.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/research/technical-document-parsing-2026-10-15/imports/implementation-r1/MaxKB/apps/knowledge/models/knowledge.py.md:251)，范围：251–266；没有专用页／bbox 字段，不推断全项目绝无其他实现。
+
+## MinerU 与证据限度
+
+2026-10-15 定点重读 [OpenDataLab 官方输出契约](https://opendatalab.github.io/MinerU/reference/output_files/) 的 Entrypoint capabilities、Intermediate JSON、Saved files：页面描述 4.0，明确远端输出以远端服务为准；JSON 用实际 schema／schema_version，producer.version 与 0 起 page_idx；资产可与结构关联。该文档不能证明所用云 API 已输出相同版本，更没有提供“任意连接图理解准确”的保证。接入必须保存实际原包、版本与字段，再适配到本项目 1 起物理页。页面未标发布日期；访问日不冒充发布日期。实际接入或升级时重读，无需新开全景研究。
+
+既有边界只继承 [Q3 evidence.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/decision-review-2026-10-15/q3/evidence.md:42)，范围：42–55，及 [Q2 evidence.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/decision-review-2026-10-15/q2/evidence.md:25)，范围：25–28。当前源码已足够界定借鉴点与未证处，停止扩搜；以下 TS 是受托设计选择，不冒称上游既有契约。

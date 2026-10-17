@@ -1,0 +1,30 @@
+[
+  {
+    "source": "runtime-operations.md",
+    "label": "C8唯一release_transition",
+    "target": "/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md",
+    "from": 141,
+    "to": 145
+  },
+  {
+    "source": "runtime-operations.md",
+    "label": "共享契约C4",
+    "target": "/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md",
+    "from": 51,
+    "to": 53
+  },
+  {
+    "source": "runtime-operations.md",
+    "label": "C8",
+    "target": "/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md",
+    "from": 129,
+    "to": 145
+  },
+  {
+    "source": "requirements-architecture-traceability.md",
+    "label": "架构主干",
+    "target": "/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/ARCHITECTURE-SPINE.md",
+    "from": 61,
+    "to": 65
+  }
+]

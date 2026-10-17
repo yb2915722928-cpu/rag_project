@@ -1,0 +1,27 @@
+# MaxKB 配额与每日计次事实 digest
+
+核验时间：2026-10-15。官方仓库：1Panel-dev/MaxKB。锁定 commit：`0fa9a0dae8850c1878f087f0d81c974c1d424b06`。本轮通过官方 raw.githubusercontent.com 实际读取下列源码；既有本地快照仅用于定位。没有运行服务、编码实现或以项目计划作为事实证据。
+
+## 容量与原件文件大小
+
+- **已证：知识库具有单个上传原件大小限制。** `Knowledge.file_size_limit` 默认 100；同处还有 `file_count_limit` 默认 50。字段存在本身不证明所有入口均强制执行数量限制。[官方模型，140–141 行](https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/knowledge/models/knowledge.py#L140-L141)
+- **已证：知识库文档 Split 入口在解析前逐个比较上传对象的 `f.size > 1024 * 1024 * knowledge.file_size_limit`，超出时报错。** 因而默认阈值是 100 × 1024² 字节（错误文本称 MB）；等于阈值不会被该条件拒绝。该检查对象是上传原件字节数，不是解析文本长度或向量体积。[官方分段入口，1200–1223 行](https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/knowledge/serializers/document.py#L1200-L1223)
+- **已证：解析时会保存原件；`File.file_size` 最终并非原件大小。** `file_to_paragraph` 构造原件对象并调用 `save(file.read())`；但 `File.save` 按原始内容 SHA256 复用现有文件，或压缩后把 `len(compressed_data)` 写入 `file_size`。因此不能把该落库字段直接称为“原件字节数”。[原件保存，1255–1266 行](https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/knowledge/serializers/document.py#L1255-L1266)、[File 保存，387–406 行](https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/knowledge/models/knowledge.py#L387-L406)
+- **未证：按工作空间/用户/知识库累计的存储容量 quota。** 本轮读取的 Knowledge/File 模型、Document Split/Batch/原件保存路径，以及 OSS 文件序列化路径，未定位到累计已用容量、容量上限、上传前预占或扣减的实现。这只限定所读路径，不推断全项目不存在。OSS 中另有“应用文件 URL 抓取”的单文件阈值：默认 50 × 1024² 字节，可取应用 `file_upload_setting.fileLimit`；它与知识库容量 quota 不等同。[OSS URL 抓取，357–376 行](https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/oss/serializers/file.py#L357-L376)
+
+## ApplicationChatUserStats 的校验、递增与跨日
+
+- **统计字段与归属已证。** 模型按应用关联，保存对话用户 ID/类型、总访问次数 `access_num` 和当日访问次数 `intraday_access_num`；两次数默认 0，另建应用 ID 与对话用户 ID 的普通联合索引。[官方统计模型，138–151 行](https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/application/models/application_chat.py#L138-L151)
+- **请求前校验已证。** 非 debug 且用户类型为匿名用户或对话用户时，按用户 ID + 应用 ID 查询统计，缺失则建 0 值记录；若 `ApplicationAccessToken.access_num <= intraday_access_num` 则拒绝。本入口没有比较统计日期或即时跨日清零。简单应用和工作流均走此校验。[官方校验，295–327 行](https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/chat/serializers/chat.py#L295-L327)、[调用分流，482–487 行](https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/chat/serializers/chat.py#L482-L487)
+- **简单应用递增已证。** `add_access_num` 对匿名/对话用户，按用户 ID、类型、应用 ID 找到现有统计后，以“读值 + 1 后 save”同时更新总数与当日数。调用者在非 debug 时于响应后处理之后调用。流式的正常分支和捕获异常分支均调用；阻塞式的成功分支和捕获异常分支也均调用。因此此处不能描述成“仅成功回答扣 1”。[递增函数，44–58 行](https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/application/chat_pipeline/step/chat_step/impl/base_chat_step.py#L44-L58)、[流式调用，163–206 行](https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/application/chat_pipeline/step/chat_step/impl/base_chat_step.py#L163-L206)、[阻塞式调用，763–805 行](https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/application/chat_pipeline/step/chat_step/impl/base_chat_step.py#L763-L805)
+- **工作流递增已证。** `WorkFlowPostHandler.handler` 写入/更新聊天记录并设缓存之后，对非 debug 的匿名/对话用户执行同样的两字段 +1 保存。该 +1 不以“聊天记录是否新建”为条件。[官方工作流后处理，67–103 行](https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/application/flow/i_step_node.py#L67-L103)
+- **跨日机制已证为定时全表清零代码，而非请求时按日期滚动。** `client_access_num_reset_job_lock` 执行 `QuerySet(ApplicationChatUserStats).update(intraday_access_num=0)`，不清总数；`run()` 注册 cron 的 00:00:00 任务，并使用锁。此处仅证明任务定义和注册逻辑；本轮未验证部署是否调用注册、实际执行成功与运行时区。[官方清零及注册，18–42 行](https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/common/job/client_access_num_job.py#L18-L42)
+
+## chat_record_id、重答与重试的边界
+
+- 普通聊天入口若传入 `chat_record_id`，默认要求它已存在于本会话；不存在则拒绝。该 ID 不是“首次请求随意指定并自动创建”的幂等键。[存在性检查，459–478 行](https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/chat/serializers/chat.py#L459-L478)
+- 简单应用 `re_chat` 用于排除历史同问题已检索段落，并未豁免计次；传入的记录 ID 会放入流水线参数。流式生成沿用参数中的 ID，否则生成 UUID；**阻塞式生成在该实现内始终新建 UUID**。[重答与参数，340–378 行](https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/chat/serializers/chat.py#L340-L378)、[流式记录 ID，601–605 行](https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/application/chat_pipeline/step/chat_step/impl/base_chat_step.py#L601-L605)、[阻塞式记录 ID，725 行](https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/application/chat_pipeline/step/chat_step/impl/base_chat_step.py#L725)
+- 聊天记录按 ID `update_or_create`；相同 ID 可更新已有记录，但计次递增独立于此返回的 created 状态。工作流对已有 `workflow.chat_record` 直接改写，随后仍进入 +1。**因此复用同一个聊天记录 ID 不等于重试免计次；只要再执行到这些后处理调用点，便会再尝试 +1。** 未执行到调用点的失败不能据此断言已计次。[记录更新，359–422 行](https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/application/serializers/common.py#L359-L422)、[工作流记录复用与递增，67–103 行](https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/application/flow/i_step_node.py#L67-L103)
+- 所读校验与递增是分离的读取/保存，递增处没有按请求 ID 去重或条件原子预占；本轮未做并发/故障实验，不能据此承诺严格一次扣量、并发精确计数或跨日边界保证。[前置校验](https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/chat/serializers/chat.py#L306-L324)、[简单应用递增](https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/application/chat_pipeline/step/chat_step/impl/base_chat_step.py#L44-L58)
+
+以上为代码事实及紧邻代码的限定推论，不包含本项目方案或实现建议。

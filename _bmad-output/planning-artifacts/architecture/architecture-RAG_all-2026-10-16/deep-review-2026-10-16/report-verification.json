@@ -1,0 +1,8 @@
+{
+  "canonical_findings_json_valid": true,
+  "raw_findings": 17,
+  "local_links": 126,
+  "invalid_local_links": 0,
+  "reviewed_inputs_changed": 0,
+  "scope": "planning review only, no implementation or runtime checks"
+}

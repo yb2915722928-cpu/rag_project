@@ -1,0 +1,9 @@
+{
+  "valid": true,
+  "gate_entries": 25,
+  "subcase_groups": 45,
+  "all_not_executed": true,
+  "evidence_fabricated": false,
+  "status_file": "E:/aaa-project/rag/_bmad-output/implementation-artifacts/runtime-acceptance-status.yaml",
+  "runtime_tests": "not-executed"
+}

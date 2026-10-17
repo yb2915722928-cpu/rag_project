@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-16",
+  "scope": "document verification only; no product execution",
+  "status": "PASS",
+  "files": 14,
+  "local_links": 305,
+  "prd_sha256": "0963d529922a6b3812c8f8311f29f5112a537a59ca62616f4dc45a245baaa299",
+  "prd_lines": 428,
+  "checks": {
+    "prd_original_text_preserved": true,
+    "design_handoff_ready": true,
+    "both_reviewers_same_final_prd": true,
+    "implementation-contract.md_byte_unchanged": true,
+    "implementation-slices.md_byte_unchanged": true,
+    "roles_unchanged": true,
+    "acceptance_unchanged": true
+  },
+  "issues": [],
+  "file_hashes": {
+    "_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/prd.md": "0963d529922a6b3812c8f8311f29f5112a537a59ca62616f4dc45a245baaa299",
+    "_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/summary.md": "f1cd979352fc2a565a9f160432cc6cebb85ae89a7d68d5d9af8feac3d5114243",
+    "_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/.memlog.md": "43e13b2c244cc6d3d64188f00777d0008c479ae7d8de179ff459bf52fcf0a564",
+    "_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/addendum.md": "4695668668893b5bf4b8c79d2593804c3514219ad0ddbc64c7d13873acbdda96",
+    "_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/technical-decisions-dialogue.md": "4d8c776d25cf7f5a27df8615dab45f7c01121d30166c049f2e39fa200b7aebfa",
+    "_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md": "c324fc9640debb90fa66d689660c2a96b62922a1e7e77a2551adfd9680476900",
+    "_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-slices.md": "02e3d53ad13011fea172f58a8fb0a5b82d371ba91999421f672b28cd4aa6a352",
+    "_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/final-convergence-2026-10-16/convergence-report.md": "7e18f598c8b2c4b06509cec5487f8f212392a03d0be7f40a96203a3f8a4e5743",
+    "_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/final-convergence-2026-10-16/john-discussion.md": "bbe0c1afac2bc715bd5fae701c2fcb78aaaa080b2d56f2b48ffa008c94e4385c",
+    "_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/final-convergence-2026-10-16/john-final.md": "4d9e848ee340f26d5280ca6d1f046dde73b6adbbaa7a01c1d40ed008455f1356",
+    "_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/final-convergence-2026-10-16/john-initial.md": "144d6089e4814791194438b7facf30d48e28939762855723a098db7036bbfc75",
+    "_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/final-convergence-2026-10-16/winston-discussion.md": "6860075b68ac3d0abc956658b94768272a511b9616d860124b454dc1011d37df",
+    "_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/final-convergence-2026-10-16/winston-final.md": "b46da45ef15ede3b20933a08f9821d1ce65e8c939c170ab4faafe1bdac984709",
+    "_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/final-convergence-2026-10-16/winston-initial.md": "115fe6e80a77666f04dcef2c55523c830d9f630c6e42fd772cc781c688850725"
+  }
+}

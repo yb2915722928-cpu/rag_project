@@ -1,0 +1,32 @@
+{
+  "kind": "design-artifact-check-only",
+  "status": "pass",
+  "markdown_files_checked": 16,
+  "file_links_checked": 419,
+  "token_paths": 41,
+  "colors": 24,
+  "components": 16,
+  "ia_surfaces": 12,
+  "acceptance_groups": 23,
+  "svg": 5,
+  "png": 6,
+  "static_contrast_ratios": {
+    "text-primary/surface": 13.02,
+    "text-secondary/surface": 6.11,
+    "on-action/action": 5.31,
+    "focus/canvas": 4.78,
+    "border-control/surface": 4.31,
+    "success/success-surface": 5.71,
+    "danger/danger-surface": 5.93,
+    "warning/warning-surface": 5.52,
+    "info/info-surface": 5.56
+  },
+  "source_hashes_unchanged": {
+    "prd.md": true,
+    "implementation-contract.md": true,
+    "implementation-slices.md": true
+  },
+  "text_overflow": 0,
+  "product_runtime_tests": "not executed",
+  "errors": []
+}

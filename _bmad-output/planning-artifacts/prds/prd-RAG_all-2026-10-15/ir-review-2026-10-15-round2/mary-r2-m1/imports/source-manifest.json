@@ -1,0 +1,102 @@
+[
+  {
+    "name": "weknora-process",
+    "url": "https://raw.githubusercontent.com/Tencent/WeKnora/a37a1bc51ad85d096df341f6d3a098f60d586f52/internal/application/service/knowledge_process.go",
+    "commit": "a37a1bc51ad85d096df341f6d3a098f60d586f52",
+    "accessed": "2026-10-15",
+    "sha256": "84f1e157c51fd9ddd00f6f9f741ef3ef634608d0331900531ed40a3e5b04ba70",
+    "bytes": 187286,
+    "lines": 4727,
+    "snapshot": "E:\\aaa-project\\rag\\_bmad-output\\planning-artifacts\\prds\\prd-RAG_all-2026-10-15\\ir-review-2026-10-15-round2\\mary-r2-m1\\imports\\weknora-process.txt"
+  },
+  {
+    "name": "weknora-delete",
+    "url": "https://raw.githubusercontent.com/Tencent/WeKnora/a37a1bc51ad85d096df341f6d3a098f60d586f52/internal/application/service/knowledge_delete.go",
+    "commit": "a37a1bc51ad85d096df341f6d3a098f60d586f52",
+    "accessed": "2026-10-15",
+    "sha256": "099a1502340387a89bfd7588cd146110a4d4d5554d8875282eb618bfe417ecd2",
+    "bytes": 31196,
+    "lines": 823,
+    "snapshot": "E:\\aaa-project\\rag\\_bmad-output\\planning-artifacts\\prds\\prd-RAG_all-2026-10-15\\ir-review-2026-10-15-round2\\mary-r2-m1\\imports\\weknora-delete.txt"
+  },
+  {
+    "name": "weknora-create",
+    "url": "https://raw.githubusercontent.com/Tencent/WeKnora/a37a1bc51ad85d096df341f6d3a098f60d586f52/internal/application/service/knowledge_create.go",
+    "commit": "a37a1bc51ad85d096df341f6d3a098f60d586f52",
+    "accessed": "2026-10-15",
+    "sha256": "491b56a50bf4dd47578d862d3d2649d373f669ac2654d41b749209ffb8b50a03",
+    "bytes": 54063,
+    "lines": 1424,
+    "snapshot": "E:\\aaa-project\\rag\\_bmad-output\\planning-artifacts\\prds\\prd-RAG_all-2026-10-15\\ir-review-2026-10-15-round2\\mary-r2-m1\\imports\\weknora-create.txt"
+  },
+  {
+    "name": "weknora-local",
+    "url": "https://raw.githubusercontent.com/Tencent/WeKnora/a37a1bc51ad85d096df341f6d3a098f60d586f52/internal/application/service/file/local.go",
+    "commit": "a37a1bc51ad85d096df341f6d3a098f60d586f52",
+    "accessed": "2026-10-15",
+    "sha256": "57e010f43faf3d5888555f2c3570965f6ade52741a435158da0b80de18cbed89",
+    "bytes": 14101,
+    "lines": 349,
+    "snapshot": "E:\\aaa-project\\rag\\_bmad-output\\planning-artifacts\\prds\\prd-RAG_all-2026-10-15\\ir-review-2026-10-15-round2\\mary-r2-m1\\imports\\weknora-local.txt"
+  },
+  {
+    "name": "weknora-span",
+    "url": "https://raw.githubusercontent.com/Tencent/WeKnora/a37a1bc51ad85d096df341f6d3a098f60d586f52/internal/application/service/knowledge_span_tracker.go",
+    "commit": "a37a1bc51ad85d096df341f6d3a098f60d586f52",
+    "accessed": "2026-10-15",
+    "sha256": "19d14868bbc09f3235ea30e9af37315fcfc2af79b92e1f223848167d5a966537",
+    "bytes": 32627,
+    "lines": 896,
+    "snapshot": "E:\\aaa-project\\rag\\_bmad-output\\planning-artifacts\\prds\\prd-RAG_all-2026-10-15\\ir-review-2026-10-15-round2\\mary-r2-m1\\imports\\weknora-span.txt"
+  },
+  {
+    "name": "maxkb-document",
+    "url": "https://raw.githubusercontent.com/1Panel-dev/MaxKB/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/knowledge/serializers/document.py",
+    "commit": "0fa9a0dae8850c1878f087f0d81c974c1d424b06",
+    "accessed": "2026-10-15",
+    "sha256": "5468fd18de0efa39836b1d77faf385e58e409a4bf524003877618cc7173fc3ae",
+    "bytes": 94440,
+    "lines": 1955,
+    "snapshot": "E:\\aaa-project\\rag\\_bmad-output\\planning-artifacts\\prds\\prd-RAG_all-2026-10-15\\ir-review-2026-10-15-round2\\mary-r2-m1\\imports\\maxkb-document.txt"
+  },
+  {
+    "name": "maxkb-embedding",
+    "url": "https://raw.githubusercontent.com/1Panel-dev/MaxKB/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/knowledge/task/embedding.py",
+    "commit": "0fa9a0dae8850c1878f087f0d81c974c1d424b06",
+    "accessed": "2026-10-15",
+    "sha256": "cbbe2743897a2e62d7340a9566aafe1eb078a771b028970ce5cf223c7ffbe21d",
+    "bytes": 9124,
+    "lines": 282,
+    "snapshot": "E:\\aaa-project\\rag\\_bmad-output\\planning-artifacts\\prds\\prd-RAG_all-2026-10-15\\ir-review-2026-10-15-round2\\mary-r2-m1\\imports\\maxkb-embedding.txt"
+  },
+  {
+    "name": "maxkb-file",
+    "url": "https://raw.githubusercontent.com/1Panel-dev/MaxKB/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/oss/models.py",
+    "commit": "0fa9a0dae8850c1878f087f0d81c974c1d424b06",
+    "accessed": "2026-10-15",
+    "sha256": "563734a765db00f804e87c9317abe597df00e1e0e103902f690aac738910f404",
+    "bytes": 57,
+    "lines": 3,
+    "snapshot": "E:\\aaa-project\\rag\\_bmad-output\\planning-artifacts\\prds\\prd-RAG_all-2026-10-15\\ir-review-2026-10-15-round2\\mary-r2-m1\\imports\\maxkb-file.txt"
+  },
+  {
+    "name": "maxkb-knowledge",
+    "url": "https://raw.githubusercontent.com/1Panel-dev/MaxKB/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/knowledge/models/knowledge.py",
+    "commit": "0fa9a0dae8850c1878f087f0d81c974c1d424b06",
+    "accessed": "2026-10-15",
+    "sha256": "4f50dcaca132142c594bcf9b04d1358ba45414145e23fa70eca60a05405ef22b",
+    "bytes": 19520,
+    "lines": 515,
+    "snapshot": "E:\\aaa-project\\rag\\_bmad-output\\planning-artifacts\\prds\\prd-RAG_all-2026-10-15\\ir-review-2026-10-15-round2\\mary-r2-m1\\imports\\maxkb-knowledge.txt"
+  },
+  {
+    "name": "maxkb-chat",
+    "url": "https://raw.githubusercontent.com/1Panel-dev/MaxKB/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/application/chat_pipeline/step/chat_step/impl/base_chat_step.py",
+    "commit": "0fa9a0dae8850c1878f087f0d81c974c1d424b06",
+    "accessed": "2026-10-15",
+    "sha256": "9b70786ebabf232231a3794bfc1004559b1a2d1411726ebee8282ddfc9f3d3a6",
+    "bytes": 30854,
+    "lines": 808,
+    "snapshot": "E:\\aaa-project\\rag\\_bmad-output\\planning-artifacts\\prds\\prd-RAG_all-2026-10-15\\ir-review-2026-10-15-round2\\mary-r2-m1\\imports\\maxkb-chat.txt"
+  }
+]

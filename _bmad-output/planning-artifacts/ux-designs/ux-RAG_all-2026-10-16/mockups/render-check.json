@@ -1,0 +1,12 @@
+{
+  "artifacts": 5,
+  "svg": 5,
+  "png": 6,
+  "out_of_canvas_text": {
+    "M1-answer-source": [],
+    "M2-document-task": [],
+    "M3-comparison": [],
+    "M4-source-check": [],
+    "M5-critical-states": []
+  }
+}

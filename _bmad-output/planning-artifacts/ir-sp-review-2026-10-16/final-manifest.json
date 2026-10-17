@@ -1,0 +1,195 @@
+{
+  "status": "final",
+  "finalized_at": "2026-10-17T00:06:35+08:00",
+  "review_started": "2026-10-16",
+  "planning_gate": "PASS",
+  "artifacts": [
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/implementation-artifacts/README.md",
+      "bytes": 2615,
+      "sha256": "081a4888a5ff8714410238e8614480b60731f9e4c0fe907a13ffd51e88e2622f",
+      "lines": 20
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/implementation-artifacts/runtime-acceptance-status.yaml",
+      "bytes": 17576,
+      "sha256": "46008ead40147f5b9c9158ab0cdbeeb45fbfac9c2b0c88814fc13a843b487af2",
+      "lines": 392
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/implementation-artifacts/sprint-status.yaml",
+      "bytes": 4404,
+      "sha256": "e0ab817e11b35b675f5895758aa06f2dd884f65e03f277c622be4d893cc25ffb",
+      "lines": 105
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ce-review-2026-10-16/acceptance-allocation.md",
+      "bytes": 13242,
+      "sha256": "76a0f39951c2176e7e44ce32c2401e43027a005c3d73a91cd8e9547cef7705cb",
+      "lines": 64
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ce-review-2026-10-16/story-traceability.md",
+      "bytes": 64065,
+      "sha256": "71b749ec67a6b13fd8ecb163801d16307489fae7401ad3ba03be3bda0ab564c4",
+      "lines": 253
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/epics.md",
+      "bytes": 73159,
+      "sha256": "6464141b3a2b4dcde5b4695de41941153f94ebabcb131eb258b3ecf5f7345897",
+      "lines": 715
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/implementation-readiness.md",
+      "bytes": 9829,
+      "sha256": "de386f81d883c92316c79308bbcee2d2d21644b2407186dc4ffeb9178e4af5e8",
+      "lines": 76
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ir-sp-review-2026-10-16/audit_ir_sp.py",
+      "bytes": 17786,
+      "sha256": "993d389012ee2bc0b8db3ed85d55f6a7b7267e0ae92d54381c1c3e0628fc6d9b",
+      "lines": 272
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ir-sp-review-2026-10-16/changes.diff",
+      "bytes": 19432,
+      "sha256": "8896ec0a5bbdcbd2f59da835596ca161b17f249bd17d7a34548b2ce5d45f866e",
+      "lines": 118
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ir-sp-review-2026-10-16/completion-checks.json",
+      "bytes": 939,
+      "sha256": "8757c85c1fbac739bf916adb65ff0341115fb4a16991458d8a15cd763176fdea",
+      "lines": 26
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ir-sp-review-2026-10-16/document-checks.json",
+      "bytes": 5867,
+      "sha256": "fc9da098dbca2a5df1a7f2dd8846f9d00397051eacef242e125b9f7949432293",
+      "lines": 149
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ir-sp-review-2026-10-16/implementation-readiness.md",
+      "bytes": 9829,
+      "sha256": "de386f81d883c92316c79308bbcee2d2d21644b2407186dc4ffeb9178e4af5e8",
+      "lines": 76
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ir-sp-review-2026-10-16/input-manifest.json",
+      "bytes": 7835,
+      "sha256": "3d04c99002eb1e84a9ce884fe8188872a1bd9cf526269ba08943ee6c7bcc3e5b",
+      "lines": 125
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ir-sp-review-2026-10-16/planner-preflight.invocation.json",
+      "bytes": 719,
+      "sha256": "7624e4453beefe1ed99e70d3c09624f3a7c7caeab1822fc8c82d1daed1ed02ee",
+      "lines": 16
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ir-sp-review-2026-10-16/planner-preflight.json",
+      "bytes": 216,
+      "sha256": "742c0f0e6eb1aa04e4862ffe11d90afcb953e3f74de1fa3e50912fbbf2ac8014",
+      "lines": 1
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ir-sp-review-2026-10-16/review-acceptance-p0.md",
+      "bytes": 21339,
+      "sha256": "d31eb209e5992733b5db919320d7af038fabfe4a00c4c6a87e0a1c466cb527d3",
+      "lines": 112
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ir-sp-review-2026-10-16/review-acceptance-p0.original.md",
+      "bytes": 20877,
+      "sha256": "d033839061a4a0ffa68b008858bc2785d6f235e789129db8688d16f05db2e911",
+      "lines": 110
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ir-sp-review-2026-10-16/review-dependencies-repairs.md",
+      "bytes": 16662,
+      "sha256": "cc2585206819bf89d3368017212a0c6fdbf476b2eb860d067b2b3a2ade79e8b0",
+      "lines": 84
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ir-sp-review-2026-10-16/review-dependencies-repairs.original.md",
+      "bytes": 16221,
+      "sha256": "b302f3353611b782beab13bc36038b9ae04e2945664dd9e6e8225e6703c3c6de",
+      "lines": 82
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ir-sp-review-2026-10-16/review-dispatch.md",
+      "bytes": 4478,
+      "sha256": "204daad758806637e3f0789c20f5da4739b912da4aa9a3a7d12d95fad00d333e",
+      "lines": 31
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ir-sp-review-2026-10-16/review-record.md",
+      "bytes": 13126,
+      "sha256": "8affc0642ad46594cfe8ddad17251b05640a480936d6cab3ee9f0215f02a47b7",
+      "lines": 81
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ir-sp-review-2026-10-16/run_tracking.py",
+      "bytes": 1716,
+      "sha256": "d32aa33e3af8204de206fba321a079b8cdc6518d49c23c72e26a6939aaacb1e6",
+      "lines": 48
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ir-sp-review-2026-10-16/runtime-status-validation.json",
+      "bytes": 278,
+      "sha256": "db4d430dc548f2f7827b8b4a31195a6f6524442c15f838b1b9bfddc1ca32795c",
+      "lines": 9
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ir-sp-review-2026-10-16/sprint-generate.invocation.json",
+      "bytes": 977,
+      "sha256": "80266533feb592658708734c999a5dd13dfb4346a846feabeb287e7cd9ce97ed",
+      "lines": 24
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ir-sp-review-2026-10-16/sprint-generate.json",
+      "bytes": 4826,
+      "sha256": "81fadc471f84388b9575e15cd0ff41dc6d175f4905cf7c8e53b0df36b306826a",
+      "lines": 1
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ir-sp-review-2026-10-16/sprint-sync-check.invocation.json",
+      "bytes": 995,
+      "sha256": "799c04a22423f4d6d5b848eaefd8cac1f46c230724b6198dfe63c3455e04ee32",
+      "lines": 25
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ir-sp-review-2026-10-16/sprint-sync-check.json",
+      "bytes": 614,
+      "sha256": "5b533e353931e2ac77c48d255718ec064b982ef4df2df25755b87b3b7ff0563e",
+      "lines": 1
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ir-sp-review-2026-10-16/sprint-validate.invocation.json",
+      "bytes": 719,
+      "sha256": "7624e4453beefe1ed99e70d3c09624f3a7c7caeab1822fc8c82d1daed1ed02ee",
+      "lines": 16
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ir-sp-review-2026-10-16/sprint-validate.json",
+      "bytes": 187,
+      "sha256": "788d5e1179055bfea598f7273559b1516aff4a679bbd5a2ab317ae5e829970b0",
+      "lines": 1
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ir-sp-review-2026-10-16/story-dependencies.json",
+      "bytes": 21195,
+      "sha256": "637761525854d02dc947b94b2792bf5bc2a09f92cfee356e8a9b2cbd4d0d890f",
+      "lines": 1231
+    }
+  ],
+  "baseline_manifest": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ir-sp-review-2026-10-16/input-manifest.json",
+  "runtime_tests": "not-executed",
+  "manifest_excludes_itself": true,
+  "excluded_temporary_paths": [
+    ".runtime/",
+    "__pycache__/"
+  ]
+}

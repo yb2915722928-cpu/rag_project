@@ -1,0 +1,47 @@
+{
+  "scope": "7 semantic-reviewed artifacts; lifecycle/review-outcome-only delta after final independent checks",
+  "files": [
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/ARCHITECTURE-SPINE.md",
+      "semantic_review_sha256": "CEDF3465762A5D810499C3B33721574708F36BD44220617657DF1E6A6974343E",
+      "final_sha256": "7BA8DAB77348268E9036B63ECCC37C3E0F71684F448DBB8BD59FD23EE7B458E0",
+      "changed_after_review": true
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md",
+      "semantic_review_sha256": "9CE67591601EFAF1130197457D8A4894D3FF0919641074BE1219ECA70614187E",
+      "final_sha256": "94ADA90BA560CC55CDCC582CB34548B027B81F942DEDEA721441C4C1CD147051",
+      "changed_after_review": true
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md",
+      "semantic_review_sha256": "70FA034F0A2255367F2830C6B90B55DA46138A4FB61687749D035DC2C850CD6C",
+      "final_sha256": "23B0E3717142C6D7D12531BC955E6FC1328E7B82D678A232DE224ACEEA6DD100",
+      "changed_after_review": true
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/technology-evidence.md",
+      "semantic_review_sha256": "6030578B6C16494BC46CC74C36BFD1437C8A3AC8ED71EAB7701A6702699819AF",
+      "final_sha256": "6030578B6C16494BC46CC74C36BFD1437C8A3AC8ED71EAB7701A6702699819AF",
+      "changed_after_review": false
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/requirements-architecture-traceability.md",
+      "semantic_review_sha256": "BE60629E093A4C558417C292BDF53CB3A027B3984045521269A4CF347C5C022F",
+      "final_sha256": "01A71A58DCC8240CA524C479B0A626C940465AC1E60A75D76B1B0C69FF3DC19C",
+      "changed_after_review": true
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md",
+      "semantic_review_sha256": "9695CAEC3D1505432AA1BA0999D501DB22B99F4F3EF8AB64BF42D9304B636D4F",
+      "final_sha256": "9695CAEC3D1505432AA1BA0999D501DB22B99F4F3EF8AB64BF42D9304B636D4F",
+      "changed_after_review": false
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/technical-decisions-dialogue.md",
+      "semantic_review_sha256": "73261E5C4995085B58EA3C46E34B85EFB399DFB8ECE33F05A5A631474A5CFAE7",
+      "final_sha256": "73261E5C4995085B58EA3C46E34B85EFB399DFB8ECE33F05A5A631474A5CFAE7",
+      "changed_after_review": false
+    }
+  ]
+}

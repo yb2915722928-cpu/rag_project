@@ -1,0 +1,26 @@
+{
+    "environment":  {
+                        "engine":  "Windows.Media.Ocr.OcrEngine",
+                        "os":  "Microsoft Windows NT 10.0.26300.0",
+                        "powershell":  "5.1.26100.9711",
+                        "available_languages":  [
+                                                    "zh-Hans-CN"
+                                                ],
+                        "selected_language":  "zh-Hans-CN",
+                        "max_image_dimension":  10000
+                    },
+    "results":  [
+                    {
+                        "input":  "E:\\aaa-project\\rag\\_bmad-output\\planning-artifacts\\research\\technical-document-parsing-2026-10-15\\historical-replay\\scan-1x.png",
+                        "render_scale":  1,
+                        "status":  "failed",
+                        "error":  "Exception calling \"Wait\" with \"1\" argument(s): \"One or more errors occurred.\""
+                    },
+                    {
+                        "input":  "E:\\aaa-project\\rag\\_bmad-output\\planning-artifacts\\research\\technical-document-parsing-2026-10-15\\historical-replay\\scan-2x.png",
+                        "render_scale":  2,
+                        "status":  "failed",
+                        "error":  "Exception calling \"Wait\" with \"1\" argument(s): \"One or more errors occurred.\""
+                    }
+                ]
+}

@@ -1,0 +1,21 @@
+# R2-M2 官方证据（访问：2026-10-16，Asia/Shanghai）
+
+只查预算相关路径；项目需求用于框定问题，不是上游事实。源码为固定提交静态观察，置信度中；没有运行项目、接千问账号、调用收费 API 或测 token／性能。官方动态文档是同一发布者的接口说明，单源置信度中，接入时须重核。未找到某机制不等于全仓没有。
+
+| ID | 本轮实际访问的来源 | 支持的窄结论／不支持的范围 |
+|---|---|---|
+| W1 | Tencent/WeKnora，固定 SHA a37a1bc51ad85d096df341f6d3a098f60d586f52：[common.go](https://github.com/Tencent/WeKnora/blob/a37a1bc51ad85d096df341f6d3a098f60d586f52/internal/application/service/chat_pipeline/common.go#L35-L101)，范围 35–101、119–190 | 生成 options 分别赋 MaxTokens／MaxCompletionTokens；system、历史、当前 UserContent 拼消息；历史按 maxRounds 保留。这里只观察这些函数，不推出全仓无总预算机制；不把配置值当厂商 API 可用上限。 |
+| W2 | 同 SHA：[chat_completion.go](https://github.com/Tencent/WeKnora/blob/a37a1bc51ad85d096df341f6d3a098f60d586f52/internal/application/service/chat_pipeline/chat_completion.go#L43-L85)，范围 43–85 | 准备消息后调用模型，日志含 FinishReason 与 input/output usage，随后交 ChatResponse。此片段不能证明全仓会把 length 整答失败；可借鉴记录 finish reason，不照抄放行假设。 |
+| W3 | 同 SHA：[load_history.go](https://github.com/Tencent/WeKnora/blob/a37a1bc51ad85d096df341f6d3a098f60d586f52/internal/application/service/chat_pipeline/load_history.go#L32-L64)，范围 32–64；[into_chat_message.go](https://github.com/Tencent/WeKnora/blob/a37a1bc51ad85d096df341f6d3a098f60d586f52/internal/application/service/chat_pipeline/into_chat_message.go#L253-L278)，范围 253–278 | 历史有会话来源与轮数限制；另有保存渲染内容的路径。结合 W1 可见“历史消息”和“当前提示”需一起预算。本项目不沿用其旧答／渲染上下文作为新证据。 |
+| X1 | 1Panel-dev/MaxKB，固定 SHA 0fa9a0dae8850c1878f087f0d81c974c1d424b06：[base_generate_human_message_step.py](https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/application/chat_pipeline/step/generate_human_message_step/impl/base_generate_human_message_step.py#L22-L71)，范围 22–71 | 按 dialogue_number 取问答历史，system 另加，段落按 Python len 和 max_paragraph_char_number 截取，再替换 question。字符控制与历史轮数本身不证明实际 tokenizer 总预算。不能据此宣称整个 MaxKB 没有 token 控制。 |
+| X2 | 同 SHA：[base_search_dataset_step.py](https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/application/chat_pipeline/step/search_dataset_step/impl/base_search_dataset_step.py#L36-L78)，范围 36–78 | 使用独立 embedding_model_id；query 输入可为 padding_problem_text，再 embed_query，然后检索。说明 query 实际字符串也需独立计数，问答型号不能推出 embedding 限制。其授权过滤不等于本项目逐目标整拒语义。 |
+| X3 | 同 SHA：[base_chat_node.py](https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/application/flow/step_node/ai_chat_step_node/impl/base_chat_node.py#L197-L237)，范围 197–237、522–535、612–613 | 取得模型参数并构造 system／history／question，历史按轮数处理。这里只追这条路径，没有把 workflow 默认值当通用 Qwen API 保证。 |
+| A1 | 阿里云：[模型用量](https://help.aliyun.com/zh/model-studio/model-usage-statistics)，本轮页面行 106–115；发布／更新时间页面未显示 | token 数依赖实际模型分词器，真实用量以接口统计为准；各模型有输入／输出 token 限制。支持拒用固定“字符÷常数”当保证，不提供当前账号模型能力。 |
+| A2 | 阿里云：[DashScope API reference](https://www.alibabacloud.com/help/en/model-studio/qwen-api-via-dashscope)，本轮页面行 352–377、410–417、1617–1642；动态页 | max_tokens 与 max_completion_tokens 对思考／答案的口径及适用模型有区别；length 表示过长而停止；JSON 模式支持随型号而异；usage 有输入／输出。支持显式适配与截断失败，不证明任一未选型号都支持 strict schema／无思考／相同上下文上限。 |
+| A3 | 阿里云：[同步 embedding API](https://help.aliyun.com/en/model-studio/text-embedding-synchronous-api)，input／model overview／text_type 各节；动态页 | 每条输入、批条数限制随型号／版本而异；query/document 用途独立。故接入 profile 必填 per_item_tokens、batch_items 等，不从生成模型推导。未把页面任一型号数字设为本项目已测值。 |
+
+GitHub blob 曾出现读取错误，随后本轮以官方 raw.githubusercontent.com 固定 SHA 原始 GET 重新访问成功，文本副本保存在本目录 source-snapshots/（仅引用资料，不是项目实现）。关键副本校验 SHA-256：W1 common=db14a17d484e04a30573697cbe121dc15bc6d225a4b41e74dd2d0c2b27f18d8d；W2 chat_completion=64ed2137f39fcfa88325343142611b8f476457a11c3904a2131996d38ecf5d9e；X1 human_message=e873e6e04002a08e1e6014d924358dfbdbd2e3e0e8ba428943917ec17bc2465b；X2 search=7bd721e9ecbfe075314f6f121cbf4adb303745459740c4fb968e46630723a920。补查提交日期的 GitHub commits API 返回403 rate limit，故不填推测日期；不影响已读固定原文。MaxKB qwen provider __init__ 为0字节，仅登记观察，不拿空文件推出没有实现。
+
+停止扩查：W1/X1 独立项目的静态源码共同表明历史／字符／输出参数应分开考察；A1–A3 提供所需厂商口径。它们不能验证本项目算法、最终质量或吞吐量。未证范围：实际选型／账号限额、tokenizer 与 API 完全一致性、隐藏封装成本、SDK 运行行为、alias 版本稳定性、4×6 最大输入能否通过、4 核 4GB 的真实资源与全部 SM 成绩，留给原有 P0 接入与验收，不增产品范围。
+
+John追问只补查一个官方线索（2026-10-16）：[OpenSearch Token计算](https://help.aliyun.com/zh/open-search/token-calculation)。页面确有messages输入的tokenizer接口，但属于OpenSearch产品／端点／鉴权；不能证明本项目百炼DashScope任意型号有同等服务，不移植其8MB限制或支持模型范围，不据此新增OpenSearch。无新增千问能力主张，随后停止网络查找。

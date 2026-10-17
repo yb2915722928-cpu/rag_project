@@ -1,0 +1,112 @@
+{
+  "status": "final",
+  "artifacts": [
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/epics.md",
+      "bytes": 73159,
+      "sha256": "6464141b3a2b4dcde5b4695de41941153f94ebabcb131eb258b3ecf5f7345897"
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ce-review-2026-10-16/acceptance-allocation.md",
+      "bytes": 13242,
+      "sha256": "76a0f39951c2176e7e44ce32c2401e43027a005c3d73a91cd8e9547cef7705cb"
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ce-review-2026-10-16/changes.diff",
+      "bytes": 18834,
+      "sha256": "eb1544702801d8c499352be7f8a8ffbaeccb6a9ab9adc2f115c245eed8529d63"
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ce-review-2026-10-16/current-manifest.json",
+      "bytes": 3771,
+      "sha256": "897c2b2fedc914e264860da3d646db9db9fe6cdf9373a200100acea01b50e8ec"
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ce-review-2026-10-16/draft/epics.md",
+      "bytes": 69122,
+      "sha256": "e624fb4816d43d1d3ba1b02338d82b1cd441b07b0618481b1ac43db845d68512"
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ce-review-2026-10-16/draft/story-traceability.md",
+      "bytes": 55359,
+      "sha256": "41516ece14be55c0e00e5b07eeb3d40cf55cd1c32767d1e618eb93b376acf890"
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ce-review-2026-10-16/final-verification.json",
+      "bytes": 1047,
+      "sha256": "3dc50d9c57139e1ac1acc15308d145b7a8ad54607f958889399246adb1b574d9"
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ce-review-2026-10-16/prepare_review.py",
+      "bytes": 9807,
+      "sha256": "2e4a8d0bf5488cffddb5367d56227b438a78be7cc975c8f1d49d73fcd4122f2f"
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ce-review-2026-10-16/review-coverage.md",
+      "bytes": 11249,
+      "sha256": "c4f790738b2092e5af6c1be039d2e80b35aa7d1f28519e0a2fe2da9e4396eec8"
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ce-review-2026-10-16/review-coverage.original.md",
+      "bytes": 10333,
+      "sha256": "5eb7e063b1d2d803e78011b95d94afae933ba2d8634ca9b84bc003102ccae23e"
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ce-review-2026-10-16/review-dispatch.md",
+      "bytes": 1767,
+      "sha256": "2780320a3c7f482487105bbcf97ebd02db08c94ade1f6859084758b7cf920f2b"
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ce-review-2026-10-16/review-manifest.json",
+      "bytes": 3771,
+      "sha256": "cc5875c7c4df6e1d2ec4aac5fd44c022c28fe86a1249d2d93026815fe6a2c49c"
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ce-review-2026-10-16/review-record.md",
+      "bytes": 9221,
+      "sha256": "1a3bb6cc417c6d761941490eba99c462594074c838221d227361c719bbea3816"
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ce-review-2026-10-16/review-stories.md",
+      "bytes": 9634,
+      "sha256": "f9b65522f3472e2926905b86ac4b9a565f66da38f11b91ea231460627baf6098"
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ce-review-2026-10-16/review-stories.original.md",
+      "bytes": 8900,
+      "sha256": "f9a519f10fe8e0be821fa2d8fb6f400c76d74b4caa01b8fe00742e511a763da5"
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ce-review-2026-10-16/static-checks.json",
+      "bytes": 160,
+      "sha256": "10773554e6d432817722ad5a07e736d4e73ecf04df70de7fca7abb8d083987a0"
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ce-review-2026-10-16/story-index.json",
+      "bytes": 26747,
+      "sha256": "d1ca782407150e4551c98506d6c59764fcac3e7cdb0116ec91a574aeb00ddd30"
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ce-review-2026-10-16/story-traceability.md",
+      "bytes": 64065,
+      "sha256": "71b749ec67a6b13fd8ecb163801d16307489fae7401ad3ba03be3bda0ab564c4"
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ce-review-2026-10-16/validate_documents.py",
+      "bytes": 2012,
+      "sha256": "08b3e6b50e379f55b742b4135710728fc5925f397e1ad4d0917bd768bd4c93e0"
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ce-review-2026-10-16/verify_final.py",
+      "bytes": 3248,
+      "sha256": "5389c08e9c7fd4e0b4afe6aa74bed4c3f5370a6a42321f96470f45289a0833c7"
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ce-review-2026-10-16/document-checks.json",
+      "bytes": 3443,
+      "sha256": "79fa35d47a99de198c52318e00ad8f223ff7320d59521313ad500f621312dd9d"
+    }
+  ],
+  "upstream_unchanged": true,
+  "runtime_tests": "not-executed"
+}

@@ -1,0 +1,188 @@
+[
+  {
+    "id": "A01",
+    "lens": "adversarial",
+    "location": "[shared-contracts.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:139)，C8；[runtime-operations.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md:29)，R2",
+    "trigger_condition": "may_have_sent取得RPS/TPM窗口后，child在允许的阶段期限内延迟发送；原窗口已自然过期，新grant与旧grant可在同一实际发送窗口集中消费。",
+    "guard_snippet": "为grant规定受监督的最晚消费界，并明确窗口预占覆盖从授权到最晚可能消费的区间；过界只能终结原call并以新call重新领许可，不能继续消费旧grant。补1秒RPS窗口跨界延迟的负例。",
+    "potential_consequence": "PG计数和唯一call均合法，实际本地发出的请求/token仍可成批超过配置窗口；远端task的最晚到达保护没有保护RPS/TPM。"
+  },
+  {
+    "id": "A02",
+    "lens": "adversarial",
+    "location": "[shared-contracts.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:135)，C8；[runtime-operations.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md:93)，R6",
+    "trigger_condition": "平台将job/task或账号维度上限从4降至2，已有3项占用且另有旧配置快照等待派发；配置发布没有与gate/pool共用的生效事务和超额债务语义。",
+    "guard_snippet": "定义配置激活的线性化点：按既定锁序锁本地gate/pool，保留全部真实占用，降额后只停新增领取至占用低于新额；区分业务预算快照与每次派发读取的现行安全上限。升额只激活已有对应验证证据的档位。",
+    "potential_consequence": "API和worker可能分别沿新旧上限领取，或用新上限覆盖计数而丢占用；已核较小上限不能实际约束新派发。"
+  },
+  {
+    "id": "A03",
+    "lens": "adversarial",
+    "location": "[runtime-operations.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md:17)，R1；[shared-contracts.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:137)，C8",
+    "trigger_condition": "四个远端task长期pending时继续接收许多小原件；queued不占active_job，而“有限PG队列”未给出独立计数边界、受理点和排队顺序。",
+    "guard_snippet": "补全全系统及空间的有限待处理job数量配置，在候选受理时预占或明确在原件接收前拒绝；固定queued领取的稳定顺序/公平性和过期优先扫描，原2h期限不延长。",
+    "potential_consequence": "实现可仅靠原件字节额度堆积大量小job，任务元数据与扫描积压先耗资源；用户已经上传的任务可在从未处理时成批耗尽2h。"
+  },
+  {
+    "id": "A04",
+    "lens": "adversarial",
+    "location": "[shared-contracts.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:57)，C4；[prd.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/prd.md:141)，FR-2",
+    "trigger_condition": "成员退出/被移除时只让旧scope与当前成员关系取空交集，保留旧空间Bearer及逐库授权；同账号之后重新接受该团队邀请。",
+    "guard_snippet": "明确成员关系终结同UoW永久撤销该成员的团队凭证，并清除或按成员关系代次封存旧逐库授权；若采用代次绑定，旧凭证/ACL不得因重加入复活。按账号→space前缀锁相应主体。",
+    "potential_consequence": "撤权期间每次当前校验都正确，重新入队后旧Bearer和旧ACL却自动恢复；违反退出凭证失效及加入本身不授库权的原条款。"
+  },
+  {
+    "id": "A05",
+    "lens": "adversarial",
+    "location": "[shared-contracts.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:68)，C4；[page-contracts.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/ux-designs/ux-RAG_all-2026-10-16/page-contracts.md:201)，IA-11",
+    "trigger_condition": "所有者与库负责人都基于同一旧ACL表单编辑；所有者先撤B，负责人随后提交包含B的旧完整集合，双方action_key均不同且当前仍有管理权。",
+    "guard_snippet": "为替换式ACL、角色和配置保存定义expected_revision/If-Match，版本不符409并要求重读；显式增删动作也须指明其目标变化。action_key继续只负责同一动作重传，不能替代陈旧状态冲突。",
+    "potential_consequence": "space EX将两个保存顺序执行，仍会静默恢复刚撤的权限或覆盖另一管理员变更，无法实现UX既定的冲突不覆盖。"
+  },
+  {
+    "id": "A06",
+    "lens": "adversarial",
+    "location": "[shared-contracts.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:42)，C3",
+    "trigger_condition": "一个保留表头与数据的来源原子组跨PDF两页，或同chunk含不连续图注/表格范围；契约允许多个spans，但只给单个physical_page/bbox和source_locator。",
+    "guard_snippet": "明确spans的对象schema并让每个span/来源原子组绑定自己的source_asset_id及可信locator，验证文本范围与页/区域对应；catalog/citation支持逐片段定位或拆分引用，仍保持最终chunk数≤5。",
+    "potential_consequence": "两个正确页上的片段可同时通过文本hash和单页bbox检查，引用却只能打开其中一页；简单跨页表格的必要事实无法完整核验。"
+  },
+  {
+    "id": "A07",
+    "lens": "adversarial",
+    "location": "[shared-contracts.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:37)，C3；[implementation-contract.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:184)，§3.4",
+    "trigger_condition": "独立视觉API生成的图意说明作为受控块进入索引，现有来源schema只区分pdf/structured，无法区分原文提取与模型派生说明。",
+    "guard_snippet": "为来源块/实见证据补representation/provenance字段：提取文本或图意派生、原图/裁图hash及locator、生成call/profile/处理配置和校核状态；派生说明独立不可变保存并在来源DTO中显式标记。",
+    "potential_consequence": "可把图意说明写入source_text并用原PDF哈希背书，UI无法可靠展示原件/提取/图意说明区别，后续核验也无法追踪这段话来自哪次视觉调用。"
+  },
+  {
+    "id": "A08",
+    "lens": "adversarial",
+    "location": "[shared-contracts.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:65)，C4；[implementation-contract.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:97)，§2.5；[page-contracts.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/ux-designs/ux-RAG_all-2026-10-16/page-contracts.md:211)，IA-12",
+    "trigger_condition": "只有平台身份的接入管理员点击独立于保存的“验证接入”，需要使用待保存凭据发起一次有限真实探测，但调用归属只定义operation/job/retrieval及其业务资格。",
+    "guard_snippet": "补平台validation_context及同UoW矩阵项：当前平台权限、epoch/action_key、待验证配置指纹/最少秘密、有限deadline/探测次数与预算，所有传输共用call/permit/迟到账；使用非业务常量样例，不能借验证取得库正文权限。",
+    "potential_consequence": "实现只能绕过统一派发/三账入口，或伪造库任务/查询身份才能验证；验证通过状态与实际所测配置也可错配。"
+  },
+  {
+    "id": "A09",
+    "lens": "adversarial",
+    "location": "[shared-contracts.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:69)，C4；[runtime-operations.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md:51)，R4",
+    "trigger_condition": "合法GET返回答案/页图/原件后被浏览器或代理缓存；用户撤权或换账号后，同URL可被缓存复用而不经过后端当前鉴权。",
+    "guard_snippet": "给全部私有API、错误、引用与资源响应固定Cache-Control:no-store，gateway禁止缓存该路由族；如允许条件请求，鉴权必须先于304。将浏览器历史恢复纳入先遮蔽/重核context再显示的约束，不能只清Pinia。",
+    "potential_consequence": "每个真正到达后端的请求都正确鉴权，客户端仍可能在新身份下拿到旧私有正文；本地代次和后端重核没有控制HTTP缓存。"
+  },
+  {
+    "id": "A10",
+    "lens": "adversarial",
+    "location": "[shared-contracts.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:127)，C7；[implementation-contract.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:330)，§5.1",
+    "trigger_condition": "合法UTF-8 TXT/Markdown原件包含HTML/脚本语法，经受控原件入口以可执行MIME或浏览器嗅探形式在应用同源inline打开；现有不执行HTML只约束本地解析/清洗视图。",
+    "guard_snippet": "定义资源交付schema：原件固定attachment及安全文件名，类型取服务器格式白名单并设nosniff；inline仅给已核安全的预览表示，主动内容须隔离origin或严格sandbox/CSP，不能透传上游Content-Type。",
+    "potential_consequence": "后端授权和EgressTarget均正确，用户提供的主动内容仍可能在本应用来源执行并发起带Cookie的请求；模型Markdown清洗不能保护原件下载响应。"
+  },
+  {
+    "id": "A11",
+    "lens": "adversarial",
+    "location": "[implementation-contract.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:196)，§3.5；[shared-contracts.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:65)，C4；[runtime-operations.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md:31)，R2",
+    "trigger_condition": "新问题显式只选库B，但受理快照已纳入同空间旧轮次A的用户问题；A在受理后、下一次embedding/生成前被撤权，派发事务只重核新操作的原显式目标B。",
+    "guard_snippet": "把辅助历史的turn_id及其可读授权依赖纳入执行快照的authorization_dependency_set，每次使用/外传与最终放行重核；失效后按已定整条历史剔除并重新预算，若指代不可解则澄清，不能继续使用缓存历史。",
+    "potential_consequence": "历史在选取时合法、当前显式目标也合法，但失权历史仍进入供应方上下文；仅限制两条/2048码点及禁止旧答案证据不能挡住该路径。"
+  },
+  {
+    "lens": "edge-case-hunter",
+    "location": "[shared-contracts.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:139)",
+    "trigger_condition": "窗口到期后，暂停的 child 仍消费旧 grant 发送",
+    "guard_snippet": "窗口释放须证明旧 grant 不再可发送，并覆盖最晚到达时刻",
+    "potential_consequence": "新旧调用挤入同一实际窗口，突破账号限流并使已受理操作失败"
+  },
+  {
+    "lens": "edge-case-hunter",
+    "location": "[shared-contracts.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:91)",
+    "trigger_condition": "首次登录没有会话或会话绑定 CSRF token",
+    "guard_snippet": "为登录 POST 定义匿名 CSRF 引导或明确登录专用防护，成功后旋转会话",
+    "potential_consequence": "统一写守卫拒绝首次登录，或各入口自行猜测豁免规则"
+  },
+  {
+    "pass": "structure",
+    "tag": "MOVE",
+    "original_text": "[架构主干](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/ARCHITECTURE-SPINE.md:23)开头只有业务/UX来源与companion文件名；完整AD/C/R职责导航在[需求追踪§1](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/requirements-architecture-traceability.md:5)（232词），切片到强制条款的入口在[§6](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/requirements-architecture-traceability.md:142)。",
+    "revised_text": "MOVE 将§1权威输入与承接索引移到主干目的之后、概念总览之前，并把现有切片门槛链接直接定位到§6；追踪矩阵保留回指。",
+    "changes": "触发：实现者第一次按S0或单一AD开工。现有companion清单没有说明去哪里查当前切片的完整C/R约束，AD14到主干后段才指向追踪；读者需自行拼接阅读路径，容易把摘要Rule作为完整契约。前移现有导航可先交代权威/查找方式，再进入八模块与依赖图。字数影响：移动232词，净减约0。",
+    "word_impact": {
+      "measured_source_words": 232,
+      "moved_words": 232,
+      "estimated_net_saved_words": 0
+    }
+  },
+  {
+    "pass": "structure",
+    "tag": "MERGE",
+    "original_text": "完整PG锁序同时展开于[架构主干AD3](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/ARCHITECTURE-SPINE.md:71)（248词）、[运行契约R3](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md:47)（350词）、[实施契约§2.6](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:113)，范围：113–115（377词）；[共享契约C4](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:55)另有完整规范。",
+    "revised_text": "MERGE 完整序列及其当前授权/后台任务例外收口到C4；其余三处保留用例事务、OS停写和清理语境，用定点链接引用C4/C8，不再逐项复制序列。",
+    "changes": "触发：后续增加锁类别或调整许可释放流程。虽然各处已链接C4，正文仍各自给出可直接实现的完整顺序；引用不能同步复制的列表，维护者需人工改四份，遗漏一处即可让不同模块依不同段落取锁。保留摘要与局部操作目的，集中机械序列即可消除平行维护面，不改变锁、权限或执行行为。字数影响：三处原975词，最小示意替换合计417词，预计净减558词。",
+    "word_impact": {
+      "measured_source_words": 975,
+      "proposed_words": 417,
+      "estimated_net_saved_words": 558
+    },
+    "illustrative_replacements": [
+      {
+        "source": "[架构主干](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/ARCHITECTURE-SPINE.md:71)",
+        "lines": [
+          71,
+          71
+        ],
+        "original_words": 248,
+        "proposed_text": "- **Rule:** 同步SQLAlchemy短Session每线程独立；application统一begin/commit/rollback，仓储不commit、不跨线程传Session。全局锁序、当前授权SH/EX覆盖、后台已受理库任务前缀与迟到成本例外统一见[共享契约C4](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:51)。PG事务内不等待OS锁、网络、进程退出或大文件删除；OS锁取得后才开短事务复核。",
+        "proposed_words": 100,
+        "saved_words": 148
+      },
+      {
+        "source": "[运行契约](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md:47)",
+        "lines": [
+          47,
+          47
+        ],
+        "original_words": 350,
+        "proposed_text": "PG锁序、账号/space控制行SH/EX覆盖、多主体与多KB锁集合、后台库任务前缀及同UoW矩阵统一见[共享契约C4](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:51)；permit的独立一次释放见[C8](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:141)。本节清理流程遵守该锁序，迟到成本仅锁call，不回取父锁或退permit。OS锁先于短PG事务取得；不持PG事务等待OS锁、网络、进程退出或大文件删除。",
+        "proposed_words": 115,
+        "saved_words": 235
+      },
+      {
+        "source": "[实施契约](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:113)",
+        "lines": [
+          113,
+          115
+        ],
+        "original_words": 377,
+        "proposed_text": "全局PG锁序及当前授权前缀、SH/EX覆盖、组件独立释放与迟到成本例外统一见[共享契约C4](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:51)，不得反序或无序升级。先在事务外取得稳定OS锁，再开短PG事务复核；不持Session/PG事务等OS锁、网络、进程退出或大文件删除。物理停写与清理步骤见[R3](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md:35)；无法证明停写或清理/账提交失败，保留占用、显示cleanup_blocked并可重试，不恢复删除访问；仅DB有效写意图终结可解除重建阻塞，物理余账仍另核预算。稳定OS锁覆盖可写生命周期，清理取排它锁，不凭目录暂空/unlink归还打开FD占用。",
+        "proposed_words": 202,
+        "saved_words": 175
+      }
+    ]
+  },
+  {
+    "pass": "structure",
+    "tag": "MOVE",
+    "original_text": "[需求追踪§7](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/requirements-architecture-traceability.md:161)，范围：161–163（540词），混排B/A互审、B3/H1/H2修复过程、旧结论关闭及当前并发规则。",
+    "revised_text": "MOVE 将两段修复沿革移入已有审查gate记录的历史部分；当前追踪只保留现行覆盖结论、未取得证据和历史入口链接，现行并发规则继续由实施契约/C8/R1承载。",
+    "changes": "触发：下一位实现者或维护者确认当前约束与未证门槛。§7同时承载现行摘要与按轮次叙述的修复史，且把“当前权威结论”再导向审查签署；即使已声明规划不等于实测，读者仍需筛掉已关闭反例并逐段区分规则与形成过程。历史完整保留在审查记录，可让实施包按当前状态收束。字数影响：移动540词，资料总量净减约0。",
+    "word_impact": {
+      "measured_source_words": 540,
+      "moved_words": 540,
+      "estimated_net_saved_words": 0
+    }
+  },
+  {
+    "pass": "structure",
+    "tag": "CONDENSE",
+    "original_text": "[技术证据E4末段](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/technology-evidence.md:61)（185词）重述两项全系统gate、本机槽、等待资源、调度及P0/S6验收要求。",
+    "revised_text": "CONDENSE 保留“用户授权的未测seed，不证明账号或4GB已通过”这一证据状态；完整并发取值/生命周期、调度与门槛改为引用实施契约§2.6、C8及R1/R6。",
+    "changes": "触发：并发配置、调度或验收步骤再次变化。该段没有新增官方证据，却在证据目录内维护一份完整动作契约；其链接和“未测”声明不能避免行为段落日后滞后，接入者仍须比较两份文字。凝缩后技术证据页负责来源与适用限度，规则继续从原权威位置读取，保留两个gate各默认4/范围1–4与本机重阶段1的既定行为。字数影响：185词改为56词示意引用，预计净减129词。",
+    "word_impact": {
+      "measured_source_words": 185,
+      "proposed_words": 56,
+      "estimated_net_saved_words": 129
+    },
+    "illustrative_replacement": "并发seed、完整调度/许可规则及真实验证门槛分别见[实施契约§2.6](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:103)、[C8](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:129)、[R1/R6](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md:5)。本表不证明账号支持4或4GB资源已验证；依赖版本未因此变化。"
+  }
+]

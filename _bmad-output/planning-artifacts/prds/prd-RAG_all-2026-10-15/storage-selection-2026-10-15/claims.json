@@ -1,0 +1,7 @@
+[
+  {"claim":"pgvector ANN filtering and memory requirements; publication date unspecified, access date used only as a recheck baseline", "class":"compatibility", "pub_date":"2026-10"},
+  {"claim":"Milvus Standalone requirements; publication date unspecified, access date used only as a recheck baseline", "class":"compatibility", "pub_date":"2026-10"},
+  {"claim":"Milvus Lite 3.2.2 package and Beta metadata", "class":"compatibility", "pub_date":"2026-10"},
+  {"claim":"MongoDB Community Search GA announcement", "class":"landscape", "pub_date":"2026-06"},
+  {"claim":"MongoDB current supported versions and mongot topology; publication date unspecified, access date used only as a recheck baseline", "class":"compatibility", "pub_date":"2026-10"}
+]

@@ -1,0 +1,128 @@
+{
+  "scope": "final planning artifacts and review-byte coverage; not runtime tests",
+  "date": "2026-10-16",
+  "canonical_design_files": [
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/ARCHITECTURE-SPINE.md",
+      "expected_sha256": "f2562f959fceb22ec06f0328f39d1dcc28312494a2badcbcc08edeea75f389a2",
+      "actual_sha256": "f2562f959fceb22ec06f0328f39d1dcc28312494a2badcbcc08edeea75f389a2",
+      "snapshot_sha256": "f2562f959fceb22ec06f0328f39d1dcc28312494a2badcbcc08edeea75f389a2",
+      "match": true
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md",
+      "expected_sha256": "3cbeb99748de09e9f33e2daf97308b4c4ea6faef54c9b370ff7c40228e03af5b",
+      "actual_sha256": "3cbeb99748de09e9f33e2daf97308b4c4ea6faef54c9b370ff7c40228e03af5b",
+      "snapshot_sha256": "3cbeb99748de09e9f33e2daf97308b4c4ea6faef54c9b370ff7c40228e03af5b",
+      "match": true
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md",
+      "expected_sha256": "54498a3c7aa600348cfc65dab8952f090b547ba2ed0b32f05b8103de508c1e68",
+      "actual_sha256": "54498a3c7aa600348cfc65dab8952f090b547ba2ed0b32f05b8103de508c1e68",
+      "snapshot_sha256": "54498a3c7aa600348cfc65dab8952f090b547ba2ed0b32f05b8103de508c1e68",
+      "match": true
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/requirements-architecture-traceability.md",
+      "expected_sha256": "4e31b70cd804c350a20b2c81fe914ac98eeb62180991be632de1c40bd501d27c",
+      "actual_sha256": "4e31b70cd804c350a20b2c81fe914ac98eeb62180991be632de1c40bd501d27c",
+      "snapshot_sha256": "4e31b70cd804c350a20b2c81fe914ac98eeb62180991be632de1c40bd501d27c",
+      "match": true
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/technology-evidence.md",
+      "expected_sha256": "f7b53dc1232fb0d518485479d99f79ed5767669f4346a688cf35c90966da9da8",
+      "actual_sha256": "f7b53dc1232fb0d518485479d99f79ed5767669f4346a688cf35c90966da9da8",
+      "snapshot_sha256": "f7b53dc1232fb0d518485479d99f79ed5767669f4346a688cf35c90966da9da8",
+      "match": true
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/prd.md",
+      "expected_sha256": "0963d529922a6b3812c8f8311f29f5112a537a59ca62616f4dc45a245baaa299",
+      "actual_sha256": "0963d529922a6b3812c8f8311f29f5112a537a59ca62616f4dc45a245baaa299",
+      "snapshot_sha256": "0963d529922a6b3812c8f8311f29f5112a537a59ca62616f4dc45a245baaa299",
+      "match": true
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md",
+      "expected_sha256": "1482841f4c780cf79402c80f7f06e45c1579dbe73c9929f749f54fa1cc18e0c7",
+      "actual_sha256": "1482841f4c780cf79402c80f7f06e45c1579dbe73c9929f749f54fa1cc18e0c7",
+      "snapshot_sha256": "1482841f4c780cf79402c80f7f06e45c1579dbe73c9929f749f54fa1cc18e0c7",
+      "match": true
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-slices.md",
+      "expected_sha256": "21c2b54c797755689d70f1fcef22b6504301073ecf16b631fd3a823c473f834c",
+      "actual_sha256": "21c2b54c797755689d70f1fcef22b6504301073ecf16b631fd3a823c473f834c",
+      "snapshot_sha256": "21c2b54c797755689d70f1fcef22b6504301073ecf16b631fd3a823c473f834c",
+      "match": true
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ux-designs/ux-RAG_all-2026-10-16/DESIGN.md",
+      "expected_sha256": "179cfc6eccdeb58ed3fb9ee8ec3abb400f9ac7e7e49b8e197596a256ffaefc48",
+      "actual_sha256": "179cfc6eccdeb58ed3fb9ee8ec3abb400f9ac7e7e49b8e197596a256ffaefc48",
+      "snapshot_sha256": "179cfc6eccdeb58ed3fb9ee8ec3abb400f9ac7e7e49b8e197596a256ffaefc48",
+      "match": true
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ux-designs/ux-RAG_all-2026-10-16/EXPERIENCE.md",
+      "expected_sha256": "67d0b4d412eba225b2e13a6578c89c69237c303df26c5707e3863f35eb8a28a2",
+      "actual_sha256": "67d0b4d412eba225b2e13a6578c89c69237c303df26c5707e3863f35eb8a28a2",
+      "snapshot_sha256": "67d0b4d412eba225b2e13a6578c89c69237c303df26c5707e3863f35eb8a28a2",
+      "match": true
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ux-designs/ux-RAG_all-2026-10-16/page-contracts.md",
+      "expected_sha256": "f1e8cfd2588e63188aefbf779aa7af4c054460cc03246ff820a7c8627706d2b1",
+      "actual_sha256": "f1e8cfd2588e63188aefbf779aa7af4c054460cc03246ff820a7c8627706d2b1",
+      "snapshot_sha256": "f1e8cfd2588e63188aefbf779aa7af4c054460cc03246ff820a7c8627706d2b1",
+      "match": true
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ux-designs/ux-RAG_all-2026-10-16/acceptance.md",
+      "expected_sha256": "68ba6634d6714fe1185ebe62c4e90f0ad32dd0d8a8aae88777d5ed71d5fe6ebb",
+      "actual_sha256": "68ba6634d6714fe1185ebe62c4e90f0ad32dd0d8a8aae88777d5ed71d5fe6ebb",
+      "snapshot_sha256": "68ba6634d6714fe1185ebe62c4e90f0ad32dd0d8a8aae88777d5ed71d5fe6ebb",
+      "match": true
+    }
+  ],
+  "canonical_match_count": 12,
+  "baseline_match_count": 15,
+  "reviews": [
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/ca-remediation-2026-10-16/reviews/review-adversarial.md",
+      "sha256": "b2d9b33522616793aa5e8bdab3fa0dcac695c365aef2b4628649451e9f8a6adc",
+      "signed_design_file_count": 3,
+      "all_expected_design_sha_present": true
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/ca-remediation-2026-10-16/reviews/review-technology.md",
+      "sha256": "be5bf90952423458afd9ac7f0c367f9500ded6a7ef3b33d00b2bc20df85fcd57",
+      "signed_design_file_count": 4,
+      "all_expected_design_sha_present": true
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/ca-remediation-2026-10-16/reviews/review-rubric-ir.md",
+      "sha256": "e1ff4457c950fc501e17c63c16043325f374c5bcd9f57b21da7a0ad7b215cda9",
+      "signed_design_file_count": 12,
+      "all_expected_design_sha_present": true
+    }
+  ],
+  "published_ir": [
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/ca-remediation-2026-10-16/implementation-readiness.md",
+      "sha256": "499fe6139e5be12988b88ee347b28606f7c917d18155e6a8c0ec3cc20eaa9f7d"
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/implementation-readiness.md",
+      "sha256": "499fe6139e5be12988b88ee347b28606f7c917d18155e6a8c0ec3cc20eaa9f7d"
+    },
+    {
+      "path": "E:/aaa-project/rag/_bmad-output/planning-artifacts/implementation-readiness.md",
+      "sha256": "499fe6139e5be12988b88ee347b28606f7c917d18155e6a8c0ec3cc20eaa9f7d"
+    }
+  ],
+  "identical_final_ir": true,
+  "ok": true
+}

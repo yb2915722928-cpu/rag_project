@@ -1,0 +1,24 @@
+{
+  "interpreter": "E:\\government\\python3.12.8\\python.exe",
+  "script": "E:\\aaa-project\\rag\\.agents\\skills\\bmad-sprint-planning\\scripts\\sprint_plan.py",
+  "script_sha256": "c4e4daf4200f233501a069a43db56d097c5d4e71f74cd29f132f88b83c2fc95f",
+  "script_modified": false,
+  "dependency": "ruamel.yaml",
+  "dependency_version": "0.18.17",
+  "dependency_path": "E:\\government\\uv\\cache\\archive-v0\\jFALiVrvihRXS3CK\\ruamel\\yaml\\__init__.py",
+  "arguments": [
+    "generate",
+    "--epic-file",
+    "E:\\aaa-project\\rag\\_bmad-output\\planning-artifacts\\epics.md",
+    "--status-file",
+    "E:\\aaa-project\\rag\\_bmad-output\\implementation-artifacts\\sprint-status.yaml",
+    "--stories-dir",
+    "E:\\aaa-project\\rag\\_bmad-output\\implementation-artifacts",
+    "--project",
+    "RAG_all",
+    "--date",
+    "10-17-2026 00:03"
+  ],
+  "exit_code": 0,
+  "scope": "sprint document generation/validation only; product runtime not executed"
+}

@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1040" viewBox="0 0 1600 1040" role="img" aria-label="M1 / 问答与来源 · IA-07 + IA-09"><title>M1 / 问答与来源 · IA-07 + IA-09</title>
+<rect width="1600" height="1040" fill="#F2F3F5"/>
+<rect x="0" y="0" width="1600" height="40" rx="4" fill="#303133" stroke="none" stroke-width="1"/>
+<text x="24" y="10" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="600" fill="#FFFFFF" dominant-baseline="text-before-edge">M1 / 问答与来源 · IA-07 + IA-09</text>
+<text x="1352" y="10" font-family="Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#FFFFFF" dominant-baseline="text-before-edge">模拟资料 · 设计参考 · 非运行结果</text>
+<rect x="0" y="40" width="1600" height="56" rx="0" fill="#FFFFFF" stroke="none" stroke-width="1"/>
+<line x1="0" y1="96" x2="1600" y2="96" stroke="#DCDFE6" stroke-width="1"/>
+<rect x="0" y="96" width="224" height="944" rx="0" fill="#FFFFFF" stroke="none" stroke-width="1"/>
+<line x1="224" y1="96" x2="224" y2="1040" stroke="#DCDFE6" stroke-width="1"/>
+<text x="24" y="58" font-family="Microsoft YaHei, sans-serif" font-size="20" font-weight="600" fill="#1D6CC0" dominant-baseline="text-before-edge">RAG_all</text>
+<text x="248" y="60" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="600" fill="#303133" dominant-baseline="text-before-edge">团队空间：示例研发团队 / 切换</text>
+<text x="1310" y="60" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="400" fill="#606266" dominant-baseline="text-before-edge">小周 · 知识使用者 / 本人</text>
+<rect x="12" y="136" width="200" height="40" rx="4" fill="#ECF5FF" stroke="none" stroke-width="1"/>
+<rect x="12" y="136" width="3" height="40" rx="0" fill="#1D6CC0" stroke="none" stroke-width="1"/>
+<text x="32" y="144" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="600" fill="#1D6CC0" dominant-baseline="text-before-edge">问答</text>
+<text x="32" y="192" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="400" fill="#303133" dominant-baseline="text-before-edge">对比</text>
+<text x="32" y="240" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="400" fill="#303133" dominant-baseline="text-before-edge">知识库</text>
+<line x1="24" y1="304" x2="200" y2="304" stroke="#DCDFE6" stroke-width="1"/>
+<text x="24" y="328" font-family="Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#606266" dominant-baseline="text-before-edge">当前空间会话</text>
+<text x="24" y="368" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="400" fill="#303133" dominant-baseline="text-before-edge">出差审批与材料</text>
+<text x="24" y="408" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="400" fill="#303133" dominant-baseline="text-before-edge">M2 手册核验</text>
+<line x1="24" y1="880" x2="200" y2="880" stroke="#DCDFE6" stroke-width="1"/>
+<text x="24" y="904" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="400" fill="#303133" dominant-baseline="text-before-edge">空间与邀请</text>
+<text x="24" y="944" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="400" fill="#303133" dominant-baseline="text-before-edge">凭证与用量</text>
+<text x="24" y="984" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="400" fill="#303133" dominant-baseline="text-before-edge">本人账户</text>
+<text x="248" y="120" font-family="Microsoft YaHei, sans-serif" font-size="20" font-weight="600" fill="#303133" dominant-baseline="text-before-edge">企业内部知识查询</text>
+<text x="248" y="158" font-family="Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#606266" dominant-baseline="text-before-edge">本会话仅使用当前空间；查看历史仍按当前权限核验。</text>
+<rect x="248" y="192" width="904" height="64" rx="4" fill="#FFFFFF" stroke="#DCDFE6" stroke-width="1"/>
+<text x="272" y="214" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="600" fill="#303133" dominant-baseline="text-before-edge">本次范围</text>
+<rect x="356" y="208" width="134" height="26" rx="4" fill="#F4F4F5" stroke="none" stroke-width="1"/>
+<text x="366" y="213" font-family="Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#606266" dominant-baseline="text-before-edge">制度知识库 · 1 个库</text>
+<text x="1008" y="216" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="400" fill="#1D6CC0" dominant-baseline="text-before-edge">调整范围</text>
+<rect x="368" y="280" width="784" height="64" rx="4" fill="#ECF5FF" stroke="none" stroke-width="1"/>
+<text x="392" y="302" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="400" fill="#303133" dominant-baseline="text-before-edge">出差需要哪些材料？审批负责人是谁？</text>
+<rect x="248" y="368" width="904" height="408" rx="4" fill="#FFFFFF" stroke="#DCDFE6" stroke-width="1"/>
+<rect x="272" y="392" width="98" height="26" rx="4" fill="#F0F9EB" stroke="none" stroke-width="1"/>
+<text x="282" y="397" font-family="Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#2F6F17" dominant-baseline="text-before-edge">有依据的流程</text>
+<text x="272" y="442" font-family="Microsoft YaHei, sans-serif" font-size="18" font-weight="600" fill="#303133" dominant-baseline="text-before-edge">准备材料与适用条件</text>
+<text x="272" y="480" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="400" fill="#303133" dominant-baseline="text-before-edge">适用于本次查询资料所述的普通出差流程。请准备行程安排与费用预算，并按制度要求提交。</text>
+<text x="272" y="552" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="400" fill="#1D6CC0" dominant-baseline="text-before-edge">依据 [1] 出差制度 v2 · 第 3 节</text>
+<line x1="272" y1="596" x2="1128" y2="596" stroke="#DCDFE6" stroke-width="1"/>
+<rect x="272" y="616" width="72" height="26" rx="4" fill="#F4F4F5" stroke="none" stroke-width="1"/>
+<text x="282" y="621" font-family="Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#606266" dominant-baseline="text-before-edge">信息缺口</text>
+<text x="272" y="658" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="400" fill="#303133" dominant-baseline="text-before-edge">资料未提供明确审批负责人，无法据此确定人选。请向当前制度维护者核实。</text>
+<text x="272" y="734" font-family="Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#606266" dominant-baseline="text-before-edge">反馈：有误   ·   缺失依据   ·   引用问题</text>
+<rect x="248" y="800" width="904" height="208" rx="4" fill="#FFFFFF" stroke="#DCDFE6" stroke-width="1"/>
+<text x="272" y="820" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="600" fill="#303133" dominant-baseline="text-before-edge">继续提问</text>
+<text x="272" y="858" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="400" fill="#606266" dominant-baseline="text-before-edge">补充你的问题；Enter 换行，使用按钮提交。</text>
+<rect x="1008" y="952" width="120" height="32" rx="4" fill="#1D6CC0" stroke="#1D6CC0" stroke-width="1"/>
+<text x="1024" y="959" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="400" fill="#FFFFFF" dominant-baseline="text-before-edge">提交问答</text>
+<text x="272" y="960" font-family="Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#606266" dominant-baseline="text-before-edge">当前范围保持不变；可在提交前调整。</text>
+<rect x="1176" y="192" width="400" height="816" rx="4" fill="#FFFFFF" stroke="#DCDFE6" stroke-width="1"/>
+<text x="1200" y="212" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="600" fill="#303133" dominant-baseline="text-before-edge">来源 [1]</text>
+<text x="1200" y="246" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="600" fill="#303133" dominant-baseline="text-before-edge">出差制度 · 资料版本标签 v2</text>
+<text x="1200" y="280" font-family="Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#606266" dominant-baseline="text-before-edge">结构位置：第 3 节 / 出差材料</text>
+<rect x="1200" y="320" width="112" height="32" rx="4" fill="#1D6CC0" stroke="#1D6CC0" stroke-width="1"/>
+<text x="1216" y="327" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="400" fill="#FFFFFF" dominant-baseline="text-before-edge">提取内容</text>
+<rect x="1320" y="320" width="112" height="32" rx="4" fill="#FFFFFF" stroke="#767A82" stroke-width="1"/>
+<text x="1336" y="327" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="400" fill="#1D6CC0" dominant-baseline="text-before-edge">原件入口</text>
+<line x1="1200" y1="376" x2="1552" y2="376" stroke="#DCDFE6" stroke-width="1"/>
+<text x="1200" y="400" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="600" fill="#303133" dominant-baseline="text-before-edge">准确片段</text>
+<rect x="1200" y="438" width="352" height="112" rx="4" fill="#FFF0B3" stroke="none" stroke-width="1"/>
+<text x="1212" y="454" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="400" fill="#303133" dominant-baseline="text-before-edge">出差申请应提交行程安排和费用预算。审批负</text>
+<text x="1212" y="480" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="400" fill="#303133" dominant-baseline="text-before-edge">责人由相关制度另行明确。</text>
+<text x="1200" y="580" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="400" fill="#606266" dominant-baseline="text-before-edge">此资料按章节定位，可下载原件核验。</text>
+<rect x="1200" y="660" width="112" height="32" rx="4" fill="#FFFFFF" stroke="#767A82" stroke-width="1"/>
+<text x="1216" y="667" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="400" fill="#1D6CC0" dominant-baseline="text-before-edge">下载原件</text>
+<text x="1200" y="956" font-family="Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#606266" dominant-baseline="text-before-edge">返回时保留答案与引用位置。</text>
+</svg>

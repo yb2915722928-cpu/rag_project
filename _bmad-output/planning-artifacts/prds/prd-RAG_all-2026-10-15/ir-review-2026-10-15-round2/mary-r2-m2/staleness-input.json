@@ -1,0 +1,6 @@
+[
+  {"claim":"固定提交的所读历史/当前提示/参数分开处理","class":"pattern","pub_date":"2026-10-16","date_basis":"access observation; source commit publication date unavailable"},
+  {"claim":"tokenizer与实际usage口径","class":"compatibility","pub_date":"2026-10-16","date_basis":"access observation; dynamic source publication date unavailable"},
+  {"claim":"输出参数/思考/length/结构输出差异","class":"compatibility","pub_date":"2026-10-16","date_basis":"access observation; dynamic source publication date unavailable"},
+  {"claim":"embedding单条/批次/用途限制","class":"compatibility","pub_date":"2026-10-16","date_basis":"access observation; dynamic source publication date unavailable"}
+]

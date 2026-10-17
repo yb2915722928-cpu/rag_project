@@ -1,0 +1,118 @@
+--- E:/aaa-project/rag/_bmad-output/planning-artifacts/ir-sp-review-2026-10-16/baseline/_bmad-output/planning-artifacts/implementation-readiness.md
++++ E:/aaa-project/rag/_bmad-output/planning-artifacts/implementation-readiness.md
+@@ -1,63 +1,76 @@
+ ---
+-title: RAG_all CA修复后的实施就绪裁决
+-date: 2026-10-16
+-intent: readiness
++title: RAG_all CE修后最终稿实施就绪裁决
++date: 2026-10-17
++review_started: 2026-10-16
++intent: sprint-planning
+ status: final
+ gate: PASS
+ scope: planning-implementability
+-accepted_findings_planning_closed: 4
++owner: John
++independent_reviewers: 2
++fresh_context: true
++epics: 9
++stories: 42
+ unresolved_material_findings: 0
+ implementation_started: false
+ runtime_tests: not-executed
+ ---
+ 
+-# IR：PASS，规划可实施，S0可独立开始
++# IR：PASS，CE修后规划可实施
+ 
+-本轮按CA原位修复最新深审确认的R01–R04，相关实施契约、切片、UX与验收条件已同步。当前包足以让开发者实施已记录单元，无需自行发明这四处共享技术决定；本PASS是规划可实施性判断。它不表示代码、真实供应方、浏览器安全、4C4GB资源、可信恢复或原SM质量验收已通过。
++两位未参与编写的审阅者以全新上下文直接读取现行输入及CE最终三件，全部完成后，主John对照源条款、最终字节及反例统一核实，裁决为 **PASS：开发者可实施已记录故事，无需自行发明本轮关注的共享决定**。本次未确认需修改的规划缺陷；保留CE最终三件的受审字节。
+ 
+-根Winston已结合三镜完整独立报告、实际修后条款与最终字节核对，重新作出本裁决；取代最新深审对修复前稿件的CONCERNS，保留原报告为历史。
++本PASS只表示规划可实施。S0可独立开始；任何真实外发、身份/资源/问答入口、上线和整期完成仍须各自运行门取得证据。代码、真实PG/Linux、供应方、浏览器、4C4GB、可信恢复和SM运行验收全部未执行。
+ 
+-## 四项规划关闭结论
++## 本次实际输入及权威边界
+ 
+-| 原确认问题 | 当前具体规则 | 同步的验收与开放前门槛 |
++现行源为PRD、实施契约/切片、架构主干/共享/运行/需求追踪/技术证据、UX DESIGN/EXPERIENCE/逐页/验收共12件，加上一轮CA IR；最终稿是[9 Epic / 42 Story](/E:/aaa-project/rag/_bmad-output/planning-artifacts/epics.md:1)、[45组验收子例分派](/E:/aaa-project/rag/_bmad-output/planning-artifacts/ce-review-2026-10-16/acceptance-allocation.md:1)、[双向追踪](/E:/aaa-project/rag/_bmad-output/planning-artifacts/ce-review-2026-10-16/story-traceability.md:1)。PRD/UX/架构记录了故事所需的角色、共享schema、状态、锁序、调用/资产/预算、页面行为及部署恢复决定；未发现要求另造未记录政策的孤立故事或输入义务。
++
++冻结清单另含CE定稿记录，共17件：[输入清单与baseline位置](/E:/aaa-project/rag/_bmad-output/planning-artifacts/ir-sp-review-2026-10-16/input-manifest.json:1)。没有单独SPEC/brief或项目知识目录，不构成缺少必要决定；现行epics是唯一冲刺输入，CE草稿及各baseline是明确历史，不参与生成或重复计数。
++
++两位审阅者均报告全文读取上述13项输入、三件最终稿及独立初判后补读的CE记录；长输出截断部分已分段补读。范围不外推至所有链接后的历史文档、图片、外部网站或任何实现。主John全文核最终故事/分派及重点源条款、切片、原验收/共享/运行门，并独立从故事正文重建依赖，逐反例核实报告；不把主代理或审阅者的SHA核对冒充产品运行。
++
++## 重点裁决
++
++| 核对方向 | 主John核实与结论 |
++| --- | --- |
++| 验收子例分派 | 原AC-01–23正反义务及原证据字段继续有效；45行是责任分组，不是缩减后的45条运行用例。故事验本条分派，切片开放汇总到期子例，9.4再全流程复验。每新增Web表面各验AC-21/23、G-01–12，不能统一推到末尾。 |
++| 三组隐含前置 | 4.2只验来源数据/索引发布，4.3验查看/媒体/资源缓存；7.1验结构/OCR/图意事实，7.2验完整手册产品回答；8.3验目标部署/一致备份准备，8.4验完整可信恢复。未实现后者的反例不再封死前者；相应资源/SC-4/上线门仍保留。 |
++| P0 DOC/MIX拆分 | 2.5依2.2（含2.1），无2.3答案预算前置，DOC-1/4分别消费；4.1依S1和对应格式/来源/embedding及实际DOC档位，闭包不含2.3/2.6。2.6依预算及已证DOC档，MIX-1/4按真实组合取证；5.1开放实际并存组合前需要对应MIX，8.3补目标4C4GB。未证4档不开4档，不把开发机成绩当目标机成绩。 |
++| 显式与隐式故事依赖 | 9 Epic、42节点、54条含条件/传递说明的故事引用、123项GWT；无缺失、前向或循环引用。3.3自交最小持久职责模型/空库夹具，3.4建库ACL及4.4文档负载后续联调；5.2以零候选/终态机制独立验，不等待5.3生成或6.2比较。显式无环与这些语义反例共同支持裁决。 |
++| 可前移及并行 | S0不依P0/S7；1.5通过后P0与S1可并行，3.7缺真实模型条件可显示不可验证而不强求接通。9.1/F0无代码/S6前置，首次基于结果选参前必须冻结；普通S0实现不受未来S7成绩阻断。 |
++| 决策与真实状态 | 四场景、K≤5、两个全系统独立gate各默认4/可配1–4、本机重阶段1、原2h、32题/原金标/原SM及独立权限分母不变。3.5沿用已裁定的到期字段初态协调，未重开该决定。所有运行门仍未执行。 |
++
++上述反例是规划语义核对，不是已经执行了对应故障、浏览器或供应方测试。
++
++## 四项修复的最早运行门
++
++| 修复 | 首次责任与完整证据 | 最早硬门；当前状态 |
+ | --- | --- | --- |
+-| R01 迟发grant跨速率窗口 | [C8](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:155)在发送能力未封口时持续计入open charge；控制器证明call发送child/全部sender停止、FD/IPC关闭、旧grant销毁后，取随后DB时刻作为保守上界再保留完整W。期限/读钟/业务终态不提前退额，旧包恢复先独立隔离sender | S0真实PG+可控传输假件覆盖跨秒/分钟、读钟后/部分写暂停、另一槽推进、child失联仍活、controller崩溃、重复封口与重启/旧包恢复；**任何真实外发前通过**。P0另核真实限额维度，不承诺远端到达窗或永不429 |
+-| R02 首次登录CSRF前置循环 | [C5](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:95)为匿名登录固定精确部署Origin+JSON+X-RAG-Login:1且CORS关闭，不依赖尚不存在的token；成功旋转会话/token；受控no-store context GET可供重载取当前token；其他认证写仍须绑定token | S1新无Cookie首次登录正例，缺/null/跨源Origin、form/缺头拒绝，旧/缺token写拒绝；**身份入口开放前通过** |
+-| R03 私有响应缓存边界 | [C2/C4](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:35)覆盖全部私有成功/错误/认证/状态/引用/原件no-store；gateway显式禁缓存。首版无验证器/304，条件请求仍当前鉴权；pagehide清除/遮蔽，pageshow含bfcache先失效旧context/代次，重核全部依赖后重取 | S1共同设施、S2资源/原件、S3答案/重放/历史分别用真实浏览器验同URL换账号/撤权、If-*、back/forward及bfcache；**各入口开放前通过**。no-store不自证历史快照已清 |
+-| R04 原件与预览媒体边界 | [C7](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:133)固定服务器确认格式的准确MIME+attachment+安全有界filename/filename*+nosniff。inline仅已核PNG/JPEG页图/裁图；文本/MD/提取走受控文本渲染，不透传上游主动类型或原始头 | S2含HTML合法TXT/MD、伪类型/扩展、CRLF/路径文件名、无脚本/无远程抓取与当前授权负例；**资源入口开放前通过**。不增加主动内容预览 |
++| R01 迟发grant/跨窗 | 1.3真实PG+可控传输覆盖跨秒/分钟、读钟后/部分写暂停、另一槽、失联/崩溃、监督停发/FD/IPC/grant销毁、DB上界+完整W、重复封口及重启/旧包；1.4停写资产；1.5汇总。2.1/2.5核真实维度，8.4恢复再验 | **任何真实外发前**，包含P0首次最小请求和接入验证；未执行 |
++| R02 首次登录/认证写 | 3.1无Cookie/token首次登录正例、Origin/JSON/固定头和旋转token、缺/null/跨源/form/缺头与旧错缺token写负例；3.7汇总 | **S1身份入口开放前**；未执行 |
++| R03 私有缓存/历史恢复 | 3.2/3.7设施、4.3资源、5.4答案/重放/历史/operation各用真实浏览器重做；含成功/错误、gateway禁缓存、If-*当前权/无304、换账号/撤权、history/bfcache/迟到回包、遮蔽及全部依赖重核；6.2新增比较同门复验 | **S1/S2/S3各入口分别开放前**，新增比较亦须复验；未执行。S1设施成绩不代S2/S3，不推9.4 |
++| R04 原件/预览媒体 | 4.3准确白名单MIME+attachment+nosniff、安全有界fallback/filename*、含HTML合法TXT/MD、伪类型/扩展/恶意文件名/上游头、已核PNG/JPEG、文本安全渲染、不执行/不外抓及当前权正反例 | **S2资源入口开放前**；未执行，不推7.1或9.4 |
+ 
+-完整关闭矩阵及后续运行状态见[修复记录](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/ca-remediation-2026-10-16/remediation-record.md:1)、[运行验收R7](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md:130)及[UX验收](/E:/aaa-project/rag/_bmad-output/planning-artifacts/ux-designs/ux-RAG_all-2026-10-16/acceptance.md:24)。四项运行验收全部未执行。
++原技术要求仍由[共享契约](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:95)、[运行关闭条件](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md:130)及[子例分派](/E:/aaa-project/rag/_bmad-output/planning-artifacts/ce-review-2026-10-16/acceptance-allocation.md:55)约束。四项规划关闭不等于运行关闭。
+ 
+-## 独立复核与静态证据
++## 独立复核、核实与静态证据
+ 
+-三位审阅者均以全新上下文启动，未参与本轮写作，针对实际冻结字节审阅；主代理实施修复并作最终IR裁决。审阅者各自的完整范围以原报告为准，不能将核心三件/四件签署扩大成全部十二件全文审阅。
++| 审阅者 | 实际方向与范围 | 原结论 |
++| --- | --- | --- |
++| A：/root/ir_acceptance_p0 | 13项现行输入、三件最终稿全文；原AC逐组正反主题、P0 DOC/MIX/档位及汇总门；首尾16件SHA/字节一致 | PASS，实质/非阻塞发现0；[完整原报告](/E:/aaa-project/rag/_bmad-output/planning-artifacts/ir-sp-review-2026-10-16/review-acceptance-p0.original.md:1) |
++| B：/root/ir_dependencies_repairs | 同一输入与最终稿全文；42故事显式/隐式依赖、四修复最早门及F0/S0/S1反例；首尾16件SHA/字节一致 | PASS，实质/非阻塞发现0；[完整原报告](/E:/aaa-project/rag/_bmad-output/planning-artifacts/ir-sp-review-2026-10-16/review-dependencies-repairs.original.md:1) |
+ 
+-| 镜头 | 实读签署范围 | 结果/证据 |
+-| --- | --- | --- |
+-| 对抗兼容性 | 三份核心架构全文，原深审及交叉处置，实施/UX新增内容抽核 | [PASS，material 0](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/ca-remediation-2026-10-16/reviews/review-adversarial.md:1)；具体检查暂停、封口、独立release、恢复、身份/缓存/媒体反例 |
+-| 技术依据与适用性 | 四份核心架构/技术证据及baseline差异 | [PASS，material 0](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/ca-remediation-2026-10-16/reviews/review-technology.md:1)；独立核本轮官方标准/机制，未变版本承接同日既有证据 |
+-| Rubric、输入对齐与IR | 冻结十二份现行规划文档全文 | [PASS，material 0](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/ca-remediation-2026-10-16/reviews/review-rubric-ir.md:1)；十二件全文对齐、逐R规划关闭，独立IR建议PASS |
++主John等待两者最终报告全部返回才作裁决及发布，不把上一轮CE草稿审阅扩称本轮最终稿审阅。本轮没有成立的缺陷需要改动最终三件；新增IR裁决、冲刺与运行子门跟踪。完整派发、阅读版历史链接、逐方向核实、差异、SHA和SP执行结果见[统一复核记录](/E:/aaa-project/rag/_bmad-output/planning-artifacts/ir-sp-review-2026-10-16/review-record.md:1)。
+ 
+-确定性检查：架构lint零发现；AD-1–14、原AC-01–23编号集合保持稳定；12份文档的259个本地链接目标存在且行号未越界，无冲突标记，均与审阅快照SHA一致。修改前15份baseline完整保留。这些是文档检查，不是产品测试。
++[静态检查](/E:/aaa-project/rag/_bmad-output/planning-artifacts/ir-sp-review-2026-10-16/document-checks.json:1)及[正文依赖闭包](/E:/aaa-project/rag/_bmad-output/planning-artifacts/ir-sp-review-2026-10-16/story-dependencies.json:1)只证明文档结构/引用和显式依赖；语义裁决以本报告及完整复核记录为准。12件源和最终三件保持受审字节；规划目录IR由本裁决更新，旧CA IR原字节保存在[本轮baseline](/E:/aaa-project/rag/_bmad-output/planning-artifacts/ir-sp-review-2026-10-16/baseline/_bmad-output/planning-artifacts/implementation-readiness.md:1)，原CE清单仍是历史签署，未回写伪造“全部现行仍相同”。
+ 
+-输入/范围与可复核记录：[IR清单](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/ca-remediation-2026-10-16/readiness-inventory.md:1)、[审阅SHA清单](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/ca-remediation-2026-10-16/review-manifest.json:1)、[架构lint](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/ca-remediation-2026-10-16/lint-spine.json:1)、[静态检查](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/ca-remediation-2026-10-16/document-checks.json:1)、[基线完整性](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/ca-remediation-2026-10-16/baseline-integrity.json:1)、[精确文本差异](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/ca-remediation-2026-10-16/changes.diff:1)。
++## SP及实施交接
+ 
+-## IR的整体实施判断
++按用户“通过后继续SP”的授权，以唯一现行epics生成[冲刺跟踪](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/sprint-status.yaml:1)：9 Epic及42 Story全部backlog，9项回顾optional；没有单独故事文件，不将规划PASS提升为ready-for-dev或完成。
+ 
+-已读取PRD、实施契约/切片、架构/共享/运行/追踪/技术证据、DESIGN/EXPERIENCE/逐页/验收共12件。FR/NFR/SM、IA/G/23AC与切片具有正向承接及反向来源；新四项以R01–R04映射追加，不改原编号、分母或质量门槛。架构固定模块唯一写者、事务/锁序、共享schema、状态/账/执行边界及部署恢复规则，未将本轮跨单元决定留给各模块猜测。
++[运行验收台账](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/runtime-acceptance-status.yaml:1)逐列25个门/子门及45组分派，全部not-executed、证据为空。DOC/MIX各档按证据分别消费，故事整体状态不替代子门状态；P0与S6目标机结果分别记录。所有原AC实质子句/正负例仍须逐项运行，台账行数不是运行用例或质量分母。
+ 
+-现有S0→S7是可拆故事的纵向实施单元，均有前置、交付、验收和失败处理；尚无单独epic/story与运行冲刺文件不构成本次S0开工缺口。P0依S0骨架及合法凭据并可与S1并行，后续真实解析/预算/图意分别在S2/S3/S5前停止；F0在首次调优前完成，无需先凭S7成绩才能做S0。后续正式拆故事须继承本包，本次readiness-only不生成虚构冲刺状态。
++下一实施入口为[Story 1.1](/E:/aaa-project/rag/_bmad-output/planning-artifacts/epics.md:184)，可使用bmad-build创建并实施；本轮没有启动实现。账号/环境未实际核验，不臆记“凭据已缺失”或“已阻塞”；未执行就是未执行。未来运行失败/unknown必须保留，未满足各门不得外发、开放、上线或称整期完成。
+ 
+-保留已定四场景、K≤5、两个全系统独立gate各默认4/允许1–4、本机重阶段1及原2h含排队/等待规则。4不是每账号额度或4GB已测；真实生效仍取已核账号/用途限制及资源包络交集。
+-
+-非阻塞建议N1：PRD前言仍保留旧单文档初值及旧PRD轮次PASS。现行实施契约§2.6已经显式覆盖该技术seed，主干已指明当前IR入口，故不构成行为缺陷；本轮保留原PRD字节，后续例行整理可补历史导航。此项不改变本次四项关闭和PASS。
+-
+-## 后续运行硬门与历史效力
+-
+-- S0：无供应方凭据可开始；本地调用/限流、PG、epoch、资产与停写守卫验收未过，不做任何真实外发。
+-- P0：真实格式/来源、完整输入输出预算、D/图意、真实限额维度、1/4档满池poll/unknown/恢复和并存资源逐项取证；假件不替代。
+-- S1/S2/S3：分别完成本轮身份、资源、历史/问答入口开放前负例；不能以文档PASS直接向用户开放。
+-- S6：目标4C4GB、TLS/秘密、部署方确认备份窗口、独立受托恢复与两次新epoch实演；无证不上线。
+-- F0/S7：原冻结材料/原金标与SM-1–7全部门槛，保留失败、真实费用/unknown及独立权限分母，不凭规划通过宣称整期完成。
+-
+-最新深审的[CONCERNS](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/deep-review-2026-10-16/implementation-readiness.md:1)及此前PASS均保留为历史；本轮发布后只由当前IR判定修后包的规划状态。原深审未被改写为“当时没有问题”，原四项实施验收也未被标成已运行。当前权威入口是[规划目录IR](/E:/aaa-project/rag/_bmad-output/planning-artifacts/implementation-readiness.md:1)。
++本裁决取代规划目录旧CA IR作为当前CE修后包的实施就绪入口；旧CA修复、深审CONCERNS与CE记录均保留历史效力。本轮目录采用2026-10-16启动日，裁决及SP按实际北京时间2026-10-17记录。

@@ -1,0 +1,16 @@
+[
+  {
+    "lens": "edge-case-hunter",
+    "location": "[shared-contracts.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:139)",
+    "trigger_condition": "窗口到期后，暂停的 child 仍消费旧 grant 发送",
+    "guard_snippet": "窗口释放须证明旧 grant 不再可发送，并覆盖最晚到达时刻",
+    "potential_consequence": "新旧调用挤入同一实际窗口，突破账号限流并使已受理操作失败"
+  },
+  {
+    "lens": "edge-case-hunter",
+    "location": "[shared-contracts.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:91)",
+    "trigger_condition": "首次登录没有会话或会话绑定 CSRF token",
+    "guard_snippet": "为登录 POST 定义匿名 CSRF 引导或明确登录专用防护，成功后旋转会话",
+    "potential_consequence": "统一写守卫拒绝首次登录，或各入口自行猜测豁免规则"
+  }
+]

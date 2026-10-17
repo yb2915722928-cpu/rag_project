@@ -1,0 +1,236 @@
+[
+  {
+    "path": "apps/maxkb/urls/web.py",
+    "url": "https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/maxkb/urls/web.py",
+    "publisher": "1Panel-dev/MaxKB",
+    "pub_date": "未知",
+    "accessed": "2026-10-15",
+    "commit": "0fa9a0dae8850c1878f087f0d81c974c1d424b06",
+    "line_count": 142
+  },
+  {
+    "path": "apps/maxkb/settings/base/web.py",
+    "url": "https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/maxkb/settings/base/web.py",
+    "publisher": "1Panel-dev/MaxKB",
+    "pub_date": "未知",
+    "accessed": "2026-10-15",
+    "commit": "0fa9a0dae8850c1878f087f0d81c974c1d424b06",
+    "line_count": 197
+  },
+  {
+    "path": "apps/maxkb/settings/base/model.py",
+    "url": "https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/maxkb/settings/base/model.py",
+    "publisher": "1Panel-dev/MaxKB",
+    "pub_date": "未知",
+    "accessed": "2026-10-15",
+    "commit": "0fa9a0dae8850c1878f087f0d81c974c1d424b06",
+    "line_count": 179
+  },
+  {
+    "path": "apps/maxkb/settings/auth/web.py",
+    "url": "https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/maxkb/settings/auth/web.py",
+    "publisher": "1Panel-dev/MaxKB",
+    "pub_date": "未知",
+    "accessed": "2026-10-15",
+    "commit": "0fa9a0dae8850c1878f087f0d81c974c1d424b06",
+    "line_count": 20
+  },
+  {
+    "path": "apps/common/auth/authentication.py",
+    "url": "https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/common/auth/authentication.py",
+    "publisher": "1Panel-dev/MaxKB",
+    "pub_date": "未知",
+    "accessed": "2026-10-15",
+    "commit": "0fa9a0dae8850c1878f087f0d81c974c1d424b06",
+    "line_count": 144
+  },
+  {
+    "path": "apps/common/auth/handle/impl/user_token.py",
+    "url": "https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/common/auth/handle/impl/user_token.py",
+    "publisher": "1Panel-dev/MaxKB",
+    "pub_date": "未知",
+    "accessed": "2026-10-15",
+    "commit": "0fa9a0dae8850c1878f087f0d81c974c1d424b06",
+    "line_count": 320
+  },
+  {
+    "path": "apps/application/serializers/application_api_key.py",
+    "url": "https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/application/serializers/application_api_key.py",
+    "publisher": "1Panel-dev/MaxKB",
+    "pub_date": "未知",
+    "accessed": "2026-10-15",
+    "commit": "0fa9a0dae8850c1878f087f0d81c974c1d424b06",
+    "line_count": 123
+  },
+  {
+    "path": "apps/application/models/application_api_key.py",
+    "url": "https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/application/models/application_api_key.py",
+    "publisher": "1Panel-dev/MaxKB",
+    "pub_date": "未知",
+    "accessed": "2026-10-15",
+    "commit": "0fa9a0dae8850c1878f087f0d81c974c1d424b06",
+    "line_count": 26
+  },
+  {
+    "path": "apps/maxkb/conf.py",
+    "url": "https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/maxkb/conf.py",
+    "publisher": "1Panel-dev/MaxKB",
+    "pub_date": "未知",
+    "accessed": "2026-10-15",
+    "commit": "0fa9a0dae8850c1878f087f0d81c974c1d424b06",
+    "line_count": 259
+  },
+  {
+    "path": "apps/users/serializers/login.py",
+    "url": "https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/users/serializers/login.py",
+    "publisher": "1Panel-dev/MaxKB",
+    "pub_date": "未知",
+    "accessed": "2026-10-15",
+    "commit": "0fa9a0dae8850c1878f087f0d81c974c1d424b06",
+    "line_count": 332
+  },
+  {
+    "path": "apps/users/views/login.py",
+    "url": "https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/users/views/login.py",
+    "publisher": "1Panel-dev/MaxKB",
+    "pub_date": "未知",
+    "accessed": "2026-10-15",
+    "commit": "0fa9a0dae8850c1878f087f0d81c974c1d424b06",
+    "line_count": 97
+  },
+  {
+    "path": "apps/common/auth/handle/impl/application_key.py",
+    "url": "https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/common/auth/handle/impl/application_key.py",
+    "publisher": "1Panel-dev/MaxKB",
+    "pub_date": "未知",
+    "accessed": "2026-10-15",
+    "commit": "0fa9a0dae8850c1878f087f0d81c974c1d424b06",
+    "line_count": 46
+  },
+  {
+    "path": "apps/application/migrations/0001_initial.py",
+    "url": "https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/application/migrations/0001_initial.py",
+    "publisher": "1Panel-dev/MaxKB",
+    "pub_date": "未知",
+    "accessed": "2026-10-15",
+    "commit": "0fa9a0dae8850c1878f087f0d81c974c1d424b06",
+    "line_count": 252
+  },
+  {
+    "path": "apps/application/chat_pipeline/pipeline_manage.py",
+    "url": "https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/application/chat_pipeline/pipeline_manage.py",
+    "publisher": "1Panel-dev/MaxKB",
+    "pub_date": "未知",
+    "accessed": "2026-10-15",
+    "commit": "0fa9a0dae8850c1878f087f0d81c974c1d424b06",
+    "line_count": 67
+  },
+  {
+    "path": "apps/application/chat_pipeline/step/search_dataset_step/impl/base_search_dataset_step.py",
+    "url": "https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/application/chat_pipeline/step/search_dataset_step/impl/base_search_dataset_step.py",
+    "publisher": "1Panel-dev/MaxKB",
+    "pub_date": "未知",
+    "accessed": "2026-10-15",
+    "commit": "0fa9a0dae8850c1878f087f0d81c974c1d424b06",
+    "line_count": 151
+  },
+  {
+    "path": "apps/chat/urls.py",
+    "url": "https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/chat/urls.py",
+    "publisher": "1Panel-dev/MaxKB",
+    "pub_date": "未知",
+    "accessed": "2026-10-15",
+    "commit": "0fa9a0dae8850c1878f087f0d81c974c1d424b06",
+    "line_count": 33
+  },
+  {
+    "path": "apps/common/db/sql_execute.py",
+    "url": "https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/common/db/sql_execute.py",
+    "publisher": "1Panel-dev/MaxKB",
+    "pub_date": "未知",
+    "accessed": "2026-10-15",
+    "commit": "0fa9a0dae8850c1878f087f0d81c974c1d424b06",
+    "line_count": 68
+  },
+  {
+    "path": "apps/common/auth/authenticate.py",
+    "url": "https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/common/auth/authenticate.py",
+    "publisher": "1Panel-dev/MaxKB",
+    "pub_date": "未知",
+    "accessed": "2026-10-15",
+    "commit": "0fa9a0dae8850c1878f087f0d81c974c1d424b06",
+    "line_count": 158
+  },
+  {
+    "path": "apps/common/cache_data/application_api_key_cache.py",
+    "url": "https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/common/cache_data/application_api_key_cache.py",
+    "publisher": "1Panel-dev/MaxKB",
+    "pub_date": "未知",
+    "accessed": "2026-10-15",
+    "commit": "0fa9a0dae8850c1878f087f0d81c974c1d424b06",
+    "line_count": 29
+  },
+  {
+    "path": "apps/application/views/application_api_key.py",
+    "url": "https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/application/views/application_api_key.py",
+    "publisher": "1Panel-dev/MaxKB",
+    "pub_date": "未知",
+    "accessed": "2026-10-15",
+    "commit": "0fa9a0dae8850c1878f087f0d81c974c1d424b06",
+    "line_count": 131
+  },
+  {
+    "path": "apps/knowledge/migrations/0001_initial.py",
+    "url": "https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/knowledge/migrations/0001_initial.py",
+    "publisher": "1Panel-dev/MaxKB",
+    "pub_date": "未知",
+    "accessed": "2026-10-15",
+    "commit": "0fa9a0dae8850c1878f087f0d81c974c1d424b06",
+    "line_count": 182
+  },
+  {
+    "path": "apps/application/migrations/0012_remove_applicationapikey_user.py",
+    "url": "https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/application/migrations/0012_remove_applicationapikey_user.py",
+    "publisher": "1Panel-dev/MaxKB",
+    "pub_date": "未知",
+    "accessed": "2026-10-15",
+    "commit": "0fa9a0dae8850c1878f087f0d81c974c1d424b06",
+    "line_count": 18
+  },
+  {
+    "path": "apps/application/migrations/0007_applicationapikey_expire_time_and_more.py",
+    "url": "https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/application/migrations/0007_applicationapikey_expire_time_and_more.py",
+    "publisher": "1Panel-dev/MaxKB",
+    "pub_date": "未知",
+    "accessed": "2026-10-15",
+    "commit": "0fa9a0dae8850c1878f087f0d81c974c1d424b06",
+    "line_count": 25
+  },
+  {
+    "path": "apps/chat/views/chat.py",
+    "url": "https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/chat/views/chat.py",
+    "publisher": "1Panel-dev/MaxKB",
+    "pub_date": "未知",
+    "accessed": "2026-10-15",
+    "commit": "0fa9a0dae8850c1878f087f0d81c974c1d424b06",
+    "line_count": 291
+  },
+  {
+    "path": "apps/chat/serializers/chat.py",
+    "url": "https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/chat/serializers/chat.py",
+    "publisher": "1Panel-dev/MaxKB",
+    "pub_date": "未知",
+    "accessed": "2026-10-15",
+    "commit": "0fa9a0dae8850c1878f087f0d81c974c1d424b06",
+    "line_count": 652
+  },
+  {
+    "path": "apps/knowledge/vector/pg_vector.py",
+    "url": "https://github.com/1Panel-dev/MaxKB/blob/0fa9a0dae8850c1878f087f0d81c974c1d424b06/apps/knowledge/vector/pg_vector.py",
+    "publisher": "1Panel-dev/MaxKB",
+    "pub_date": "未知",
+    "accessed": "2026-10-15",
+    "commit": "0fa9a0dae8850c1878f087f0d81c974c1d424b06",
+    "line_count": 350
+  }
+]

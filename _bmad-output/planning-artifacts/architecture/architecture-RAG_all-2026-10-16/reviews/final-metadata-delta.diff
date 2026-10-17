@@ -1,0 +1,53 @@
+--- E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/ARCHITECTURE-SPINE.md@semantic-review
++++ E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/ARCHITECTURE-SPINE.md@final
+@@ -6,5 +6,5 @@
+ paradigm: 模块化单体与端口适配器
+ scope: 首版四场景、Web管理问答及用户只读程序API
+-status: draft
++status: final
+ created: 2026-10-16
+ updated: 2026-10-16
+--- E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md@semantic-review
++++ E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md@final
+@@ -1,5 +1,5 @@
+ ---
+ title: RAG_all 共享契约
+-status: draft
++status: final
+ updated: 2026-10-16
+ binds: [AD-2, AD-3, AD-4, AD-5, AD-6, AD-8, AD-9, AD-10, AD-11, AD-12]
+--- E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md@semantic-review
++++ E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md@final
+@@ -1,5 +1,5 @@
+ # RAG_all 运行、监督与恢复契约
+ 
+-日期：2026-10-16；状态：draft-for-peer-check。这是架构的实施 companion，尚无应用代码、供应方接通、目标部署或运行成绩。产品语义继承[现行实施契约](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:10)；不得据本文件放宽其状态、期限、计账或恢复规则。
++日期：2026-10-16；状态：final-planning-contract。这是架构的实施 companion，尚无应用代码、供应方接通、目标部署或运行成绩。产品语义继承[现行实施契约](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:10)；不得据本文件放宽其状态、期限、计账或恢复规则。
+ 
+ ## R1. 控制器与物理执行槽
+@@ -124,5 +124,5 @@
+ | S7／评估者 | 同冻结材料B0/上一保留轮/本轮输入输出/检索/引用/用量费用/失败；SM-1至7逐项及场景分报，独立权限专项 | 质量阈值、任一专项或权限失败不得被平均/漂亮UI抵消，不称整期完成 |
+ 
+-R3清理与R5恢复的停止点为硬门，UI隐藏按钮、HTTP200、进程已重启或历史PASS都不替代它们。具体AC、需求与切片映射由[需求—架构追踪](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/requirements-architecture-traceability.md)维护；架构最终gate仍须独立审查当前实稿。
++R3清理与R5恢复的停止点为硬门，UI隐藏按钮、HTTP200、进程已重启或历史PASS都不替代它们。具体AC、需求与切片映射由[需求—架构追踪](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/requirements-architecture-traceability.md)维护；本轮独立审查、修后复核及最终字节范围由[最终gate索引](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/reviews/finalize-gate.md:1)记录。
+ 
+ ## R8. 官方依据与适用限度
+--- E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/requirements-architecture-traceability.md@semantic-review
++++ E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/requirements-architecture-traceability.md@final
+@@ -1,5 +1,5 @@
+ # RAG_all 需求—架构—验收追踪
+ 
+-日期：2026-10-16；状态：working-reconciliation。维护者：Winston B。此矩阵逐项核对现行输入与本轮实际架构，不是已运行成绩。只有已落盘AD/companion可列为承接；实现证据全部待S0/P0/F0/S1–S7取得。历史IR/PASS、文件齐全、静态UX图均不代表运行放行。
++日期：2026-10-16；状态：final-reconciled。维护者：Winston B。此矩阵逐项核对现行输入与本轮实际架构，不是已运行成绩。只有已落盘AD/companion可列为承接；实现证据全部待S0/P0/F0/S1–S7取得。历史IR/PASS、文件齐全、静态UX图均不代表运行放行。
+ 
+ ## 1. 权威输入与承接索引
+@@ -159,7 +159,7 @@
+ 已逐项承接FR16/16、NFR6/6、SM7/7、实施契约§1–§5.5全部实质子节、IA12/12、G12/12、AC23/23及S0/P0/F0/S1–7。此计数仅为映射完整度；行中的实测全部未执行，不能写成100%实现或通过。C5共同有限管理schema、C6生成子契约、C7五投影/格式路由已经实际读取；C5密码/会话/凭证/邀请/15分钟cursor/366d查询窗是受托技术seed，可调整但不扩大权限或改原业务期限。C7补足五状态字段/enums/allowed_actions，格式差异依据本轮官方实查，仍保MinerU主路及原承诺五格式，不纳入Doc/Ppt/Xls承诺。
+ 
+-本轮B新发现的控制行锁前缀反例已在实际AD3/C4/R3关闭；无产品选择冲突。A互审后runtime修复了child持锁/多prefix顺序、冻结包写入范围；真实PG/Linux成绩仍留原门。五状态最小DTO与有限cursor/时间窗已由A实际补C5/C7，B逐项核对关闭其规划缺口。独立rubric发现共享provider账号分进程限流可超额，A接受并补AD2/3/11与C8，B已实际读C8并同步R1/3/6；session续活等不能SH升级也已实际补C5。B3再次实读C8唯一release_transition_id与R5恢复未决调用规则，确认响应/核对只一次归还、ledger迟到账不退permit，以及恢复pool持久态统一blocked_unverified、窗口到期不解远端并发unknown，规划反例关闭。最终核对仍须读取其余独立review修改后的主干/共享契约/技术证据与当前companion，签署见B最终检查；此时不先报最终gate通过。
++本轮B新发现的控制行锁前缀反例已在实际AD3/C4/R3关闭；无产品选择冲突。A互审后runtime修复了child持锁/多prefix顺序、冻结包写入范围；真实PG/Linux成绩仍留原门。五状态最小DTO与有限cursor/时间窗已由A实际补C5/C7，B逐项核对关闭其规划缺口。独立rubric发现共享provider账号分进程限流可超额，A接受并补AD2/3/11与C8，B已实际读C8并同步R1/3/6；session续活等不能SH升级也已实际补C5。B3再次实读C8唯一release_transition_id与R5恢复未决调用规则，确认响应/核对只一次归还、ledger迟到账不退permit，以及恢复pool持久态统一blocked_unverified、窗口到期不解远端并发unknown，规划反例关闭。本轮独立review、修后复核与最终字节范围见[最终gate索引](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/reviews/finalize-gate.md:1)，B的当前权威结论见[最终实际稿核对](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/winston-b-final-check.md:1)；这些均为规划层证据。
+ 
+ 本轮对抗H1/H2进一步发现异步task已满后poll再抢新增task名额、恢复整pool阻断已知原task核对会使必要流程无法推进；现C8/R1/R5按真实适用维度/动作、每(call,dimension)唯一组件终态及恢复逐维放行收口，不假拆池；官方上界须覆盖最晚实际到达时刻。用户随后明确提高异步并发，现行实施契约§2.6原位采用doc_active_job与external_async_task两个全系统独立gate各默认/上限4（可配1–4），本机重阶段仍1，原2h含排队/等待。job终态只释放active_job，未知task跨失败/重启仍占taskgate阻第5项；4个远端pending可与有限新本地预处理元数据共存，不各持线程/正文/Session。S0假件与P0任务池1/4的满池poll/公平/取消/unknown/恢复/三账/并存资源为必需证据，4不是账号额度或4GB已验；独立delta及最终实稿仍以最终gate/检查为准。
+ 
+-待实施证据：供应方合法凭据及P0官方用途/实际响应、D、完整消息计数与输出R、图意/格式/来源/账号限流、目标Ubuntu/Engine/TLS/磁盘/并存RSS、独立恢复受托链与介质、部署方确认备份窗口及S6演练、F0冻结与S7全部原SM。它们各有责任人/触发/停止点，是后续运行门；当前CA最终gate和B实稿签署尚未结束，不能据矩阵先放行最终架构包。
++待实施证据：供应方合法凭据及P0官方用途/实际响应、D、完整消息计数与输出R、图意/格式/来源/账号限流、目标Ubuntu/Engine/TLS/磁盘/并存RSS、独立恢复受托链与介质、部署方确认备份窗口及S6演练、F0冻结与S7全部原SM。它们各有责任人/触发/停止点，是后续运行门；本轮CA最终gate与B实稿签署仅判规划一致和可实施性，不能据矩阵放行未证运行能力。

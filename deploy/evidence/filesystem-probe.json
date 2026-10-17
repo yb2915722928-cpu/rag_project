@@ -1,0 +1,10 @@
+{
+  "recorded_at": "2026-10-17T08:24:24.872369+00:00",
+  "path": "/opt/rag-story-1-1/deploy",
+  "filesystem": "ext4",
+  "shared_lock_blocks_other_process_exclusive": true,
+  "exclusive_acquired_after_shared_closed": true,
+  "replace_and_file_fsync": true,
+  "scope": "host filesystem probe only; not container cross-mount inode/UID or production cleanup proof",
+  "temporary_probe_removed": true
+}

@@ -1,0 +1,143 @@
+name: rag-story-1-1
+
+x-runtime: &runtime
+  init: true
+  restart: "no"
+  stop_signal: SIGTERM
+  stop_grace_period: 20s
+  pids_limit: 128
+  logging:
+    driver: json-file
+    options:
+      max-size: "5m"
+      max-file: "2"
+
+services:
+  gateway:
+    <<: *runtime
+    mem_limit: 128m
+    build:
+      context: ..
+      dockerfile: deploy/gateway/Dockerfile
+      args:
+        NGINX_BASE_IMAGE: ${NGINX_BASE_IMAGE:?set NGINX_BASE_IMAGE to a verified image digest}
+    image: ${RAG_GATEWAY_IMAGE:-rag-story-1-1-gateway:local}
+    depends_on:
+      api:
+        condition: service_healthy
+    ports:
+      - "${RAG_GATEWAY_BIND:-127.0.0.1}:${RAG_GATEWAY_PORT:-8443}:8443"
+    user: "65532:65532"
+    read_only: true
+    tmpfs:
+      - /var/cache/nginx:rw,noexec,nosuid,size=16m
+      - /var/run:rw,noexec,nosuid,size=1m
+      - /tmp:rw,noexec,nosuid,size=4m
+    security_opt:
+      - no-new-privileges:true
+    cap_drop: [ALL]
+    volumes:
+      - ./gateway/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ${RAG_TLS_CERT_FILE:?set RAG_TLS_CERT_FILE}:/run/tls/cert.pem:ro
+      - ${RAG_TLS_KEY_FILE:?set RAG_TLS_KEY_FILE}:/run/tls/key.pem:ro
+
+  api:
+    <<: *runtime
+    mem_limit: 768m
+    build:
+      context: ../backend
+      dockerfile: ../deploy/api.Dockerfile
+      args:
+        PYTHON_BASE_IMAGE: ${PYTHON_BASE_IMAGE:?set PYTHON_BASE_IMAGE to a verified image digest}
+        UV_BASE_IMAGE: ${UV_BASE_IMAGE:?set UV_BASE_IMAGE to a verified uv image digest}
+    image: ${RAG_API_IMAGE:-rag-story-1-1-api:local}
+    command: ["python", "-m", "rag_app", "api"]
+    environment:
+      RAG_ENVIRONMENT: ${RAG_ENVIRONMENT:-production}
+      RAG_DATABASE_URL: ${RAG_DATABASE_URL:?set RAG_DATABASE_URL}
+      RAG_DATABASE_SCHEMA: ${RAG_DATABASE_SCHEMA:-public}
+      PGPASSFILE: /run/secrets/postgres_pgpass
+    secrets: [postgres_pgpass]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    expose: ["8000"]
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=32m
+    volumes:
+      - ${RAG_ASSET_ROOT:-/opt/rag-story-1-1/assets}:/var/lib/rag/assets:rw
+      - ${RAG_LOCK_ROOT:-/opt/rag-story-1-1/locks}:/var/lib/rag/locks:rw
+      - ${RAG_EPOCH_ROOT:-/opt/rag-story-1-1/epoch}:/var/lib/rag/epoch:ro
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=2)"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+    security_opt:
+      - no-new-privileges:true
+    cap_drop: [ALL]
+
+  worker:
+    <<: *runtime
+    mem_limit: 768m
+    build:
+      context: ../backend
+      dockerfile: ../deploy/api.Dockerfile
+      args:
+        PYTHON_BASE_IMAGE: ${PYTHON_BASE_IMAGE:?set PYTHON_BASE_IMAGE to a verified image digest}
+        UV_BASE_IMAGE: ${UV_BASE_IMAGE:?set UV_BASE_IMAGE to a verified uv image digest}
+    image: ${RAG_API_IMAGE:-rag-story-1-1-api:local}
+    command: ["python", "-m", "rag_app", "worker"]
+    environment:
+      RAG_ENVIRONMENT: ${RAG_ENVIRONMENT:-production}
+      RAG_DATABASE_URL: ${RAG_DATABASE_URL:?set RAG_DATABASE_URL}
+      RAG_DATABASE_SCHEMA: ${RAG_DATABASE_SCHEMA:-public}
+      PGPASSFILE: /run/secrets/postgres_pgpass
+    secrets: [postgres_pgpass]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=32m
+    volumes:
+      - ${RAG_ASSET_ROOT:-/opt/rag-story-1-1/assets}:/var/lib/rag/assets:rw
+      - ${RAG_LOCK_ROOT:-/opt/rag-story-1-1/locks}:/var/lib/rag/locks:rw
+      - ${RAG_EPOCH_ROOT:-/opt/rag-story-1-1/epoch}:/var/lib/rag/epoch:ro
+    security_opt:
+      - no-new-privileges:true
+    cap_drop: [ALL]
+
+  postgres:
+    <<: *runtime
+    mem_limit: 1g
+    image: ${POSTGRES_IMAGE:?set POSTGRES_IMAGE to a verified PostgreSQL 18.6 + pgvector 0.8.7 digest}
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-rag}
+      POSTGRES_USER: ${POSTGRES_USER:-rag}
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+      PGDATA: /var/lib/postgresql/18/docker
+    user: "${RAG_POSTGRES_UID:?set verified RAG_POSTGRES_UID}:${RAG_POSTGRES_GID:?set verified RAG_POSTGRES_GID}"
+    secrets: [postgres_password]
+    expose: ["5432"]
+    volumes:
+      - ${RAG_PGDATA_ROOT:-/opt/rag-story-1-1/postgres}:/var/lib/postgresql:rw
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=16m
+      - /var/run/postgresql:rw,noexec,nosuid,size=4m,mode=0777
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\""]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+    security_opt:
+      - no-new-privileges:true
+    cap_drop: [ALL]
+
+secrets:
+  postgres_password:
+    file: ${RAG_POSTGRES_PASSWORD_FILE:?set RAG_POSTGRES_PASSWORD_FILE outside the repository}
+  postgres_pgpass:
+    file: ${RAG_POSTGRES_PGPASS_FILE:?set RAG_POSTGRES_PGPASS_FILE with 0600 permissions for UID 65532}

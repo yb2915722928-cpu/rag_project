@@ -1,0 +1,144 @@
+--- draft/epics.md
++++ epics.md
+@@ -1,11 +1,11 @@
+ ---
+ title: RAG_all Epics 与 Stories
+-status: draft
++status: final
+ created: 2026-10-16
+ updated: 2026-10-16
+ author: John
+ workflow: bmad-create-epics-and-stories
+-stepsCompleted: [step-01-validate-prerequisites, step-02-design-epics, step-03-create-stories]
++stepsCompleted: [step-01-validate-prerequisites, step-02-design-epics, step-03-create-stories, step-04-final-validation]
+ inputDocuments:
+   - prds/prd-RAG_all-2026-10-15/prd.md
+   - prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md
+@@ -32,7 +32,7 @@
+ 
+ 业务真源为[PRD](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/prd.md:1)、[实施契约](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:1)与[切片](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-slices.md:1)；跨模块技术由[架构主干](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/ARCHITECTURE-SPINE.md:1)、[共享契约 C1–C8](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:1)与[运行契约 R1–R8](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md:1)约束。组件视觉遵循[DESIGN](/E:/aaa-project/rag/_bmad-output/planning-artifacts/ux-designs/ux-RAG_all-2026-10-16/DESIGN.md:1)，行为遵循[EXPERIENCE](/E:/aaa-project/rag/_bmad-output/planning-artifacts/ux-designs/ux-RAG_all-2026-10-16/EXPERIENCE.md:1)、[逐页 IA/G](/E:/aaa-project/rag/_bmad-output/planning-artifacts/ux-designs/ux-RAG_all-2026-10-16/page-contracts.md:1)与[原 AC-01–23](/E:/aaa-project/rag/_bmad-output/planning-artifacts/ux-designs/ux-RAG_all-2026-10-16/acceptance.md:1)。原[需求—架构追踪](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/requirements-architecture-traceability.md:1)继续有效；本文件增加到 Story 的最后一跳。精确版本与 starter 继承[技术证据](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/technology-evidence.md:1)，实施时核依赖，不借 CE 重选。
+ 
+-用户明确授权“完成草稿、两位全新上下文只读复核、核实修订并定稿”，因此按 CE 四步顺序连续完成，不逐步请求 C。输出语言中文；项目 RAG_all。每条来源与正向分派详见[Story双向追踪](/E:/aaa-project/rag/_bmad-output/planning-artifacts/ce-review-2026-10-16/story-traceability.md:1)，独立复核及主John处置在定稿时附入记录。
++用户明确授权“完成草稿、两位全新上下文只读复核、核实修订并定稿”，因此按 CE 四步顺序连续完成，不逐步请求 C。输出语言中文；项目 RAG_all。每条来源与正向分派详见[Story双向追踪](/E:/aaa-project/rag/_bmad-output/planning-artifacts/ce-review-2026-10-16/story-traceability.md:1)，独立复核及主John处置见[复核记录](/E:/aaa-project/rag/_bmad-output/planning-artifacts/ce-review-2026-10-16/review-record.md:1)。
+ 
+ ## Requirements Inventory
+ 
+@@ -171,7 +171,9 @@
+ 
+ 每个故事只新增自身所需实体/迁移，以先前已验故事为基础；“依赖”表示完成验收后方可使用，不能用仅有代码或旧PASS替代。Epic编号是归类，不把E2排在E3前形成全P0串行屏障。相同Epic内只依赖更早故事；F0例外前移已显式列出。一次开发上下文处理一条故事，运行资源不足则记阻塞，不把多个故事合成一次大任务。
+ 
+-每条故事的 AC 编号为 Story ID-ACn，按下列条目顺序计。必须运行所列原 UX AC 的完整正反例及相关原条款，下面的 Given/When/Then 为故事级增量，不缩减原用例。所有Web故事同时验 UX-DR01/18/19/20、G-01–G-12、AC-21/23：真实键盘/辅助技术、1440/1280/1024/767/375与200%截图、对比度/触控/焦点、冷加载/空/失败/失权/离线、无秘密/正文持久缓存。组件按首次故事落地、后续复用并验证本页，不留统一“最后美化”故事。
++每条故事的 AC 编号为 Story ID-ACn，按下列条目顺序计。故事引用的原UX AC是来源及持续约束；本条必须完整执行[验收子例分派](/E:/aaa-project/rag/_bmad-output/planning-artifacts/ce-review-2026-10-16/acceptance-allocation.md:1)分配给它的正反子例及相关条款。跨故事原AC按子例逐步闭合，不能把未来页面或演练的整组AC作为本条完成前置，也不能将未分配/未执行子例写成已通过。切片开放门必须汇总该片应完成的全部子例，9.4再全流程复验原AC-01–23及原SM，保留原分母和四修复最早门。
++
++所有Web故事同时验**自身新增/修改页面**的UX-DR01/18/19/20、G-01–G-12、AC-21/23子例：真实键盘/辅助技术、1440/1280/1024/767/375与200%截图、对比度/触控/焦点、冷加载/空/失败/失权/离线、无秘密/正文持久缓存；尚无某表面的早期故事不负责其未来交互。组件按首次故事落地、后续复用并验证本页，不留统一“最后美化”故事。
+ 
+ 每条运行证据记录版本/环境、输入与当前限制、主体/范围、动作、预期/实际、HTTP及DB/资产/调用副作用、关联ID、脱敏原始证据和通过/失败/阻塞；真实PG、Linux、浏览器、供应方、目标机分别标来源。失败与unknown原样保留。默认状态全部未执行；文档静态通过不改变运行状态。
+ 
+@@ -190,17 +192,19 @@
+ - **Given** 空项目与现行技术seed，**When** 初始化后端及create-vue 3.23.0的TS/Router/Pinia模板，**Then** 锁实际依赖、peer和镜像digest，四服务可构建/启动/停止；不复制React整栈模板，不预建后续全部业务表。
+ - **Given** 真实PG/pgvector与短UoW示例，**When** 迁移/回滚和制造事务失败，**Then** 版本、扩展及原子回滚可核；领域不导入框架/ORM，仓储不commit，配置/秘密不入日志。D未证前仅验扩展与隔离测试向量，不建立正式生产vector(D)。
+ - **Given** 上游抽取或样例拟引入，**When** 登记来源/许可证/依赖边界/最小样例与改造，**Then** 未核验内容不当已复用；构建记录可在干净Linux环境复现。
++- **Given** 共同contracts与有界HTTP测试入口，**When** 导出OpenAPI/JSON Schema/TS及正负样例，**Then** C1标量码点/非BMP/序列化、C2公共包/错误与实施契约§3.5的H字节/深度/节点/重复键/编码/未知字段边界一致，按需增量schema而非手写平行类型；1MiB JSON不误套原件PUT，未认证不回私有operation ID。
+ 
+ ### Story 1.2：隔离执行并保存每次调用事实
+ 
+ As a 接入实施者，I want 用可控假件经过epoch与单call派发，So that 超时或崩溃不会静默重发或丢成本。
+ 
+-**依赖：** 1.1。**来源：** FR-4/15/16；NFR-2/3/5/6；AR-03；AD-3/7/8/13；C4；实施契约§2.5；运行R1/R2。
++**依赖：** 1.1。**来源：** FR-4/15/16；NFR-2/3/5/6；AR-03；AD-3/7/8/13；C4/C5；实施契约§2.5；运行R1/R2。
+ 
+ **Acceptance Criteria:**
+ 
+ - **Given** 独立持久epoch与DB镜像，**When** 普通重启/缺失/矛盾或旧attempt回报，**Then** 重启不换epoch，矛盾隔离且失效执行者不能提交业务；模型/解析/embedding/图意端口仅用显式假件，不实际外发。
+ - **Given** 有界受监督child及有限IPC，**When** 在prepared前后、may_have_sent后、响应前后注入崩溃/超时，**Then** 原call只获一次grant、不恢复重发，未知保留NULL+unknown；child无业务DB/主密钥、不自主串阶段，secret不入argv/日志。
++- **Given** 配置端点/上游签名URL、redirect和DNS变化假件，**When** 准备出网，**Then** S0即交付C5 EgressTarget：仅HTTPS、有限准确host/port、拒userinfo/fragment与私网/回环/link-local/保留/metadata全部A/AAAA，连接绑定已核公共IP并保持TLS主机校验；禁止重解析绕过/自动redirect，API Authorization不转交下载host，URL/secret不写日志。任何未过目标守卫的真实调用均阻断。
+ - **Given** 业务已终结/旧epoch与可信迟到usage，**When** 重复或冲突补账，**Then** 仅按call幂等补事实/留冲突，不改业务、产品次数、会话或许可；PG真实负例证明锁序，无网络/进程等待占事务。
+ 
+ ### Story 1.3：证明共享限流与双任务gate不会提前退额
+@@ -294,13 +298,24 @@
+ 
+ As a 运行实施者，I want 在1档和4档验证共享限流/公平推进及并存资源，So that 只启用有证据的档位。
+ 
+-**依赖：** 2.2、2.3；目标机部分需合法环境访问。**来源：** FR-4/15/16；NFR-2/4/5；AR-05/10；AD-7/14；C8；运行R6/R7。
++**依赖：** 2.2（含2.1）；本条只验文档任务，不依赖2.3生成预算；目标机部分需合法环境访问。**来源：** FR-4/15/16；NFR-2/4/5；AR-05/10；AD-7/14；C8；运行R6/R7。
+ 
+ **Acceptance Criteria:**
+ 
+ - **Given** S0隔离探路工具与真实账号，**When** 1/4档满池submit→accepted→poll→terminal、取消/unknown/重启，**Then** 原task可有限推进，组件只归还一次；4档证四远端工作重叠且本机重阶段≤1，无pending常驻线程/Session，原deadline不刷新。
+-- **Given** 查询/上传形状的隔离探路负载，**When** 与worker远端等待/重阶段并存，**Then** 记录RSS/FD/连接/磁盘/预算/延迟及每call真实费用，应用页未实现不阻探路；目标4C4GB结果与开发机结果分列。
+-- **Given** 账号/目标资源缺失或4档失败，**When** 输出证据清单，**Then** 对应档位保持未证/禁用，较低档只有具备自身证据才可用；不以目标机证据缺失阻S0/S1，不把P0全完成作为S2一切开发的前置。S6上线仍必须补齐目标机证据。
++- **Given** 已证文档用途与受控上传/纯检索embedding形状负载，**When** 与worker远端等待/重阶段并存，**Then** 记录RSS/FD/连接/磁盘/预算/延迟及每call真实费用，不要求答案生成/业务页；目标4C4GB结果与开发机结果分列。
++- **Given** 1档或4档各自的真实限制/活性/所用环境资源证据，**When** 发布P0-DOC-1/P0-DOC-4子门，**Then** 两档可分别消费，未证档保持禁用，S2仅消费所启用文档档位子门，2.3未完成不阻此子门；目标机结果仍须S6补齐，不以开发机成绩声称4GB通过。
++
++### Story 2.6：补验真实生成与文档任务并存资源
++
++As a 运行实施者，I want 在生成预算已证后核查询/上传与文档任务并存，So that 完整业务负载只启用有证据的档位。
++
++**依赖：** 2.3、2.5对应文档档位；目标机部分需合法环境访问。**来源：** FR-4/9/15/16；NFR-4/5；AR-05/10；AD-14；C8；运行R6/R7。
++
++**Acceptance Criteria:**
++
++- **Given** P0-DOC-1/4与实际生成profile，**When** 隔离工具运行真实问答/embedding、上传与文档等待/重阶段并存，**Then** 保存P0-MIX-1/P0-MIX-4的真实共额/活性/RSS/FD/磁盘/延迟/成本证据，四远端重叠仍本机重阶段≤1；不依S3页面。
++- **Given** MIX未证或目标环境暂缺，**When** 输出清单，**Then** 只阻对应并存组合/档位，S2所用已证DOC子门不被2.6整包状态反向阻断；S3开放实际组合前取相应MIX证据，S6上线前必须补齐目标4C4GB实测。
+ 
+ ## Epic 3：用户能安全进入并管理授权范围（S1）
+ 
+@@ -340,6 +355,7 @@
+ 
+ - **Given** 平台/所有者与已有有效账号，**When** 建团队指定初始owner、发带角色邀请并由目标接受，**Then** 每团队一个有效owner、接受才入队且普通成员初始无库权；未接受/撤销/过期及普通自建/成员管理反例拒绝。
+ - **Given** 当前owner与有效团队接任者，**When** 转让/退出/停用/降级/移除/解散，**Then** 先交接、旧owner转维护者不新增库授权，负责库接管且资料保留；解散先阻访问并登记关联清理意图；全部安全事件同事务。
++- **Given** 该片尚未交付建库页面，**When** 验证负责库交接，**Then** 本条同步交付接管所需最小库归属/负责人持久模型与端口，以无文档负载的受控库夹具实证职责转移；3.4增量实现创建/授权和已有库联调，不作为3.3完成前置，不提前实现文档管线。
+ - **Given** 名称确认/默认空角色和管理丢回包，**When** 提交或恢复，**Then** 完整影响/安全焦点/Tab/Esc可用，未知先读当前邀请/成员/owner不自动重写；平台办理交接不获正文读权。
+ 
+ ### Story 3.4：创建知识库并管理逐库授权与负责人
+@@ -362,7 +378,7 @@
+ 
+ **Acceptance Criteria:**
+ 
+-- **Given** 当前本人空间/授权库，**When** 显式选单空间、非空库/动作与未来到期创建，**Then** 有效范围取scope与当前权交集，密钥仅创建显示（默认遮罩、显式复制），后续只有元信息；改变空间清库/动作，期限取现行schema而不猜无限。
++- **Given** 当前本人空间/授权库，**When** 显式选单空间、非空库/动作与未来到期创建，**Then** 有效范围取scope与当前权交集，密钥仅创建显示（默认遮罩、显式复制），后续只有元信息；改变空间清库/动作，到期字段按IA-10初态为空、必填未来上海时区时间且遵守C5最大365d，未填不提交。C5的30d技术seed不用于表单预填或服务器默补到期；此按UX管字段初态的既有分工协调来源字面差异，不改变期限/权限边界。
+ - **Given** 本人或本团队owner撤销、停用/到期/移除/撤库权，**When** 访问受控context/状态，**Then** 立即失效或缩窄；Cookie+Bearer、越库、写/他人任务等拒绝，无身份回退；变更同事务台账。
+ - **Given** 创建回包丢失或关闭秘密面板，**When** 恢复，**Then** 先读元信息、不再次取明文或自动新建，明确撤销后可由本人新建；秘密不持久保存/自动播报。
+ 
+@@ -387,6 +403,7 @@
+ **Acceptance Criteria:**
+ 
+ - **Given** 平台身份，**When** 配账号/团队、模型/存储/配额与验证状态，**Then** 严格schema/HTTPS白名单/secret只输入不回显，unknown不标可用；改默认不覆盖已有profile、不暗迁移/DDL/充值；纯平台直读个人/团队正文、他人历史/代登录拒绝。
++- **Given** 供应方secret配置/留空/替换/轮换或主密钥缺失，**When** 保存/读取/验证，**Then** 留空保持旧值、清除须独立确认、保存与验证分开；按C5 AESGCM/唯一96位nonce/AAD绑定deployment/provider/config/key_id加密，主密钥外置，保旧读能力后重加密退役，缺钥明确阻能力不重置密文、不回显秘密。
+ - **Given** S0门、已核P0对应动作及凭据齐备，**When** 显式接入验证，**Then** 通过统一call/gate/账；未具备时只显示不可验证/原因，不为完成本故事强求真实模型账号；与E2证据按用途合并使用。
+ - **Given** S1全部故事，**When** 运行R02首次登录/认证写、R03设施、角色/范围/凭证/末笔预留/锁序/台账正反例，**Then** 任何越权、重复记账或浏览器旧正文闪现均阻身份及业务入口；记录S1门，不把运行未执行变成PASS。
+ 
+@@ -398,7 +415,7 @@
+ 
+ As a 当前库维护者，I want 有限上传/替换入口与原候选恢复，So that 批次局部失败和重传不制造重复版本。
+ 
+-**依赖：** 3.7、2.2对应子门；2.1及实际启用档位证据。**来源：** FR-4/6/15；NFR-1/2/6；UX-DR05/06；AD-6/7/8；C4/C7；运行R2/R3；IA-04/05；AC-06/07。
++**依赖：** 3.7、2.2对应格式/来源/embedding子门、2.5的P0-DOC-1或P0-DOC-4所启用档位；不依赖2.3/2.6整体完成。**来源：** FR-4/6/15；NFR-1/2/6；UX-DR05/06；AD-6/7/8；C4/C7；运行R2/R3；IA-04/05；AC-06/07。
+ 
+ **Acceptance Criteria:**
+ 
+@@ -462,7 +479,7 @@
+ 
+ As a 用户，I want 显式选范围仅检索资料，So that 我能核验最多五个当前证据候选。
+ 
+-**依赖：** 4.5、2.3。**来源：** FR-3/5/9/14；NFR-1/3/4；UX-DR03/08；AD-9/10/11；C1/C3/C6/C8；IA-07/09；AC-03/15。
++**依赖：** 4.5、2.3；实际开放的查询/文档并存组合另取2.6对应MIX子门。**来源：** FR-3/5/9/14；NFR-1/3/4；UX-DR03/08；AD-9/10/11；C1/C3/C6/C8；IA-07/09；AC-03/15。
+ 
+ **Acceptance Criteria:**
+ 
+@@ -614,13 +631,14 @@
+ 
+ As a 部署方，I want 核实真实环境和四服务并存保护，So that 运行不依赖开发电脑且备份材料可核。
+ 
+-**依赖：** 8.2、2.5目标机证据补齐；合法环境/TLS/秘密/操作者。**来源：** FR-4/15/16；NFR-3/4/5/6；AR-09/10；AD-13/14；C8；运行R4/R6；AC-05/20/22。
++**依赖：** 8.2、2.5/2.6目标机证据补齐；合法环境/TLS/秘密/操作者。**来源：** FR-4/15/16；NFR-3/4/5/6；AR-09/10；AD-13/14；C8；运行R4/R6；AC-05/20/22。
+ 
+ **Acceptance Criteria:**
+ 
+ - **Given** 实际Ubuntu/Engine/磁盘/域名TLS，**When** 部署锁定gateway/API/worker/PG，**Then** 仅gateway公开HTTPS，卷/锁/epoch/服务secret最小权限、非root只读根，无私有静态直出，前端预构建；实际配置/网络/秘密检查留证。
+ - **Given** P0真实负载与查询/上传/重处理并存，**When** 测1/4档RSS/峰值/OOM/CPU/FD/连接/事务/磁盘/延迟，**Then** 按总4GB配置各预算并只启已验档位；不足先收并发/流式/批量/输入重测，仍不满足记录变更，不降低功能门槛。
+ - **Given** 部署方确认备份频率/留存/最大备份龄/可丢失窗口和现行受托登记，**When** 停写制作同snapshot_id的PG/roles/原件解析引用/配置/密文/独立密钥恢复材料与台账认证区间，**Then** hash/可读性核验、独立受控介质及gap可追溯；未确认窗口或介质不签上线，备份存在不等于恢复通过。
++- **Given** 普通启动/发布/备份与schema不兼容失败，**When** 有限排空后迁移或冻结一致包，**Then** 启动按R5核schema/epoch/能力再逐范围开放，发布不重置deadline、不在目标机构建；备份冻结全部应用写入含会话/安全事件/扫描/cleanup/迟到账，紧急撤权中止包后重做，失败只回已证schema兼容产物，否则维护隔离并走可信恢复，不把在线文件拷贝自称一致。
+ 
+ ### Story 8.4：从旧备份隔离恢复并逐范围放行
+ 

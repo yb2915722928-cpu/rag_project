@@ -1,0 +1,603 @@
+--- before/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/ARCHITECTURE-SPINE.md
++++ after/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/ARCHITECTURE-SPINE.md
+@@ -21,6 +21,10 @@
+ # RAG_all 架构主干
+ 
+ 本主干固定不同功能开发者必须共享的技术边界；业务含义以[现行PRD](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/prd.md)、[实施契约](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md)和[实施切片](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-slices.md)为真源，架构不覆盖它们。视觉与交互分别继承[DESIGN](/E:/aaa-project/rag/_bmad-output/planning-artifacts/ux-designs/ux-RAG_all-2026-10-16/DESIGN.md)和[EXPERIENCE](/E:/aaa-project/rag/_bmad-output/planning-artifacts/ux-designs/ux-RAG_all-2026-10-16/EXPERIENCE.md)。当前无应用代码；本文不是实现或运行通过记录。
++
++## 现行契约导航
++
++业务/UX来源与权威分工见[需求追踪§1](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/requirements-architecture-traceability.md#1-权威输入与承接索引)。AD是摘要不变量；实现必须同时读取[共享C1–C8](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md)、[运行R1–R8](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md)及[切片门槛§6](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/requirements-architecture-traceability.md#6-s0p0f0s1s7纵向门槛)。当前IR统一由[现行裁决](/E:/aaa-project/rag/_bmad-output/planning-artifacts/implementation-readiness.md)发布；历史review/PASS不能替代修订后的裁决。
+ 
+ ## Design Paradigm
+ 
+@@ -74,7 +78,7 @@
+ 
+ - **Binds:** FR-1–FR-5、SM-6、全部私有读写与外传。
+ - **Prevents:** 平台越权、双凭据回退、静默缩目标、撤权后缓存泄漏。
+-- **Rule:** Web只认服务端Cookie会话，program只认本人只读Bearer；同请求带二者整拒。角色/负责人/逐库范围与scope按当前服务端事实取交集，显式目标逐项校验、任一不可用整拒。派发、完整放行、历史、重放、citation及每次资源读取都重核；AuthContext仅身份载体，不是永久许可。上传受理前按当前维护权；已受理库任务按库资格继续，程序仅本人状态读。密码/会话/凭证/供应方秘密的有限技术规则同源于共享契约。
++- **Rule:** Web只认服务端Cookie会话，program只认本人只读Bearer；同请求带二者整拒。角色/负责人/逐库范围与scope按当前服务端事实取交集，显式目标逐项校验、任一不可用整拒。派发、完整放行、历史、重放、citation及每次资源读取都重核；AuthContext仅身份载体，不是永久许可。上传受理前按当前维护权；已受理库任务按库资格继续，程序仅本人状态读。密码/会话/凭证/供应方秘密的有限技术规则同源于共享契约C5；匿名首次登录采用精确同源Origin+JSON+固定自定义头的独立防护，成功旋转会话/CSRF token，其余认证Web写仍须会话绑定token。全部私有响应遵守C2 no-store及C4历史恢复重核。
+ 
+ ### AD-5 — 单一共享schema与来源表示
+ 
+@@ -92,7 +96,7 @@
+ 
+ - **Binds:** 所有供应方请求、上传、文件写入、worker及维护恢复。
+ - **Prevents:** 旧attempt继续派发、SDK暗重试、超时线程仍写文件、仅凭PID消失释放空间。
+-- **Rule:** API/worker控制器持业务资格，每个物理槽监督有绝对期限且可等待停止的子执行者；child不写业务DB、不持主密钥、不自主串阶段，单call最少秘密只经私有有界IPC注入。每次传输含上游返回签名URL先过统一EgressTarget校验，持久prepared，再临近发送复核并条件转may_have_sent，提交后给一次grant；该call永不重发，显式重试新call且重过守卫，自动重试/重定向关闭。may_have_sent与网络非原子，撤销后可能仍收费，迟到事实只补账。调用按真实适用的HTTP/异步task等限制维度领取许可；原task只读轮询不重复新增task占用，HTTP响应不证明异步task终态。物理槽仅确认本槽全部写入者/后代已停才复用；writer持稳定生命周期OS锁，cleanup先fence、事务外停写及取EX锁、删除核验，再同UoW标cleaned和释放账；不能证明就blocked。详见[运行契约](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md)。
++- **Rule:** API/worker控制器持业务资格，每个物理槽监督有绝对期限且可等待停止的子执行者；child不写业务DB、不持主密钥、不自主串阶段，单call最少秘密只经私有有界IPC注入。每次传输含上游返回签名URL先过统一EgressTarget校验，持久prepared，再临近发送复核并条件转may_have_sent，提交后给一次grant；窗口charge在发送能力未封口时持续占用，受监督sender退出/FD关闭和旧grant销毁后取DB上界再保留完整窗口，遵守C8，期限或child读钟不能证明停发；该call永不重发，显式重试新call且重过守卫，自动重试/重定向关闭。may_have_sent与网络非原子，撤销后可能仍收费，迟到事实只补账。调用按真实适用的HTTP/异步task等限制维度领取许可；原task只读轮询不重复新增task占用，HTTP响应不证明异步task终态。物理槽仅确认本槽全部写入者/后代已停才复用；writer持稳定生命周期OS锁，cleanup先fence、事务外停写及取EX锁、删除核验，再同UoW标cleaned和释放账；不能证明就blocked。详见[运行契约](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md)。
+ 
+ ### AD-8 — 三账与唯一结算 [ADOPTED]
+ 
+@@ -122,19 +126,19 @@
+ 
+ - **Binds:** IA-1–IA-12、所有Web私有异步页面及来源回看。
+ - **Prevents:** job状态吞旧版、清理状态伪装可用性、迟到回包跨账号/空间、前端裁128掩盖非法输出。
+-- **Rule:** 分离active_version、candidate、job、index_generation、cleanup五个投影，返回有限allowed_actions与EffectiveLimits；服务端执行时仍重核。请求/轮询/回调持账号+登录实例+空间+epoch+本地代次及适用操作/父轮次归属，切换或退出清私有状态，回包入视图/缓存前复核；Abort不能替代归属校验。非流式完整答案一次展示，202/断网只查原操作/同Key，失败须用户新逻辑操作。PDF可信页/bbox高亮、非PDF真实结构、无bbox回退页，定位损坏明示不猜；模型Markdown清洗，URL/下载由受控后端解析。视觉、键盘、窄屏和错误呈现继承UX包，不另造设计体系。
++- **Rule:** 分离active_version、candidate、job、index_generation、cleanup五个投影，返回有限allowed_actions与EffectiveLimits；服务端执行时仍重核。请求/轮询/回调持账号+登录实例+空间+epoch+本地代次及适用操作/父轮次归属，切换或退出清私有状态，回包入视图/缓存前复核；Abort不能替代归属校验。私有HTTP统一no-store，前端不持久缓存私有body；pagehide清除/遮蔽，pageshow含bfcache先遮蔽并作废旧context/代次，经当前context及全部依赖重核后重取展示，失败不显示旧快照。非流式完整答案一次展示，202/断网只查原操作/同Key，失败须用户新逻辑操作。PDF可信页/bbox高亮、非PDF真实结构、无bbox回退页，定位损坏明示不猜；模型Markdown清洗，URL/下载由受控后端解析；原件按C7准确白名单MIME+attachment+安全文件名+nosniff交付，inline仅已核PNG/JPEG页图/裁图，文本走受控渲染，不inline原始主动文档。视觉、键盘、窄屏和错误呈现继承UX包，不另造设计体系。
+ 
+ ### AD-13 — 四服务部署与可信恢复 [ADOPTED]
+ 
+ - **Binds:** NFR-3–NFR-6、恢复、安全台账和平台运维。
+ - **Prevents:** 备份回滚复活权限/凭证、业务依赖开发电脑、运维日志泄漏正文、半备份假可恢复。
+-- **Rule:** 同一Ubuntu主机Compose gateway/API/worker/PG四服务，仅gateway对外；API与worker同代码/模型，PG任务，不增常驻队列。独立持久epoch控制、break-glass和受托安全台账介质不随DB回滚；epoch缺失/矛盾默认隔离。恢复先停流量和全部写入者、一致恢复DB与资产，再生成新随机epoch并使旧会话/凭证/执行失效；账号、权限、墓碑、配额与不完任务逐范围核对后放行，不能用旧DB自证。平台仅受控元数据；结构日志、审计、安全台账和逐call事实分开。秘密按服务最少挂载，备份包含匹配资产/配置/密钥恢复材料，频率/留存/丢失窗在S6登记并实演。
++- **Rule:** 同一Ubuntu主机Compose gateway/API/worker/PG四服务，仅gateway对外；gateway按C2/R4关闭私有路由缓存并覆盖错误响应，私有资产无静态直出入口；API与worker同代码/模型，PG任务，不增常驻队列。独立持久epoch控制、break-glass和受托安全台账介质不随DB回滚；epoch缺失/矛盾默认隔离。恢复先停流量和全部写入者、一致恢复DB与资产，再生成新随机epoch并使旧会话/凭证/执行失效；账号、权限、墓碑、配额与不完任务逐范围核对后放行，不能用旧DB自证。平台仅受控元数据；结构日志、审计、安全台账和逐call事实分开。秘密按服务最少挂载，备份包含匹配资产/配置/密钥恢复材料，频率/留存/丢失窗在S6登记并实演。
+ 
+ ### AD-14 — 切片依赖与可验证门槛 [ADOPTED]
+ 
+ - **Binds:** S0–S7、P0、F0及全计划实施判断。
+ - **Prevents:** S0可开工冒称全期能力通过、调优后挑题、官方版本冒充组合已安装。
+-- **Rule:** S0可独立开始；其调用/资产/epoch骨架可用且具真实凭证后尽早P0、可并行S1。S2解析/来源/embedding、S3完整预算、S5真正图意分别按真实前置停行；S6验证目标4C4GB、证书、介质/操作者与恢复；F0在首次调优前冻结32题/版本/hash/原金标，开发题隔离，S7按原SM全门槛。本轮用户授权将旧整文档并发1改为两项全系统独立上限：活跃文档job≤4、未证终态远端task≤4（各默认4、可配置1–4）；本机重处理物理槽仍1，真实生效受账号共额及资源验证限制，远端等待不持正文缓冲/Session/常驻child。Stack仅官方核实冷启动seed，S0须锁依赖/镜像digest并验证组合；上游模型/图意/计数/D/额度未知保持显式未证，不编成绩，不以假件代真实。实现路径与门槛映射见[需求追溯](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/requirements-architecture-traceability.md)。
++- **Rule:** S0可独立开始；R01须先完成C8迟发/停发/跨窗假件验收再开展任何真实外发，S1身份开放前验R02匿名登录，S2资源/S3历史开放前分别验R03/R04缓存与媒体边界；其调用/资产/epoch骨架可用且具真实凭证后尽早P0、可并行S1。S2解析/来源/embedding、S3完整预算、S5真正图意分别按真实前置停行；S6验证目标4C4GB、证书、介质/操作者与恢复；F0在首次调优前冻结32题/版本/hash/原金标，开发题隔离，S7按原SM全门槛。本轮用户授权将旧整文档并发1改为两项全系统独立上限：活跃文档job≤4、未证终态远端task≤4（各默认4、可配置1–4）；本机重处理物理槽仍1，真实生效受账号共额及资源验证限制，远端等待不持正文缓冲/Session/常驻child。Stack仅官方核实冷启动seed，S0须锁依赖/镜像digest并验证组合；上游模型/图意/计数/D/额度未知保持显式未证，不编成绩，不以假件代真实。实现路径与门槛映射见[需求追溯](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/requirements-architecture-traceability.md)。
+ 
+ ## Stack & Versions
+ 
+--- before/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md
++++ after/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md
+@@ -31,6 +31,8 @@
+ | retrieval | 无生成operation或产品预留，但有持久retrieval_execution_id与deadline/call账；结果至多五块 |
+ 
+ retry_mode严格为none/same_key_or_status/new_operation/manual_reconcile，是恢复动作而非自动付费许可。错误码和HTTP以实施契约§5.3为底线；新增子码不能改变整目标拒绝、计账和保密语义。Path/body同一目标不一致422；未经认证不返回可恢复私有operation ID。普通answer载荷继承实施契约§3.7的facts/quantity/gaps/clarifications四态，比较继承全格四态；模型只生成能力子对象，可信metadata/catalog由服务器补齐。
++
++所有私有HTTP响应固定`Cache-Control: no-store`，覆盖Web与program的认证/context、管理、状态/失败、问答/重放/历史、citation、页图/提取与原件，包含非2xx与gateway自产错误；不以Cookie、Bearer或GET/POST差异推定可缓存。首版私有路由不发ETag/Last-Modified，不返回304；带If-None-Match/If-Modified-Since也先当前鉴权，再返回正常受控响应或拒绝，不复用旧body。gateway必须关闭该路由族缓存且保留no-store，具体见R4。公开带内容hash的静态构建资源另行缓存，不能包括私有JSON或资产。no-store不证明旧副本或浏览器历史内存已清，历史恢复另守C4/AD-12。
+ 
+ ## C3：SourceLocator与EvidenceSnapshot
+ 
+@@ -72,6 +74,8 @@
+ 
+ 迁移必须实现等价唯一性：非空稳定ID、组合归属约束、活动版本/当前候选指针、活动generation/有效guard、会话唯一未终结轮次、用户+空间+能力+Key摘要、逐文件Key域、容量/日桶非负、唯一quota_transition/call事实。具体表结构是S0/S1代码seed，不通过仓储私自降低约束。
+ 
++私有读放行还必须遵守C2的no-store与条件请求规则。Web不将私有body、来源blob或认证context写入localStorage/IndexedDB/CacheStorage/service worker缓存；内存缓存仍须归属隔离。pagehide同步遮蔽并清除私有DOM/状态、撤销blob URL、作废旧异步代次；pageshow（含persisted/bfcache与普通历史恢复）在显示私有数据前保持遮蔽、清理旧context并生成新本地代次，重新取得当前context，再逐项重核原操作全部依赖及资源后才重新取数展示。失败保持空白安全状态/登录或无权提示，不显示旧快照兜底；不依赖unload必触发或no-store禁用bfcache。此边界不承诺追回已合法显示/保存的字节。
++
+ ## C5：有限管理schema与身份技术seed
+ 
+ 以下是受托实现初值，技术配置有版本、可调整但不得放宽上游权限/期限不变量；不是运行成绩。所有管理JSON也受H结构界，列表均有界，不把全部成员/库/审计导入页面后分页。
+@@ -88,7 +92,9 @@
+ 
+ 密码12–128 Unicode码点、最多512 UTF-8字节，保留原值且不trim/截断。argon2id采用库RFC_9106_LOW_MEMORY参数档，hash内保存参数/盐；成功登录按新配置rehash，目标机核验延迟/RSS前验证并发≤1。失败登录统一安全错误；按登录名摘要和来源地址使用PG有界尝试桶，初值每15分钟5次失败后15分钟冷却，桶到期扫描；不得以IP限流替代账号桶或把原始登录名写普通日志。
+ 
+-Web会话是≥256位随机不透明secret，DB仅SHA-256摘要+用户/epoch/created/last_seen/absolute_expiry/revoked；初值空闲30分钟、绝对12小时，续活不越绝对期。登录成功换会话、退出撤销、改密撤销该用户全部会话及程序凭证（当前会话也要求重新登录），恢复epoch全失效；Cookie为Secure/HttpOnly/SameSite=Lax/Path=/且不用Domain扩大子域。所有Web写动作校验Origin允许表与会话绑定CSRF token，程序Bearer不使用Cookie回退；生产同源、CORS默认关闭。
++Web会话是≥256位随机不透明secret，DB仅SHA-256摘要+用户/epoch/created/last_seen/absolute_expiry/revoked；初值空闲30分钟、绝对12小时，续活不越绝对期。登录成功换会话、退出撤销、改密撤销该用户全部会话及程序凭证（当前会话也要求重新登录），恢复epoch全失效；Cookie为Secure/HttpOnly/SameSite=Lax/Path=/且不用Domain扩大子域。生产同源，CORS关闭；程序Bearer不使用Cookie回退，同请求本应用Cookie+Bearer仍整拒。
++
++匿名登录POST采用独立防护路径：Origin必须精确等于受托部署配置的scheme/host/port（不从任意Host/X-Forwarded-*推导），Content-Type必须为application/json（可带UTF-8 charset），固定自定义头`X-RAG-Login: 1`；拒缺失、null或跨源Origin、简单form类型与缺头请求，防护失败403且不创建会话。新浏览器不要求尚不存在的认证会话/CSRF token。成功时撤销请求携带的旧会话并建立全新会话和≥256位随机、会话绑定的CSRF token；token仅由C2 no-store的受控登录响应交前端内存。后续页面重载可经同源、当前认证的no-store context GET重新取得本会话token；不将token放URL或持久缓存。其他已认证Web写（含退出、改密、上传、管理及业务POST）必须同时校验精确同源Origin与`X-CSRF-Token`绑定当前会话，缺失/失配403；匿名登录的固定头不能替代该检查。登录无凭据/现有过期Cookie均不落入token前置循环，仍受密码校验、失败桶及恢复隔离规则约束。
+ 
+ 普通鉴权SH事务只读，不能顺手写last_seen/rehash/失败登录桶或撤销状态。空闲续活、rehash、登录失败桶/撤销要么在用例开始确定账号EX，要么独立账号EX短UoW并重核状态/旧过期值；不得在持space/KB或account SH时升级回取。续活失败/已过期不授新资格，不能以异步触碰掩盖会话本应失效。
+ 
+@@ -126,6 +132,16 @@
+ 
+ 格式路由也是共享端口契约：文本/扫描PDF及DOCX使用MinerU精准API主路；TXT/Markdown用有界本地严格UTF-8解码与结构保留，记录BOM/换行处理配置、不抓取远程链接/图片、不执行HTML/脚本、不增加本地OCR；所有格式都产同一不可变SourceLocator并经相同完整性/来源/向量发布守卫。声明/探测格式矛盾明确拒绝，损坏/加密/非UTF-8不能猜编码后假成功。官方额外支持Doc/Ppt/Xls不扩首版承诺。P0逐个承诺格式、PDF页/bbox和DOCX结构的真实结果仍是S2前置。
+ 
++资源交付与解析是两个边界。每次打开原件、提取或预览先执行C4当前授权/归属/hash核验，响应再遵守C2 no-store；客户端或上游的文件名、Content-Type、Content-Disposition不能原样成为响应头。
++
++| 表示 | 服务器交付规则 |
++| --- | --- |
++| 五格式原件 | 一律`Content-Disposition: attachment`及`X-Content-Type-Options: nosniff`；服务器依据已校验格式映射MIME：PDF→application/pdf，DOCX→application/vnd.openxmlformats-officedocument.wordprocessingml.document，TXT→text/plain; charset=utf-8，MD→text/markdown; charset=utf-8。禁止text/html、SVG或用户/供应方指定主动类型；原件不inline，准确MIME与attachment须同时满足 |
++| 下载文件名 | 服务器生成有限ASCII fallback（稳定ID+已核扩展名）及规范UTF-8 filename*；展示名经服务器移除CR/LF、其他控制字符、路径分隔/目录片段并限制255码点，无合法名则用fallback。使用规范header编码器，不拼接原始header、不接受重复filename参数或上游Disposition |
++| inline预览 | 仅允许本机解码/重编码并核格式与像素/字节上界的image/png或image/jpeg页图/裁图，映射回可信locator；不得直接inline原始PDF、HTML、SVG、上游任意响应或有主动能力的文档。文本/MD/提取通过application/json受控文本字段交应用，用textContent/已定Markdown清洗渲染，不插入原始HTML、不抓远程资源 |
++
++nosniff不能让明确的text/html变安全；原件下载也不承诺用户另存后在其他程序打开不会执行。首版不提供主动内容预览，若未来确需该能力再独立设计隔离origin/sandbox/CSP，不以开放iframe兜底。S2须有含HTML/脚本语法的合法UTF-8 TXT/MD、伪类型/扩展名、CRLF/路径文件名、预览不执行/不外抓及当前授权的正负验收。
++
+ ## C8：跨进程共享调用rate gate
+ 
+ execution是共享RatePool/CallPermit唯一写者。pool身份为provider_account_id+region+rate_pool_id，profile/key_ref必须映射到真实账号限制范围；换密钥、API/worker、query/document/vision用途不能新建一个额度副本。每用途可有更紧子池；每个真实限制维度登记有限值、窗口和适用动作，包括RPS/TPM、在途HTTP、异步task并发，不能把厂商的task限制猜成所有HTTP限制或反向猜测。P0固定submit/poll/download等动作到真实维度的映射；未证范围/计数/适用性不得启用对应能力。
+@@ -136,10 +152,14 @@
+ 
+ 两个本地gate也由execution独占、全系统共用PG控制行与唯一transition：queued job创建不占doc_active_job，worker条件领取并开始处理时同UoW领取，业务终态/到期fence时按job_id一次释放；原2h绝对deadline仍从原件受理起算，排队/调度/远端等待不延长。external_async_task在submit的may_have_sent同UoW按原call唯一领取，只有该task组件可信终态/可证上界才能与本维账号/用途组件同UoW一次归还；doc_active_job归还不顺带归还未知task。涉及这些gate的事务按C4本地gate→provider pool→call→permit组件锁序；恢复本地task计数也blocked_unverified并按独立未决事实重建，不能用备份旧低值放新task。控制器采用有限轮转：每个活跃job每轮最多一个已到期可执行阶段，stage完成停写后轮到其他job；到期poll/reconciliation在本轮先于新submit，poll遵守实际最小间隔、不忙等，不持Session或正文缓冲等待。
+ 
+-窗口用DB时间、持久计数/已发permit条件更新，时间滑窗边缘采用不超配的保守实现；不在进程内各自计额，不因重启清零。TPM预占完整已证输入上界+最大输出（包括思考上界，适用时），不按平均usage；may_have_sent/unknown即计可能消耗，不因业务失败归零/重发，时间窗口自然过期才解除该窗口占用。prepared尚无rate permit，确认从未派发只终结意图/释放未用阶段预算，不归还从未取得的rate数。实际usage可以独立事实补账，不为归还保守限流数反向取pool父锁。
++RPS/TPM采用持久的“未封口持续占用、封口后完整窗口”保守滑窗。may_have_sent同UoW为每个适用窗口组件创建唯一charge，`send_state=send_open`，绑定call/attempt/boot/child启动实例、有限send_stop_by及grant标识；先提交charge再经私有IPC给一次grant。RPS权重1；TPM权重为完整已证输入上界+最大输出（含思考上界，适用时），不按平均usage。对任意账号总池/用途子池维度d，窗口W_d、上限L_d、DB时刻t的准入计数为`sum(weight_d where send_open OR t < last_local_send_upper + W_d)`；含新call后仍≤L_d才原子领取全部组件，否则不发grant。未封口charge即使跨秒/分钟、业务失败、期限过期或重启也持续全量计入，不能凭may_have_sent时间+W移除。
+ 
+-供应方远端并发约束与本地物理槽分开，HTTP与异步task组件也分别终结：可信HTTP响应只证明本HTTP组件终态，不能释放仍running/unknown的task；原task终态由合法poll/官方查询证明，或本维已证官方绝对执行上界到期证明。上界证明必须覆盖该call最晚可能实际到达的时刻；may_have_sent后仍可延迟发送，不能只将该本地提交时间加厂商执行时长当终态证明。缺实际接收时刻或可证最晚到达界时保留unknown。child退出/超时不证明任一远端组件结束。许可释放由execution独立短UoW按适用本地gate ID升序→pool ID升序→call ID升序→permit组件ID升序取锁，核该维已持久可验证证据，以每(call_id,dimension_id)唯一release_transition_id条件active→released，同事务只归还相应账号总池/用途子池的本维并发一次；重复响应/核对零效果，CallPermit整体结束须全部适用组件均结束。无业务父锁、不复活业务，迟到成本入口本身不能释放许可。RPS/TPM窗口额度仍仅自然到期，不因usage回填提前返还。
++本地发送计量边界是该call由受监督传输者向本机传输栈提交请求应用字节的可能区间，不是远端接收时刻。首版封口证明固定为控制器确认该启动实例的本call child及全部受控发送者已停止、发送FD/IPC已关闭、未消费grant已销毁且不可能再授予/恢复原grant；正常结果先有界落盘，再退出child，不能仅凭其“已消费/写完”自报。取得证明后，execution独立短UoW按pool→call→组件锁序，持久proof ID并用随后DB时间条件`send_open→send_sealed`，设置只写一次的last_local_send_upper；每维从该保守上界继续保留完整W才自然到期。重复封口/扫描零额外效果；成本账和远端组件终态不随封口修改。child复用仅限不持旧call发送能力的其他阶段；每个外部call的发送child必须先按此规则退出。
++
++send_stop_by不晚于原阶段/业务hard_deadline，只触发拒发新grant、撤销未消费grant、TERM/KILL及等待停止证明；它和child发送前读钟均不是停发证明。检查后暂停、部分写后暂停、IPC失联但child仍活、controller崩溃/kill未确认时保持send_open并阻相应新额度；物理槽也不复用。已竞争发生的迟发仍由原charge覆盖，不声称到期瞬间网络绝对静默。DB时钟后退不提前到期，检测到超出已验证时钟包络的前跳/时基矛盾则阻断窗口、核当前sender后重新建立保守上界，不能用跳钟清额。prepared无rate permit，不能归还未领额度；usage回填只补事实，不缩减charge或反向取pool锁。此算法不承诺网络到达滑窗或厂商永不429。
++
++供应方远端并发约束与本地物理槽分开，HTTP与异步task组件也分别终结：可信HTTP响应只证明本HTTP组件终态，不能释放仍running/unknown的task；原task终态由合法poll/官方查询证明，或本维已证官方绝对执行上界到期证明。上界证明必须覆盖该call最晚可能实际到达的时刻；may_have_sent后仍可延迟发送，不能只将该本地提交时间加厂商执行时长当终态证明。缺实际接收时刻或可证最晚到达界时保留unknown。child退出/超时不证明任一远端组件结束。许可释放由execution独立短UoW按适用本地gate ID升序→pool ID升序→call ID升序→permit组件ID升序取锁，核该维已持久可验证证据，以每(call_id,dimension_id)唯一release_transition_id条件active→released，同事务只归还相应账号总池/用途子池的本维并发一次；重复响应/核对零效果，CallPermit整体结束须全部适用组件均结束。无业务父锁、不复活业务，迟到成本入口本身不能释放许可。RPS/TPM组件独立遵守上述send_sealed后完整W到期，不能因HTTP/task release或usage回填提前返还。
+ 
+ P0必须实证task池满时原task的受控poll仍能在其真实适用限额内推进并取得终态，验证重启后的同任务路径与各组件独立一次释放；不能以人工处理替代正常异步流程。若真实厂商限制使必要poll也无法取得且无可证官方有限完成上界/受控核对通道，该能力保持不启用，先解决接入契约。异常无ID/未知终态只阻相关维度的新工作，按登记的官方只读核对或独立厂商核验通道处理，不盲重交。逻辑查询拿不到槽立即429；已受理内部等待仅在原hard_deadline内且无Session，不增加查询队列，期限届满保留原unknown与明确停止/核对动作。派发提交与网络依旧非原子，不能承诺调度暂停/撤销后远端零请求或厂商永不429；保留unknown与失败证据。
+ 
+-恢复旧包后全部共额pool先blocked_unverified；新epoch不证明备份后丢失call/远端inflight已终止，也不能按旧低计数重开额度。现行接入受托人独立核真实维度/适用动作、额度及未决调用后逐维度、逐动作放行；已知原task的只读核对可在其真实适用HTTP/RPS等维度验证可用后受控开放，不因task新增维度仍blocked就禁止不新增task的合法poll，也不能豁免poll实际适用的未知维度。有证时间窗口届满只解除RPS/TPM窗口占用，不解除远端并发unknown；无ID且无本维官方有限执行上界继续阻该维新工作并走登记的独立核验通道。不能借恢复清账，恢复控制按运行契约T4/T5执行。
++恢复旧包后全部共额pool先blocked_unverified；新epoch不证明备份后丢失call/远端inflight已终止，也不能按旧低计数重开额度。窗口放行前须独立确认全部旧本地sender已隔离/停止且旧grant不可消费，包括备份后缺失call；从该证明后的新DB上界保守等待各完整W，不能用旧备份中已到期的领取时间自证。证明缺失维持阻断。现行接入受托人再核真实维度/适用动作、额度及未决调用后逐维度、逐动作放行；已知原task的只读核对可在其真实适用HTTP/RPS等维度验证可用后受控开放，不因task新增维度仍blocked就禁止不新增task的合法poll，也不能豁免poll实际适用的未知维度。窗口封口+W只解RPS/TPM，不解远端并发unknown；无ID且无本维官方有限执行上界继续阻该维新工作并走登记的独立核验通道。普通重启对已持久send_open同样先停旧sender再封口，不清计数。不能借恢复清账，恢复控制按运行契约T4/T5执行。
+--- before/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md
++++ after/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md
+@@ -16,9 +16,9 @@
+ 
+ 调度器在有限PG队列中按稳定游标公平轮转活跃job，每轮每job最多执行一个到期可执行阶段，到期poll不被新submit无限压后、未到期不忙轮询。每次submit/poll只占一个本机阶段槽，远端accepted后保存原task ID／状态／permit/fence与原deadline，确认该次child退出、FD全关才返还物理槽并推进其他job。远端pending不持Session或正文缓冲，仍持原task组件；有账号／资源依据时最多4个远端工作可真实重叠，不能让第一job同步阻等到terminal再调第二个。任务原2h期限含排队／等待／重试不刷新；取消／到期先fence本地写资格，未证远端终止的task组件与成本unknown继续保留，不为给新job腾位假退并发。
+ 
+-跨API/worker的账号调用gate由execution唯一拥有PG共享池，以provider_account_id+region+rate_pool_id标识真实共额域；真实账号总池与用途子池共同约束，换secret/key_id不创建新额度池。profile按用途/动作登记实际适用的RPS、TPM、在途HTTP并发、异步task并发等维度，不能把它们统称一个并发计数。may_have_sent同一短UoW按call_id唯一原子取得全部适用维度的permit组件，不在各进程复制账号额度，也不为活性编造独立池。TPM适用时按已证完整输入+最大合法输出预留；RPS/TPM窗口按派发事实自然到期，失败/usage回填不提前返还。
++跨API/worker的账号调用gate由execution唯一拥有PG共享池，以provider_account_id+region+rate_pool_id标识真实共额域；真实账号总池与用途子池共同约束，换secret/key_id不创建新额度池。profile按用途/动作登记实际适用的RPS、TPM、在途HTTP并发、异步task并发等维度，不能把它们统称一个并发计数。may_have_sent同一短UoW按call_id唯一原子取得全部适用维度的permit组件，不在各进程复制账号额度，也不为活性编造独立池。TPM适用时按已证完整输入+最大合法输出预留；RPS/TPM按C8的send_open持续计额、监督封口后完整W自然到期，不能按grant领取时间过窗；失败/usage回填不提前返还。
+ 
+-异步submit新增task组件并留在原call，收到accepted/HTTP响应仅能释放已证结束的HTTP组件，不能释放仍running的task组件。原持久已知task的只读poll/reconcile引用其原task组件，不再领取“新增task”额度；每次poll仍新建call并领取厂商真实适用的账号/用途HTTP、RPS等组件，全部外传仍过相同gate。每组件的可靠终态/官方绝对上界及[C8唯一release_transition](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:141)控制每(call_id,dimension_id)唯一active→released与适用本地taskgate／账号／用途本维一次归还；独立释放先本地gate再pool→call→组件，重复响应/核对/扫描零额外效果，ledger迟到账不退permit。上界须覆盖该call最晚可能实际到达时刻，不能用may_have_sent本地时间直接加厂商执行时长；无接收时刻或可证最晚到达界仍unknown。未知task保留原组件，停止child不证明远端task终止。若供应方真实把只读poll也计入已满且无法释放的同一维，P0必须证明可用核对通道或官方有限完成上界，否则不启用该异步组合；不以无限人工等待充正常处理闭环。
++异步submit新增task组件并留在原call，收到accepted/HTTP响应仅能释放已证结束的HTTP组件，不能释放仍running的task组件。原持久已知task的只读poll/reconcile引用其原task组件，不再领取“新增task”额度；每次poll仍新建call并领取厂商真实适用的账号/用途HTTP、RPS等组件，全部外传仍过相同gate。每组件的可靠终态/官方绝对上界及[C8唯一release_transition](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:145)控制每(call_id,dimension_id)唯一active→released与适用本地taskgate／账号／用途本维一次归还；独立释放先本地gate再pool→call→组件，重复响应/核对/扫描零额外效果，ledger迟到账不退permit。上界须覆盖该call最晚可能实际到达时刻，不能用may_have_sent本地时间直接加厂商执行时长；无接收时刻或可证最晚到达界仍unknown。未知task保留原组件，停止child不证明远端task终止。若供应方真实把只读poll也计入已满且无法释放的同一维，P0必须证明可用核对通道或官方有限完成上界，否则不启用该异步组合；不以无限人工等待充正常处理闭环。
+ 
+ ## R2. 有界入口与每次派发
+ 
+@@ -26,7 +26,9 @@
+ 
+ gateway对二进制上传关闭request buffering并显式proxy_http_version=1.1，验证chunked/有限body/超时实际流式行为，禁止未计账的请求临时文件；API不使用在准入前自动物化整文件的默认UploadFile/SpooledTemporaryFile链。先获上传槽、候选当前资格与原件/物理预算，才读取实际body；框架、代理、IPC、子执行者所有缓冲须有上界并计预算。确需暂存时先登记独立prefix/资产预算再接收，不能“接完整文件后拒绝”。断网只终止输入，不推定业务终态/退款；重复PUT沿原候选有界核实际长度/hash，不新建版本。
+ 
+-执行顺序是：控制器预占真实物理槽与有限命令→实际子执行者取得所需稳定生命周期SH锁并IPC请求资格→控制器短UoW复核并记录prepared→临近传输短UoW复核并条件提交may_have_sent→一次grant→子执行者一次传输→受控结果→新短UoW条件登记。不是控制器先代writer持一份锁；controller本身若读取源则作为独立读者持自己的SH。所需多个prefix按稳定prefix ID升序，锁集合提前确定，禁持后序再补前序。上述锁不在持PG事务时等待。SDK暗重试/自动重定向关闭；显式有限重试新call_id且重过资格门。may_have_sent后是否真正出网不能从本地失败推为not_sent，费用unknown保留。
++执行顺序是：控制器预占真实物理槽与有限命令→实际子执行者取得所需稳定生命周期SH锁并IPC请求资格→控制器短UoW复核并记录prepared→临近传输短UoW复核并条件提交may_have_sent→一次grant（C8 send_open已持久）→子执行者一次传输→受控结果落盘→该call发送child退出/发送FD关闭与旧grant销毁→新短UoW封口和条件登记。不是控制器先代writer持一份锁；controller本身若读取源则作为独立读者持自己的SH。所需多个prefix按稳定prefix ID升序，锁集合提前确定，禁持后序再补前序。上述锁不在持PG事务时等待。SDK暗重试/自动重定向关闭；显式有限重试新call_id且重过资格门。may_have_sent后是否真正出网不能从本地失败推为not_sent，费用unknown保留。
++
++grant绑定call、attempt、boot及child启动实例，经私有IPC单次消费；原call不得在重启/重领后再次给grant。send_stop_by到期只触发停止，读钟后暂停、部分写后暂停、控制器失联或TERM/KILL未确认均保持send_open；不能复用物理槽。正常结果也须发送child退出、发送FD/IPC关闭及未用grant销毁才由execution按C8原子封口，以取得证明后的DB时间保守留完整W。封口只结束本地发送可能性，不证明远端HTTP/task终态或成本为零；无需为此增外发代理服务。DB不可用/证明不完整持续占额，恢复依R5隔离旧sender，不能计数清零。
+ 
+ controller 每阶段重核当前epoch、父级墓碑/隔离、attempt/token/lease/deadline、候选/guard与预算；用户查询另核当前身份/凭证与全部原显式目标。合法受理文档任务归库继续，不因上传者后续降级自动取消；它仍受库资格和物理守卫约束。纯retrieval也有持久执行上下文、deadline和call账，不获得免费无限外发入口。
+ 
+@@ -44,7 +46,7 @@
+ 
+ C5成功而C6提交失败保留占用，重试按资产实况和原token完成一次转换；C2/C3/C5失败显示cleanup_blocked、保留占用，删除访问阻断已经生效且不能回滚。已fence的业务终态不再阻重建，清理余账仍受物理预算。旧attempt无权释放新guard、标其资产cleaned或借成本回填写业务。
+ 
+-PG锁序统一为全部所需账号控制行ID升序→空间控制行ID升序→KB稳定ID升序→业务对象固定类别/ID→空间容量/日桶→文档本地gate ID升序→provider rate pool ID升序→call ID升序→permit组件ID升序→asset ID升序；无某类则跳过。组件独立释放的短UoW也按本地gate→pool→call→组件顺序；迟到成本只锁call、不回取gate/pool。当前鉴权取SH，安全变更在对应控制行取EX并覆盖子表。先确定整组主体/空间，解析信息取锁后重核，space后不补账号；多KB集合取space锁后确定并复核，变集合回滚重试。受理、每次派发、完成放行、重放/历史/来源/下载均同序；后台已受理库任务从space SH开始且永不回取用户。完整覆盖清单和同UoW矩阵见[共享契约C4](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:51)，账号总池/用途子池及permit见[C8](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:129)。先取OS锁再开短PG事务；不持PG事务等待OS锁/网络/子进程退出/大文件删除。迟到可信成本只锁call追加，不反向取业务父锁/gate/pool/组件，不为退限流占用修改历史事实；冲突留核对。
++PG锁序统一为全部所需账号控制行ID升序→空间控制行ID升序→KB稳定ID升序→业务对象固定类别/ID→空间容量/日桶→文档本地gate ID升序→provider rate pool ID升序→call ID升序→permit组件ID升序→asset ID升序；无某类则跳过。组件独立释放的短UoW也按本地gate→pool→call→组件顺序；迟到成本只锁call、不回取gate/pool。当前鉴权取SH，安全变更在对应控制行取EX并覆盖子表。先确定整组主体/空间，解析信息取锁后重核，space后不补账号；多KB集合取space锁后确定并复核，变集合回滚重试。受理、每次派发、完成放行、重放/历史/来源/下载均同序；后台已受理库任务从space SH开始且永不回取用户。完整覆盖清单和同UoW矩阵见[共享契约C4](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:53)，账号总池/用途子池及permit见[C8](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:145)。先取OS锁再开短PG事务；不持PG事务等待OS锁/网络/子进程退出/大文件删除。迟到可信成本只锁call追加，不反向取业务父锁/gate/pool/组件，不为退限流占用修改历史事实；冲突留核对。
+ 
+ ## R4. 四服务、介质与最小权限
+ 
+@@ -60,6 +62,8 @@
+ | 服务密钥/外置主密钥 | 仅TLS私钥RO | 各需秘密RO | 各需秘密RO | 分版本加密封存，单独授权 |
+ | break-glass及现行受托登记 | 不挂载 | 不挂载 | 不挂载 | 独立受控介质，必要时离线使用 |
+ | 安全台账已认证连续导出/备份副本 | 不挂载 | 不常驻挂载 | 不挂载 | 显式维护导出到独立加密离机介质 |
++
++私有路由族覆盖认证/context、Web/program API、状态/错误、引用/来源/页图与原件；gateway必须proxy_cache off、proxy_no_cache 1、proxy_cache_bypass 1，不能从上级配置继承缓存或用error_page回落到可缓存路由。API及gateway自产错误均确保Cache-Control: no-store（含非2xx），不覆盖为public/max-age，不发私有ETag/Last-Modified/304，条件请求仍到当前授权入口。私有资产不由gateway静态目录、任意X-Accel-Redirect或上游签名URL直出，受控应用读取执行C4/C7并设置准确MIME、Disposition及nosniff。公开静态构建产物与私有路由显式分开，S0/S1验证路由/头部，S2/S3入口开放前验证实际资源/历史。
+ 
+ 供应方密文配置在DB、主密钥在服务secret，两者分离；用户Cookie/Bearer只存hash不能恢复明文。Compose secret只提供按服务挂载，不承诺宿主文件自动加密。子执行者不常驻加载secret文件，按R1单call IPC获取。不同环境用不同数据库/卷/epoch/秘密与样例，开发假件不会自动成为生产可用profile。Windows开发可以使用Linux容器/隔离Ubuntu环境验证flock与进程组；原生Windows假件成绩不代替Linux物理停写验收。
+ 
+@@ -83,14 +87,14 @@
+ | T2 换纪元/封身份 | 独立维护写者生成全新至少128位随机epoch/cutover，与DB镜像一致；旧会话/Bearer全失效，账号全unverified，关正常登录/取回/旧邀请 | 不用旧epoch+1；不得以旧密码/owner字段解禁；控制矛盾保持维护 |
+ | T3 核验/合并 | 独立break-glass核受托链，重放可证台账；列gap并用外部现行记录逐账号/空间/库/资料核白名单，重置密码后启用账号 | 已知墓碑/撤权拒绝优先；删除完整性不明范围保持quarantine；平台无正文权限 |
+ | T4 执行/三账 | 旧attempt全fence；success不重结算，旧pending生成终止且一次释放恢复预留／doc_active_job占位，原Key不再跑；远端task本地gate与全部provider共额维度先blocked_unverified，不沿用旧低计数；现行未决task须独立核验后重建本地／账号／用途占用。已知上游ID仅在范围及只读核对动作放行后查 | 无ID为unknown，不重交；未知task不因旧job终态返还远端组件；当前上海日次数不明则冻结该空间新增生成，可信核对或次日仅解该配额缺口；备份后丢失call不凭新epoch断言远端已停 |
+-| T5 分步放行 | 现行接入受托人核凭据/key_id、匹配主密钥、真实共额域、各维未决调用与有限约束；按账号、资料范围、本地读/写、外部只读/付费、worker及pool维度/动作分别放行。可证窗口届满且HTTP容量已核时，仅放已知原task的有限只读核对，仍禁未知task占用下的新submit；task终态经可信证据后才一次释放原task组件 | 缺主密钥/凭据或未核适用维度阻该动作；RPS/TPM窗口届满不解task unknown，不为poll假拆池。无ID无本维官方有限上界仍阻新增task，上界须覆盖最晚可能到达时刻，不从本地may_have_sent计时自证；若poll也被同一满维阻断，按P0已证通道/上界处理，无证明不启能力。部分放行不称全站恢复，次日不解身份/资料隔离 |
++| T5 分步放行 | 现行接入受托人核凭据/key_id、匹配主密钥、真实共额域、各维未决调用与有限约束；按账号、资料范围、本地读/写、外部只读/付费、worker及pool维度/动作分别放行。全部旧本地sender独立隔离/停止且旧grant不可消费后，以新DB上界保守等待各完整W，HTTP容量亦已核时，仅放已知原task的有限只读核对，仍禁未知task占用下的新submit；task终态经可信证据后才一次释放原task组件 | 缺主密钥/凭据或未核适用维度阻该动作；无旧sender停发证明不得按备份时间放行窗口；封口后完整W届满不解task unknown，不为poll假拆池。无ID无本维官方有限上界仍阻新增task，上界须覆盖最晚可能到达时刻，不从本地may_have_sent计时自证；若poll也被同一满维阻断，按P0已证通道/上界处理，无证明不启能力。部分放行不称全站恢复，次日不解身份/资料隔离 |
+ | T6 负例与收尾 | 原Key/旧epoch/旧凭据/迟到attempt负例通过，备份gap/未知费用仍可见；归档实际丢失窗口和恢复耗时 | 不以进程启动/旧引用偶然打开通过；同包二次恢复必须新epoch并使第一轮新凭据失效 |
+ 
+ 恢复后context只给当前合法本人epoch/server_time；新付费写操作要求现行epoch及cutover后UUIDv7，客户端不得自动改旧Key/epoch重送。恢复点内success仅经受控GET在原窗口回看，核当前身份/来源/墓碑且标原完成时间/版本/日桶；丢失于恢复点后的答案、任务、上游ID不承诺找回。普通重启不改Key窗口、不重新生成epoch。
+ 
+ ## R6. 有界资源、观测与运行动作
+ 
+-上线生效配置必须含上传/JSON/响应字节、格式页数/批量、ZIP展开字节/文件数/单文件/比例、每阶段及全系统并存临时字节、磁盘低水位/保留余量、PG连接池及overflow/等待、各类deadline、日志轮转、全系统doc_active_job_limit与external_async_task_limit两个独立gate（各默认4、配置1–4，非每账号各4）、provider真实账号共额域/账号总池/用途子池的RPS/TPM/HTTP并发/异步task并发及适用动作、模型输入/输出/总token上限；不适用维度须有官方依据，未知必需项阻断对应派发，不用默认无限。设置须保存配置版本与受理快照，UI只显示服务器EffectiveLimits。原件空间额度、磁盘实占、产品次数、供应方额度和真实物理执行槽是五种独立保护，不相互替代。P0用API/worker共享账号的并发/跨用途负例验证总池与子池；以任务池1和4均验证满池submit→accepted→poll→terminal、公平推进／取消／unknown／重启恢复与组件一次领还，4档还须证明4项远端工作重叠且本机重阶段≤1、与查询／上传并存的RSS／FD／磁盘／预算不过界。未达到4档则不启4档，未证并发不声称4GB已达标。unknown不放新task但不无据封死已核只读核对；所有等待按原deadline有界，不另建查询等待队列。
++上线生效配置必须含上传/JSON/响应字节、格式页数/批量、ZIP展开字节/文件数/单文件/比例、每阶段及全系统并存临时字节、磁盘低水位/保留余量、PG连接池及overflow/等待、各类deadline、日志轮转、全系统doc_active_job_limit与external_async_task_limit两个独立gate（各默认4、配置1–4，非每账号各4）、provider真实账号共额域/账号总池/用途子池的RPS/TPM/HTTP并发/异步task并发及适用动作、每call有限send_stop_by/监督停发证明与窗口charge持久配置、模型输入/输出/总token上限；不适用维度须有官方依据，未知必需项阻断对应派发，不用默认无限。设置须保存配置版本与受理快照，UI只显示服务器EffectiveLimits。原件空间额度、磁盘实占、产品次数、供应方额度和真实物理执行槽是五种独立保护，不相互替代。P0用API/worker共享账号的并发/跨用途负例验证总池与子池；以任务池1和4均验证满池submit→accepted→poll→terminal、公平推进／取消／unknown／重启恢复与组件一次领还，4档还须证明4项远端工作重叠且本机重阶段≤1、与查询／上传并存的RSS／FD／磁盘／预算不过界。未达到4档则不启4档，未证并发不声称4GB已达标。unknown不放新task但不无据封死已核只读核对；所有等待按原deadline有界，不另建查询等待队列。
+ 
+ 4C4GB目标机以S0锁定镜像和P0真实负载测量：PG、gateway、API、worker与并存子执行者总RSS/峰值、cgroup/OOM事件、CPU、连接/事务时长、FD、磁盘余量/增长、调用延迟与失败。保守起点是单API业务进程、worker一个本机重阶段槽、有限调度≤4个远端等待context及独立心跳、无在线本地大模型/重排/前端构建；数值并发沿R1。PG池与容器内存须按实测总预算显式配置，不能把各容器各填4GB。先缩并发/批量/输入、使用流式与背压再复测；仍不满足原功能时停对应切片，记录变更提案，不能降验收。OOM后未证旧写者停止不借出其槽；磁盘低水位阻新写/付费受理，已有任务按预算安全终止，已核合法读和受控删除可保留。
+ 
+@@ -123,7 +127,18 @@
+ | S6／部署/恢复操作者＋实现者 | 4C4GB并存RSS/连接/磁盘/故障；真PG重建/删除/guard竞态；同包恢复两次新epoch，独立受托核验、台账gap、旧密码/Cookie/Bearer/owner/Key/attempt负例、逐范围放行 | 无环境/秘密/备份频率与可接受窗口确认或可信恢复演练未过不上线；未知配额/身份/资料各守自身隔离 |
+ | S7／评估者 | 同冻结材料B0/上一保留轮/本轮输入输出/检索/引用/用量费用/失败；SM-1至7逐项及场景分报，独立权限专项 | 质量阈值、任一专项或权限失败不得被平均/漂亮UI抵消，不称整期完成 |
+ 
+-R3清理与R5恢复的停止点为硬门，UI隐藏按钮、HTTP200、进程已重启或历史PASS都不替代它们。具体AC、需求与切片映射由[需求—架构追踪](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/requirements-architecture-traceability.md)维护；本轮独立审查、修后复核及最终字节范围由[最终gate索引](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/reviews/finalize-gate.md:1)记录。
++### 最新深审修复的运行关闭条件
++
++以下四项的**规划条款已补，运行验收全部未执行**；不把文档审阅替代这些证据。
++
++| 发现/最早门 | 必需正负例与可观察结果 | 硬停止点 |
++| --- | --- | --- |
++| R01 / S0→P0 | 共享池RPS=1/s、TPM完整一分钟预算：A领grant后暂停跨窗、读钟后暂停、部分写后暂停，B在另一槽尝试，A仍open时B不得超额发送；封口后完整W才可再领。controller在may_have_sent/IPC/封口前后崩溃、child失联仍活、kill未确认均继续计额；重复封口/扫描零效果，重启及旧包恢复不得清额。记录实际本地发送事件、PG charge/proof/DB时刻与全部池计数；P0再核真实维度和厂商行为 | S0假件未过不做任何真实外发；真实维度未证不开对应能力，不承诺远端到达窗或永不429 |
++| R02 / S1 | 全新无Cookie浏览器可同源JSON+固定头登录，成功新会话/token可用于后续认证写；跨源/null/缺Origin、form/缺头不建会话，旧token/缺token认证写拒绝；context重载取当前token且no-store，双凭据仍整拒 | 未过不开放身份入口 |
++| R03 / S1设施→S2资源→S3问答历史 | 真实浏览器同URL A读后退出换B、撤权后再读、If-*条件请求、history back/forward与bfcache恢复；所有私有成功/错误no-store且gateway不命中缓存，恢复前私有DOM/旧回包遮蔽作废、当前context及全部依赖重核后重取，失败无旧body | 各入口开放前分别验资源/原件、问答/重放/历史；no-store不自证bfcache已清 |
++| R04 / S2 | 合法TXT/MD含HTML/脚本仍为attachment准确MIME，DOCX/PDF同样attachment；恶意CRLF/路径文件名、伪MIME/扩展和上游头不能改变交付；受控PNG/JPEG与文本预览无脚本/远程资源，拒inline主动文档 | 资源入口未通过不开放，不用nosniff单独证明text/html安全 |
++
++R3清理与R5恢复的停止点为硬门，UI隐藏按钮、HTTP200、进程已重启或历史PASS都不替代它们。具体AC、需求与切片映射由[需求—架构追踪](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/requirements-architecture-traceability.md)维护；本轮四项修复、独立审查与最终字节范围由[CA修复记录](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/ca-remediation-2026-10-16/remediation-record.md:1)记录；当前效力以[现行IR](/E:/aaa-project/rag/_bmad-output/planning-artifacts/implementation-readiness.md:1)为准。
+ 
+ ## R8. 官方依据与适用限度
+ 
+--- before/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/requirements-architecture-traceability.md
++++ after/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/requirements-architecture-traceability.md
+@@ -1,12 +1,12 @@
+ # RAG_all 需求—架构—验收追踪
+ 
+-日期：2026-10-16；状态：final-reconciled。维护者：Winston B。此矩阵逐项核对现行输入与本轮实际架构，不是已运行成绩。只有已落盘AD/companion可列为承接；实现证据全部待S0/P0/F0/S1–S7取得。历史IR/PASS、文件齐全、静态UX图均不代表运行放行。
++日期：2026-10-16；状态：final-reconciled。维护者：Winston。此矩阵逐项核对现行输入与本轮实际架构，不是已运行成绩。只有已落盘AD/companion可列为承接；实现证据全部待S0/P0/F0/S1–S7取得。历史IR/PASS、文件齐全、静态UX图均不代表运行放行。
+ 
+ ## 1. 权威输入与承接索引
+ 
+ 业务真源：[PRD](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/prd.md:121)、[实施契约](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:12)、[实施切片](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-slices.md:15)。UX真源：[DESIGN](/E:/aaa-project/rag/_bmad-output/planning-artifacts/ux-designs/ux-RAG_all-2026-10-16/DESIGN.md)、[EXPERIENCE](/E:/aaa-project/rag/_bmad-output/planning-artifacts/ux-designs/ux-RAG_all-2026-10-16/EXPERIENCE.md)、[逐页IA/G](/E:/aaa-project/rag/_bmad-output/planning-artifacts/ux-designs/ux-RAG_all-2026-10-16/page-contracts.md:7)、[AC正负例](/E:/aaa-project/rag/_bmad-output/planning-artifacts/ux-designs/ux-RAG_all-2026-10-16/acceptance.md:24)。旧baseline、imports与研究历史仅供来源，不覆盖现行条款。
+ 
+-以下表格的AD编号指[架构主干](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/ARCHITECTURE-SPINE.md:61)实际条目；C编号指[共享契约](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:12)，R编号指[运行契约](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md:5)。AD1–2固定8模块/4服务的所有权，AD3–5固定UoW/当前权/schema，AD6–8固定版本/执行/三账，AD9–11固定索引/RAG/逻辑终态，AD12固定UX投影，AD13–14固定运行与停止点。C1标识/文本，C2公共包，C3来源/实见快照，C4控制锁与同UoW，C5有限管理/身份seed，C6限制/生成子契约，C7五状态DTO/格式分派，C8跨进程账号总池/用途子池；R1–4执行/上传/停写/挂载，R5恢复，R6观测资源，R7分层验收，R8官方依据。
++以下表格的AD编号指[架构主干](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/ARCHITECTURE-SPINE.md:65)实际条目；C编号指[共享契约](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:12)，R编号指[运行契约](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md:5)。AD1–2固定8模块/4服务的所有权，AD3–5固定UoW/当前权/schema，AD6–8固定版本/执行/三账，AD9–11固定索引/RAG/逻辑终态，AD12固定UX投影，AD13–14固定运行与停止点。C1标识/文本，C2公共包，C3来源/实见快照，C4控制锁与同UoW，C5有限管理/身份seed，C6限制/生成子契约，C7五状态DTO/格式分派，C8跨进程账号总池/用途子池；R1–4执行/上传/停写/挂载，R5恢复，R6观测资源，R7分层验收，R8官方依据。
+ 
+ ## 2. FR逐项承接
+ 
+@@ -158,8 +158,19 @@
+ 
+ 已逐项承接FR16/16、NFR6/6、SM7/7、实施契约§1–§5.5全部实质子节、IA12/12、G12/12、AC23/23及S0/P0/F0/S1–7。此计数仅为映射完整度；行中的实测全部未执行，不能写成100%实现或通过。C5共同有限管理schema、C6生成子契约、C7五投影/格式路由已经实际读取；C5密码/会话/凭证/邀请/15分钟cursor/366d查询窗是受托技术seed，可调整但不扩大权限或改原业务期限。C7补足五状态字段/enums/allowed_actions，格式差异依据本轮官方实查，仍保MinerU主路及原承诺五格式，不纳入Doc/Ppt/Xls承诺。
+ 
+-本轮B新发现的控制行锁前缀反例已在实际AD3/C4/R3关闭；无产品选择冲突。A互审后runtime修复了child持锁/多prefix顺序、冻结包写入范围；真实PG/Linux成绩仍留原门。五状态最小DTO与有限cursor/时间窗已由A实际补C5/C7，B逐项核对关闭其规划缺口。独立rubric发现共享provider账号分进程限流可超额，A接受并补AD2/3/11与C8，B已实际读C8并同步R1/3/6；session续活等不能SH升级也已实际补C5。B3再次实读C8唯一release_transition_id与R5恢复未决调用规则，确认响应/核对只一次归还、ledger迟到账不退permit，以及恢复pool持久态统一blocked_unverified、窗口到期不解远端并发unknown，规划反例关闭。本轮独立review、修后复核与最终字节范围见[最终gate索引](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/reviews/finalize-gate.md:1)，B的当前权威结论见[最终实际稿核对](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/winston-b-final-check.md:1)；这些均为规划层证据。
+-
+-本轮对抗H1/H2进一步发现异步task已满后poll再抢新增task名额、恢复整pool阻断已知原task核对会使必要流程无法推进；现C8/R1/R5按真实适用维度/动作、每(call,dimension)唯一组件终态及恢复逐维放行收口，不假拆池；官方上界须覆盖最晚实际到达时刻。用户随后明确提高异步并发，现行实施契约§2.6原位采用doc_active_job与external_async_task两个全系统独立gate各默认/上限4（可配1–4），本机重阶段仍1，原2h含排队/等待。job终态只释放active_job，未知task跨失败/重启仍占taskgate阻第5项；4个远端pending可与有限新本地预处理元数据共存，不各持线程/正文/Session。S0假件与P0任务池1/4的满池poll/公平/取消/unknown/恢复/三账/并存资源为必需证据，4不是账号额度或4GB已验；独立delta及最终实稿仍以最终gate/检查为准。
++本轮依据最新深审R01–R04原位补充C2/4/5/7/8、AD4/7/12/13/14与R1/2/4/5/7，并同步实施契约、切片及UX。规划修复/独立复核范围见[本轮修复记录](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/ca-remediation-2026-10-16/remediation-record.md)，当前裁决见[现行IR](/E:/aaa-project/rag/_bmad-output/planning-artifacts/implementation-readiness.md)。此前修复过程移入[历史沿革](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/ca-remediation-2026-10-16/prior-convergence-history.md)，原深审报告及baseline不改。
+ 
+ 待实施证据：供应方合法凭据及P0官方用途/实际响应、D、完整消息计数与输出R、图意/格式/来源/账号限流、目标Ubuntu/Engine/TLS/磁盘/并存RSS、独立恢复受托链与介质、部署方确认备份窗口及S6演练、F0冻结与S7全部原SM。它们各有责任人/触发/停止点，是后续运行门；本轮CA最终gate与B实稿签署仅判规划一致和可实施性，不能据矩阵放行未证运行能力。
++
++## 8. 最新深审四项修复的跨层闭合
++
++“已记录”仅指规划规则存在，实际运行证据仍未执行；独立复核及最终IR另记，不自行沿用历史PASS。
++
++| 项目 | 架构与共享规则 | 上游/UX承接 | 验收与停止点 |
++| --- | --- | --- | --- |
++| R01 迟发grant | AD7/11/14；C8 open charge→监督停发证明→DB上界后完整W；R1/2/5 | 实施契约§2.5/2.6；S0/P0切片 | R7 R01，S0秒/分钟跨窗、检查后暂停、部分写、child仍活、controller崩溃/重复封口/恢复，真实外发前通过；P0真实维度另核 |
++| R02 首次登录 | AD4；C5匿名登录独立同源JSON/固定头分支，认证写仍token | 实施契约§1；EXPERIENCE身份与恢复；IA-01；AC-01 | R7 R02，S1全新无Cookie正例与缺/null/跨源Origin、form/缺头、旧token负例；身份入口开放前 |
++| R03 缓存/历史 | AD4/12/13；C2/4 no-store、不发304、历史恢复先遮蔽重核；R4 gateway | 实施契约§1/§5.5；EXPERIENCE；G-04/IA历史来源；AC-10/16/18 | R7 R03，S1设施、S2来源/原件、S3问答/历史；同URL换账号/撤权、If-*、back/forward及bfcache，失败无旧body |
++| R04 媒体交付 | AD5/12；C7准确MIME+attachment+安全文件名+nosniff、安全预览；R2/4 | 实施契约§5.1/5.5；来源IA；AC-10/21 | R7 R04，S2合法含HTML TXT/MD、伪类型、恶意文件名、不执行/不外抓，资源入口开放前 |
++
++§6中S0须合并R01门，S1须合并R02与私有设施门，S2/S3须合并R03/R04对应入口门；该表与R7是强制补充，不能将旧摘要未逐字展开视为豁免。原FR/SM/AC编号、分母与期限不变。
+--- before/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/technology-evidence.md
++++ after/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/technology-evidence.md
+@@ -59,3 +59,18 @@
+ [FastAPI并发说明](https://fastapi.tiangolo.com/async/)确认普通def在外部线程池运行而直接调用的普通函数不自动卸载；上传edge不能在async内直接跑同步ORM。[Nginx官方request buffering](https://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_request_buffering)说明关闭缓冲才即时向上游传，chunked传输还须匹配代理HTTP版本；S0须设并验证proxy_http_version=1.1、request buffering off及受控体/超时，不能只改一开关就断言没有临时文件。
+ 
+ 用户本轮要求增加异步任务并发：本地doc_active_job_limit与external_async_task_limit选择默认4、可配置1–4的未测seed，覆盖旧整文档并发1；本机重处理物理stage仍1，远端pending只存有限持久元数据，阶段child停写/关FD/落盘后调度其他job。此为本地资源策略，不声称MinerU/千问账号支持4。P0须同时证明四个在途文档与查询/上传并存时的真实限额、满池原task轮询与有限公平调度，S6再验目标机RSS/CPU/连接/磁盘；不通过时不启用该档，不能只提高配置跳过验证。依赖版本未因此变化。
++
++## E5：本轮CA修复采用的HTTP与浏览器依据
++
++2026-10-16针对R02–R04实际打开以下标准/官方文档；本轮不变更Stack精确版本，不重新宣称依赖安装或产品验收通过。标准支持机制，以下具体收紧取值是本项目技术决定。
++
++| 依据 | 采用规则及适用限度 |
++| --- | --- |
++| [OWASP CSRF Prevention](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#employing-custom-request-headers-for-ajaxapi) | 自定义头配合同源/CORS约束可用于AJAX及登录防护；C5另强制精确部署Origin、JSON、固定登录头，其他认证写继续用会话token。SameSite不替代这些守卫 |
++| [RFC 9111 §5.2.2.5、§6](https://www.rfc-editor.org/rfc/rfc9111.html#section-5.2.2.5) | no-store控制HTTP缓存存储/复用；历史呈现是另一边界。C2/C4要求gateway禁缓存及历史恢复先遮蔽重核，不从该头推定bfcache/已保存内容被清除 |
++| [Nginx proxy cache](https://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_cache) | R4显式关闭私有路由缓存并设置no_cache/bypass，禁止上级继承或错误页回落。实际配置与自产错误响应头仍须S0/S1验证 |
++| [HTML PageTransitionEvent](https://html.spec.whatwg.org/multipage/nav-history-apis.html#the-pagetransitionevent-interface) | pageshow/pagehide与persisted可描述页面历史生命周期；C4要求所有恢复先遮蔽再重新context，不假设unload一定触发。实际浏览器画面/回包隔离由S2/S3验 |
++| [RFC 6266 §4](https://www.rfc-editor.org/rfc/rfc6266.html#section-4) | attachment、filename与UTF-8 filename*有规范语义；C7采用服务器编码的安全文件名，不复制上游头。准确媒体类型与下载边界由本项目同时强制 |
++| [Fetch：X-Content-Type-Options](https://fetch.spec.whatwg.org/#x-content-type-options-header) | nosniff用于类型检查，不把声明为HTML的响应转为惰性文本。C7另外限制MIME/attachment与inline表示，不能只加该头声称无执行 |
++
++R01是现有PG共享gate、受监督child与C8的本地保守调度算法，无新技术依赖；证明依据是“每个可能发送区间都被open charge覆盖，封口后完整W覆盖每个剩余滑窗”。S0必须用可控暂停/崩溃假件验证，P0再核真实限额；不从公开标准推断供应方永不429或远端到达界。
+--- before/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md
++++ after/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md
+@@ -14,6 +14,7 @@
+ 以下落实 John A／John B 对 B1 已接受的修复方向，最终由 John B 按实际稿件复核。
+ 
+ - Web 管理／查询入口使用登录 Cookie，程序入口使用用户绑定 Bearer；不能因一种认证失败回退到另一种更宽的身份。
++- 匿名登录 POST 使用独立防护：服务端只接受精确等于部署 scheme／host／port 的同源 Origin、`application/json` 与固定 `X-RAG-Login: 1`，CORS 关闭；missing／null／跨源 Origin、简单 form 或缺固定头均403拒绝且不创建会话，不以前置会话或会话 CSRF token 阻断首次登录。成功旋转会话并绑定 CSRF token，由受控且不缓存的登录响应交前端内存；重载后可经同源、当前认证的 no-store context GET 取本会话 token，不放 URL 或持久缓存；已有认证的 Web 写请求继续校验同源 Origin＋会话绑定 token。技术真源是 [C5 身份安全协议](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:79)。
+ - 同一受保护请求同时携带本应用的登录 Cookie 与 Bearer 时，整请求拒绝 `AUTH_CHANNEL_CONFLICT`，包括二者属于同一人的情况。其他无关 Cookie 不参与该判定。程序客户端不携带 Web 会话；浏览器程序调用示例须明确省略登录凭据。
+ - 认证后从服务端取得用户身份和渠道约束，不信请求体提供的用户、角色或权限。Web／程序 API 共用业务授权，程序动作还必须在只读白名单内。
+ - 客户端显式选择的空间、知识库与文档在查询向量化、检索和生成前逐项验证；任一越界、撤权、不存在或不属于所选上级，整请求失败，不静默缩减对比对象或查询范围。对无权／不存在资源统一返回资源不可用，不暴露其标题、数量或是否存在。`kb_ids` 必须是非空、无重复的显式集合；界面“全部有权库”先解析为本次实际列表，不使用省略范围代表无条件全库。
+@@ -106,7 +107,7 @@
+ 
+ 2026-10-16用户明确要求增加异步任务并发上限，覆盖此前“整文档单处理槽”的技术起点：文档worker使用一个有限调度控制线程及独立心跳，全系统doc_active_job与external_async_task两个本地gate各默认4、可配置1–4，均所有账号合计最多4；另保留单本机下载／解包／校核／embedding重处理阶段槽1。doc_active_job在PG条件领取开始处理时占，queued不占，业务终态／到期fence同UoW一次归还；远端task组件在submit may_have_sent同UoW领取，业务失败／取消／重启仍占unknown，可信task终态的唯一release才同时归还本地taskgate及账号／用途本维。已受理远端等待只保留PG原ID、fence／原deadline与permit元数据，不持Session／正文缓冲，不为每个pending创建线程；submit获accepted且child完成本次传输、关闭FD并停止后返本地物理阶段槽，task组件继续占，调度器可提交下一job，使已核额度内最多4项远端工作真实重叠。单次HTTP／CPU／写入仍由本地槽串行；每轮每活跃job最多一个到期可执行阶段，due poll不被新submit无限压后，未到期不忙轮询。有效task并发取本地配置、已核真实账号总池／用途限额和已验资源界的较小值；未知不派发，4不是账号额度或4GB成绩。
+ 
+-阻塞外部传输／文件写入仍使用每物理执行槽一个本机受监督、有绝对期限且可等待停止的子进程，同有效attempt内可复用，跨attempt不复用。上传初始并发1；API／框架／网关的缓冲、暂存同样纳入清单／预算，不留未登记的第二写入者。子执行者不自主串后续阶段、不持业务DB写资格；控制器每阶段重新过§2.5资格门，以有限IPC／受控暂存收结果和补账。超时不能只丢弃Python线程引用并宣称写入已停止。P0分别以任务池1和4验证满池poll、公平推进／取消／unknown／恢复、账与全部并存资源，未满足不启用对应并发；不增加常驻队列或外发代理服务。原job的2h绝对期限包含排队、远端等待和重试，不因调度释放本地槽而刷新。
++阻塞外部传输／文件写入仍使用每物理执行槽一个本机受监督、有绝对期限且可等待停止的子进程；每个外部call的发送child必须退出后才能封口，同有效attempt内的child复用只限不持旧call发送能力的其他阶段，跨attempt不复用。上传初始并发1；API／框架／网关的缓冲、暂存同样纳入清单／预算，不留未登记的第二写入者。子执行者不自主串后续阶段、不持业务DB写资格；控制器每阶段重新过§2.5资格门，以有限IPC／受控暂存收结果和补账。超时不能只丢弃Python线程引用并宣称写入已停止。P0分别以任务池1和4验证满池poll、公平推进／取消／unknown／恢复、账与全部并存资源，未满足不启用对应并发；不增加常驻队列或外发代理服务。原job的2h绝对期限包含排队、远端等待和重试，不因调度释放本地槽而刷新。
+ 
+ 清理顺序：①短事务撤销写资格/终结意图；②事务外停止并等待该prefix所有受控写入者/后代退出；③取得稳定生命周期排它锁后短事务复核终态/cleanup_token，再删除暂存、孤儿及无有效引用的资产，确认打开FD已关闭；④同锁保护下PG条件标cleaned并只释放一次对应原件字节/物理预算。各写入者在任何字节写入前先取得该稳定生命周期锁并重新核资格。锁文件放独立受控locks目录，不随资产目录删除/重建，不能只靠PID存活判断。所有入口协作遵守；不承诺隔离恶意本机进程。
+ 
+@@ -174,8 +175,9 @@
+ 
+ - 普通文档程序校核后自动发布，不增加逐份人工审批。首次 partial 只用通过且可定位范围并提示不完整；不完整替换候选不覆盖旧版。
+ - 当前有维护权者可对照原件、提取／结构、错误范围，按状态重试、取消、继续核对或知情显式重交。修正限修订原件重新上传，以及合法元信息／解析参数产生新候选；不内建通用 OCR／富文本编辑器，不原地改历史来源。
+-- PDF 有可信 bbox 则页内高亮，无 bbox 但有页则该物理页预览＋准确片段并标无区域高亮。DOCX／TXT／MD 显示真实章节／块／字符位置＋准确提取片段＋受控原件下载，标清原件与提取内容，不部署 Word 服务、不编页码。
++- PDF 有可信 bbox 则在服务器生成并校验的页图上高亮，无 bbox 但有页则该物理页图＋准确片段并标无区域高亮。DOCX／TXT／MD 显示真实章节／块／字符位置＋准确提取片段＋受控原件下载，标清原件与提取内容，不部署 Word 服务、不编页码。
+ - 定位／哈希／资源缺失要显示可识别错误，允许时下载原件人工核对，不猜位置；缺必要定位的候选不得假装通过。引用、页图、片段和下载每次重新授权／检查归属与墓碑，不用上游临时 URL 当可信用户入口。
++- 原件一律受控 attachment 下载，不 inline；服务端生成安全且有界的 Content-Disposition（含 fallback、UTF-8 filename*，剔除 CRLF／路径／控制字符），按已验证 PDF／DOCX／TXT／MD 类型设置白名单 MIME 并加 `X-Content-Type-Options: nosniff`，不透传上游类型或头。inline 仅服务器生成并校验的 PNG／JPEG 页图或裁图；文本、MD、提取 JSON 用 textContent 或清洗渲染，禁止 HTML／SVG／上游 PDF 等主动文档 inline。精确 MIME、字段和资源响应真源是 [C7 格式分派](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:117)。这不新增主动内容预览能力。
+ 
+ ### 3.4 外部能力探路前置
+ 
+@@ -261,6 +263,8 @@
+ 
+ query embedding全局≤2次/秒、每用户≤1次/秒仅为本地拟定起点，不是账号实况或当前生效额度；每用途/provider的TPM/RPS/并发生效值必须登记有限本地上限并与已核账号限制取较小者，未知不填无限、不派发该能力。生成/图意及将来显式计数或改写调用也不能绕账号调用gate/§2.5账本。文档embedding批次同时满足每条token、批条数/总token（若供应方有此项）、body字节上限，实际SDK不得自动拆批/暗重试。提高并发/批量前重新验证目标4GB、限流和故障负例。
+ 
++所有可能发送的 grant 持久占 `send_open` charge，领取／send-by 窗口过期不自动退占。控制器须取得本 call 发送 child／全部受控后代已退出、全部传输写及发送 FD／IPC 已关闭、旧 grant 已销毁且不可再授予或恢复的监督证明，再取其后的 DB 时刻 `last_local_send_upper`，sealed charge 从该上界保留完整 W；准入合计 open charge 与 sealed 未满 W，不能只看 send-by、child 读钟、lease、业务终态或重启。无法证明停发则继续占用／阻塞对应维度。精确多维池锁序、条件更新和计量算法只在 [C8 共享 rate gate](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:145) 维护，[R2 派发](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md:23) 约束本地监督执行；本地发送窗口不承诺远端到达时间或永无供应方 429。S0 暂停／失联／恢复假件通过后才允许任何真实外发，P0 再核真实接入。
++
+ ## 4. 恢复与安全放行
+ 
+ 来源：[Mary M3 TR／TS](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/mary-m3/answer.md)、[同题追问](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/mary-m3/followup-answer.md)、[恢复动作表](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/mary-m3/runbook.md)、[官方依据](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/mary-m3/evidence.md)。数据库认证字段、账号 active 和程序密钥状态会随旧备份倒退；清会话不能阻止旧密码重新登录，PG 快照／PITR 也不自动补回恢复点后的安全事件或库外文件。
+@@ -309,7 +313,7 @@
+ 
+ | 入口族 | 最小能力／关键输入 | 输出与守卫 |
+ | --- | --- | --- |
+-| `/api/v1/web/auth` | 密码登录、本人状态、退出、改密；Cookie 认证，写请求 CSRF／Origin 检查 | 服务端会话、不向前端暴露供应方密钥；登录与退出状态明确 |
++| `/api/v1/web/auth` | 密码登录用独立同源 Origin＋JSON＋固定登录头防护，不要求已有会话 token；本人状态、退出、改密用 Cookie，认证写用同源 Origin＋会话绑定 CSRF token | 登录成功旋转会话／绑定 token，以不缓存受控响应交前端内存；不向前端暴露供应方密钥；登录与退出状态明确 |
+ | `/api/v1/web/spaces`、团队／成员／邀请／授权入口 | 按 PRD 的平台、所有者、维护者权限执行对应管理；授权输入使用主体 ID 与动作，不信客户端角色声明 | 转让与负责人接管事务性，当前权限为准，必要操作审计 |
+ | `/api/v1/web/knowledge-bases`、文档入口 | 创建库、资料列表，显示生效版／候选／任务／索引代；操作时校验当前空间和库权限 | 普通使用者没有管理写入口；候选不混进查询 |
+ | `POST /api/v1/web/document-candidates` | `upload_operation_id`、space_id、knowledge_base_id、可选替换 document_id、显示名／类型、声明字节或未知长度、处理配置版本 | Web 每文件预先生成并保留上传 operation ID；同用户／空间／库／ID 的同规范输入只建一个候选与预留，重传返回同 candidate_id／version_id；异输入冲突，先检查 KB guard 再预留 |
+@@ -335,6 +339,8 @@
+ 程序允许动作逐一登记为检索、问答、对比、引用读取、本人导入任务状态读取，不以HTTP GET代表获得全部只读动作。GET operation与同Key结果重放继承该操作原来的问答或对比动作，且检查原显式目标和结果依赖；不另签一个绕开原动作的“状态读取”通行权。同用户、原认证渠道的新合法凭证可以在覆盖原动作/目标/依赖时读取，不要求继续使用已撤销的原凭证；被撤旧凭证本身仍无效。citation是独立许可动作，有当前来源读取权限和citation scope即可按受控来源核验，不强加answers scope，也不因此交付他人的问题、答案或历史。
+ 
+ ### 5.2 输入与结果的共同边界
++
++所有私有 HTTP 响应（成功／错误、认证、context／状态、citation、页图／原件、答案／历史及程序入口）统一 `Cache-Control: no-store`；对应网关路由族 `proxy_cache off`、`proxy_no_cache 1`、`proxy_cache_bypass 1`，不得覆盖为可缓存。首版不发 ETag／Last-Modified／304，If-* 条件头仍完整重授权，不能绕授权返回任何 body。前端不将私有内容写入持久缓存。HTTP 响应的单一真源是 [C2 公共 HTTP](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:20)，网关部署真源是 [R4 四服务](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md:51)；S1 首交公共设施，S2 资源、S3 历史入口各在开放前验证。
+ 
+ - 身份、角色、持有人 ID 由认证层确定。请求只提供目标；路径目标与 body 目标不一致拒绝。目标 ID 列表显式非空／去重校验，未知字段及 schema_version 不猜测。
+ - 准入顺序固定：校验渠道／当前身份、有限的结构与显式目标；查已有逻辑 Key 并按其规范化版本／原输入指纹处理重传；仅对新 Key 按当前受理限额、profile／guard、执行配置及配额创建操作。已受理同 Key 不因默认配置或可调输入上限后来变化而暗中变成新操作；但当前授权、墓碑、恢复纪元和固定截止仍必须检查。
+@@ -397,7 +403,7 @@
+ ### 5.5 前端响应归属与网络恢复
+ 
+ - API客户端为每次异步工作保存本地上下文代次：账号、登录实例、空间、恢复epoch、会话/父轮次（适用时）和operation/candidate ID。退出、换账号、切空间或确认epoch变化时递增本地代次，清私有Pinia/组件缓存并尽力终止旧请求/轮询。取消网络请求不代表业务取消或退款。
+-- 响应落入视图或缓存前核对上述归属；迟到回包只属于原操作，不能写进当前另一账号/空间的页面。AbortController只是尽力取消，回调归属检查仍必须执行。后台标签页恢复时先核本人context/epoch和当前授权，不自动恢复私有正文。
++- 响应落入视图或内存状态前核对上述归属；迟到回包只属于原操作，不能写进当前另一账号/空间的页面。AbortController只是尽力取消，回调归属检查仍必须执行。`pagehide` 时隐藏并清除私有 DOM；`pageshow`（含 bfcache／history restore）先遮蔽私有区域、清旧 context 并递增本地代次，再通过受控请求核当前本人 context／epoch 及欲显示内容的全部资源依赖，完成前不显示旧正文。后台标签页恢复也先重核；仅 context 成功不能恢复未经重授权的答案／引用／资源。
+ - 问答首次提交前保存Key和规范输入，等待/断网/202只查原operation或同Key重传；业务成功但回包丢失仍读原结果。终态失败明确呈现原失败，用户主动确认新请求才生成新Key；epoch改变不得给旧排队请求自动换epoch/Key。GET读取仍检查原动作和当前范围。
+ - 页面区分“尚未受理”“已受理等待”“正常不足/澄清/冲突”“业务失败/未知成本”“成功但当前无权重读”，不因浏览器超时将操作重置为可自动付费提交。上传取消/过期、候选失败保留、清理中/失败分别呈现，不能用清空页面伪装后端资产已释放。
+-- 联调必须覆盖迟到回包跨空间、退出后换账号、多标签页旧请求、epoch变化、回包丢失和原上下文正常重放；不要求追回已经合法显示或下载的内容。源Markdown/模型文本清洗渲染，受控引用与资源由后端授权，页面隐藏按钮不作为权限证明。
++- 联调必须用真实浏览器覆盖同 URL 换账号／撤权、If-* 条件请求、前进／后退及 bfcache 恢复，并覆盖迟到回包跨空间、多标签页旧请求、epoch变化、回包丢失和原上下文正常重放；检查网关和应用的 no-store 及无 304，旧正文不得先闪现。源Markdown／模型文本清洗渲染，受控引用与资源由后端授权，页面隐藏按钮不作为权限证明；不要求追回已经合法显示或下载的内容。
+--- before/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-slices.md
++++ after/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-slices.md
+@@ -18,8 +18,8 @@
+ 
+ | 基础不变量 | 首次交付／独立验收 | 后续使用 |
+ | --- | --- | --- |
+-| 独立epoch控制、统一错误、调用intent/guard/迟到成本账、物理资产清单与预算 | S0，用假件及真实PG验证本地状态；未真实接入 | P0及所有外部调用；S6做完整恢复 |
+-| 身份当前状态、安全变更同事务台账、请求/容量预留与有限上传意图、所有私有请求的前端账号/空间归属 | S1 | S2最小校核/来源及S3问答均沿用；不在S6补造早期事件 |
++| 独立epoch控制、统一错误、调用intent/guard/迟到成本账、send_open／seal 共享 rate gate、物理资产清单与预算 | S0，用假件及真实PG验证本地状态；暂停／失联／恢复负例通过前禁止任何真实外发 | P0及所有外部调用；S6做完整恢复 |
++| 身份当前状态、匿名登录独立防护、认证写 CSRF、安全变更同事务台账、私有 no-store／页面恢复隔离、请求/容量预留与有限上传意图 | S1，含真实浏览器公共设施验收 | S2资源与S3历史入口开放前各验证；不在S6补造早期事件 |
+ | profile/部署维度D、generation/revision、块/向量写入与候选原子发布、来源最小回看 | S2，前置P0对应解析、来源及embedding通过 | S3只新增查询B0；S5扩复杂质量；S6新增重建管理 |
+ | 逻辑操作/结果/会话/产品终态、实际token预算、前端operation/Key回包恢复 | S3（底层唯一性与前端身份归属S1已验证） | S4各格/场景、S7质量验收 |
+ | 32题及原金标冻结、开发题隔离 | F0，在首次调优前 | S7运行，不首次选题 |
+@@ -31,14 +31,16 @@
+ - **前置：** 已记录的 PRD 与实施契约；无需外部模型账号即可开始。
+ - **交付：** 模块化应用／worker 骨架、配置与秘密注入、依赖／镜像锁定、真实 PG＋pgvector 的迁移、短 Session、统一错误与 request_id／operation_id 结构；独立持久epoch与DB一致性守卫；MinerU、embedding、问答和可选图意适配器及可控假件。先交付所有外部调用共用的持久intent、派发检查、超时unknown和迟到成本幂等回填；资产清单/attempt隔离目录、磁盘预算与维护恢复骨架。epoch初始化不冒称已完成可信恢复演练。
+ - **验收：** 干净环境可启动／迁移／停止；配置/epoch矛盾可识别且隔离；假件明确模拟成功、超时、未知与非法结果，不能标成真实服务通过；意图提交前／后、可能发出后崩溃与业务终态后usage回填有真实PG负例，旧执行者不能借回填提交业务；日志无凭据或私有正文。
++- **任何真实外发前的 rate gate：** 交付 [C8 共享限流](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:145) 与 [R2 受监督派发](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md:23)；真实 PG＋可控传输假件覆盖 grant 后暂停跨秒／分钟、检查后暂停、另一槽推进、失联 child、重复 seal／重启。断言领取窗口过期仍保留 open charge、未证明全部停发不退占、该 call 发送 child／后代退出、全部发送 FD／IPC 关闭及旧 grant 销毁的监督证明后取得 DB 上界并保留完整 W、准入同时计 open＋sealed 未满 W；禁止只靠 child 读钟／lease／send-by。失败须阻断对应外发，不延后至 P0 才补本地算法。
+ - **出处：** NFR-3／5／6、FR-4／15／16；本阶段不宣称 SM-1–SM-7 全通过。
+ - **失败处理：** 迁移或配置失败先定位修复，不跳过为 SQLite 的通过结果来替代 PG 事务与向量行为。
+ 
+ ## P0：真实外部能力与目标资源探路
+ 
+-- **前置：** S0 适配器／调用记录；可用账号与合法样例。实际调用前取得运行侧凭据，按已确认的 API 方向执行，不把开发工具账号当运行服务。
++- **前置：** S0 适配器／调用记录及上述本地 rate gate 假件负例全部通过；可用账号与合法样例。实际调用前取得运行侧凭据，按已确认的 API 方向执行，不把开发工具账号当运行服务。
+ - **交付：** 固定原件版本与 hash 的 PDF／DOCX／TXT／MD 样例，规则及简单跨页表格、扫描页、必须理解图中连接关系的题；实际 MinerU 响应／ZIP、来源映射、embedding 配置／维度与问答结构，必要时独立视觉 API 的实际结果。独立用途profile的输入/输出/总token、完整消息计数依据、非思考普通文本JSON模式/compact档/完整输出预留与实际可受理形状、RPS/TPM/响应字节和SDK禁暗重试须登记；未证模式不生成，不从OpenSearch计数接口推定DashScope可用能力。
+ - **验收：** 文本、表头行列、数值单位、页／结构引用可回查；图意题必须有直接依据，图注或仅识字不算通过。首个可用生成profile证明四场景最小完整有效载荷有空间，最大输入/24格仅通过预算的组合才受理；验证高token输入、输出上界/length/非法JSON、计数偏差失效、零候选不需LLM与非零未证失败分支。实际调用状态、用量／费用或未知及失败记录完整。目标 4C4GB 主机接通后测服务并存 RSS、连接、磁盘、超时；开发电脑结果不替代生产资源结果。
++- **真实限流核验：** 按已核账号／用途／总池限制取有效有限上限，检查实际 SDK 无暗重试、每 call 经过 C8、open／sealed charge 与停发证明账可核对；分别保留本地发送时间与可得远端响应／429，不把本地窗口证明当远端到达或永无 429 保证。文档任务的两个 gate 各默认4、可配1–4、所有账号合计最多4，本机重处理槽仍1，原 job deadline 不刷新；P0 分别核池1和4的公平 poll、unknown／恢复及并存资源。
+ - **缺口分支：** MinerU 图意不足仅触发图意 API 验证，保留 MinerU 主路和绑定来源；定位不足先修适配／回退，不猜位置。仍达不到 FR-7 则阻断 S5／整期完成，不能降验收或假称图意已支持。资源不足先限制并发、流式与输入上限再测；仍不能满足记录真实变更提案。
+ - **边界：** 账号／环境暂缺时可继续 S0／S1 的独立工作，不能以假件成绩替代 P0；S2 的真实格式接通须通过对应解析与来源检查，S5 须通过图意分支。
+ 
+@@ -47,6 +49,7 @@
+ - **前置：** S0；无需真实模型调用。
+ - **交付：** 初始化平台账号、密码登录／退出／改密、个人与团队、所有者／维护者／使用者及逐库授权、用户只读凭证、统一认证／授权、请求与容量账本；所有私有异步响应从此使用前端账号/登录实例/空间/epoch归属代次，S2校核来源页直接沿用；所有安全变更从首次实现起同事务写稳定ID台账，不留到S6补录；上传意图的截止/放弃/过期清理与一次释放。原件字节与临时物理预算分账。
+ - **验收：** FR-1–FR-5 的角色／转让／撤权反例；双凭据、混合越界目标整体拒绝；无权与不存在目标不泄露存在性。并发争最后一笔原件／次数预留仅一笔成功；无效同键、异内容、过期和崩溃回收按契约。
++- **登录与私有响应交付／验收：** 匿名登录按 [C5](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:79) 接受无 Cookie／无会话 token 的精确同源 Origin＋JSON＋`X-RAG-Login: 1`，成功旋转会话／绑定 CSRF token 并经不缓存登录响应交前端内存，重载可经同源当前认证的 no-store context GET 取本会话 token；拒 missing／null／跨源 Origin、简单 form／缺固定头，CORS 关闭。已认证 Web 写继续 Origin＋会话 token。按 [C2](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:20)／[R4](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md:51) 交付所有私有响应含错误／认证／状态的 no-store 与网关禁缓存，首版不发验证器或304；If-*仍完整授权。真实浏览器验证同 URL 换账号／撤权、history／bfcache：pagehide清私有DOM，pageshow先遮蔽清context／代次，当前context及全部依赖重核后才显示；不持久缓存私有内容。
+ - **出处：** FR-1–FR-5、NFR-1／2／6、SM-6 的对应基础用例。
+ - **失败处理：** 任一越权或重复计账未修复不能进入外部调用；不靠隐藏按钮通过。
+ 
+@@ -55,6 +58,7 @@
+ - **前置：** S1；P0 对应格式、MinerU 上传／查询／来源及实际embedding配置/维度检查通过；不依赖答案模型或S3查询页面。
+ - **交付：** 逐文件预留与候选上传、原件／产物受控存储、PG 持久任务、单文档处理与独立续租、上游 ID／阶段产物、正常／部分可用／待核对、完整候选切换、墓碑与清理。导入所需不可变profile、经显式迁移的vector(D)、活动generation与docset_revision、结构块/向量校验写入和同锁原子发布在本片首次交付；重建管理可到S6。同步交付生效/候选/任务分栏、原件与提取/失败范围对照、PDF可靠页/可得bbox及非PDF结构片段/原件下载的最小校核回看。
+ - **验收：** 五类承诺格式可按配置处理；不用问答UI即能导入→查看原件/解析/定位/索引→失败重试→完整发布；缺向量或必需来源不得标ready。首次部分可用明确范围、不完整替换不盖旧版；上传重传不新增版本，未传/半传可有限终结；旧 worker、乱序替换、删除竞态、清理失败、上游未知与重启均不复活／重复生效／丢失占用账。复杂表格/图意的最终质量仍由P0/S5/SM验收，不以最小回看已上线代替。
++- **资源入口开放门槛：** 按 [C7 资源分派](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:117) 交付原件 attachment、安全 Content-Disposition／准确白名单 MIME／nosniff，inline 仅服务端生成并校验的 PNG／JPEG；真实浏览器覆盖含 HTML 的合法 TXT／MD、伪扩展／伪 MIME、恶意文件名及页／裁图，预览不执行主动内容、不透传上游头。每个 citation／页图／原件／提取入口及错误验证 no-store、无304、If-*不能绕权，同 URL 换账号／撤权和 history 恢复不闪旧内容；未通过不得开放资源入口。
+ - **出处：** FR-6–FR-8／15、NFR-1／2／6、SM-5／6／7 的导入生命周期部分。
+ - **失败处理：** 按原任务核对，不自动盲重交；缺必要来源不发布；任何旧版破坏或删除后可读均阻断本切片。
+ 
+@@ -63,6 +67,7 @@
+ - **前置：** S2；P0 的实际 embedding／问答能力接通。
+ - **交付：** 复用S2已交付的结构块、profile/generation与同维存储，新增授权精确向量 B0、全请求最终五块、企业查询 schema、引用 resolve、同空间追问与历史、程序只读接口；持久逻辑操作、原输入／执行快照与结果重放、完整模型输入/输出预算及前端迟到响应隔离。不能把S2的索引/校核基础算作此时才首次实现。
+ - **验收：** SC-2 开发题有可核查答案；无候选为受控不足，依赖失败不冒充不足；非法 schema／ID或供应方截断整答失败；合法字符但token装不下在答案调用前明确拒绝/释放，catalog等于实见片段；撤权或来源删除后不能重放旧答；成功提交后丢回包不重复调用／扣次。会话并发、轮次、迟到回包跨账号/空间及epoch变化均按契约；首次调优前必须有F0记录。
++- **历史入口开放门槛：** 沿用 S1 公共响应及恢复隔离设施，在真实浏览器对答案／历史／operation成功与失败响应核 no-store、无 ETag／Last-Modified／304、If-*完整重授权；同 URL 换账号／撤权、前进后退／bfcache先遮蔽，当前context及答案全部依赖重新核权完成才显示，无旧正文闪现。不能只以S1公共中间件通过替代本片入口验证。
+ - **出处：** FR-5／9／11／14／16、NFR-1／3／4、SM-1–SM-4 对应开发检查；不将开发题成绩充作冻结验收。
+ - **失败处理：** 保留 B0、具体失败与真实费用；不先加关键词／重排／ANN 掩盖未闭合的证据链。
+ 
+--- before/_bmad-output/planning-artifacts/ux-designs/ux-RAG_all-2026-10-16/EXPERIENCE.md
++++ after/_bmad-output/planning-artifacts/ux-designs/ux-RAG_all-2026-10-16/EXPERIENCE.md
+@@ -78,7 +78,7 @@
+ | 原件容量 | “原件容量包含保留版本和清理中的原件；清理完成后才释放。” | “服务器磁盘已用” |
+ | 未知费用 | “费用待核对；已知调用：{已知事实}。” | “¥0／免费” |
+ 
+-系统性错误以可读原因加请求／任务标识辅助定位。具体错误码可折叠在同一状态反馈中，不把内部栈、密钥、正文日志或模型思维链作为业务 UI 内容。[错误与成本语义](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:350)，范围：350–372。
++系统性错误以可读原因加请求／任务标识辅助定位。具体错误码可折叠在同一状态反馈中，不把内部栈、密钥、正文日志或模型思维链作为业务 UI 内容。[错误与成本语义](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:354)，范围：350–372。
+ 
+ ## Component Patterns
+ 
+@@ -88,12 +88,12 @@
+ 
+ | 组件 | 出现位置 | 行为契约 |
+ | --- | --- | --- |
+-| 应用框架 | IA-01–12 | 当前空间／身份持续可辨；导航不替用户授权。切空间、退出、换账号及确认恢复纪元变化时先隔离旧私有视图，再加载当前上下文；未授权内容不以缓存填充 |
++| 应用框架 | IA-01–12 | 当前空间／身份持续可辨；导航不替用户授权。切空间、退出、换账号及确认恢复纪元变化时先隔离旧私有视图，再加载当前上下文。私有内容仅当前内存，pagehide隐藏并清私有DOM；pageshow含bfcache／history恢复先遮蔽、清context并变更本地代次，受控当前context及全部显示依赖重核后才显示，未授权内容不以缓存填充 |
+ | 范围选择器 | IA-02、03、07、08、10 | 单空间显式库清单，可进一步选文档；“全部有权库”提交前展开为本次实际列表，给出可见摘要。目标不可用则整请求失败，禁止偷偷去掉；凭证范围从本人当前权限构造 |
+ | 资料表格 | IA-03、04 | 表头说明版本和可查询状态；行内动作可键盘聚焦且按当前权限呈现。使用明确分页与筛选条件；选中项显式列出，不假设跨页全选。无整库导出／回收站入口 |
+ | 导入表单 | IA-05 | 提交前读取当前有效格式／大小／页数／数量和容量限制，逐文件显示字段错误与受理结果；表单自身校验不能替代服务端。替换保留旧版说明，网络重传沿原上传，不私建候选 |
+ | 处理状态条 | IA-04–06、12 | 分开生效／候选／任务／清理／重建，显示真实阶段、时间、截止与失败范围；没有实际百分比就不绘制百分比。只给当前状态允许的动作；就绪观测不等于本地发布 |
+-| 来源查看器 | IA-06、09 | 原件与提取内容标明身份；PDF可靠区域高亮，否则可靠页＋片段并写“无区域高亮”；非PDF用实际结构路径，不编页。打开、翻页、取图／下载均鉴权；返回保留来源上下文 |
++| 来源查看器 | IA-06、09 | 原件下载与提取内容标明身份；PDF只在服务器生成并校验的PNG／JPEG页图上做可靠区域高亮，否则可靠页图＋片段并写“无区域高亮”；非PDF用实际结构路径，不编页。原件均attachment下载，HTML／SVG／上游PDF等主动文档不inline，文本／MD／提取JSON用textContent或清洗渲染。打开、翻页、取图／下载均鉴权；返回只保留安全位置上下文，正文需重核 |
+ | 问题输入区 | IA-07 | 场景选择沿用 SC-1／2／4 原名；按场景展开版本／环境／日志或型号／故障码／条件。保留完整输入，不为预算静默删减。纯检索和提交问答用不同动词并说明计次差异 |
+ | 答案卡 | IA-07、历史 | 完整校验成功后一次展示 answered／insufficient／clarify／conflict。结论、适用条件、步骤／参数与事实引用同处可核验；历史和成功重放标原时间／版本；失权时整体隐藏受影响回答 |
+ | 对比矩阵 | IA-08 | 固定输入对象与条件顺序，逐格恰一次且显示四态文字、理由和证据入口；状态不能仅以色区分。格子缺失、截断或非法引用整答失败，不展示貌似完整的部分矩阵 |
+@@ -103,7 +103,7 @@
+ | 管理表单 | IA-03、11、12 | 明示操作者当前角色、作用范围和影响；授权与团队角色分栏判断。提交按服务端当前事实落地，不对撤权、转让、删资料做未经确认的乐观成功提示 |
+ | 确认对话框 | 删除／解散／转让／撤销及可能重复付费重交 | 显示对象、影响及当前可见事实，按钮写具体动作；一个任务只打开一层。没有知情上下文时不自动聚焦危险动作；关闭对话不解释为取消已受理后台任务 |
+ | 状态反馈 | 全页面 | 错误靠近触发位置并有安全恢复动作；需处理／失权／超时信息持续可见，不只用短暂消息。loading只表示当前读取，不掩盖真实后台状态；状态改变适度播报，不每次轮询报读 |
+-| 登录表单 | IA-01 | 账号和密码有真实标签，支持密码管理器与粘贴，提交中阻止重复触发；失败不泄露账号额外信息。登录成功先取本人上下文再打开受控页面；不自动重放登录前的写入或付费动作 |
++| 登录表单 | IA-01 | 账号和密码有真实标签，支持密码管理器与粘贴，提交中阻止重复触发；失败不泄露账号额外信息。首次匿名登录不需既有会话token，以精确同源Origin、JSON及固定登录头防护；成功旋转会话／绑定CSRF token并经不缓存响应存前端内存，重载可经同源当前认证的no-store context GET取本会话token；已有认证写继续同源Origin＋会话token。先取本人上下文再打开受控页面；不自动重放登录前的写入或付费动作 |
+ 
+ ## State Patterns
+ 
+@@ -144,7 +144,7 @@
+ 
+ ### 问答／对比操作与错误恢复
+ 
+-**[上游已定]** 尚未受理、已受理等待、正常结果、业务失败、成功但当前无权重读必须分开；浏览器等待结束不能推断失败或自动付费重试。[前端恢复条款](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:395)，范围：395–401。
++**[上游已定]** 尚未受理、已受理等待、正常结果、业务失败、成功但当前无权重读必须分开；浏览器等待结束不能推断失败或自动付费重试。[前端恢复条款](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:403)。
+ 
+ | 当前事实 | [Sally设计决定] 页面与动作 | 配额／成本语义 |
+ | --- | --- | --- |
+@@ -156,7 +156,7 @@
+ | 过期／纪元变化 | 原操作不再执行，显示旧操作终态；不自动变新Key或恢复纪元提交 | 只有本人显式新操作才重新受理；不静默重复扣费 |
+ | 成功但失去当前来源权限 | 隐藏受影响答案或矩阵，显示安全原因；不把缓存答案作为降级兜底 | 成功事实不因读回失败变新生成；不提供原敏感结果 |
+ 
+-恢复动作严格按服务端 `none`／`same_key_or_status`／`new_operation`／`manual_reconcile`，不把“允许新操作”解释为自动付费授权。预算不足、证据被预算裁空、模型预算未证、截断、校验、依赖失败分别解释；用户可主动缩小输入后新提交，但 UI 不擅自删日志、条件或矩阵格。真正检索成功且零候选才能呈现正常不足。[最小错误字典](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:350)，范围：350–372。
++恢复动作严格按服务端 `none`／`same_key_or_status`／`new_operation`／`manual_reconcile`，不把“允许新操作”解释为自动付费授权。预算不足、证据被预算裁空、模型预算未证、截断、校验、依赖失败分别解释；用户可主动缩小输入后新提交，但 UI 不擅自删日志、条件或矩阵格。真正检索成功且零候选才能呈现正常不足。[最小错误字典](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:354)，范围：350–372。
+ 
+ ## Interaction Primitives
+ 
+@@ -170,7 +170,9 @@
+ - 对比条件显式新增／移除／编辑，顺序可由明确的上移／下移操作调整；不要求拖拽。使用有效配置显示数量与码点限制；越限标字段，不静默合并相似条件。文档版本在受理时固定，不随列表刷新偷换。
+ - 提交后的反馈、邀请、配置等动作失败就显示失败；安全变更不乐观宣布成功。删除／转让／重交解析等影响先在确认对话框写清，再发动作；确认对话不替代服务端权限复核。
+ 
+-**[上游已定]** 退出、换账号、切空间或确认恢复纪元变化时清私有缓存并变更本地上下文代次；旧请求即使 Abort 失败，回包也不能写新账号／空间。后台标签页回前台先核本人 context／epoch 与当前授权，再读私有内容，不自动重放旧写操作。[响应归属](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:397)，范围：397–401。
++**[上游已定]** 退出、换账号、切空间或确认恢复纪元变化时清私有内存并变更本地上下文代次；旧请求即使 Abort 失败，回包也不能写新账号／空间。`pagehide` 隐藏并清私有DOM；`pageshow`（含 bfcache／history restore）先遮蔽私有区、清旧 context 并变更本地代次，再受控读取当前本人 context／epoch 和全部欲显示依赖，完成前不恢复正文。后台标签页回前台也先重核，不自动重放旧写操作。[响应归属](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:403)。
++
++所有私有 HTTP 响应含认证／错误／状态／citation／页图／原件／历史统一 `Cache-Control: no-store`，网关禁缓存且不覆盖；首版不发 ETag、Last-Modified 或304，条件请求同样重授权，前端不持久缓存私有内容。匿名登录的精确 Origin＋`application/json`＋`X-RAG-Login: 1`（CORS关闭、无会话token前置）、认证写token、资源header与安全预览分别以 [C2 HTTP](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:20)、[C5 登录](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:79)、[C7 资源](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:117)、[R4 网关](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md:51) 为技术真源。真实浏览器同URL换账号／撤权、If-*与history恢复是S1公共设施、S2资源和S3历史开放前的必测条件，本文不声称已执行。
+ 
+ ## Accessibility Floor
+ 
+@@ -285,14 +287,14 @@
+ 
+ ### Flow 7 — 登录、切空间与安全历史回看（新员工小周）
+ 
+-1. 小周在 IA-01 登录，应用框架先确认本人、当前可用空间与身份，不恢复旧账号正文。
++1. 小周在 IA-01 首次无Cookie登录，以独立登录防护提交；受控不缓存响应旋转会话／绑定CSRF token，应用框架再确认本人、当前可用空间与身份，不恢复旧账号正文。
+ 2. 进入 IA-02 选择团队，进入 IA-03 看授权库；暂无授权时只显示当前范围的空态。
+ 3. 从 IA-07 打开同空间历史，每次重新鉴权；从历史引用进入 IA-09 回看原版本。
+ 4. 小周切到个人空间：先提示新空间需新会话，清旧空间私有视图，再取当前上下文；后台迟到结果仍归原操作，不落入个人空间。
+ 5. **高潮：** 小周能清楚判断自己目前在哪个空间，历史引用属于哪个版本；切换后不会误把团队答案当成个人资料。
+ 6. 本人账户可改密码或退出；退出清理私有视图，不把 Abort 当作已经取消后台业务。
+ 
+-失败分支：历史所依赖库被撤权／删除→受影响回答整体隐藏并给安全说明；后台标签页恢复先重核context，不自动加载旧正文；纪元改变使旧会话／凭证失效时按当前身份处理，不自动新凭证或重交旧问题。见 [FR-14](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/prd.md:269)，范围：269–279；[前端恢复](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:395)，范围：395–401。
++失败分支：历史所依赖库被撤权／删除→受影响回答整体隐藏并给安全说明；前进／后退／bfcache及后台标签页恢复先遮蔽清旧context、重核context与全部依赖，不先闪旧正文；同URL换账号或条件请求不能借缓存读旧答。纪元改变使旧会话／凭证失效时按当前身份处理，不自动新凭证或重交旧问题。见 [FR-14](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/prd.md:269)，范围：269–279；[前端恢复](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:403)。
+ 
+ ### Flow 8 — 本人只读凭证与用量核对（程序凭证持有人阿禾，支持流程走查人物）
+ 
+--- before/_bmad-output/planning-artifacts/ux-designs/ux-RAG_all-2026-10-16/page-contracts.md
++++ after/_bmad-output/planning-artifacts/ux-designs/ux-RAG_all-2026-10-16/page-contracts.md
+@@ -8,7 +8,7 @@
+ 
+ | ID | 必须执行的行为 |
+ | --- | --- |
+-| G-01 身份与数据归属 | 每次私有读取及提交绑定本人、登录实例、单空间、恢复纪元及适用的会话/操作/候选。切账号、退出、切空间、纪元改变先隔离并清旧私有视图；旧回包不得写新视图。后台页回前台先核当前 context。平台入口使用平台权限，业务入口使用当前业务权限。 |
++| G-01 身份与数据归属 | 每次私有读取及提交绑定本人、登录实例、单空间、恢复纪元及适用的会话/操作/候选。切账号、退出、切空间、纪元改变先隔离并清旧私有视图；旧回包不得写新视图。pagehide隐藏清私有DOM；pageshow含bfcache／history恢复先遮蔽、清context并变更本地代次，受控当前context及全部显示依赖重核后才显示。后台页回前台也先重核；平台入口使用平台权限，业务入口使用当前业务权限。 |
+ | G-02 初值与必填 | 下文“空”表示不替用户选择资源、角色或付费动作。“当前”来自本次已鉴权服务端上下文；直接从库进入可带入该库并显式展示。技术version_id、来源版本身份与业务版本标签分名展示；业务标签缺失写“未标注”，不从ID推断产品适用性。只读事实不得以可编辑字段伪装。必填标签与错误均可被辅助技术读取。 |
+ | G-03 有效配置 | 文件、页数、批量、输入及期限等读取当前生效配置并标明范围/单位；配置未知显示“限制暂不可用”并阻止相应新受理，不当作无限。新受理按当前配置，同 Key 原操作沿受理快照及原期限恢复。模型/部署实际上限由 P0 验证；不编造实测值。 |
+ | G-04 校验 | 提交前显示可确定的字段错误，提交后以服务端当前校验为准。错误贴近字段且有摘要，首个错误可聚焦，合法输入保留。问题/日志不静默裁剪；目标不静默删减。管理字段的有限长度、密码强度、精确序列化由 Winston/Amelia 定义服务端 schema 并向表单提供相同提示，属于常规实现细节，不得改变既定合法角色/资源/业务动作。 |
+@@ -19,9 +19,11 @@
+ | G-09 危险动作 | 单文件删除/撤销凭证/取消任务用一个确认对话框，列可见对象、影响和具体按钮。删整库/解散团队/转让所有权再要求输入当前可见对象名称确认；不影响服务端最终鉴权。知情重交解析明确“可能重复外部调用及费用”，复选“我已知悉可能重复调用与费用”默认未勾，勾选且当前资格合法后才启用“确认并重新提交解析”。未提交的 Esc/关闭只放弃本次对话输入；不取消已受理后台业务。 |
+ | G-10 返回与焦点 | 来源关闭回原引用/矩阵格；详情返回保留当前空间合法筛选、页码与行焦点。动作移除原行时焦点落下一合法行或列表标题。对话打开移焦标题/安全操作，Tab 不逸出；关闭回触发处。轮询不反复夺焦点或播报。 |
+ | G-11 文案与状态 | answered/insufficient/clarify/conflict 为正常完整结果；执行/预算/依赖/校验失败单列。需处理、失权、清理失败、未知费用常驻说明；成功短提示不能替代页面最终事实。未知用“待核对/未知”，不用0、绿色或假百分比。所有展示时间及日桶为 Asia/Shanghai，原受理日不随重放跨日改变。 |
+-| G-12 清洗与只读证据 | Markdown/模型内容清洗渲染；引用只按服务端 citation ID 打开受控资源。前端不接任意文件路径、模型 URL、供应方临时链接；秘密不进日志/自动播报/持久缓存。状态可含安全 request/operation/task ID，详细技术错误可折叠，但不展示栈、密钥或模型思维链。 |
+-
+-来源：[前端归属与恢复](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:395)，范围：395–401；[共同输入与完整返回](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:336)，范围：336–348；[错误恢复模式](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:350)，范围：350–372。G-02/04/08–10 的具体呈现为本轮设计决定。
++| G-12 清洗与只读证据 | Markdown／模型内容／提取JSON用textContent或清洗渲染；引用只按服务端citation ID打开受控资源。原件均attachment下载；inline仅服务端生成并校验的PNG／JPEG页图／裁图，HTML／SVG／上游PDF等主动文档不inline。前端不接任意文件路径、模型URL、供应方临时链接；私有内容不进持久缓存，秘密不进日志／自动播报。状态可含安全request/operation/task ID，详细技术错误可折叠，但不展示栈、密钥或模型思维链。 |
++
++来源：[前端归属与恢复](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:403)；[共同输入与完整返回](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:341)，范围：336–348；[错误恢复模式](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:354)，范围：350–372。G-02/04/08–10 的具体呈现为本轮设计决定。
++
++HTTP共同要求：所有私有成功／错误、认证／状态／citation／资源／历史均 `Cache-Control: no-store`，网关禁缓存；首版无 ETag／Last-Modified／304，If-*不能绕过当前授权返回body。技术真源为 [C2 HTTP](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:20)／[R4 网关](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md:51)，G-12精确资源header及MIME以 [C7](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:117) 为准。S1验证公共设施，S2资源、S3历史入口各在开放前做真实浏览器同URL换账号／撤权、条件头及history恢复负例；不能只靠应用store清空证明安全。
+ 
+ ## IA-01 — 登录与本人账户
+ 
+@@ -29,12 +31,14 @@
+ 
+ | 字段/信息 | 初值、必填及校验 | 动作与副作用 |
+ | --- | --- | --- |
+-| 账号、密码 | 空；均必填；密码支持管理器/粘贴/显隐，显隐不改变内容 | “登录”仅执行密码登录；成功先读本人 context，合法安全返回路径才可进入。登录前未完成写入/付费动作不重放 |
++| 账号、密码 | 空；均必填；密码支持管理器/粘贴/显隐，显隐不改变内容 | “登录”执行匿名密码POST：精确部署scheme／host／port的同源Origin、application/json、X-RAG-Login: 1，CORS关闭，无已有会话／token前置；成功旋转会话并将绑定CSRF token经不缓存响应存内存，再读本人context。合法安全返回路径才可进入；登录前未完成写入/付费动作不重放 |
+ | 本人账号与身份 | 只读当前事实；平台与当前空间业务身份分别标注 | 不提供改他人密码或切他人身份 |
+ | 当前密码、新密码、确认新密码 | 空；均必填；新密码符合生效密码规则，两次一致；不对密码做 trim | “修改密码”仅改本人密码；结果确认后清三个秘密字段；会话是否失效按服务端返回处理，不据前端猜测 |
+ | 退出 | 无输入 | “退出登录”清私有视图，通知服务端退出；网络未知仍不留本地敏感内容，不能宣称后台任务已取消 |
+ 
+ 冷加载不闪旧账号。身份失败统一安全文案；停用/恢复未核验按服务端可公开范围解释。登录断网保留账号，不持久保存密码；改密丢回包显示“尚未确认密码是否已修改”，先核当前登录状态，不自动再改。失败摘要获焦点；登录成功焦点到已授权页面标题。验收：AC-01、AC-18。
++
++登录服务端拒missing／null／cross-origin Origin、简单form或缺固定登录头；成功后的认证Web写（退出／改密／业务写）须同源Origin＋会话绑定token，Cookie＋Bearer双渠道仍整拒。选择与token发放真源为 [C5身份协议](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:79)，前端不持久保存token；重载可经同源、当前认证的no-store context GET取本会话token，token不可用时不擅自降级为无防护写。
+ 
+ ## IA-02 — 空间与邀请
+ 
+@@ -114,7 +118,7 @@
+ 
+ ## IA-07 — 问答、检索与会话历史
+ 
+-入口/范围：当前空间“问答”；从库/文档带入显式范围。对应 SC-1/SC-2/SC-4，不改变业务岗位或团队角色。依据：[问答输入与会话](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:336)，范围：336–348。
++入口/范围：当前空间“问答”；从库/文档带入显式范围。对应 SC-1/SC-2/SC-4，不改变业务岗位或团队角色。依据：[问答输入与会话](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:341)，范围：336–348。
+ 
+ | 字段/信息 | 初值、必填及校验 | 动作与副作用 |
+ | --- | --- | --- |
+@@ -163,9 +167,9 @@
+ | 字段/信息 | 初值、必填及校验 | 动作与副作用 |
+ | --- | --- | --- |
+ | 引用身份 | 服务端解析citation ID；文档名、不可变版本、来源位置、原时间、准确片段 | 历史引用提示“历史版本，仅供本条引用核验”；不提供将旧替换版直接加入新检索的操作 |
+-| PDF页/区域 | 从1起物理页；初始实际引用页。可靠bbox才高亮；无bbox但可靠页写“无区域高亮” | 页预览/放大/翻页只读取该授权版本，不能猜坐标。页码输入仅合法实际页范围 |
++| PDF页/区域 | 从1起物理页；初始实际引用页。只显示服务端生成并校验的PNG／JPEG；可靠bbox才高亮，无bbox但可靠页写“无区域高亮” | 页预览/放大/翻页只读取该授权版本的受控页图，不inline上游PDF，不能猜坐标。页码输入仅合法实际页范围 |
+ | 非PDF位置 | 实际章节/结构路径、段落/字符范围及准确提取片段 | 不编DOCX物理页，不部署Word预览服务；“下载原件”单文件且当前授权 |
+-| 原件/提取标签 | 明确“原件页预览/原件下载/提取片段/表格或图意说明” | 不能把提取内容外观当原件；图意有图号/适用条件和文字说明 |
++| 原件/提取标签 | 明确“原件页图/原件下载/提取片段/表格或图意说明”；原件一律attachment，安全文件名、准确白名单MIME、nosniff | 不能把提取内容外观当原件，不透传上游类型／header；文本／MD／提取JSON安全渲染，HTML／SVG等主动文档不inline；图意有图号/适用条件和文字说明 |
+ | 定位错误 | hash不符、缺资产、坏位置明确“来源位置不可用，暂不能核验这条引用” | 不跳文件首页冒充定位成功；仍有权且原件存在可单独下载核对；故障须记录 |
+ 
+ 来源已删除时只在后端允许披露的已知历史语境显示删除提示；未知目标/无权统一不可用，不泄露陌生标题或存在性。宽屏与结果并置，窄屏独立可返回；先核身份再加载，失权立即清缓存片段。关闭回原引用/同格且按当前权恢复正文。验收：AC-10、AC-16、AC-18、AC-21。
+--- before/_bmad-output/planning-artifacts/ux-designs/ux-RAG_all-2026-10-16/acceptance.md
++++ after/_bmad-output/planning-artifacts/ux-designs/ux-RAG_all-2026-10-16/acceptance.md
+@@ -25,10 +25,10 @@
+ 
+ 映射：IA-01；FR-1/4/5；SM-6/7；S1。依据：[账号与认证](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/prd.md:159)、[双渠道边界](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:16)。
+ 
+-- **正例：** Given有效账号且未登录，When填账号密码登录，再修改本人密码，Then先取得本人context再加载授权页面；改密明确成功后清秘密字段，旧会话后续行为按服务端当前状态处理；页面无自助注册/代登录入口。
+-- **反例：** Given停用/未核验身份，或请求同时含本应用Cookie和Bearer，When登录/调用受保护入口，Then按安全身份错误拒绝、无受保护正文、不回退另一凭据；密码错误/断网不冒充账号不存在或改密成功。改密丢回包不自动再次提交。
+-
+-证据：登录/改密原始响应、当前会话事实、页面错误/秘密清除、无越权读写记录。
++- **正例：** Given有效账号且全新浏览器无Cookie／无会话CSRF token，When以精确部署scheme／host／port的同源Origin、application/json与X-RAG-Login: 1提交匿名登录，Then可完成首次登录，不被会话token前置阻断；成功旋转会话／绑定CSRF token，经不缓存受控响应交前端内存，先取本人context再加载授权页面；重载后可经同源当前认证的no-store context GET取本会话token，不放URL或持久缓存。再以同源Origin＋会话绑定token修改本人密码，明确成功后清秘密字段，旧会话行为按当前服务端状态；无自助注册／代登录入口。
++- **反例：** Given匿名登录缺Origin、Origin为null／cross-origin（含部署scheme／host／port任一不符）、简单form／非JSON或缺固定登录头，When提交，Then403拒绝且CORS关闭，不创建会话／不返回受保护正文；既有认证Web写缺／错会话token或非同源Origin也拒绝。停用／未核验身份、受保护请求同时含本应用Cookie和Bearer，仍按原安全错误整拒，不回退另一凭据；密码错误／断网不冒充账号不存在或改密成功，丢回包不自动再次改密。
++
++证据：全新无Cookie正例及各Origin／form／header负例原始请求响应、会话旋转与绑定token事实（报告脱敏）、认证写token正反例、no-store／CORS配置、前端内存与秘密清除、无越权读写记录。技术真源：[C5](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:79)；状态：未执行。
+ 
+ ## AC-02 — 邀请、加入、退出与所有权
+ 
+@@ -106,10 +106,10 @@
+ 
+ 映射：IA-06/09；FR-6/7/8/13；SM-2/3/5/7；S2最小→S5复杂。依据：[FR-7](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/prd.md:205)，范围：205–213。
+ 
+-- **正例：** GivenPDF可信bbox、PDF仅可靠页、DOCX/TXT/MD实际结构样例，When打开校核/引用，Then分别高亮真实区域、可靠物理页+“无区域高亮”、结构路径+准确片段+授权原件下载；原件与提取明确标签，PDF物理页从1起。
+-- **反例：** Given坏locator/hash不符/资源缺失或无必需定位候选，When打开/发布，Then明确定位不可用、不猜首页/坐标、不编DOCX物理页、不假ready；原件存在且当前有权时单独下载仍可用；不部署OCR编辑器/Word服务，也不以提取片段冒充原件。
+-
+-证据：原件hash/定位元数据、PDF/非PDF对照、故障响应；来源最小回看在S2提供，不能等S5才交付。
++- **正例：** GivenPDF可信bbox、PDF仅可靠页、DOCX／TXT／MD实际结构样例，When打开校核／引用，Then在服务器生成并校验的PNG／JPEG页图上高亮真实区域或展示可靠物理页＋“无区域高亮”；非PDF为结构路径＋准确片段＋授权原件attachment下载。PDF物理页从1起，原件／提取身份清楚；原件响应的安全Content-Disposition含服务端fallback及UTF-8 filename*、准确白名单MIME及nosniff，PDF为application/pdf、DOCX为application/vnd.openxmlformats-officedocument.wordprocessingml.document、TXT为text/plain;charset=utf-8、MD为text/markdown;charset=utf-8。
++- **反例：** Given合法TXT／MD包含HTML／脚本、伪扩展／伪MIME文件、含CRLF／路径／控制字符／超长名的恶意filename，When读取／下载／预览，Then文本／MD／提取JSON仅textContent或清洗渲染，原件不inline、头不注入、文件名有界，不透传上游类型／header；HTML／SVG／上游PDF等主动文档不inline、不执行脚本。坏locator／hash不符／缺资产或无必需定位候选明确不可用，不猜首页／坐标、不编DOCX物理页、不假ready；当前有权且原件存在可单独下载。无OCR编辑器／Word服务或新主动预览能力。
++
++证据：原件hash／定位元数据、四类准确响应头与恶意filename结果、含HTML的合法TXT／MD和伪类型样本、真实浏览器无执行／无主动文档inline、PDF／非PDF对照及故障响应。逐一核资源与错误的no-store、If-*仍授权、无304及同URL换账号／撤权／history恢复（见AC-18）；S2资源开放前须通过，不能等S5才交付。真源：[C7](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:117)；状态：未执行。
+ 
+ ## AC-11 — SC-1：技术支持与故障排查
+ 
+@@ -149,7 +149,7 @@
+ 
+ ## AC-15 — 查询结果、计次、零候选与网络恢复
+ 
+-映射：IA-07/08/10；FR-4/5/9/12/14/15；SM-4/6/7；S3→S4。依据：[三账及幂等](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:28)、[前端恢复](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:395)。
++映射：IA-07/08/10；FR-4/5/9/12/14/15；SM-4/6/7；S3→S4。依据：[三账及幂等](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:28)、[前端恢复](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:403)。
+ 
+ - **正例：** Given执行成功但回包丢失/跨上海午夜，When按原Key或原operation恢复，Then原结果/原完成时间/版本、只追加一次轮次/只按原日计一次，不新检索生成。真正检索成功零候选可跳LLM，问答正常不足/比较全格不足仍计一次；纯检索/引用/任务状态不扣问答。
+ - **反例：** Given202/断网/Abort，Then不能自动新Key或宣称取消/退款；同Key异输入冲突、failed同Key只回原失败、expired不执行。预算裁空/未证模型预算且非零候选/截断/依赖失败/输出前撤权不伪装不足，按契约一次释放问答预留，真实已花embedding/调用保留且未知费用不为0。显示“发起新请求”必须本人显式选择。
+@@ -176,12 +176,12 @@
+ 
+ ## AC-18 — 响应归属、离线、多标签页与会话串行
+ 
+-映射：IA-01–12；FR-1/3/4/5/9/14/15；SM-6/7；S1基础→S3联调。依据：[前端响应归属](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:395)，范围：395–401。
+-
+-- **正例：** Given原上下文仍合法，When重连/后台回前台，Then先核context/epoch及当前授权，再恢复原状态/结果。单会话未终结期间下一生成禁发；父轮次冲突保留输入、重新取历史，用户核对后再明确提交。
+-- **反例：** Given请求在途，When切空间、退出后换账号、另一标签页改变身份/授权或恢复epoch改变，Then旧回包/轮询不得灌入当前私有缓存；未授权正文不得先闪现再隐藏。旧写/付费请求不自动换epoch/Key恢复，不跨空间续会话；Abort失败也要挡迟到回包。
+-
+-证据：延迟/乱序网络与多页操作录屏、私有store/DOM无旧数据、服务端原操作事实与新身份直接请求。
++映射：IA-01–12；FR-1/3/4/5/9/14/15；SM-6/7；S1基础→S3联调。依据：[前端响应归属](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:403)。
++
++- **正例：** Given原上下文仍合法，When重连／后台回前台／前进后退或pageshow（含bfcache／history restore），Then先遮蔽私有区、清旧context并变更本地代次；受控核当前context／epoch及欲显示内容的全部依赖后才恢复原状态／结果，pagehide已隐藏清私有DOM。所有私有HTTP响应含成功、认证、错误、context／状态、citation／页图／原件、答案／历史及程序入口均Cache-Control:no-store，网关proxy_cache off／proxy_no_cache 1／proxy_cache_bypass 1且不覆盖，前端无持久私有缓存。单会话忙时下一生成禁发；父轮次冲突保留输入、重取历史，用户核对后才明确提交。
++- **反例：** Given真实浏览器已访问私有同URL，When换账号／另一标签页撤权后重访、携If-None-Match／If-Modified-Since等条件头或从history／bfcache恢复，Then首版不发ETag／Last-Modified／304，条件头仍完整当前授权，不能返回旧body或先闪旧正文，context成功不能替代全部内容依赖重核。请求在途切空间／退出换账号／epoch变更时旧回包和轮询不得灌入新内存；Abort失败仍挡迟到回包。旧写／付费不自动换epoch／Key恢复，不跨空间续会话。
++
++证据：真实浏览器同URL换账号／撤权、条件请求及前进后退／bfcache录屏与网络原始响应；应用与网关no-store／禁缓存配置、无验证器／304、pagehide／pageshow与私有DOM／store／持久存储检查、延迟乱序多页操作、服务端原操作事实与新身份直接请求。S1交付公共设施，S2资源及S3历史各在入口开放前重做对应负例。真源：[C2](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:20)／[R4](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md:51)；状态：未执行。
+ 
+ ## AC-19 — 程序凭证与独立动作scope
+ 
+@@ -227,6 +227,15 @@
+ - **反例：** Given窄屏/触屏/长中英文/长条件，Then不把全页压小字号、不隐藏矩阵格/失败范围/旧版可用性/单位与费用说明；细指针视觉控件≥32px，粗指针40px视觉控件但目标≥44px且间距≥8px；正文/背景/焦点对比按DESIGN目标实测，不以默认Element Plus必然合格作证。
+ 
+ 证据：各宽度/缩放截图、实际颜色对比计算、触控命中与焦点检查；四关键屏静态图是设计参考，不能替代此运行检查。
++
++## 架构补充验收 R01 — 共享调用窗口、停发证明与恢复
++
++映射：IA-05／06／07／08／12的全部外部调用；FR-4／15／16、NFR-1／2／6；S0本地假件先行、P0真实核验。技术单一真源：[C8共享rate gate](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:145)、[R2受监督派发](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md:23)。状态：未执行，不构成真实服务或资源成绩。
++
++- **正例：** Given真实PG＋可控传输假件，When逐一暂停grant跨秒／分钟、检查后暂停并让另槽推进，再完成正常／强制退出的受监督停发，Then grant的send_open charge在领取窗口过期后仍计占；控制器证明本call发送child／后代退出、全部发送FD／IPC关闭且旧grant销毁后，才取随后DB时刻last_local_send_upper并保留完整W。准入同时计open与sealed未满W，多维charge及关联call可核对；重复seal／控制器重启不提前释放、不重复计量。
++- **反例：** Givenchild失联／暂停、旧grant或FD仍可能发送、无监督停发证明，When send-by／lease到期、业务取消／终态或进程重启，Then对应维度继续占用／阻塞；不能靠child读钟、暂未观测到字节、跨窗口或业务结束就重新借额度。S0全部负例通过前任何真实外发均禁止；P0使用真实账号核有效限额与实际SDK发送账，不承诺远端到达窗口或永无429。
++
++证据：各暂停点与另一槽推进时间线、PG grant／open／seal／last_local_send_upper／维度汇总、child／后代退出及FD／IPC／grant销毁的监督证明、重复seal／重启前后账和准入结果；P0另存真实调用／供应方响应及429，未知仍unknown。两个任务gate各默认4、可配1–4且全部账号合计最多4，本机重处理槽1、四场景／K=5及原deadline保持既定约束。
+ 
+ ## 原SM/F0/S0/P0/S7门槛不变
+ 

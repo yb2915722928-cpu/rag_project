@@ -1,0 +1,77 @@
+[
+  {
+    "name": "ARCHITECTURE-SPINE.md",
+    "snapshot_match": true,
+    "canonical_match": true
+  },
+  {
+    "name": "shared-contracts.md",
+    "snapshot_match": true,
+    "canonical_match": true
+  },
+  {
+    "name": "runtime-operations.md",
+    "snapshot_match": true,
+    "canonical_match": true
+  },
+  {
+    "name": "technology-evidence.md",
+    "snapshot_match": true,
+    "canonical_match": true
+  },
+  {
+    "name": "requirements-architecture-traceability.md",
+    "snapshot_match": true,
+    "canonical_match": true
+  },
+  {
+    "name": "implementation-contract.md",
+    "snapshot_match": true,
+    "canonical_match": true
+  },
+  {
+    "name": "implementation-slices.md",
+    "snapshot_match": true,
+    "canonical_match": true
+  },
+  {
+    "name": "prd.md",
+    "snapshot_match": true,
+    "canonical_match": true
+  },
+  {
+    "name": "addendum.md",
+    "snapshot_match": true,
+    "canonical_match": true
+  },
+  {
+    "name": "ux-DESIGN.md",
+    "snapshot_match": true,
+    "canonical_match": true
+  },
+  {
+    "name": "ux-EXPERIENCE.md",
+    "snapshot_match": true,
+    "canonical_match": true
+  },
+  {
+    "name": "ux-page-contracts.md",
+    "snapshot_match": true,
+    "canonical_match": true
+  },
+  {
+    "name": "ux-handoff-check.md",
+    "snapshot_match": true,
+    "canonical_match": true
+  },
+  {
+    "name": "ux-acceptance.md",
+    "snapshot_match": true,
+    "canonical_match": true
+  },
+  {
+    "name": "ux-handoff.md",
+    "snapshot_match": true,
+    "canonical_match": true
+  }
+]

@@ -1,0 +1,37 @@
+{
+  "recorded_date": "2026-10-17",
+  "execution_location": "Windows development computer, outside sandbox",
+  "remote_registry_reprobe": false,
+  "checks": [
+    {
+      "url": "https://registry-1.docker.io/v2/",
+      "command": "curl.exe -4 --head --silent --show-error --connect-timeout 5 --max-time 8",
+      "exit_code": 28,
+      "stderr": "curl: (28) Connection timed out after 5015 milliseconds"
+    },
+    {
+      "url": "https://auth.docker.io/token",
+      "command": "curl.exe -4 --head --silent --show-error --connect-timeout 5 --max-time 8",
+      "exit_code": 28,
+      "stderr": "curl: (28) Connection timed out after 5012 milliseconds"
+    },
+    {
+      "url": "https://ghcr.io/v2/",
+      "command": "curl.exe -4 --head --silent --show-error --connect-timeout 5 --max-time 8",
+      "exit_code": 0,
+      "http_status": 405,
+      "meaning": "Registry endpoint reachable; HEAD unsupported; not image availability."
+    }
+  ],
+  "git_head": {
+    "command": "git -c safe.directory=E:/aaa-project/rag rev-parse --verify HEAD",
+    "stderr": "fatal: Needed a single revision",
+    "commit": null,
+    "global_git_configuration_changed": false
+  },
+  "images_downloaded": [],
+  "archive_created": false,
+  "new_upload_transport": false,
+  "status": "blocked",
+  "next_trigger": "Approved exact official image/archive delivery, local network change, or explicit new acquisition authorization."
+}

@@ -1,0 +1,10 @@
+{
+  "documents": 35,
+  "local_links_checked": 255,
+  "json_examples_parsed": 3,
+  "stable_ids": "FR1-16 NFR1-6 SM1-7",
+  "mary_topics_with_original_followups": 3,
+  "status": "PASS",
+  "issues": [],
+  "limits": "Documentation checks only; no product/API/deployment tests."
+}

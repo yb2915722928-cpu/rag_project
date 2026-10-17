@@ -1,0 +1,105 @@
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic not yet started
+#   - in-progress: Epic actively being worked on
+#   - done: All stories in epic completed
+
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - ready-for-dev: Story file created, ready for development
+#   - in-progress: Developer actively working on implementation
+#   - review: Implementation complete, ready for review
+#   - done: Story completed
+
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - done: Retrospective has been completed
+
+# Action Item Status:
+#   - open: Committed during a retrospective, not yet addressed
+#   - in-progress: Actively being worked on
+#   - done: Completed
+
+# WORKFLOW NOTES:
+# ===============
+# - Epic transitions to 'in-progress' automatically when its first story starts (via build's sprint sync)
+# - Stories can be worked in parallel if team capacity allows
+# - Developer typically creates the next story after the previous one is 'done' to incorporate learnings
+# - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
+# - Retrospective appends its action items to action_items; the status view surfaces open ones
+generated: 10-17-2026 00:03
+last_updated: 10-17-2026 13:45
+project: RAG_all
+project_key: NOKEY
+tracking_system: file-system
+story_location: E:\aaa-project\rag\_bmad-output\implementation-artifacts
+development_status:
+  epic-1: in-progress
+  1-1-启动可重建的模块化项目: in-progress
+  1-2-隔离执行并保存每次调用事实: backlog
+  1-3-证明共享限流与双任务gate不会提前退额: backlog
+  1-4-在真实停写后清理资产并释放预算: backlog
+  1-5-签署s0本地门并交付隔离探路工具: backlog
+  epic-1-retrospective: optional
+
+  epic-2: backlog
+  2-1-核定真实共额域与安全调用配置: backlog
+  2-2-验证五格式来源与embedding维度: backlog
+  2-3-证明四场景完整生成预算: backlog
+  2-4-验证必须理解连接关系的真正图意: backlog
+  2-5-验证真实任务池活性与资源包络: backlog
+  2-6-补验真实生成与文档任务并存资源: backlog
+  epic-2-retrospective: optional
+
+  epic-3: backlog
+  3-1-首次登录-账户生命周期与首日起安全台账: backlog
+  3-2-选择空间并隔离私有视图恢复: backlog
+  3-3-邀请成员-交接所有权并退出团队: backlog
+  3-4-创建知识库并管理逐库授权与负责人: backlog
+  3-5-创建并撤销本人只读程序凭证: backlog
+  3-6-原子预留容量-次数并终结有限上传意图: backlog
+  3-7-平台配置与s1身份准入开放门: backlog
+  epic-3-retrospective: optional
+
+  epic-4: backlog
+  4-1-逐文件上传并可靠登记原件: backlog
+  4-2-处理资料并原子发布索引与可靠来源: backlog
+  4-3-安全核查原件-提取与引用位置: backlog
+  4-4-替换完整版本并删除后真实清理: backlog
+  4-5-分别执行原任务核对-本地继续和知情重交: backlog
+  epic-4-retrospective: optional
+
+  epic-5: backlog
+  5-1-在当前授权内执行精确b0检索: backlog
+  5-2-持久受理问答并只结算一个逻辑终态: backlog
+  5-3-在实际完整预算内回答企业问题: backlog
+  5-4-同空间追问并安全回看历史与原结果: backlog
+  5-5-通过同一用例提供受scope限制的只读api: backlog
+  5-6-反馈答案并核对三类用量: backlog
+  epic-5-retrospective: optional
+
+  epic-6: backlog
+  6-1-按版本环境给出有据排障顺序: backlog
+  6-2-固定版本并返回完整四态比较矩阵: backlog
+  epic-6-retrospective: optional
+
+  epic-7: backlog
+  7-1-把表格-扫描及图意转成可核验事实: backlog
+  7-2-按型号版本回答复杂手册问题: backlog
+  epic-7-retrospective: optional
+
+  epic-8: backlog
+  8-1-同维重建期间安全查询并允许删除: backlog
+  8-2-显式维护迁移embedding维度: backlog
+  8-3-在4c4gb目标机验证部署与一致备份: backlog
+  8-4-从旧备份隔离恢复并逐范围放行: backlog
+  epic-8-retrospective: optional
+
+  epic-9: backlog
+  9-1-首次调优前冻结原32题与金标-f0: backlog
+  9-2-固定运行基线并登记性能成本门槛: backlog
+  9-3-只用开发题选择优化并保留三方比较: backlog
+  9-4-执行原sm全部门并裁决四场景完成: backlog
+  9-5-交付可复现材料与真实问题-理解记录: backlog
+  epic-9-retrospective: optional

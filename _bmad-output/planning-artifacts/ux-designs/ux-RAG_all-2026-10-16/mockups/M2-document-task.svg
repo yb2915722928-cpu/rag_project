@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1040" viewBox="0 0 1600 1040" role="img" aria-label="M2 / 生效版、候选与任务 · IA-04 + IA-06"><title>M2 / 生效版、候选与任务 · IA-04 + IA-06</title>
+<rect width="1600" height="1040" fill="#F2F3F5"/>
+<rect x="0" y="0" width="1600" height="40" rx="4" fill="#303133" stroke="none" stroke-width="1"/>
+<text x="24" y="10" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="600" fill="#FFFFFF" dominant-baseline="text-before-edge">M2 / 生效版、候选与任务 · IA-04 + IA-06</text>
+<text x="1352" y="10" font-family="Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#FFFFFF" dominant-baseline="text-before-edge">模拟资料 · 设计参考 · 非运行结果</text>
+<rect x="0" y="40" width="1600" height="56" rx="0" fill="#FFFFFF" stroke="none" stroke-width="1"/>
+<line x1="0" y1="96" x2="1600" y2="96" stroke="#DCDFE6" stroke-width="1"/>
+<rect x="0" y="96" width="224" height="944" rx="0" fill="#FFFFFF" stroke="none" stroke-width="1"/>
+<line x1="224" y1="96" x2="224" y2="1040" stroke="#DCDFE6" stroke-width="1"/>
+<text x="24" y="58" font-family="Microsoft YaHei, sans-serif" font-size="20" font-weight="600" fill="#1D6CC0" dominant-baseline="text-before-edge">RAG_all</text>
+<text x="248" y="60" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="600" fill="#303133" dominant-baseline="text-before-edge">团队空间：示例研发团队 / 切换</text>
+<text x="1310" y="60" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="400" fill="#606266" dominant-baseline="text-before-edge">阿宁 · 知识维护者 / 本人</text>
+<text x="32" y="144" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="400" fill="#303133" dominant-baseline="text-before-edge">问答</text>
+<text x="32" y="192" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="400" fill="#303133" dominant-baseline="text-before-edge">对比</text>
+<rect x="12" y="232" width="200" height="40" rx="4" fill="#ECF5FF" stroke="none" stroke-width="1"/>
+<rect x="12" y="232" width="3" height="40" rx="0" fill="#1D6CC0" stroke="none" stroke-width="1"/>
+<text x="32" y="240" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="600" fill="#1D6CC0" dominant-baseline="text-before-edge">知识库</text>
+<line x1="24" y1="304" x2="200" y2="304" stroke="#DCDFE6" stroke-width="1"/>
+<text x="24" y="328" font-family="Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#606266" dominant-baseline="text-before-edge">当前空间会话</text>
+<text x="24" y="368" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="400" fill="#303133" dominant-baseline="text-before-edge">出差审批与材料</text>
+<text x="24" y="408" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="400" fill="#303133" dominant-baseline="text-before-edge">M2 手册核验</text>
+<line x1="24" y1="880" x2="200" y2="880" stroke="#DCDFE6" stroke-width="1"/>
+<text x="24" y="904" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="400" fill="#303133" dominant-baseline="text-before-edge">空间与邀请</text>
+<text x="24" y="944" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="400" fill="#303133" dominant-baseline="text-before-edge">凭证与用量</text>
+<text x="24" y="984" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="400" fill="#303133" dominant-baseline="text-before-edge">本人账户</text>
+<text x="248" y="120" font-family="Microsoft YaHei, sans-serif" font-size="20" font-weight="600" fill="#303133" dominant-baseline="text-before-edge">M2 产品手册</text>
+<text x="248" y="158" font-family="Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#606266" dominant-baseline="text-before-edge">知识库 / 产品手册库 / 资料详情</text>
+<rect x="1432" y="120" width="144" height="32" rx="4" fill="#FFFFFF" stroke="#767A82" stroke-width="1"/>
+<text x="1448" y="127" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="400" fill="#1D6CC0" dominant-baseline="text-before-edge">替换资料</text>
+<rect x="248" y="208" width="432" height="500" rx="4" fill="#FFFFFF" stroke="#DCDFE6" stroke-width="1"/>
+<text x="272" y="228" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="600" fill="#303133" dominant-baseline="text-before-edge">当前生效版本</text>
+<rect x="696" y="208" width="432" height="500" rx="4" fill="#FFFFFF" stroke="#DCDFE6" stroke-width="1"/>
+<text x="720" y="228" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="600" fill="#303133" dominant-baseline="text-before-edge">候选版本</text>
+<rect x="1144" y="208" width="432" height="500" rx="4" fill="#FFFFFF" stroke="#DCDFE6" stroke-width="1"/>
+<text x="1168" y="228" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="600" fill="#303133" dominant-baseline="text-before-edge">本次任务</text>
+<rect x="272" y="272" width="122" height="26" rx="4" fill="#F0F9EB" stroke="none" stroke-width="1"/>
+<text x="282" y="277" font-family="Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#2F6F17" dominant-baseline="text-before-edge">就绪 · 可用于查询</text>
+<text x="272" y="322" font-family="Microsoft YaHei, sans-serif" font-size="20" font-weight="600" fill="#303133" dominant-baseline="text-before-edge">资料版本标签 v1</text>
+<text x="272" y="370" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="400" fill="#303133" dominant-baseline="text-before-edge">当前查询继续使用此版本。</text>
+<text x="272" y="412" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="400" fill="#303133" dominant-baseline="text-before-edge">适用型号：M2</text>
+<text x="272" y="448" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="400" fill="#303133" dominant-baseline="text-before-edge">来源：已校核的 PDF 原件</text>
+<text x="272" y="484" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="400" fill="#606266" dominant-baseline="text-before-edge">适用产品版本：未标注</text>
+<rect x="272" y="640" width="136" height="32" rx="4" fill="#FFFFFF" stroke="#767A82" stroke-width="1"/>
+<text x="288" y="647" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="400" fill="#1D6CC0" dominant-baseline="text-before-edge">查看生效版</text>
+<rect x="720" y="272" width="135" height="26" rx="4" fill="#FDF6EC" stroke="none" stroke-width="1"/>
+<text x="730" y="277" font-family="Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#8A5A00" dominant-baseline="text-before-edge">待核对 · 不参与查询</text>
+<text x="720" y="322" font-family="Microsoft YaHei, sans-serif" font-size="20" font-weight="600" fill="#303133" dominant-baseline="text-before-edge">资料版本标签 v2</text>
+<text x="720" y="370" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="400" fill="#303133" dominant-baseline="text-before-edge">外部解析结果尚未确认；未替换当前生效版本。</text>
+<text x="720" y="466" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="400" fill="#606266" dominant-baseline="text-before-edge">失败 / 未完成范围：尚待确认</text>
+<rect x="720" y="640" width="152" height="32" rx="4" fill="#FFFFFF" stroke="#767A82" stroke-width="1"/>
+<text x="736" y="647" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="400" fill="#1D6CC0" dominant-baseline="text-before-edge">查看候选详情</text>
+<rect x="1168" y="272" width="59" height="26" rx="4" fill="#FEF0F0" stroke="none" stroke-width="1"/>
+<text x="1178" y="277" font-family="Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#B42318" dominant-baseline="text-before-edge">已到期</text>
+<text x="1168" y="322" font-family="Microsoft YaHei, sans-serif" font-size="18" font-weight="600" fill="#303133" dominant-baseline="text-before-edge">原任务保持终态</text>
+<text x="1168" y="370" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="400" fill="#303133" dominant-baseline="text-before-edge">最后进展未获完整回包，不能从连接中断推断解析失</text>
+<text x="1168" y="396" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="400" fill="#303133" dominant-baseline="text-before-edge">败。</text>
+<text x="1168" y="466" font-family="Microsoft YaHei, sans-serif" font-size="13" font-weight="400" fill="#606266" dominant-baseline="text-before-edge">截止：10-16 09:30（上海时间）</text>
+<rect x="1168" y="528" width="128" height="32" rx="4" fill="#FFFFFF" stroke="#767A82" stroke-width="1"/>
+<text x="1184" y="535" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="400" fill="#1D6CC0" dominant-baseline="text-before-edge">继续核对</text>
+<text x="1168" y="578" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="400" fill="#606266" dominant-baseline="text-before-edge">只查询原任务与费用，不下载、处理或发布。</text>
+<rect x="248" y="732" width="1328" height="248" rx="4" fill="#FFFFFF" stroke="#DCDFE6" stroke-width="1"/>
+<text x="272" y="752" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="600" fill="#303133" dominant-baseline="text-before-edge">后续动作分开受理</text>
+<text x="272" y="792" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="600" fill="#303133" dominant-baseline="text-before-edge">继续本地处理</text>
+<text x="272" y="828" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="400" fill="#606266" dominant-baseline="text-before-edge">尚未确认可复用产物；维护权限、资格、限制及资产校验通过后才可用。</text>
+<rect x="1360" y="788" width="192" height="32" rx="4" fill="#F5F7FA" stroke="#DCDFE6" stroke-width="1"/>
+<text x="1376" y="795" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="400" fill="#909399" dominant-baseline="text-before-edge">继续本地处理</text>
+<line x1="272" y1="872" x2="1552" y2="872" stroke="#DCDFE6" stroke-width="1"/>
+<text x="272" y="900" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="600" fill="#8A5A00" dominant-baseline="text-before-edge">重新提交解析</text>
+<text x="272" y="936" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="400" fill="#606266" dominant-baseline="text-before-edge">可能重复外部调用并产生费用；确认前不会重新提交。</text>
+<rect x="1360" y="896" width="192" height="32" rx="4" fill="#FFFFFF" stroke="#767A82" stroke-width="1"/>
+<text x="1376" y="903" font-family="Microsoft YaHei, sans-serif" font-size="14" font-weight="400" fill="#1D6CC0" dominant-baseline="text-before-edge">重新提交解析…</text>
+</svg>

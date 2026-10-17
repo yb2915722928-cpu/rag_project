@@ -1,0 +1,68 @@
+{
+  "date": "2026-10-16",
+  "scope": "planning closure only; no implementation or runtime achievement",
+  "items": [
+    {
+      "id": "R01",
+      "planning_state": "closed-in-current-contracts",
+      "runtime_state": "not-executed",
+      "authorities": [
+        "AD-7",
+        "AD-11",
+        "AD-14",
+        "C8",
+        "R1",
+        "R2",
+        "R5",
+        "R7"
+      ],
+      "validation_gate": "S0 local pause/crash/seal fixtures before any real egress; P0 actual dimensions"
+    },
+    {
+      "id": "R02",
+      "planning_state": "closed-in-current-contracts",
+      "runtime_state": "not-executed",
+      "authorities": [
+        "AD-4",
+        "C5",
+        "AC-01",
+        "R7"
+      ],
+      "validation_gate": "S1 before identity entry opens"
+    },
+    {
+      "id": "R03",
+      "planning_state": "closed-in-current-contracts",
+      "runtime_state": "not-executed",
+      "authorities": [
+        "AD-4",
+        "AD-12",
+        "AD-13",
+        "C2",
+        "C4",
+        "R4",
+        "AC-10",
+        "AC-16",
+        "AC-18",
+        "R7"
+      ],
+      "validation_gate": "S1 shared infrastructure, S2 resources/originals, S3 answers/history before each entry opens"
+    },
+    {
+      "id": "R04",
+      "planning_state": "closed-in-current-contracts",
+      "runtime_state": "not-executed",
+      "authorities": [
+        "AD-5",
+        "AD-12",
+        "C7",
+        "R2",
+        "R4",
+        "AC-10",
+        "AC-21",
+        "R7"
+      ],
+      "validation_gate": "S2 before resource entry opens"
+    }
+  ]
+}

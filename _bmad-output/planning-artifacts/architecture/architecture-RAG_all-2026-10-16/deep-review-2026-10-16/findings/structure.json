@@ -1,0 +1,638 @@
+{
+  "lens": "structure",
+  "content_type": "docs",
+  "reader_type": "humans",
+  "style_guide": "Microsoft Writing Style Guide",
+  "purpose": "本架构包用于帮助实际实现团队在不重开产品决定的前提下，找到当前权威契约、按切片开工，并准确执行共享边界与停止条件。",
+  "structure_model": "结构模型：主干按Explanation（由概念到实现），共享/运行契约与追踪按Reference/Database（可随机查找、职责互斥、稳定模式）校准；读者为humans，风格为Microsoft Writing Style Guide。",
+  "counts_source": "[字数度量脚本](/E:/aaa-project/rag/.agents/skills/bmad-review/scripts/word_metrics.py)",
+  "word_metrics": [
+    {
+      "document": "[架构主干](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/ARCHITECTURE-SPINE.md)",
+      "total_words": 5766,
+      "sections": [
+        {
+          "heading": "(preamble)",
+          "level": 0,
+          "words": 86
+        },
+        {
+          "heading": "RAG_all 架构主干",
+          "level": 1,
+          "words": 89
+        },
+        {
+          "heading": "Design Paradigm",
+          "level": 2,
+          "words": 533
+        },
+        {
+          "heading": "Invariants & Rules",
+          "level": 2,
+          "words": 0
+        },
+        {
+          "heading": "AD-1 — 共享用例与向内依赖 [ADOPTED]",
+          "level": 3,
+          "words": 111
+        },
+        {
+          "heading": "AD-2 — 每份状态只有一个写者",
+          "level": 3,
+          "words": 150
+        },
+        {
+          "heading": "AD-3 — 用例事务与全局锁序 [ADOPTED]",
+          "level": 3,
+          "words": 287
+        },
+        {
+          "heading": "AD-4 — 当前身份、显式范围与统一授权 [ADOPTED]",
+          "level": 3,
+          "words": 211
+        },
+        {
+          "heading": "AD-5 — 单一共享schema与来源表示",
+          "level": 3,
+          "words": 151
+        },
+        {
+          "heading": "AD-6 — 上传、版本与墓碑 [ADOPTED]",
+          "level": 3,
+          "words": 233
+        },
+        {
+          "heading": "AD-7 — 单次外传与可停止的执行者 [ADOPTED]",
+          "level": 3,
+          "words": 343
+        },
+        {
+          "heading": "AD-8 — 三账与唯一结算 [ADOPTED]",
+          "level": 3,
+          "words": 252
+        },
+        {
+          "heading": "AD-9 — 不可变向量空间与索引代次 [ADOPTED]",
+          "level": 3,
+          "words": 217
+        },
+        {
+          "heading": "AD-10 — 显式RAG、实际预算与实见证据 [ADOPTED]",
+          "level": 3,
+          "words": 345
+        },
+        {
+          "heading": "AD-11 — 逻辑终态、并发与会话 [ADOPTED]",
+          "level": 3,
+          "words": 385
+        },
+        {
+          "heading": "AD-12 — UX投影与私有响应归属 [ADOPTED]",
+          "level": 3,
+          "words": 258
+        },
+        {
+          "heading": "AD-13 — 四服务部署与可信恢复 [ADOPTED]",
+          "level": 3,
+          "words": 277
+        },
+        {
+          "heading": "AD-14 — 切片依赖与可验证门槛 [ADOPTED]",
+          "level": 3,
+          "words": 314
+        },
+        {
+          "heading": "Stack & Versions",
+          "level": 2,
+          "words": 373
+        },
+        {
+          "heading": "Structure Seed",
+          "level": 2,
+          "words": 281
+        },
+        {
+          "heading": "Deferred & Open Gates",
+          "level": 2,
+          "words": 648
+        }
+      ]
+    },
+    {
+      "document": "[共享契约](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md)",
+      "total_words": 7508,
+      "sections": [
+        {
+          "heading": "(preamble)",
+          "level": 0,
+          "words": 23
+        },
+        {
+          "heading": "共享契约",
+          "level": 1,
+          "words": 63
+        },
+        {
+          "heading": "C1：标识、时间、文本与序列化",
+          "level": 2,
+          "words": 441
+        },
+        {
+          "heading": "C2：公共HTTP包与能力载荷",
+          "level": 2,
+          "words": 375
+        },
+        {
+          "heading": "C3：SourceLocator与EvidenceSnapshot",
+          "level": 2,
+          "words": 604
+        },
+        {
+          "heading": "C4：执行栅栏与同UoW矩阵",
+          "level": 2,
+          "words": 1197
+        },
+        {
+          "heading": "C5：有限管理schema与身份技术seed",
+          "level": 2,
+          "words": 1495
+        },
+        {
+          "heading": "C6：限制与生成子契约单一真源",
+          "level": 2,
+          "words": 453
+        },
+        {
+          "heading": "C7：五投影最小DTO与格式分派",
+          "level": 2,
+          "words": 702
+        },
+        {
+          "heading": "C8：跨进程共享调用rate gate",
+          "level": 2,
+          "words": 2059
+        }
+      ]
+    },
+    {
+      "document": "[运行契约](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md)",
+      "total_words": 9315,
+      "sections": [
+        {
+          "heading": "RAG_all 运行、监督与恢复契约",
+          "level": 1,
+          "words": 74
+        },
+        {
+          "heading": "R1. 控制器与物理执行槽",
+          "level": 2,
+          "words": 1634
+        },
+        {
+          "heading": "R2. 有界入口与每次派发",
+          "level": 2,
+          "words": 718
+        },
+        {
+          "heading": "R3. 稳定锁、停写证明与清理",
+          "level": 2,
+          "words": 1019
+        },
+        {
+          "heading": "R4. 四服务、介质与最小权限",
+          "level": 2,
+          "words": 768
+        },
+        {
+          "heading": "R5. 启动、发布、成套备份与可信恢复",
+          "level": 2,
+          "words": 1922
+        },
+        {
+          "heading": "R6. 有界资源、观测与运行动作",
+          "level": 2,
+          "words": 1477
+        },
+        {
+          "heading": "R7. 分层验收与停止条件",
+          "level": 2,
+          "words": 1143
+        },
+        {
+          "heading": "R8. 官方依据与适用限度",
+          "level": 2,
+          "words": 447
+        }
+      ]
+    },
+    {
+      "document": "[技术证据](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/technology-evidence.md)",
+      "total_words": 2352,
+      "sections": [
+        {
+          "heading": "(preamble)",
+          "level": 0,
+          "words": 19
+        },
+        {
+          "heading": "技术核验与冷启动版本证据",
+          "level": 1,
+          "words": 147
+        },
+        {
+          "heading": "E1：运行与持久化seed",
+          "level": 2,
+          "words": 594
+        },
+        {
+          "heading": "E2：前端starter与构建seed",
+          "level": 2,
+          "words": 437
+        },
+        {
+          "heading": "E3：部署与实际适用性",
+          "level": 2,
+          "words": 250
+        },
+        {
+          "heading": "E4：接入前真实门槛",
+          "level": 2,
+          "words": 855
+        }
+      ]
+    },
+    {
+      "document": "[需求追踪](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/requirements-architecture-traceability.md)",
+      "total_words": 7455,
+      "sections": [
+        {
+          "heading": "RAG_all 需求—架构—验收追踪",
+          "level": 1,
+          "words": 82
+        },
+        {
+          "heading": "1. 权威输入与承接索引",
+          "level": 2,
+          "words": 232
+        },
+        {
+          "heading": "2. FR逐项承接",
+          "level": 2,
+          "words": 1206
+        },
+        {
+          "heading": "3. NFR与SM逐项承接",
+          "level": 2,
+          "words": 716
+        },
+        {
+          "heading": "4. 现行实施契约逐节承接",
+          "level": 2,
+          "words": 1387
+        },
+        {
+          "heading": "5. UX IA、共同G与AC逐项承接",
+          "level": 2,
+          "words": 2123
+        },
+        {
+          "heading": "6. S0/P0/F0/S1–S7纵向门槛",
+          "level": 2,
+          "words": 773
+        },
+        {
+          "heading": "7. 输入reconcile与未取得证据",
+          "level": 2,
+          "words": 854
+        }
+      ]
+    },
+    {
+      "document": "[实施契约](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md)",
+      "total_words": 20388,
+      "sections": [
+        {
+          "heading": "(preamble)",
+          "level": 0,
+          "words": 14
+        },
+        {
+          "heading": "RAG_all 实施契约",
+          "level": 1,
+          "words": 127
+        },
+        {
+          "heading": "1. 请求准入与唯一身份",
+          "level": 2,
+          "words": 438
+        },
+        {
+          "heading": "2. 请求身份、配额和容量",
+          "level": 2,
+          "words": 50
+        },
+        {
+          "heading": "2.1 三本账与容量受理",
+          "level": 3,
+          "words": 757
+        },
+        {
+          "heading": "2.2 三种请求身份",
+          "level": 3,
+          "words": 725
+        },
+        {
+          "heading": "2.3 生成操作与崩溃恢复",
+          "level": 3,
+          "words": 458
+        },
+        {
+          "heading": "2.4 上传意图的期限与终态",
+          "level": 3,
+          "words": 990
+        },
+        {
+          "heading": "2.5 每次外部派发与迟到成本账",
+          "level": 3,
+          "words": 852
+        },
+        {
+          "heading": "2.6 物理写入者、清理屏障与磁盘保护",
+          "level": 3,
+          "words": 2089
+        },
+        {
+          "heading": "2.7 原任务到期后的有限核对与本地继续",
+          "level": 3,
+          "words": 706
+        },
+        {
+          "heading": "3. 索引、对比结果及校核交互",
+          "level": 2,
+          "words": 50
+        },
+        {
+          "heading": "3.1 逐库 profile、索引代和写入守卫",
+          "level": 3,
+          "words": 903
+        },
+        {
+          "heading": "3.2 对比输入、四态和最终证据",
+          "level": 3,
+          "words": 483
+        },
+        {
+          "heading": "3.3 最小校核与来源回看",
+          "level": 3,
+          "words": 409
+        },
+        {
+          "heading": "3.4 外部能力探路前置",
+          "level": 3,
+          "words": 194
+        },
+        {
+          "heading": "3.5 查询协议硬界与业务受理限制",
+          "level": 3,
+          "words": 848
+        },
+        {
+          "heading": "3.6 实际模型预算、实见证据与失败分支",
+          "level": 3,
+          "words": 1901
+        },
+        {
+          "heading": "3.7 有限生成载荷与响应语义",
+          "level": 3,
+          "words": 922
+        },
+        {
+          "heading": "3.8 查询并发与调用限流",
+          "level": 3,
+          "words": 431
+        },
+        {
+          "heading": "4. 恢复与安全放行",
+          "level": 2,
+          "words": 86
+        },
+        {
+          "heading": "4.1 信任起点与安全台账",
+          "level": 3,
+          "words": 459
+        },
+        {
+          "heading": "4.2 恢复动作与放行",
+          "level": 3,
+          "words": 618
+        },
+        {
+          "heading": "4.3 新操作与恢复后重放",
+          "level": 3,
+          "words": 379
+        },
+        {
+          "heading": "4.4 恢复演练与记录",
+          "level": 3,
+          "words": 240
+        },
+        {
+          "heading": "5. 最小接口、页面与实施切片",
+          "level": 2,
+          "words": 91
+        },
+        {
+          "heading": "5.1 入口和能力",
+          "level": 3,
+          "words": 1747
+        },
+        {
+          "heading": "5.2 输入与结果的共同边界",
+          "level": 3,
+          "words": 812
+        },
+        {
+          "heading": "5.3 最小错误字典",
+          "level": 3,
+          "words": 916
+        },
+        {
+          "heading": "5.4 必需实体与不变量",
+          "level": 3,
+          "words": 820
+        },
+        {
+          "heading": "5.5 前端响应归属与网络恢复",
+          "level": 3,
+          "words": 522
+        }
+      ]
+    },
+    {
+      "document": "[实施切片](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-slices.md)",
+      "total_words": 4612,
+      "sections": [
+        {
+          "heading": "(preamble)",
+          "level": 0,
+          "words": 19
+        },
+        {
+          "heading": "RAG_all 纵向实施切片与前置门槛",
+          "level": 1,
+          "words": 178
+        },
+        {
+          "heading": "先后关系",
+          "level": 2,
+          "words": 744
+        },
+        {
+          "heading": "S0：可重建的工程基础和隔离适配器",
+          "level": 2,
+          "words": 354
+        },
+        {
+          "heading": "P0：真实外部能力与目标资源探路",
+          "level": 2,
+          "words": 596
+        },
+        {
+          "heading": "S1：身份、空间、知识库与受控准入",
+          "level": 2,
+          "words": 328
+        },
+        {
+          "heading": "S2：文档导入、替换、删除与恢复闭环",
+          "level": 2,
+          "words": 470
+        },
+        {
+          "heading": "S3：企业查询的基线 RAG、引用、历史与只读 API",
+          "level": 2,
+          "words": 361
+        },
+        {
+          "heading": "S4：排障与多文档对比",
+          "level": 2,
+          "words": 306
+        },
+        {
+          "heading": "S5：复杂手册与可校核来源",
+          "level": 2,
+          "words": 263
+        },
+        {
+          "heading": "S6：索引变更、目标部署与可信恢复",
+          "level": 2,
+          "words": 290
+        },
+        {
+          "heading": "S7：固定验收、优化比较与工程证据",
+          "level": 2,
+          "words": 417
+        },
+        {
+          "heading": "开始与完成的不同门槛",
+          "level": 2,
+          "words": 120
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "pass": "structure",
+      "tag": "MOVE",
+      "original_text": "[架构主干](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/ARCHITECTURE-SPINE.md:23)开头只有业务/UX来源与companion文件名；完整AD/C/R职责导航在[需求追踪§1](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/requirements-architecture-traceability.md:5)（232词），切片到强制条款的入口在[§6](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/requirements-architecture-traceability.md:142)。",
+      "revised_text": "MOVE 将§1权威输入与承接索引移到主干目的之后、概念总览之前，并把现有切片门槛链接直接定位到§6；追踪矩阵保留回指。",
+      "changes": "触发：实现者第一次按S0或单一AD开工。现有companion清单没有说明去哪里查当前切片的完整C/R约束，AD14到主干后段才指向追踪；读者需自行拼接阅读路径，容易把摘要Rule作为完整契约。前移现有导航可先交代权威/查找方式，再进入八模块与依赖图。字数影响：移动232词，净减约0。",
+      "word_impact": {
+        "measured_source_words": 232,
+        "moved_words": 232,
+        "estimated_net_saved_words": 0
+      }
+    },
+    {
+      "pass": "structure",
+      "tag": "MERGE",
+      "original_text": "完整PG锁序同时展开于[架构主干AD3](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/ARCHITECTURE-SPINE.md:71)（248词）、[运行契约R3](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md:47)（350词）、[实施契约§2.6](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:113)，范围：113–115（377词）；[共享契约C4](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:55)另有完整规范。",
+      "revised_text": "MERGE 完整序列及其当前授权/后台任务例外收口到C4；其余三处保留用例事务、OS停写和清理语境，用定点链接引用C4/C8，不再逐项复制序列。",
+      "changes": "触发：后续增加锁类别或调整许可释放流程。虽然各处已链接C4，正文仍各自给出可直接实现的完整顺序；引用不能同步复制的列表，维护者需人工改四份，遗漏一处即可让不同模块依不同段落取锁。保留摘要与局部操作目的，集中机械序列即可消除平行维护面，不改变锁、权限或执行行为。字数影响：三处原975词，最小示意替换合计417词，预计净减558词。",
+      "word_impact": {
+        "measured_source_words": 975,
+        "proposed_words": 417,
+        "estimated_net_saved_words": 558
+      },
+      "illustrative_replacements": [
+        {
+          "source": "[架构主干](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/ARCHITECTURE-SPINE.md:71)",
+          "lines": [
+            71,
+            71
+          ],
+          "original_words": 248,
+          "proposed_text": "- **Rule:** 同步SQLAlchemy短Session每线程独立；application统一begin/commit/rollback，仓储不commit、不跨线程传Session。全局锁序、当前授权SH/EX覆盖、后台已受理库任务前缀与迟到成本例外统一见[共享契约C4](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:51)。PG事务内不等待OS锁、网络、进程退出或大文件删除；OS锁取得后才开短事务复核。",
+          "proposed_words": 100,
+          "saved_words": 148
+        },
+        {
+          "source": "[运行契约](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md:47)",
+          "lines": [
+            47,
+            47
+          ],
+          "original_words": 350,
+          "proposed_text": "PG锁序、账号/space控制行SH/EX覆盖、多主体与多KB锁集合、后台库任务前缀及同UoW矩阵统一见[共享契约C4](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:51)；permit的独立一次释放见[C8](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:141)。本节清理流程遵守该锁序，迟到成本仅锁call，不回取父锁或退permit。OS锁先于短PG事务取得；不持PG事务等待OS锁、网络、进程退出或大文件删除。",
+          "proposed_words": 115,
+          "saved_words": 235
+        },
+        {
+          "source": "[实施契约](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:113)",
+          "lines": [
+            113,
+            115
+          ],
+          "original_words": 377,
+          "proposed_text": "全局PG锁序及当前授权前缀、SH/EX覆盖、组件独立释放与迟到成本例外统一见[共享契约C4](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:51)，不得反序或无序升级。先在事务外取得稳定OS锁，再开短PG事务复核；不持Session/PG事务等OS锁、网络、进程退出或大文件删除。物理停写与清理步骤见[R3](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md:35)；无法证明停写或清理/账提交失败，保留占用、显示cleanup_blocked并可重试，不恢复删除访问；仅DB有效写意图终结可解除重建阻塞，物理余账仍另核预算。稳定OS锁覆盖可写生命周期，清理取排它锁，不凭目录暂空/unlink归还打开FD占用。",
+          "proposed_words": 202,
+          "saved_words": 175
+        }
+      ]
+    },
+    {
+      "pass": "structure",
+      "tag": "MOVE",
+      "original_text": "[需求追踪§7](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/requirements-architecture-traceability.md:161)，范围：161–163（540词），混排B/A互审、B3/H1/H2修复过程、旧结论关闭及当前并发规则。",
+      "revised_text": "MOVE 将两段修复沿革移入已有审查gate记录的历史部分；当前追踪只保留现行覆盖结论、未取得证据和历史入口链接，现行并发规则继续由实施契约/C8/R1承载。",
+      "changes": "触发：下一位实现者或维护者确认当前约束与未证门槛。§7同时承载现行摘要与按轮次叙述的修复史，且把“当前权威结论”再导向审查签署；即使已声明规划不等于实测，读者仍需筛掉已关闭反例并逐段区分规则与形成过程。历史完整保留在审查记录，可让实施包按当前状态收束。字数影响：移动540词，资料总量净减约0。",
+      "word_impact": {
+        "measured_source_words": 540,
+        "moved_words": 540,
+        "estimated_net_saved_words": 0
+      }
+    },
+    {
+      "pass": "structure",
+      "tag": "CONDENSE",
+      "original_text": "[技术证据E4末段](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/technology-evidence.md:61)（185词）重述两项全系统gate、本机槽、等待资源、调度及P0/S6验收要求。",
+      "revised_text": "CONDENSE 保留“用户授权的未测seed，不证明账号或4GB已通过”这一证据状态；完整并发取值/生命周期、调度与门槛改为引用实施契约§2.6、C8及R1/R6。",
+      "changes": "触发：并发配置、调度或验收步骤再次变化。该段没有新增官方证据，却在证据目录内维护一份完整动作契约；其链接和“未测”声明不能避免行为段落日后滞后，接入者仍须比较两份文字。凝缩后技术证据页负责来源与适用限度，规则继续从原权威位置读取，保留两个gate各默认4/范围1–4与本机重阶段1的既定行为。字数影响：185词改为56词示意引用，预计净减129词。",
+      "word_impact": {
+        "measured_source_words": 185,
+        "proposed_words": 56,
+        "estimated_net_saved_words": 129
+      },
+      "illustrative_replacement": "并发seed、完整调度/许可规则及真实验证门槛分别见[实施契约§2.6](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md:103)、[C8](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:129)、[R1/R6](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md:5)。本表不证明账号支持4或4GB资源已验证；依赖版本未因此变化。"
+    }
+  ],
+  "summary": {
+    "recommendations": 4,
+    "measured_total_words": 57396,
+    "estimated_net_saved_words": 687,
+    "estimated_reduction_percent": 1.1969,
+    "moved_words": 772,
+    "length_target": null,
+    "text": "共4项建议：2项移动、1项合并、1项凝缩。按word_metrics实测，7份完整输入共57,396词；若采纳示意改法，预计净减687词（1.20%），另移动772词而不丢失资料。未给长度目标。计数采用脚本的CJK逐字符加空白token口径；改写节省为示意稿估计。保留模块概览/依赖图、Stack概览和按FR/IA/AC分组的追踪入口：它们分别服务心智模型、快速查表与不同检索入口，重复有理解价值。代价是机械规则需跳转一次，以定点链接补偿；不建议削减任何行为、权限、并发4、验收门或已明确责任/停止点的未执行证据。"
+  }
+}

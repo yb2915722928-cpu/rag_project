@@ -1,0 +1,22 @@
+{
+  "recorded_at": "2026-10-17T08:23:17.054990+00:00",
+  "transfer_sha256": "18320beb7231f4c54fe472659dc6ff9e9a251dab1a905c257cc4b1711212d5ad",
+  "files": {
+    "preflight.py": "bc453826bb9a1e1da95f88c6685c7d1b8f28fcb63ba0bef7ac91dd08a41dd1e6",
+    "api.Dockerfile": "a9dbc5963d4e9ee8222b0d2ea138a0c45aad24d7eb9561fddb55b68c681488f7",
+    "compose.yaml": "c0896deaebd04cfdbd1428c9946af23080772de9297f7dd58339f1adf8b084fc",
+    "gateway/nginx.conf": "125bf2f1552b1b08511f18eeb4ff01f84ffcbebd97d280bee9f7d2fae7257856"
+  },
+  "compose_structure_only": {
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "",
+    "no_containers_started": true,
+    "validation_only_zero_digests": true
+  },
+  "preflight_missing_dependencies": {
+    "exit_code": 2,
+    "stdout": "{\n  \"status\": \"blocked\",\n  \"failures\": [\n    \"PYTHON_BASE_IMAGE: verified digest required\",\n    \"NGINX_BASE_IMAGE: verified digest required\",\n    \"POSTGRES_IMAGE: verified digest required\",\n    \"UV_BASE_IMAGE: verified digest required\",\n    \"backend: project and valid lock must be delivered\",\n    \"frontend: real dist delivery required\",\n    \"RAG_TLS_CERT_FILE: existing secret file required\",\n    \"RAG_TLS_KEY_FILE: existing secret file required\",\n    \"RAG_POSTGRES_PASSWORD_FILE: existing secret file required\",\n    \"RAG_POSTGRES_PGPASS_FILE: existing secret file required\"\n  ]\n}\n",
+    "stderr": ""
+  }
+}

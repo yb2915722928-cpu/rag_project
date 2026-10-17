@@ -1,0 +1,92 @@
+[
+  {
+    "name": "ARCHITECTURE-SPINE.md",
+    "canonical": "E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/ARCHITECTURE-SPINE.md",
+    "snapshot": "E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/deep-review-2026-10-16/baseline/ARCHITECTURE-SPINE.md",
+    "sha256": "7BA8DAB77348268E9036B63ECCC37C3E0F71684F448DBB8BD59FD23EE7B458E0"
+  },
+  {
+    "name": "shared-contracts.md",
+    "canonical": "E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md",
+    "snapshot": "E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/deep-review-2026-10-16/baseline/shared-contracts.md",
+    "sha256": "94ADA90BA560CC55CDCC582CB34548B027B81F942DEDEA721441C4C1CD147051"
+  },
+  {
+    "name": "runtime-operations.md",
+    "canonical": "E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md",
+    "snapshot": "E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/deep-review-2026-10-16/baseline/runtime-operations.md",
+    "sha256": "23B0E3717142C6D7D12531BC955E6FC1328E7B82D678A232DE224ACEEA6DD100"
+  },
+  {
+    "name": "technology-evidence.md",
+    "canonical": "E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/technology-evidence.md",
+    "snapshot": "E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/deep-review-2026-10-16/baseline/technology-evidence.md",
+    "sha256": "6030578B6C16494BC46CC74C36BFD1437C8A3AC8ED71EAB7701A6702699819AF"
+  },
+  {
+    "name": "requirements-architecture-traceability.md",
+    "canonical": "E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/requirements-architecture-traceability.md",
+    "snapshot": "E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/deep-review-2026-10-16/baseline/requirements-architecture-traceability.md",
+    "sha256": "01A71A58DCC8240CA524C479B0A626C940465AC1E60A75D76B1B0C69FF3DC19C"
+  },
+  {
+    "name": "implementation-contract.md",
+    "canonical": "E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md",
+    "snapshot": "E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/deep-review-2026-10-16/baseline/implementation-contract.md",
+    "sha256": "9695CAEC3D1505432AA1BA0999D501DB22B99F4F3EF8AB64BF42D9304B636D4F"
+  },
+  {
+    "name": "implementation-slices.md",
+    "canonical": "E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-slices.md",
+    "snapshot": "E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/deep-review-2026-10-16/baseline/implementation-slices.md",
+    "sha256": "02E3D53AD13011FEA172F58A8FB0A5B82D371BA91999421F672B28CD4AA6A352"
+  },
+  {
+    "name": "prd.md",
+    "canonical": "E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/prd.md",
+    "snapshot": "E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/deep-review-2026-10-16/baseline/prd.md",
+    "sha256": "0963D529922A6B3812C8F8311F29F5112A537A59CA62616F4DC45A245BAAA299"
+  },
+  {
+    "name": "addendum.md",
+    "canonical": "E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/addendum.md",
+    "snapshot": "E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/deep-review-2026-10-16/baseline/addendum.md",
+    "sha256": "4695668668893B5BF4B8C79D2593804C3514219AD0DDBC64C7D13873ACBDDA96"
+  },
+  {
+    "name": "ux-DESIGN.md",
+    "canonical": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ux-designs/ux-RAG_all-2026-10-16/DESIGN.md",
+    "snapshot": "E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/deep-review-2026-10-16/baseline/ux-DESIGN.md",
+    "sha256": "179CFC6ECCDEB58ED3FB9EE8EC3ABB400F9AC7E7E49B8E197596A256FFAEFC48"
+  },
+  {
+    "name": "ux-EXPERIENCE.md",
+    "canonical": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ux-designs/ux-RAG_all-2026-10-16/EXPERIENCE.md",
+    "snapshot": "E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/deep-review-2026-10-16/baseline/ux-EXPERIENCE.md",
+    "sha256": "FAB0D5A915357F37908AAF19BEACBB2588E99C021BA306F8B985E244D78E0759"
+  },
+  {
+    "name": "ux-page-contracts.md",
+    "canonical": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ux-designs/ux-RAG_all-2026-10-16/page-contracts.md",
+    "snapshot": "E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/deep-review-2026-10-16/baseline/ux-page-contracts.md",
+    "sha256": "1095E608F69852E070ADE40D8F8229811837DB93674632A828EA4FFA7E73BB98"
+  },
+  {
+    "name": "ux-handoff-check.md",
+    "canonical": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ux-designs/ux-RAG_all-2026-10-16/handoff-check.md",
+    "snapshot": "E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/deep-review-2026-10-16/baseline/ux-handoff-check.md",
+    "sha256": "312089C856AB5CADA425C98CC221557D8C1DB7DCA3A8DD71FC17170D615CF035"
+  },
+  {
+    "name": "ux-acceptance.md",
+    "canonical": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ux-designs/ux-RAG_all-2026-10-16/acceptance.md",
+    "snapshot": "E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/deep-review-2026-10-16/baseline/ux-acceptance.md",
+    "sha256": "1639276E51854239B4DCB2AC88F41B2C482668634842B6CF580B0FA8ABFBEBE9"
+  },
+  {
+    "name": "ux-handoff.md",
+    "canonical": "E:/aaa-project/rag/_bmad-output/planning-artifacts/ux-designs/ux-RAG_all-2026-10-16/handoff.md",
+    "snapshot": "E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/deep-review-2026-10-16/baseline/ux-handoff.md",
+    "sha256": "BBC3EFE652C7CA1CEBEF8494C7E00EEEB05B3879BB4210B668A0D82FFEFFC5A5"
+  }
+]

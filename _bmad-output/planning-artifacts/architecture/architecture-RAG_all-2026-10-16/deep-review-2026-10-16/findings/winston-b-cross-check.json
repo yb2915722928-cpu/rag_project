@@ -1,0 +1,149 @@
+{
+  "reviewer": "Winston B",
+  "stage": "sealed-cross-check",
+  "basis": "manifest frozen snapshots; canonical links locate the same reviewed text",
+  "ir_recommendation": "CONCERNS",
+  "s0_can_start": true,
+  "human_product_choice_required": false,
+  "design_modified": false,
+  "runtime_tests_or_paid_calls_performed": false,
+  "unique_accepted": ["A01/B01", "B02", "A09", "A10"],
+  "disposition_counts": {"accepted_including_duplicate": 5, "clarification_only": 5, "rebutted": 3},
+  "dispositions": [
+    {
+      "id": "A01",
+      "decision": "accepted",
+      "duplicate_of": "B01",
+      "location": "[shared-contracts.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:139)",
+      "strongest_counterexample": "A获grant后暂停跨过RPS窗口，B在新窗口发送后A恢复发送，两call各一次却集中透支本地发送窗口。",
+      "guard_assessment": "原子领许可及单grant没有约束旧grant仍可消费的未来窗口；最晚到达条款只明确用于远端并发终态。",
+      "minimum_remedy": "窗口占用覆盖授予至最后可能本地发送，并监督旧grant停发/消费；不复发原call，不普遍要求所有上游有绝对网络到达界。",
+      "closure_stage": "S0派发骨架；任何真实外发前关闭，P0再核真实维度",
+      "closure_condition": "跨1秒/分钟暂停而其他槽推进的负例，实际本地发送没有跨窗透支；仅加send-by或检查一次时钟不算关闭。"
+    },
+    {
+      "id": "A02",
+      "decision": "clarification-only",
+      "location": "[shared-contracts.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:135)",
+      "strongest_counterexample": "active=3时limit从4降2，旧快照第四job继续领取或实现改写真实active。",
+      "guard_assessment": "统一PG gate、有效交集和组件唯一释放已禁止伪改真实占用；现稿没有承诺在线热改gate入口。",
+      "minimum_remedy": "S0明确激活方式，保留active债务并只停新增；可以关闭新增后激活，无需新产品交互。",
+      "closure_stage": "S0配置/gate实现",
+      "closure_condition": "3→2时不丢占用、不新领；未来若支持在线热变，再证明同序事务和版本栅栏。"
+    },
+    {
+      "id": "A03",
+      "decision": "clarification-only",
+      "location": "[runtime-operations.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md:17)",
+      "strongest_counterexample": "四个pending下很多小文件不断创建queued，元数据积压且未处理即到2h。",
+      "guard_assessment": "有限PG队列、PG/WAL物理预算、稳定游标、2h含排队和到期终结已选定；无限入队不符合现稿。",
+      "minimum_remedy": "S0落实具体有限cap、饱和拒绝点、稳定领取及过期扫描，不自动新增逐空间份额产品政策。",
+      "closure_stage": "S0/S2队列与上传实现",
+      "closure_condition": "小文件饱和和queued到期保持有界、账不丢、期限不刷新。"
+    },
+    {
+      "id": "A04",
+      "decision": "rebutted",
+      "location": "[prd.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/prd.md:141)",
+      "strongest_counterexample": "退出仅令membership inactive，重加入后旧Bearer和ACL复活。",
+      "guard_assessment": "PRD119明确加入本身不授库权，PRD141与UX48明确退出凭证失效；该复活实现违反已有真源。",
+      "minimum_remedy": "不新增规则，按现有语义实现永久撤销/清ACL或成员关系代次。",
+      "closure_stage": "S1",
+      "closure_condition": "退出→重邀后旧Bearer/旧ACL不恢复，作为原需求负例。"
+    },
+    {
+      "id": "A05",
+      "decision": "rebutted",
+      "location": "[page-contracts.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/ux-designs/ux-RAG_all-2026-10-16/page-contracts.md:201)",
+      "strongest_counterexample": "两名合法管理者交错保存，后提交的旧完整ACL恢复刚撤的B。",
+      "guard_assessment": "UX201已经明确当前结果刷新、冲突不覆盖；action_key或行锁不足不等于现稿允许覆盖。",
+      "minimum_remedy": "按已有行为选expected_revision/If-Match或精确差量机制，无需重选产品规则。",
+      "closure_stage": "S1管理动作实现",
+      "closure_condition": "合法管理者交错保存返回冲突且不恢复被撤值，重读/输入保留遵守原UX。"
+    },
+    {
+      "id": "A06",
+      "decision": "clarification-only",
+      "location": "[shared-contracts.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:45)",
+      "strongest_counterexample": "第7页表头与第8页数据同chunk多span只保存单页locator。",
+      "guard_assessment": "跨页多个有序spans、准确来源核验与简单跨页表格已强制；只保留一页不符合既定行为。",
+      "minimum_remedy": "同一contracts所有者将每span绑定可靠locator/资产，支持有序多页引用；不扩大K。",
+      "closure_stage": "S0共享schema及S2来源实现",
+      "closure_condition": "第7/8页fixture校验每段文本与页/区域对应，公共类型和UI一致。"
+    },
+    {
+      "id": "A07",
+      "decision": "clarification-only",
+      "location": "[page-contracts.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/ux-designs/ux-RAG_all-2026-10-16/page-contracts.md:168)",
+      "strongest_counterexample": "图意生成句写入source_text后仅以PDF哈希呈现成原文摘录。",
+      "guard_assessment": "实施契约184/C3要求说明绑定原图/定位，UX168明确区分原件/提取/图意说明；无标签的实现违反已定语义。",
+      "minimum_remedy": "DTO落实有限表示类型及不可变派生资产到原图/locator的关系，复用已有job/call/config必要追溯。",
+      "closure_stage": "S0 schema、S2/S5派生来源实现",
+      "closure_condition": "标签、派生文本hash、原图位置和校核依据在同一fixture中可核对。"
+    },
+    {
+      "id": "A08",
+      "decision": "clarification-only",
+      "location": "[shared-contracts.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:53)",
+      "strongest_counterexample": "平台管理员验证未保存A，迟到A响应绿标后来保存B或绕过gate。",
+      "guard_assessment": "FR4/UX211已选平台验证而不授库权，泛型owner_context/job与所有传输统一守卫可承接，不必新增实体。",
+      "minimum_remedy": "验证job/context明确当前平台资格、有限非业务样例、指纹与条件结果，沿call/permit/迟到账。",
+      "closure_stage": "S0/P0/S1接入验证实现",
+      "closure_condition": "无业务读权可合法验证常量；A迟到不绿标B；记录call/permit/unknown且不读取业务正文。"
+    },
+    {
+      "id": "A09",
+      "decision": "accepted",
+      "location": "[shared-contracts.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:69)",
+      "strongest_counterexample": "A合法缓存页图后退出，B访问同URL由HTTP cache返回新鲜私有body而未鉴权。",
+      "guard_assessment": "后端每读鉴权只保护到达后端的请求；Pinia/组件代次不控制浏览器或代理HTTP cache。",
+      "minimum_remedy": "私有API/资源/错误no-store、gateway排除缓存、鉴权先于304；历史恢复先隔离正文再重核context。",
+      "closure_stage": "共享HTTP守卫，最迟S2来源/原件及S3问答/历史入口开放前",
+      "closure_condition": "真实浏览器同URL换账号/撤权/304/历史返回不交付旧私有缓存；不承诺追回已合法下载保存字节。",
+      "official_sources": ["https://www.rfc-editor.org/rfc/rfc9111.html"]
+    },
+    {
+      "id": "A10",
+      "decision": "accepted",
+      "location": "[shared-contracts.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:127)",
+      "strongest_counterexample": "含HTML示例的合法MD原始字节在受控原件URL以text/html同源inline交付。",
+      "guard_assessment": "本地解析不执行HTML和视图清洗没有约束原始字节的媒体类型/inline文档来源；此为契约缺口，未证明已有代码XSS。",
+      "minimum_remedy": "原件attachment/安全文件名/服务器类型白名单/nosniff；inline限安全预览，主动内容隔离且不透传上游类型。",
+      "closure_stage": "共享资源交付schema，最迟S2来源/原件入口开放前",
+      "closure_condition": "含HTML的合法TXT/MD经直接原件URL、下载、预览均不在应用来源执行主动内容；nosniff不能单独洗白text/html。",
+      "official_sources": ["https://www.rfc-editor.org/rfc/rfc6266.html#section-4.2", "https://fetch.spec.whatwg.org/#x-content-type-options-header", "https://mimesniff.spec.whatwg.org/#determining-the-computed-mime-type-of-a-resource"]
+    },
+    {
+      "id": "A11",
+      "decision": "rebutted",
+      "location": "[prd.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/prd.md:277)",
+      "strongest_counterexample": "新轮只查B，受理后撤掉历史A；后续仍外传已缓存A轮问题。",
+      "guard_assessment": "PRD277直接禁止历史绕过授权重新进入生成；实施契约196只取当前仍有权历史，快照没有永久授权。",
+      "minimum_remedy": "实现历史当前授权端口/turn依赖并按原规则整条剔除重算，不新增业务选择。",
+      "closure_stage": "S3",
+      "closure_condition": "撤A后继续B轮不外传A历史，必要指代不可解按既定澄清规则处理。"
+    },
+    {
+      "id": "B01",
+      "decision": "accepted",
+      "duplicate_of": "A01",
+      "location": "[shared-contracts.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:139)",
+      "strongest_counterexample": "与A01独立得到同一跨窗口暂停grant反例。",
+      "guard_assessment": "与A01合并，原始镜头输出不覆盖。",
+      "minimum_remedy": "按A01收窄到未来本地可发送能力及完整保守窗口，不普遍强加远端到达界。",
+      "closure_stage": "S0派发骨架；任何真实外发前",
+      "closure_condition": "采用A01同一关闭证据，IR只计一次。"
+    },
+    {
+      "id": "B02",
+      "decision": "accepted",
+      "location": "[shared-contracts.md](/E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md:91)",
+      "strongest_counterexample": "全新浏览器登录POST没有会话绑定CSRF token，但所有Web写动作都要求该token。",
+      "guard_assessment": "Origin是并列条件，登录成功后旋转会话不能产生登录前token；全文未选匿名引导或登录例外。",
+      "minimum_remedy": "明确未认证登录专用Origin+JSON+有限自定义头防护，拒缺失/null/跨源；已有会话写仍绑token，成功旋转。",
+      "closure_stage": "S1身份入口开放前",
+      "closure_condition": "无Cookie首次登录可达、跨站/缺Origin被拒、登录后写仍需会话token；无需匿名GET写状态。",
+      "official_sources": ["https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html"]
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "epics": 9,
+  "stories": 42,
+  "acceptance_criteria": 123,
+  "mapping_entries": 184,
+  "dependency_issues": [],
+  "runtime_tests": "not-executed"
+}
