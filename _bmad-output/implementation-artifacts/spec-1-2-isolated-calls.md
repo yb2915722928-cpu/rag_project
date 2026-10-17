@@ -47,6 +47,8 @@ story_key: '1-2-隔离执行并保存每次调用事实'
 
 2026-10-18 已按既有用户预授权批准并进入开发。tiktoken o200k 编码完整规格计数：母规格1089、A931、B827、C878，均低于1600风险线；不需长度门确认。分段仅控制上下文，四项原AC不延期。
 
+实际调用路径确认新增必要回归D：[epoch启动接线](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-2-d-epoch-deploy.md:1)。已有Compose未提供新的epoch文件配置，新worker必隔离；只补最小配置/首次显式维护说明并验证受影响启动/重启，1.5完整S0资格工具不前移。
+
 ## Spec Change Log
 
 ## Review Triage Log

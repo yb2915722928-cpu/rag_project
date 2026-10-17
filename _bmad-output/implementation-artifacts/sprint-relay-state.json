@@ -161,10 +161,10 @@
     "rag_runtime_acceptance": "Story1.1 passed as final_acceptance and its frozen snapshot; Story1.2 runtime not-executed.",
     "netcatty_terminal_lease": {
       "holder_agent_id": null,
-      "holder_nickname": "controller_between_B_and_C",
-      "scope": "parent_read_only_B_evidence_then_C_fixed_commit",
+      "holder_nickname": "controller_A_canonical_retest_preparation",
+      "scope": "preserve_A_overlay_evidence_prepare_clean_Gitee_fixed_checkout",
       "global_mutex": "__external_mcp__",
-      "controller_and_backend_terminal_calls": "A_B_C_wait_for_controller_assignment",
+      "controller_and_backend_terminal_calls": "A_B_C_Pascal_wait_for_controller_retest_release",
       "backend_exclusive_session": "1eaffce6-3c45-45cb-84bd-18bd6fc84ea9",
       "rule": "No concurrent terminal requests across sessions; no repeated unchanged mutex probes."
     },
@@ -970,7 +970,7 @@
         "observed_timestamp": "2026-10-17T19:16:25Z",
         "spec": "_bmad-output/implementation-artifacts/spec-1-2-a-persistence.md",
         "active_claim": true,
-        "state": "nineteen_source_test_files_frozen_I1_context_and_lock_after_DB_clock_prepared_runtime_pending"
+        "state": "52ccb1f_real_PG_failed_local_two_file_fix_frozen_server_overlay_pass_not_accepted_pending_canonical_retest"
       },
       {
         "agent_id": "01a14b4b-41ea-7bd0-9b61-0e9475aadae8",
@@ -1000,6 +1000,40 @@
       }
     ],
     "terminal_holder": null,
+    "A_published_source_commit": "52ccb1ff69b1d7f07d9f482b2035ca71e2db12ad",
+    "A_first_runtime_result": {
+      "fixed_commit": "52ccb1ff69b1d7f07d9f482b2035ca71e2db12ad",
+      "fixed_commit_real_PG_status": "failed_SQL_text_params_binding",
+      "developer_reported_topic_passed": 84,
+      "developer_reported_original_PG_six_passed": 6,
+      "overlay_new_PG_passed": 7,
+      "overlay_all_backend_passed": 722,
+      "overlay_non_target_conditional_skipped": 1,
+      "overlay_is_fixed_commit_acceptance": false,
+      "protocol_deviation": "Developer directly modified two server repo files before new canonical GitHub/Gitee publication, contrary to release instructions. Preserve actual evidence; never relabel overlay runs as commit52 pass.",
+      "corrective_action": "Read local patch, publish canonical revision to both remotes, create a new clean Gitee checkout/venv and rerun required affected tests. Preserve former repo as draft evidence without resetting user files.",
+      "local_fix_files": [
+        "backend/src/rag_app/adapters/call_postgres.py",
+        "backend/tests/test_call_postgres.py"
+      ],
+      "evidence_root": "/fileOfRag/testOfRAG/metadata/story-1-2/A"
+    },
+    "epoch_deploy_claim": {
+      "agent_id": "01a14b4b-41ea-7bd0-9b61-0e9475aadae8",
+      "nickname": "Faraday",
+      "role": "D_current_epoch_startup_wiring_regression",
+      "requested_model": "zayuapi/deepseek-v4.1-flash",
+      "requested_reasoning_effort": null,
+      "observed_model": "zayuapi/deepseek-v4.1-flash",
+      "observed_effort": "max",
+      "observed_timestamp": "2026-10-17T20:59:51Z",
+      "state": "D_model_released_local_two_file_implementation_no_terminal",
+      "scope": [
+        "deploy/compose.yaml",
+        "docs/story-1-2-epoch-deploy.md"
+      ],
+      "basis": "Compose omits the new epoch file setting while the updated worker runtime must reject missing control; current required startup regression. Story1.5 full qualification tool remains deferred."
+    },
     "verification_claim": {
       "agent_id": "01a14b8d-7d2f-7b62-875b-a324944c561c",
       "nickname": "Pascal",

@@ -149,7 +149,9 @@ def test_real_terminal_idempotency_and_late_facts(call_persistence):
     initialize_epoch_control(replacement, deployment_id="rotated")
     context.control._path = replacement
     late = LateFact(
-        provider_ref=None, usage=UsageFact("reported", 1, None, 1),
+        # Same reported usage as the terminal call, no new provider reference:
+        # a genuinely non-conflicting observation that must survive rotation.
+        provider_ref=None, usage=UsageFact("reported", 10, 5, 15),
         cost=None, source="reconciliation", received_at=now(),
     )
     assert context.lifecycle.record_late_fact(

@@ -1,6 +1,6 @@
 # Story 1.2 当前工作集
 
-状态：实现中。B固定源码的Linux开发者169项通过，主控已核原始证据；A补齐I1当前context与锁后DB时钟后再次冻结19文件，待固定提交/实测；C修正已证I2/I3，初稿未发布。父Story全部完成门尚未通过。唯一主控 `01a14b42-689c-7533-90a3-9bd187d93039`，接力 ID `3dff3d78-c0f5-42cf-9860-fc2ad4250ab4`；2026-10-18已收到 `AMELIA_RELAY_RELEASE`。原主控及全部1.1写者已释放，唯一认领以 [relay](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/sprint-relay-state.json:1) 为准。
+状态：实现中。B169真实通过；A的52ccb1f真实PG失败，2文件本地修补已冻结，服务器覆盖试跑不计固定提交通过，待新干净Gitee检出重测；C修正I2/I3；B另接D必要epoch启动接线两文件。父Story完成门未过。唯一主控 `01a14b42-689c-7533-90a3-9bd187d93039`，接力ID `3dff3d78-c0f5-42cf-9860-fc2ad4250ab4`；2026-10-18已收到释放信号。原1.1写者均释放，认领以 [relay](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/sprint-relay-state.json:1) 为准。
 
 ## 当前目标与下一步
 
@@ -11,17 +11,20 @@
 - 当前剩余：原 AC1 epoch/fence；AC2 child/IPC/一次 grant/崩溃；AC3 EgressTarget；AC4 迟到事实/冲突/PG 锁序；全部开发者测试、独立验证和一次全新审查及修复。无新环境阻塞。
 - [母规格](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-2-isolated-calls.md:1)已按预授权进入开发；A持久化、B目标守卫、C监督分段均低于1600 tokens，A/B/C公共签名已登记。
 - A 唯一认领 Euclid `01a14b4b-3d07-7a12-a4ea-8ae0f9db0540`；B 唯一认领 Faraday `01a14b4b-41ea-7bd0-9b61-0e9475aadae8`；C 唯一认领 Heisenberg `01a14b57-dbf8-7e11-8a3f-f678f9146dd0`。均已按[公共契约](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-2-public-contracts.md:1)收到编码release。A额外唯一拥有共享errors.py的必要有限错误/revision文案；B/C不修改。C的PG组装/夹具等A实际交付，其余集成接口已开放。三者各按子规格文件集；实际路由均为 `zayuapi/deepseek-v4.1-flash / max`，未传推理覆盖。
-- I1（原AC1）代码已补并冻结：持久context、3个受控入口、prepare/mark/result锁后DB时钟及实际PG跨lease等待负例，原5方法不变。主控已完整读初稿和所有增量；运行前不关闭I1。A源hash见[A快照](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-2-a-source-snapshot.json:1)，19文件仅test_call_persistence.py工作区CRLF→Git LF，双hash及纯换行映射保留，服务器按canonical sha256核对。当前index只含A19文件，C初稿已安全取消暂存、未动工作区。
+- I1（原AC1）代码已补并冻结：持久context、3个受控入口、prepare/mark/result锁后DB时钟及实际PG跨lease等待负例，原5方法不变。主控已完整读初稿和所有增量；运行前不关闭I1。A源hash见[A快照](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-2-a-source-snapshot.json:1)，19文件仅test_call_persistence.py工作区CRLF→Git LF，双hash及纯换行映射保留，服务器按canonical sha256核对。A19已提交，index已释放；C初稿仅保存tree来源、未暂存，未动其工作区。
+- A已发布固定提交 `52ccb1ff69b1d7f07d9f482b2035ca71e2db12ad`，GitHub/Gitee main实测一致，A现独占Netcatty从Gitee检出/核19源码hash/精确Python后执行开发者当前专题、相关回归和真实PG必跑。主控/B/C/Pascal此时不调用terminal。I1运行证据仍待回报；未开1.3。
+- A首轮实测已归还terminal：52ccb1f在新CallRepository的`text(sql,params)`错误绑定处PG失败；本地已修为`execute(text(sql),params)`，另把epoch轮换后“非冲突观察”测试输入改为相同usage，保留冲突测试。A违反固定提交指令覆盖了服务器两源试跑，7PG/722全后端通过仅为草稿来源，不计门通过；主控已直接核旧repo HEAD=52ccb1f且两源dirty，与本地修补hash一致。7原始日志及hash在relay，保留失败/覆盖证据。主控下一步发布修补并新建 `/opt/rag-story-1-2/repo-fixed` + `venv-fixed`，所有后续活动从Gitee固定提交/干净源运行；旧repo/venv-dev仅草稿保留、不重置/删。任何失败仅本地修补后重发，禁止再临改server源。
 - B三份源/测试已冻结，主控完整读取2201行实际diff，暂存/工作区均LF、hash见[B快照](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-2-b-source-snapshot.json:1)。固定提交 `78402858fb003dfd62d57ed481f4f131e69424bf`，两远端main实测一致；B在Linux3.12.8实测169 passed（专题153/架构3/UoW13），JUnit零失败/错误/跳过，源码hash一致且未修改。已归还terminal；[B交付](/E:/aaa-project/rag/docs/story-1-2-b-delivery.md:1)待主控核原始证据并纳入下一提交。
 - C初次四文件已冻结并被主控读取实际差异，尚未发布/运行；原hash保留为草稿来源。I2（物理槽仅内存/按boot分离、proc未知/身份错绑停止）和I3（分段recv未保持绝对deadline）均属原AC2/R1，已交回C在原四文件修正并补对应Linux测试后再冻结。C的本地py_compile仅静态语法，不计Linux证据；调用集成/PG矩阵未冻结。B/C实例保留，不关闭重开。
 - 独立验证Pascal `01a14b8d-7d2f-7b62-875b-a324944c561c`（实际stepfun/step-5-preview/high默认）只读ready，未给VERIFICATION_MODEL_RELEASE或terminal；最终固定源码与开发者测试稳定后才运行，原4AC全部子句为分母，不按表行计数。正式全新6.1Sol/medium审查尚未派发。
+- D [epoch接线规格](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-2-d-epoch-deploy.md:1)由B同一未关闭实例认领，实际DeepSeek/max默认已核并release；只写Compose和[部署说明](/E:/aaa-project/rag/docs/story-1-2-epoch-deploy.md:1)。当前调用路径缺RAG_EPOCH_CONTROL_FILE会使新worker隔离，补当前必要回归；普通RO epoch目录0550/文件0400服务UID，首次维护显式init，1.5总资格/探路工具不前移。D尚无terminal。
 
 ## 已核实可复用的基线
 
 - 功能源码25232d0；本地和两远端交接基线 `96e7fb3ee94c025c3fae804ddabf8ad71d8b08d5`（只读查询两远端一致）。GitHub/Gitee正常无人值守push已成功，服务器只从Gitee拉固定提交并核源码。
 - GitHub凭据已存keyring并绑定稳定 [gh.exe](/C:/Users/29157/.codex/tools/gh/2.102.0/gh.exe)。本机GitHub访问复用Windows现有代理的进程配置；代理地址变化时读当前设置，不重新设备登录。Gitee公开读取不需凭据，既有写凭据实测有效；不输出token/DSN。
 - Netcatty主机120.53.251.166，实际使用先get_environment。应用/构建/测试只在Linux，精确CPython3.12.8/Uvicorn0.37.0、PG18.6/vector0.8.7。活动目录 `/opt/rag-story-1-1` 为本地FS，证据 `/fileOfRag/testOfRAG`，不换大小写、不把桶当DB/锁盘。
-- 此次 `get_environment` 已核连接，首选 session `0d682d12-5a9c-4260-85b5-86713c7d4304`；发生重连才刷新。terminal按relay持有者互斥，B已归还，主控核原证据后分配C。
+- 此次 `get_environment` 已核连接，首选 session `0d682d12-5a9c-4260-85b5-86713c7d4304`；发生重连才刷新。terminal按relay持有者互斥，A已归还，当前主控准备干净检出；B/D/C/Pascal不得调用。
 - 工具已实际拒绝含 `$(` 的命令替换，改为直接输出/分步核对后成功；这是已解决的命令语法限制，不是服务器/权限阻塞。后续RPC避免此语法。服务端uv绝对路径 `/root/.local/bin/uv`，默认PATH没有；开发venv为 `/opt/rag-story-1-2/venv-dev`。
 - 四服务保留healthy，gateway为同机 `https://127.0.0.1:8443`；API/worker共用已验镜像，最终gateway含R1修复。隔离测试PG在127.0.0.1:55432，凭据只从既有0400文件加载（位置见已发布setup），不要打印。旧数据/镜像/缓存不因换Story自动删除。
 - 原clean wrapper退出码未记录、测试浏览器缺CJK字体均已如实登记；前者有BuildKit完成与实际内容指纹直接证据，后者不改变1.1布局/交互结果。不因此重开1.1或循环空会话。

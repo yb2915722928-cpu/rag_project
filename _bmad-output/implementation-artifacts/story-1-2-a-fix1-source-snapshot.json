@@ -1,0 +1,146 @@
+{
+  "story": "1.2",
+  "segment": "A_fix1",
+  "captured_at": "2026-10-18T05:11:04.481956+08:00",
+  "prior_fixed_commit": "52ccb1ff69b1d7f07d9f482b2035ca71e2db12ad",
+  "prior_PG_status": "failed",
+  "overlay_pass_is_canonical": false,
+  "fix": "execute(text(sql), params); use matching-usage observation for nonconflicting epoch-rotation test",
+  "files": [
+    {
+      "path": "backend/migrations/versions/0002_isolated_calls.py",
+      "sha256": "2e5dd3595e0912e6db966f00e977dd7931719bbae7d759d61edb5fdcbe7b24c5",
+      "workspace_sha256": "2e5dd3595e0912e6db966f00e977dd7931719bbae7d759d61edb5fdcbe7b24c5",
+      "workspace_matches_index": true,
+      "prior_52ccb1f_sha256": "2e5dd3595e0912e6db966f00e977dd7931719bbae7d759d61edb5fdcbe7b24c5"
+    },
+    {
+      "path": "backend/src/rag_app/adapters/call_postgres.py",
+      "sha256": "b1c155176ae809a5459e4494e7072a1ed0b42d4ef827382745a1d0f31df03a48",
+      "workspace_sha256": "b1c155176ae809a5459e4494e7072a1ed0b42d4ef827382745a1d0f31df03a48",
+      "workspace_matches_index": true,
+      "prior_52ccb1f_sha256": "cab841539fe4d063d5323dd7644f7e64e80b51efc4f7d6936c333615ff2a2dff"
+    },
+    {
+      "path": "backend/src/rag_app/adapters/epoch_control.py",
+      "sha256": "d88923c461d6da23987357d6f07a02b1b3a7c64e10086379c9b68a3608bccae8",
+      "workspace_sha256": "d88923c461d6da23987357d6f07a02b1b3a7c64e10086379c9b68a3608bccae8",
+      "workspace_matches_index": true,
+      "prior_52ccb1f_sha256": "d88923c461d6da23987357d6f07a02b1b3a7c64e10086379c9b68a3608bccae8"
+    },
+    {
+      "path": "backend/src/rag_app/adapters/postgres.py",
+      "sha256": "78029e21135ebdc1a71f02548073c2e192f15d6ef00be35251160cfe56418fe2",
+      "workspace_sha256": "78029e21135ebdc1a71f02548073c2e192f15d6ef00be35251160cfe56418fe2",
+      "workspace_matches_index": true,
+      "prior_52ccb1f_sha256": "78029e21135ebdc1a71f02548073c2e192f15d6ef00be35251160cfe56418fe2"
+    },
+    {
+      "path": "backend/src/rag_app/application/call_lifecycle.py",
+      "sha256": "ef6ec6aa1dc58b8c72a8fa8f22f33490ce54959237c71c8056d93c304199da98",
+      "workspace_sha256": "ef6ec6aa1dc58b8c72a8fa8f22f33490ce54959237c71c8056d93c304199da98",
+      "workspace_matches_index": true,
+      "prior_52ccb1f_sha256": "ef6ec6aa1dc58b8c72a8fa8f22f33490ce54959237c71c8056d93c304199da98"
+    },
+    {
+      "path": "backend/src/rag_app/application/uow.py",
+      "sha256": "5ce642298f5732c5c181309a09316e86c46894557c199de15f2c73e18ec49591",
+      "workspace_sha256": "5ce642298f5732c5c181309a09316e86c46894557c199de15f2c73e18ec49591",
+      "workspace_matches_index": true,
+      "prior_52ccb1f_sha256": "5ce642298f5732c5c181309a09316e86c46894557c199de15f2c73e18ec49591"
+    },
+    {
+      "path": "backend/src/rag_app/bootstrap/config.py",
+      "sha256": "fefe80d241e9cf1e97014e16ee52953dbbac2af92d49c1e7c2aeefa248ba2b9b",
+      "workspace_sha256": "fefe80d241e9cf1e97014e16ee52953dbbac2af92d49c1e7c2aeefa248ba2b9b",
+      "workspace_matches_index": true,
+      "prior_52ccb1f_sha256": "fefe80d241e9cf1e97014e16ee52953dbbac2af92d49c1e7c2aeefa248ba2b9b"
+    },
+    {
+      "path": "backend/src/rag_app/bootstrap/runtime.py",
+      "sha256": "8ae7309fab211989f4df3546e142f61a129397c9d7ae1f37e47b6f4739d60491",
+      "workspace_sha256": "8ae7309fab211989f4df3546e142f61a129397c9d7ae1f37e47b6f4739d60491",
+      "workspace_matches_index": true,
+      "prior_52ccb1f_sha256": "8ae7309fab211989f4df3546e142f61a129397c9d7ae1f37e47b6f4739d60491"
+    },
+    {
+      "path": "backend/src/rag_app/contracts/errors.py",
+      "sha256": "edd915bc076ba84bb4f2971cee16b19d57a58b664ec6a0e41d3b410d1d81109e",
+      "workspace_sha256": "edd915bc076ba84bb4f2971cee16b19d57a58b664ec6a0e41d3b410d1d81109e",
+      "workspace_matches_index": true,
+      "prior_52ccb1f_sha256": "edd915bc076ba84bb4f2971cee16b19d57a58b664ec6a0e41d3b410d1d81109e"
+    },
+    {
+      "path": "backend/src/rag_app/modules/execution/calls.py",
+      "sha256": "2fcc5aba4b2374afb6ffc5167ce8c161e45a68ff948937b3006934e492f32cac",
+      "workspace_sha256": "2fcc5aba4b2374afb6ffc5167ce8c161e45a68ff948937b3006934e492f32cac",
+      "workspace_matches_index": true,
+      "prior_52ccb1f_sha256": "2fcc5aba4b2374afb6ffc5167ce8c161e45a68ff948937b3006934e492f32cac"
+    },
+    {
+      "path": "backend/src/rag_app/modules/ledger/facts.py",
+      "sha256": "4344b72d309228ef3e2288b4f736ac72649de95baa07f7519119bc2791af6aa9",
+      "workspace_sha256": "4344b72d309228ef3e2288b4f736ac72649de95baa07f7519119bc2791af6aa9",
+      "workspace_matches_index": true,
+      "prior_52ccb1f_sha256": "4344b72d309228ef3e2288b4f736ac72649de95baa07f7519119bc2791af6aa9"
+    },
+    {
+      "path": "backend/tests/conftest.py",
+      "sha256": "dafb22f337d8c7897ff478dec4db2799e1af5dd055cda1b2db24a5d836436f16",
+      "workspace_sha256": "dafb22f337d8c7897ff478dec4db2799e1af5dd055cda1b2db24a5d836436f16",
+      "workspace_matches_index": true,
+      "prior_52ccb1f_sha256": "dafb22f337d8c7897ff478dec4db2799e1af5dd055cda1b2db24a5d836436f16"
+    },
+    {
+      "path": "backend/tests/test_call_persistence.py",
+      "sha256": "9509af48cd0c9e6aa35f38639a7b6e4e51eda1e343472dc52852b50576c86b09",
+      "workspace_sha256": "10dd8ef87a3b668bd812ee18c646fd0d23e72656f0272788cfb1405074147e12",
+      "workspace_matches_index": false,
+      "prior_52ccb1f_sha256": "9509af48cd0c9e6aa35f38639a7b6e4e51eda1e343472dc52852b50576c86b09",
+      "git_normalization": "CRLF_to_LF_only"
+    },
+    {
+      "path": "backend/tests/test_call_postgres.py",
+      "sha256": "c3d13897202dcf380f9c7ad63e24c6aa2227a6272821f407ad85daebef25a84c",
+      "workspace_sha256": "c3d13897202dcf380f9c7ad63e24c6aa2227a6272821f407ad85daebef25a84c",
+      "workspace_matches_index": true,
+      "prior_52ccb1f_sha256": "1c4fc2873683cd97dee4a916d9b63ce46a7be278d459d96acc6ff89a7711c799"
+    },
+    {
+      "path": "backend/tests/test_epoch_control.py",
+      "sha256": "7dc3ed7a36eb7cfe988edf31e56bdb9910b776c741c7b7aee1ab9fa304bec55b",
+      "workspace_sha256": "7dc3ed7a36eb7cfe988edf31e56bdb9910b776c741c7b7aee1ab9fa304bec55b",
+      "workspace_matches_index": true,
+      "prior_52ccb1f_sha256": "7dc3ed7a36eb7cfe988edf31e56bdb9910b776c741c7b7aee1ab9fa304bec55b"
+    },
+    {
+      "path": "backend/tests/test_namespace.py",
+      "sha256": "7d63d38c5db2d5136e8a57e956e3b01c6b77fffa64d21363612c6b83f90666a3",
+      "workspace_sha256": "7d63d38c5db2d5136e8a57e956e3b01c6b77fffa64d21363612c6b83f90666a3",
+      "workspace_matches_index": true,
+      "prior_52ccb1f_sha256": "7d63d38c5db2d5136e8a57e956e3b01c6b77fffa64d21363612c6b83f90666a3"
+    },
+    {
+      "path": "backend/tests/test_postgres_integration.py",
+      "sha256": "a169e26a0ca4cf5b3d948bfce4b37e417c2659a154f8c5970b3f959af94a5b8b",
+      "workspace_sha256": "a169e26a0ca4cf5b3d948bfce4b37e417c2659a154f8c5970b3f959af94a5b8b",
+      "workspace_matches_index": true,
+      "prior_52ccb1f_sha256": "a169e26a0ca4cf5b3d948bfce4b37e417c2659a154f8c5970b3f959af94a5b8b"
+    },
+    {
+      "path": "backend/tests/test_runtime_entrypoints.py",
+      "sha256": "55182dee8a44a8f97d2475c1692f21fada987bf69106311c4f3910582f292e07",
+      "workspace_sha256": "55182dee8a44a8f97d2475c1692f21fada987bf69106311c4f3910582f292e07",
+      "workspace_matches_index": true,
+      "prior_52ccb1f_sha256": "55182dee8a44a8f97d2475c1692f21fada987bf69106311c4f3910582f292e07"
+    },
+    {
+      "path": "backend/tests/test_uow.py",
+      "sha256": "e95c81d4cdbeaa4f45be73b3b2bcee24c0fb0fadd444cbb0206e6b4ef31f9cf4",
+      "workspace_sha256": "e95c81d4cdbeaa4f45be73b3b2bcee24c0fb0fadd444cbb0206e6b4ef31f9cf4",
+      "workspace_matches_index": true,
+      "prior_52ccb1f_sha256": "e95c81d4cdbeaa4f45be73b3b2bcee24c0fb0fadd444cbb0206e6b4ef31f9cf4"
+    }
+  ],
+  "runtime_status": "canonical_retest_pending"
+}
