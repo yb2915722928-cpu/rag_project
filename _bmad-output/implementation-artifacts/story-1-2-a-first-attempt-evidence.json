@@ -1,0 +1,66 @@
+{
+  "story": "1.2",
+  "segment": "A",
+  "date": "2026-10-18",
+  "fixed_base_commit": "52ccb1ff69b1d7f07d9f482b2035ca71e2db12ad",
+  "fixed_base_new_postgres_result": "7 failed because SQL parameters were passed to text instead of execute",
+  "parent_verified_old_repo_HEAD_and_two_dirty_source_files": true,
+  "draft_repo": "/opt/rag-story-1-2/repo",
+  "draft_venv": "/opt/rag-story-1-2/venv-dev",
+  "draft_source_sha256": {
+    "backend/src/rag_app/adapters/call_postgres.py": "b1c155176ae809a5459e4494e7072a1ed0b42d4ef827382745a1d0f31df03a48",
+    "backend/tests/test_call_postgres.py": "c3d13897202dcf380f9c7ad63e24c6aa2227a6272821f407ad85daebef25a84c"
+  },
+  "overlay_pass_is_fixed_commit_acceptance": false,
+  "retention": "Preserve failed and draft outputs unchanged. Do not relabel any overlay pass as commit52 or later canonical acceptance.",
+  "canonical_replacement": {
+    "commit": "af6ce5099166960e714a1e8b45f004cc8ac9f77a",
+    "checkout": "/opt/rag-story-1-2/repo-fixed",
+    "venv": "/opt/rag-story-1-2/venv-fixed",
+    "parent_verified_clean_before_after": true,
+    "parent_verified_source_sha256_count": 19,
+    "source_mismatches": 0,
+    "non_postgres_passed": 136,
+    "required_postgres_passed": 15,
+    "failures_errors_skipped": 0,
+    "evidence": "/fileOfRag/testOfRAG/metadata/story-1-2/A-canonical-af6ce50"
+  },
+  "original_evidence_root": "/fileOfRag/testOfRAG/metadata/story-1-2/A",
+  "original_files": [
+    {
+      "name": "unit.txt",
+      "sha256": "9e0d6bd55f576420b3a42a918913fcd76c0665f621e968b33b18f05a448ccfe6",
+      "classification": "first-attempt output, 84 passed; not relabeled as later canonical run"
+    },
+    {
+      "name": "pg-old.txt",
+      "sha256": "a79d8e98474a7dbfa1de85cac2da40a4fcb85b10ee2a85573e988d04002d3d53",
+      "classification": "first-attempt original six PG output"
+    },
+    {
+      "name": "pg-call.txt",
+      "sha256": "3308186b0a08d8c1e97d58bbe85cdd7c616f995faafb6bac000b6c53aef4e6eb",
+      "classification": "actual fixed-base new PG failures"
+    },
+    {
+      "name": "runtime.txt",
+      "sha256": "ea17d3b52c6fdf58351f9920f3d6ab590eaa2042bfa9fd756cf1621196a822ee",
+      "classification": "first-attempt runtime output"
+    },
+    {
+      "name": "pg-call-fix1.txt",
+      "sha256": "a6969c0e4c96d9b44c5b961cd1a5b477b63af20826d2008399c9c1c8afa7fd99",
+      "classification": "intermediate server-overlay repair output"
+    },
+    {
+      "name": "pg-call-fix2.txt",
+      "sha256": "90190b2ca2f72990223ceda3b9c0b39e6bb40e1b4094c6da1b78402978470f00",
+      "classification": "server-overlay seven PG passes, not canonical acceptance"
+    },
+    {
+      "name": "full-required.txt",
+      "sha256": "a95bff8cc606672c3391399337d6149c339ed1f88b9ff4fc499883817c0f7473",
+      "classification": "server-overlay 722 passes with one prior non-target conditional skip, not canonical acceptance"
+    }
+  ]
+}

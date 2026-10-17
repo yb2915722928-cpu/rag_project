@@ -41,6 +41,10 @@ C 先写无 A 依赖的监督/child/专题测试；A 的调用集成签名登记
 
 C已交付增量并由主控读取：`LinuxChildSupervisor(*,state_root,child_executable=None)`要求明确绝对本地FS根；实际物理键deployment+slot，同一部署的控制器/boot必须共用此根，不按每个boot另建目录。测试正文慢发前先完整发送帧头，确保可检出旧deadline错误。四文件代码冻结，Linux运行门尚待固定提交实测。
 
+### 当前文件归属并行调整
+
+C四native源与D两文件已发布 `96c64fbab0fa8d3d824f2e592196c02570550c70`。C现仅继续这四源及C交付文档、其Linux开发者测试。未冻结 [call_dispatch.py](/E:/aaa-project/rag/backend/src/rag_app/application/call_dispatch.py:1) 的C草稿（SHA256 `aee1099e9c401d7d408f3177d1e56bfdddb5115c8c30acd9ea13ac8dbe8f41a2`）与两unit/PG测试明确转交现有A按[E规格](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-2-e-dispatch-integration.md:1)接管；C不再写三文件。A19已验证源仍冻结，E只写新接管的三文件与新交付文档，所有原AC/故障点不延期、不减少。
+
 ## A：持久调用
 
 2026-10-18 采纳 Euclid 的最小签名：

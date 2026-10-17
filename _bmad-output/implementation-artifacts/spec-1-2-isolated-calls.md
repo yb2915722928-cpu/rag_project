@@ -21,8 +21,8 @@ story_key: '1-2-隔离执行并保存每次调用事实'
 
 ## Tasks & Acceptance
 
-- [ ] A：持久 epoch/fence/call 和 ledger，依 [A 规格](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-2-a-persistence.md:1)。
-- [ ] B：共用 EgressTarget 与绑定连接，依 [B 规格](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-2-b-egress.md:1)。
+- [x] A：持久 epoch/fence/call 和 ledger，依 [A 规格](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-2-a-persistence.md:1)。开发者canonical151通过，父独立/审查另列。
+- [x] B：共用 EgressTarget 与绑定连接，依 [B 规格](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-2-b-egress.md:1)。开发者169通过，父独立/审查另列。
 - [ ] C：child/IPC/监督及调用用例集成，依 [C 规格](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-2-c-supervision.md:1)。
 - [ ] 开发者测试、Step 5 独立实测、全新 6.1 Sol/medium 审查及真实问题的最小修复/相关回归；当前必需项未跑不得通过。
 
@@ -48,6 +48,8 @@ story_key: '1-2-隔离执行并保存每次调用事实'
 2026-10-18 已按既有用户预授权批准并进入开发。tiktoken o200k 编码完整规格计数：母规格1089、A931、B827、C878，均低于1600风险线；不需长度门确认。分段仅控制上下文，四项原AC不延期。
 
 实际调用路径确认新增必要回归D：[epoch启动接线](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-2-d-epoch-deploy.md:1)。已有Compose未提供新的epoch文件配置，新worker必隔离；只补最小配置/首次显式维护说明并验证受影响启动/重启，1.5完整S0资格工具不前移。
+
+C完成native四源后，主控将未冻结的call_dispatch及unit/PG矩阵明确移交现有A按[E集成规格](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-2-e-dispatch-integration.md:1)并行接管；没有重复写者，C原端到端义务完整转入E，父四AC分母不变。
 
 ## Spec Change Log
 

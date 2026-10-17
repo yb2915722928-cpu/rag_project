@@ -46,6 +46,8 @@ review_loop_iteration: 0
 
 初次四文件冻结经主控完整检查，I2物理槽仅内存/按boot分离及不可核实停止误判、I3分段recv重置相对timeout仍未满足原AC2/R1；按公共契约C纠正项重开同四文件最小修正，补跨实例/新boot未证停止、身份错绑不误杀、proc未知与慢速分段绝对deadline负例后再次冻结。原公开方法不变；本地语法编译不作为Linux证据。
 
+主控后续并行拆分：未冻结call_dispatch及其unit/PG两文件已转交现有A按[E规格](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-2-e-dispatch-integration.md:1)接管，C不再写这三文件；C只继续四个native child文件与本C交付。父AC/故障矩阵仍由E完整承接，未延期/缩减。
+
 ## Spec Change Log
 
 ## Review Triage Log

@@ -30,11 +30,11 @@
   "handoff_authorization": "2026-10-17 user explicitly authorizes each main Amelia chat to finish one Story, use skills and assigned subagents, and create the next Amelia chat in the same project after completion; repeat within current Sprint until complete or stopped.",
   "automation_id": null,
   "remaining_parent_obligations": [
-    "Story1.2 original AC1 epoch/current persisted fence including lock-after DB time: A code frozen, required Linux/PG evidence pending",
-    "Story1.2 original AC2 bounded supervised child/IPC/grant/crash matrix: C I2/I3 and dispatch integration plus Linux/PG evidence pending",
+    "Story1.2 original AC1: A canonical151 passed; D new-backend startup regression and E end-to-end/independent evidence pending",
+    "Story1.2 original AC2: C native25 passed; E dispatch crash/timeout matrix and independent evidence pending",
     "Story1.2 original AC3 EgressTarget: B developer 169 passed at 7840285; C integration and independent verification pending",
-    "Story1.2 original AC4 late idempotent/conflicting facts and real PG lock/transaction negatives pending",
-    "A/C developer verification, Step5 independent verification, one fresh GPT6.1Sol medium review and actual fix regressions, final acceptance snapshot and next serial relay"
+    "Story1.2 original AC4: A real PG facts/lock negatives passed; E real child/transaction/late-fact integration and independent evidence pending",
+    "D/E developer verification, Step5 independent verification, one fresh GPT6.1Sol medium review and actual fix regressions, final acceptance snapshot and next serial relay"
   ],
   "blocked_conditions": [],
   "deduplication_rule": "Recheck project threads and this claim before dispatch. Never create a second owner for the same story or retry an ambiguous creation before reconciling it.",
@@ -160,11 +160,11 @@
     "old_docker_resources": "cleaned_by_explicit_user_authorization",
     "rag_runtime_acceptance": "Story1.1 passed as final_acceptance and its frozen snapshot; Story1.2 runtime not-executed.",
     "netcatty_terminal_lease": {
-      "holder_agent_id": null,
-      "holder_nickname": "controller_preparing_C_D_fixed_source",
-      "scope": "A_canonical_evidence_verified_C_D_source_publication",
+      "holder_agent_id": "01a14b4b-41ea-7bd0-9b61-0e9475aadae8",
+      "holder_nickname": "Faraday",
+      "scope": "D96c64fb_dedicated_epoch_startup_backend_image_regression",
       "global_mutex": "__external_mcp__",
-      "controller_and_backend_terminal_calls": "A_B_D_C_Pascal_wait_for_next_controller_assignment",
+      "controller_and_backend_terminal_calls": "controller_A_E_C_Pascal_wait_until_Faraday_returns_D_slot",
       "backend_exclusive_session": "1eaffce6-3c45-45cb-84bd-18bd6fc84ea9",
       "rule": "No concurrent terminal requests across sessions; no repeated unchanged mutex probes."
     },
@@ -996,10 +996,50 @@
         "observed_timestamp": "2026-10-17T19:30:12Z",
         "spec": "_bmad-output/implementation-artifacts/spec-1-2-c-supervision.md",
         "active_claim": true,
-        "state": "I2_I3_source_and_slow_body_regression_frozen_parent_delta_read_Linux_child_pending_dispatch_PG_still_open"
+        "state": "native96c64fb_developer25_parent_raw_verified_four_sources_frozen_doc_only_E_dispatch_transferred"
       }
     ],
-    "terminal_holder": null,
+    "terminal_holder": "01a14b4b-41ea-7bd0-9b61-0e9475aadae8",
+    "C_native_developer_result": {
+      "commit": "96c64fbab0fa8d3d824f2e592196c02570550c70",
+      "passed": 25,
+      "native_topic_passed": 22,
+      "architecture_passed": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "exit_code": 0,
+      "parent_raw_JUnit_summary_environment_verified": true,
+      "parent_source_hashes_verified": 6,
+      "source_mismatches": 0,
+      "Git_before_after_clean": true,
+      "JUnit_sha256": "006ec1258428d614f9bcec0d557ea71fc42af99af2f070da96609ad679907fe5",
+      "rawlog_sha256": "8b493608d5be0a6b8ad9a213a60f9b7bb99c29ec227458f9b984cceb7fd72b95",
+      "environment_sha256": "1001de4cd08087cac367bcc91fe3c928001260a1856046d76aad28403256e2b9",
+      "evidence_root": "/fileOfRag/testOfRAG/metadata/story-1-2/C-child-96c64fb",
+      "parent_E_integration_and_independent_review": "pending"
+    },
+    "C_D_published_commit": "96c64fbab0fa8d3d824f2e592196c02570550c70",
+    "dispatch_integration_claim": {
+      "role": "E",
+      "agent_id": "01a14b4b-3d07-7a12-a4ea-8ae0f9db0540",
+      "model": "zayuapi/deepseek-v4.1-flash",
+      "reasoning_override": null,
+      "state": "E_model_released_local_dispatch_implementation_A19_frozen_no_terminal",
+      "observed_model": "zayuapi/deepseek-v4.1-flash",
+      "observed_effort": "max",
+      "observed_timestamp": "2026-10-17T21:50:08.660Z",
+      "scope": [
+        "backend/src/rag_app/application/call_dispatch.py",
+        "backend/tests/test_call_dispatch.py",
+        "backend/tests/test_call_dispatch_postgres.py",
+        "docs/story-1-2-dispatch-delivery.md"
+      ],
+      "previous_writer": "01a14b57-dbf8-7e11-8a3f-f678f9146dd0",
+      "previous_draft_sha256": "aee1099e9c401d7d408f3177d1e56bfdddb5115c8c30acd9ea13ac8dbe8f41a2",
+      "previous_writer_stopped_and_notified": true,
+      "parent_obligations_preserved": true
+    },
     "A_canonical_result": {
       "commit": "af6ce5099166960e714a1e8b45f004cc8ac9f77a",
       "non_PG_current_and_affected_passed": 88,
@@ -1029,7 +1069,7 @@
       "server_checkout": "/opt/rag-story-1-2/repo-fixed",
       "venv": "/opt/rag-story-1-2/venv-fixed",
       "clone_remote": "Gitee_only",
-      "HEAD": "af6ce5099166960e714a1e8b45f004cc8ac9f77a",
+      "HEAD": "96c64fbab0fa8d3d824f2e592196c02570550c70",
       "parent_pre_test_git_clean": true,
       "parent_source_hashes_verified": 19,
       "python": "3.12.8",
@@ -1063,7 +1103,7 @@
       "observed_model": "zayuapi/deepseek-v4.1-flash",
       "observed_effort": "max",
       "observed_timestamp": "2026-10-17T20:59:51Z",
-      "state": "two_files_frozen_parent_diff_read_epoch_startup_smoke_pending_no_terminal",
+      "state": "D_runtime_release_96c64fb_dedicated_epoch_startup_backend_image_test_slot",
       "scope": [
         "deploy/compose.yaml",
         "docs/story-1-2-epoch-deploy.md"
@@ -1126,7 +1166,7 @@
         "original_AC": "AC2/R1",
         "evidence": "Supervisor occupancy is only in memory and key includes boot; proc unknown is treated as empty and unknown identity may signal a reused group.",
         "owner": "01a14b57-dbf8-7e11-8a3f-f678f9146dd0",
-        "status": "returned_to_original_developer_current_scope_fix",
+        "status": "closed_C_native96c64fb_developer25_parent_raw_verified_wait_parent_integration_and_independent",
         "required_evidence": "Persistent physical slot across supervisor/controller/boot; unproven stop blocks; unknown proc and mismatched identity do not prove stop or signal unrelated processes."
       },
       {
@@ -1134,7 +1174,7 @@
         "original_AC": "AC2/R1 absolute IPC deadline",
         "evidence": "_recv_exact loops without recomputing absolute remaining time; socket relative timeout resets after each small recv.",
         "owner": "01a14b57-dbf8-7e11-8a3f-f678f9146dd0",
-        "status": "returned_to_original_developer_current_scope_fix",
+        "status": "closed_C_native96c64fb_absolute_body_deadline_developer25_parent_raw_verified_wait_independent",
         "required_evidence": "Linux socketpair slow segmented input terminates by original deadline, including retries."
       },
       {
