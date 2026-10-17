@@ -2,20 +2,27 @@ project: RAG_all
 initialized_at: '2026-10-17T00:03:17+08:00'
 planning_gate: PASS
 implementation_started: true
-runtime_acceptance: not-executed
+runtime_acceptance: in-progress
 status_semantics: not-executed=尚未运行，无运行结论；不是failed，也不是已核凭据缺失blocked。证据齐备后逐子门更新，不从故事/文档PASS推定。
-consumption_rule: DOC/MIX的1/4档分别消费；Story整体状态不得覆盖已经取得的真实子项证据，也不得凭静态或子规格通过关闭父门。S0等整体门仍未执行完成；当前1.1局部证据见下。
+consumption_rule: Story1.1已完成并有独立运行/审查证据；该局部通过不签署尚未到期的S0/P0/业务/目标机整体门。各后续Story按原到期分母验收。
 story_1_1_partial_evidence:
-  parent_story_gate: not_passed
-  a1_developer: 'Linux CPython3.12.8正常lock/locked/Uvicorn已通过；73passed及其他解释器单跑1passed，真实PG六项未执行'
-  h_developer: '165passed/0skipped，冻结工件hash'
-  h_independent: '259passed/0failed/0skipped，含9项真实任务取消探针；全新审查P2关闭/P3历史更正'
-  a2a_models_http: 'worker已归位、公模枚举/C1负零修订已静态复核；固定Gitee提交/Linux开发者测试未执行'
-  contracts_frontend_four_services: '源码准备及9项静态发现处置完成；B正式生成/C/完整D与E均未通过'
-  static_review_only: '全新6.1Sol/medium对F1-F8/C1-NZ静态确认；不替代任何运行或父Story门'
-  local_supplement_only: 'Windows466passed/13skipped不打开Linux/PG门；后续不本地运行应用'
+  historical_key_note: 保留旧字段名兼容历史；当前Story1.1已完成，不再是局部未通过
+  parent_story_gate: passed
+  story_status: done
+  source_commit: 25232d0bebc230c35837153b6fd572ff734977aa
+  a1_developer: '精确3.12.8、正常lock/locked与Uvicorn0.37.0；514非PG、真实错误解释器负例另1通过'
+  a2_developer_and_independent: 'PG18.6/vector0.8.7各8/8必需节点、0skip，随机schema清理0、vector未变'
+  h_developer: '历史165passed冻结hash及当前独立非PG/H回归保留各自证据'
+  h_independent: '历史259passed含9项取消探针；当前H/check/样例独立通过，不重标历史'
+  a2a_models_http: 'Linux实际通过；错误信封status根因修复、51工件check及52/52样例开发者/独立均通过'
+  contracts_frontend_four_services: 'passed：C原18单元/构建、R1开发者与独立各14、真实gateway/页面缩放/键盘；四服务/迁移/stop-start/缓存/UID/权限/共享inode/flock/atomic/干净重建'
+  formal_review: '全新6.1Sol/medium一轮R1/P2已最小修复并窄复核关闭；未加泛化审查轮'
+  source_and_license: '来源/锁/peer/许可证声明/镜像发布方与传输/层/归档hash已登记'
+  recorded_limits: 'clean后台shell退出码未记录，直接BuildKit/工件/内容指纹证明重建；Linux截图缺CJK字形，不冒充视觉字形通过'
+  local_supplement_only: '旧Windows466/13skip仅历史，不是当前验收依据；应用/构建/测试只走Linux'
   evidence_ledger: _bmad-output/implementation-artifacts/story-1-1-acceptance-ledger.md
-  current_owner: 01a14973-8555-7131-8fd2-e9eec12f53fe
+  acceptance_snapshot: _bmad-output/implementation-artifacts/story-1-1-acceptance-snapshot-2026-10-18.md
+  completing_owner: 01a14973-8555-7131-8fd2-e9eec12f53fe
   persona: Amelia
 gates:
 - id: S0

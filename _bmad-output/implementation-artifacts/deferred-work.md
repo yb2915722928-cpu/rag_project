@@ -14,3 +14,7 @@
 ## 2026-10-17 归属澄清（保留原拆分记录）
 
 以上四项仍属于原 Story 1.1 的必需交付，不是可无限推后的范围排除。每项归属、依赖与验收门见 [父Story交付计划](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-delivery-plan.md:1)。原条目中的“当前轮包含四服务”是第一次拆分时的历史说明，后续拆分已改变实施批次，不改变父Story AC。四项未完成前不得标1.1完成或放行1.2。
+
+## 2026-10-18 Story 1.1 拆分交付闭环
+
+以上四条仅拆分上下文的B/contracts、E来源、C前端和D四服务均已在原Story1.1内完成；不转移到下一Story，不再作为待开发项。完整证据见 [最终验收快照](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-acceptance-snapshot-2026-10-18.md:1)。comparison.v1等未来业务仍按原Epics归属到期，不被本闭环误记为已实现。

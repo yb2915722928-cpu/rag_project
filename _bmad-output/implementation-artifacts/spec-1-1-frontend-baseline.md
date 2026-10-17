@@ -1,6 +1,6 @@
 ---
 title: 'Story 1.1 C 可构建的前端基线'
-status: in-progress
+status: done
 route: dispatch
 baseline_commit: 0b576b65d3824e7f4319c39c38e80398caf08fb8
 context:
@@ -8,6 +8,7 @@ context:
   - E:/aaa-project/rag/docs/story-1-1-frontend-standards.md
   - E:/aaa-project/rag/contracts/README.md
   - E:/aaa-project/rag/_bmad-output/planning-artifacts/ux-designs/ux-RAG_all-2026-10-16/DESIGN.md
+completion_record: E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-acceptance-snapshot-2026-10-18.md
 ---
 
 ## Intent 与前置
@@ -22,12 +23,12 @@ Kimi K3默认，独占 `frontend/**`、`docs/story-1-1-frontend-standards.md` �
 
 ## Tasks & Acceptance
 
-- [ ] Given已批Vue栈，when编码前实读适配版本的GitHub官方规范，then补记URL、文件、tag/commit、日期及采用规则，保留原C0历史；GitHub不可达如实阻塞。
-- [ ] Given官方create-vue3.23.0，when初始化frontend的TS/Router/Pinia骨架，then锁定技术seed实际依赖与非optional peer；Node24.22.0官方工件核hash，应用安装/构建/测试仅在Netcatty Linux。来源/许可证与脚手架改造边界可复核，不保留无关模板演示或提前业务页面。
-- [ ] GivenB生成物，when前端类型检查，then覆盖 `contracts/typescript/*.ts` 并使用其公共类型，不写平行DTO。健康页只展示前端加载和同源 `/health` HTTP可达性；不得把HTTP200描述为数据库就绪或业务成功。
-- [ ] Given首载或手动刷新，when请求成功、失败、超时或取消，then状态准确、无无限重试，控件可用且错误不展示原始私有正文/URL；必要状态有开发者测试。
-- [ ] GivenDESIGN浅色系统字体/Element Plus与token，when真实浏览器在320/768/1440 CSS px、200%缩放及键盘操作，then主操作、错误和状态可读可达，无全页横溢；保存真实页面/控制台/网络证据，不以静态截图替代交互。
-- [ ] Given本地完成的源码/锁，when主控统一发布两远端同一提交、服务器仅从Gitee固定检出并核源码hash，then执行锁定安装、类型检查、构建、测试，交付dist/hash给D。需返修则本地修改并由主控重新发布，不远程改源码后冒充固定提交通过。
+- [x] Given已批Vue栈，when编码前实读适配版本的GitHub官方规范，then补记URL、文件、tag/commit、日期及采用规则，保留原C0历史；GitHub不可达如实阻塞。
+- [x] Given官方create-vue3.23.0，when初始化frontend的TS/Router/Pinia骨架，then锁定技术seed实际依赖与非optional peer；Node24.22.0官方工件核hash，应用安装/构建/测试仅在Netcatty Linux。来源/许可证与脚手架改造边界可复核，不保留无关模板演示或提前业务页面。
+- [x] GivenB生成物，when前端类型检查，then覆盖 `contracts/typescript/*.ts` 并使用其公共类型，不写平行DTO。健康页只展示前端加载和同源 `/health` HTTP可达性；不得把HTTP200描述为数据库就绪或业务成功。
+- [x] Given首载或手动刷新，when请求成功、失败、超时或取消，then状态准确、无无限重试，控件可用且错误不展示原始私有正文/URL；必要状态有开发者测试。
+- [x] GivenDESIGN浅色系统字体/Element Plus与token，when真实浏览器在320/768/1440 CSS px、200%缩放及键盘操作，then主操作、错误和状态可读可达，无全页横溢；保存真实页面/控制台/网络证据，不以静态截图替代交互。
+- [x] Given本地完成的源码/锁，when主控统一发布两远端同一提交、服务器仅从Gitee固定检出并核源码hash，then执行锁定安装、类型检查、构建、测试，交付dist/hash给D。需返修则本地修改并由主控重新发布，不远程改源码后冒充固定提交通过。
 
 ## 环境与交付
 

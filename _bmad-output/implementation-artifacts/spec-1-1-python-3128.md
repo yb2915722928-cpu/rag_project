@@ -1,11 +1,12 @@
 ---
 title: 'Story 1.1 A1 精确 Python 3.12.8'
-status: in-progress
+status: done
 route: dispatch
 baseline_commit: NO_VCS
 context:
   - E:/aaa-project/rag/AGENTS.md
   - E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-model-environment-decision-2026-10-17.md
+completion_record: E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-acceptance-snapshot-2026-10-18.md
 ---
 
 ## Intent

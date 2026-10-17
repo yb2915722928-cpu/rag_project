@@ -1,11 +1,12 @@
 ---
 title: 'Story 1.1 B0c 有界维护 HTTP 与 OpenAPI'
-status: in-progress
+status: done
 route: dispatch
 baseline_commit: NO_VCS
 context:
   - E:/aaa-project/rag/AGENTS.md
   - E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-backend-contract-source-dispatch.md
+completion_record: E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-acceptance-snapshot-2026-10-18.md
 ---
 
 ## Intent
@@ -20,12 +21,12 @@ context:
 
 ## Tasks & Acceptance
 
-- [ ] JSON入口使用 `read_bounded_json`，先H有限协议再测试令牌/模型校验；不用request.json/body或框架先无界装载。未知字段/版本由单一公共模型拒绝。
-- [ ] 仅已授权夹具可校验/返回对应DTO；Accepted夹具202，Failed按error.http_status，Operation夹具200即使原error存在，其他200。未认证/未知路由/错误不回传私有operation ID。说明这是无业务副作用的DTO探针，不冒充真实operation服务。
-- [ ] H错误映射公模有限字典；ValidationError只投影有限码，不序列化exc.errors输入。保留既有SafeError有限code及503兼容性，补C2 envelope；意外异常也不泄秘密/正文/traceback。
-- [ ] 私有成功/失败/404/405等均no-store，删除私有验证器/304语义；每HTTP尝试新request_id，不信任客户端诊断ID。健康liveness现有返回兼容。
-- [ ] OpenAPI从PUBLIC_MODELS/后端model_json_schema生成components与维护入口请求/响应引用，不维护平行业务schema。create_app默认配置也能导出模型，schema不含令牌。
-- [ ] HTTP正负例含默认关闭、令牌缺失/错误、超界/重复键/编码/未知字段/版本、非BMP/null/202/失败/GET投影语义、无秘密日志/响应及新request_id。远程精确3.12.8运行开发者测试，未执行保留未执行。
+- [x] JSON入口使用 `read_bounded_json`，先H有限协议再测试令牌/模型校验；不用request.json/body或框架先无界装载。未知字段/版本由单一公共模型拒绝。
+- [x] 仅已授权夹具可校验/返回对应DTO；Accepted夹具202，Failed按error.http_status，Operation夹具200即使原error存在，其他200。未认证/未知路由/错误不回传私有operation ID。说明这是无业务副作用的DTO探针，不冒充真实operation服务。
+- [x] H错误映射公模有限字典；ValidationError只投影有限码，不序列化exc.errors输入。保留既有SafeError有限code及503兼容性，补C2 envelope；意外异常也不泄秘密/正文/traceback。
+- [x] 私有成功/失败/404/405等均no-store，删除私有验证器/304语义；每HTTP尝试新request_id，不信任客户端诊断ID。健康liveness现有返回兼容。
+- [x] OpenAPI从PUBLIC_MODELS/后端model_json_schema生成components与维护入口请求/响应引用，不维护平行业务schema。create_app默认配置也能导出模型，schema不含令牌。
+- [x] HTTP正负例含默认关闭、令牌缺失/错误、超界/重复键/编码/未知字段/版本、非BMP/null/202/失败/GET投影语义、无秘密日志/响应及新request_id。远程精确3.12.8运行开发者测试，未执行保留未执行。
 
 Given隔离令牌和合法夹具，when通过HTTP，then返回契约一致且无DB/外发副作用。Given未授权或畸形输入，when请求，then有限错误/无私有ID/no-store。Given导出，when读取OpenAPI，then同一后端模型成为真源。
 

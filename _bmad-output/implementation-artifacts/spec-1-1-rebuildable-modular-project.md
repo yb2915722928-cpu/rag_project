@@ -2,7 +2,7 @@
 title: 'Story 1.1 建立可重建的后端与真实 PG 基线'
 type: 'feature'
 created: '2026-10-17'
-status: 'in-progress'
+status: done
 route: 'dispatch'
 review_loop_iteration: 2
 baseline_commit: 'NO_VCS'
@@ -13,6 +13,7 @@ context:
   - '{project-root}/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/ARCHITECTURE-SPINE.md'
   - '{project-root}/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md'
   - '{project-root}/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/technology-evidence.md'
+completion_record: E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-acceptance-snapshot-2026-10-18.md
 ---
 
 <frozen-after-approval reason="human-owned intent — do not modify unless human renegotiates">
@@ -49,9 +50,9 @@ context:
 本文件为保留审查历史的 A 段母记录，超过风险线后已自动拆分；当前可执行 A1 规格为 [spec-1-1-python-3128.md](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-1-python-3128.md:1)。2026-10-17 用户明确改为精确 CPython 3.12.8、远程 Linux 执行，优先于本文件历史 3.12.15 描述。A2 仍承接全部真实 PG 与迁移/namespace 义务，B/C/D/E 不减少；原审查证据保持原样。
 
 **Execution:**
-- [ ] `backend/pyproject.toml`, `backend/uv.lock` -- 按 A1 创建精确 Python 3.12.8 后端和可重复锁文件。
-- [ ] `backend/src/rag_app/` -- 创建 contracts/application/modules/adapters/entrypoints/bootstrap 与八模块最小边界，提供健康检查、配置装配和短 UoW 示例。
-- [ ] `backend/migrations/`, `backend/tests/` -- 添加最小迁移、真实 PG/pgvector 扩展检查、隔离测试向量、up/down 和回滚/仓储不 commit/日志保密测试。
+- [x] `backend/pyproject.toml`, `backend/uv.lock` -- 按 A1 创建精确 Python 3.12.8 后端和可重复锁文件。
+- [x] `backend/src/rag_app/` -- 创建 contracts/application/modules/adapters/entrypoints/bootstrap 与八模块最小边界，提供健康检查、配置装配和短 UoW 示例。
+- [x] `backend/migrations/`, `backend/tests/` -- 添加最小迁移、真实 PG/pgvector 扩展检查、隔离测试向量、up/down 和回滚/仓储不 commit/日志保密测试。
 - [x] `docs/rebuild-evidence.md` -- 记录本轮后端依赖、迁移和真实 PG 测试证据；未执行项为 `not-executed`。
 
 **Acceptance Criteria:**

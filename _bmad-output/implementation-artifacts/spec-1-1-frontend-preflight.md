@@ -1,12 +1,13 @@
 ---
 title: 'Story 1.1 C0 前端规范前置'
-status: in-progress
+status: done
 route: dispatch
 baseline_commit: NO_VCS
 context:
   - E:/aaa-project/rag/AGENTS.md
   - E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/technology-evidence.md
   - E:/aaa-project/rag/_bmad-output/planning-artifacts/ux-designs/ux-RAG_all-2026-10-16/DESIGN.md
+completion_record: E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-acceptance-snapshot-2026-10-18.md
 ---
 
 ## Intent
@@ -19,10 +20,10 @@ context:
 
 ## Tasks & Acceptance
 
-- [ ] 确认当前工作区与已批栈：create-vue3.23.0、TS/Router/Pinia、Element Plus，浅色/系统字体/tokens服从DESIGN。技术seed列的版本是待运行核验对象，不以历史声明冒充新查。
-- [ ] 编码前到GitHub打开Vue/create-vue、Router、Pinia、Element Plus等官方或维护规范，记录准确URL、所读文件、tag或完整提交标识、查阅日期2026-10-17、拟采用规则及其对本Story的具体适用。只记实际读到内容，GitHub不可达原样留阻塞，不杜撰。
-- [ ] 核查官方create-vue3.23.0模板、依赖范围与peer、Node24.22.0官方工件及hash来源；不可得不静默换版。只做读取/来源查询，本阶段不安装构建依赖。
-- [ ] 报告后续C需从B导出的准确接口；当前无B生成物时明确等待，不自写业务类型。前端只骨架/健康状态，不提前身份、文档或问答业务。
+- [x] 确认当前工作区与已批栈：create-vue3.23.0、TS/Router/Pinia、Element Plus，浅色/系统字体/tokens服从DESIGN。技术seed列的版本是待运行核验对象，不以历史声明冒充新查。
+- [x] 编码前到GitHub打开Vue/create-vue、Router、Pinia、Element Plus等官方或维护规范，记录准确URL、所读文件、tag或完整提交标识、查阅日期2026-10-17、拟采用规则及其对本Story的具体适用。只记实际读到内容，GitHub不可达原样留阻塞，不杜撰。
+- [x] 核查官方create-vue3.23.0模板、依赖范围与peer、Node24.22.0官方工件及hash来源；不可得不静默换版。只做读取/来源查询，本阶段不安装构建依赖。
+- [x] 报告后续C需从B导出的准确接口；当前无B生成物时明确等待，不自写业务类型。前端只骨架/健康状态，不提前身份、文档或问答业务。
 
 Given已批设计与官方规范，when记录前置，then每条采用规则都有实际文件/版本证据且不覆盖产品契约。GivenGitHub或精确版本不可取得，when查询，then记录原始失败与影响，不宣称已参考。GivenB未完成，when前置结束，then交回记录等待C派发，不抢写应用。
 

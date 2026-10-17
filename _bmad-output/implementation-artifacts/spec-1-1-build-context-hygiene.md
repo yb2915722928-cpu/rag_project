@@ -1,11 +1,12 @@
 ---
 title: 'Story 1.1 D F8 构建输入隔离'
-status: in-progress
+status: done
 route: dispatch
 baseline_commit: a52ae3090948e7eeea6df87590f15ce35351d247
 context:
   - E:/aaa-project/rag/AGENTS.md
   - E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-1-deploy.md
+completion_record: E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-acceptance-snapshot-2026-10-18.md
 ---
 
 ## Intent 与归属
@@ -18,9 +19,9 @@ Russell 为唯一接替实现者，显式 `zayuapi/deepseek-v4.1-flash`，不传
 
 ## Tasks & Acceptance
 
-- [ ] Given `!src/**` 和 `!migrations/**`，when 目标源码树包含已观测的 `__pycache__`/`*.py[cod]`，then 后续 ignore 规则排除这些缓存和字节码，不影响批准的 Python 源码、锁、声明和迁移。
-- [ ] Given 源码树中出现环境文件、私钥、pgpass、secrets 或 credential 工件，when 构建上下文匹配，then 精确排除真实敏感工件，保留合法 `.env.example/.sample/.template` 等示例；不读取真实秘密、不新增依赖或业务能力。
-- [ ] 文档只追加 F8 当前作者、来源、规则和最终 hash/未执行项，不把 F5–F7 已静态复核或任何旧证据重标为新运行通过。
-- [ ] 不删除本机缓存、不执行本机应用/导入/构建/测试或网络探测。固定 Gitee 提交/镜像缺失，真实 Docker context 与干净 Linux 重建保留 `not-executed`；交付后冻结并释放唯一写入。
+- [x] Given `!src/**` 和 `!migrations/**`，when 目标源码树包含已观测的 `__pycache__`/`*.py[cod]`，then 后续 ignore 规则排除这些缓存和字节码，不影响批准的 Python 源码、锁、声明和迁移。
+- [x] Given 源码树中出现环境文件、私钥、pgpass、secrets 或 credential 工件，when 构建上下文匹配，then 精确排除真实敏感工件，保留合法 `.env.example/.sample/.template` 等示例；不读取真实秘密、不新增依赖或业务能力。
+- [x] 文档只追加 F8 当前作者、来源、规则和最终 hash/未执行项，不把 F5–F7 已静态复核或任何旧证据重标为新运行通过。
+- [x] 不删除本机缓存、不执行本机应用/导入/构建/测试或网络探测。固定 Gitee 提交/镜像缺失，真实 Docker context 与干净 Linux 重建保留 `not-executed`；交付后冻结并释放唯一写入。
 
 不重新渲染 BMad。主会话随后安排独立静态复核；源码准备、静态复核与最终运行门分别记录，不替代父 Story 四 AC、A/B/C/D/E 或原完成分母。

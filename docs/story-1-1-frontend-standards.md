@@ -1,6 +1,6 @@
 ---
 title: Story 1.1 C0 前端规范前置记录
-status: preflight-complete
+status: preflight-complete; implementation appended 2026-10-18
 checked_at: 2026-10-17
 spec: _bmad-output/implementation-artifacts/spec-1-1-frontend-preflight.md
 ---
@@ -86,3 +86,30 @@ spec: _bmad-output/implementation-artifacts/spec-1-1-frontend-preflight.md
 - 仍待 C 实施阶段完成（本阶段按规格不执行）：Node 24.22.0 在 Netcatty Linux 的架构确认、下载与实测 hash 验签；`create-vue@3.23.0` 脚手架生成与依赖锁（含 `@vue/devtools-api ^8.1.5` peer）；前端骨架编码。
 - 未初始化前端、未安装依赖、未创建 `frontend/**`；远程 C 工作目录预留 `/opt/rag-story-1-1/frontend-work`，未创建未修改。B 的 OpenAPI/JSON Schema/TypeScript 导出未交付，前端继续等待，不写业务类型。
 - 证据归档（`/fileOfRag/testOfRAG/metadata/story-1-1`）由主会话在验收阶段统一安排。
+
+## 7. C 实施阶段追加记录（2026-10-17/18，Kimi K3 前端实现会话）
+
+C0 完成后，B 的 51 个生成物于 2026-10-17 经 commit `9da9af2` 同步本地与两远端，前端类型接入解除等待。本节记录实施阶段的新增实读与执行事实，不改动上方 C0 历史原文。
+
+### 7.1 实施阶段 GitHub 实读（2026-10-17，HTTP 200，只读 Invoke-WebRequest）
+
+- create-vue 非交互入口：`https://raw.githubusercontent.com/vuejs/create-vue/v3.23.0/index.ts`——`FEATURE_FLAGS` 中任一 flag 置位即跳过特性提示（`isFeatureFlagsUsed`），`--bare` 直接置 `needsBareboneTemplates`，不再出现 barebone 确认；据此以非交互命令生成骨架。
+- create-vue 模板 package.json（同 tag）：`template/base`（vue `^3.5.40`、vite `^8.1.5`、@vitejs/plugin-vue `^6.0.8`、vite-plugin-vue-devtools `^8.1.5`、engines `^22.18.0 || >=24.12.0`）、`template/config/typescript`（typescript `~6.0.0`、vue-tsc `^3.3.7`、@types/node、npm-run-all2）、`template/config/router`（vue-router `^5.2.0`）、`template/config/pinia`（pinia `^4.0.2`）、`template/config/vitest`（vitest `^4.1.10`、@vue/test-utils、jsdom `^29.1.1`）。
+- Vue Router 5.4.0 `packages/router/package.json` 复核：peer 含 `@pinia/colada >=0.21.2`、`@vue/compiler-sfc`、`pinia ^3.0.4 || ^4.0.2`、`vite ^7.3.0 || ^8.0.0`、`vue ^3.5.34 || ^4.0.0`，其中 `peerDependenciesMeta` 将 `@pinia/colada`、`@vue/compiler-sfc`、`pinia`、`vite` 全部标记 optional（C0 记录中仅确认 vue peer，本轮补齐 meta）。`@pinia/colada` 属 Router↔Pinia 集成可选能力，本 Story 骨架不使用，按 optional 不安装。
+- Pinia 4.0.2 `packages/pinia/package.json` 复核：`@vue/devtools-api ^8.1.5` 在 `peerDependenciesMeta` 中为 `optional:false`，故在 `frontend/package.json` 显式声明 `@vue/devtools-api ^8.1.5`，避免依赖解析器默认行为差异。
+- Element Plus 2.14.7（固定 tag）：`packages/element-plus/package.json` 发布包 peer 仅 `vue ^3.3.7`，MIT；`packages/theme-chalk/src/common/var.scss` 变量经 `getCssVar` 映射到 `--el-*` CSS 自定义属性（实读命中），主题定制在 `frontend/src/styles/tokens.css` 通过覆盖 `--el-*` 绑定 DESIGN token，不改组件库源码。
+- create-vue 3.23.0 与 vue 3.5.44 license 均为 MIT（实读各自 package.json）。
+
+### 7.2 脚手架执行与实际依赖锁定
+
+- 生成命令（本地开发工具操作，2026-10-17，本机 Node v24.18.0/npm 11.16.0，仅脚手架生成；应用安装/构建/测试均在 Netcatty Linux 执行）：`npm create vue@3.23.0 -- frontend --typescript --router --pinia --vitest --bare`。
+- 官方模板改动边界：删除 bare 模板残留的 `src/stores/counter.ts` 演示 store；重写 `App.vue` 为纯 `RouterView`；`index.html` 设置 `lang="zh-CN"` 与产品标题；`README.md` 改写为本项目说明；其余模板文件原样保留（含 `.vscode` 建议、tsconfig 组、vitest.config、`.gitignore`）。
+- 模板之上新增依赖仅两项：`element-plus ^2.14.7`、`@vue/devtools-api ^8.1.5`（见 7.1）。
+- 锁文件于 Netcatty Linux（Ubuntu 24.04 x86_64，ext4 `/opt/rag-story-1-1/frontend-work/repo`，Node v24.22.0 官方工件 hash 实测匹配官方 SHASUMS x64 行，npm 11.19.1）执行 `npm install` 生成，再经主控发布固定。实际锁定（`package-lock.json` v3，311 顶层包）：vue 3.5.44、vite 8.3.4、typescript 6.0.3、vue-router 5.4.0、element-plus 2.14.7、pinia 4.1.0、@vue/devtools-api 8.2.1、vitest 4.1.11、vue-tsc 3.3.13、@vitejs/plugin-vue 6.0.10、@vue/test-utils 2.5.1、jsdom 29.1.1、npm-run-all2 9.0.3、vite-plugin-vue-devtools 8.2.1、@types/node 24.19.2、@vue/tsconfig 0.9.1、@tsconfig/node24 24.0.5、@types/jsdom 28.0.3。
+- pinia 实际解析 4.1.0（模板区间 `^4.0.2` 内的正常次版本解析），其 peer 要求 `@vue/devtools-api ^8.2.1`，实际锁定 8.2.1 同时满足我方声明 `^8.1.5`；主控已接受该模板兼容范围内解析，不回退 seed 小版本重做锁。
+- npm 来源如实记录：服务器走腾讯云内网 npm 缓存 `mirrors.tencentyun.com`（lock 的 `resolved` 字段可见），包完整性由 lock `integrity` 字段保证；本地开发机 registry 为官方 `registry.npmjs.org`。
+
+### 7.3 设计绑定落实摘要
+
+- DESIGN 浅色 token 全量落地 `frontend/src/styles/tokens.css`，并将 Element Plus 语义色绑定到交付 token：主操作/焦点 `--el-color-primary` → `{colors.action}` `#1D6CC0`，hover/active → `#185BA1`/`#144B85`，状态文字使用加深后的 success `#2F6F17`、danger/error `#B42318`、warning `#8A5A00`、info `#606266` 及对应浅底；不直接使用 EP 默认 `#409EFF` 承载普通文字按钮/链接。
+- 系统字体栈（含 PingFang SC / 微软雅黑）绑定 `--el-font-family` 与全局 body；2px 焦点轮廓 + 2px 留白经 `:focus-visible` 全局样式；`prefers-reduced-motion` 下取消过渡；状态展示文字化（el-tag 全称 + el-alert 标题/描述），不以颜色单独承载状态。

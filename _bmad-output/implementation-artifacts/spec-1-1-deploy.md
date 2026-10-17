@@ -1,6 +1,6 @@
 ---
 title: 'Story 1.1 D 四服务 Linux 骨架'
-status: in-progress
+status: done
 route: dispatch
 baseline_commit: NO_VCS
 context:
@@ -8,6 +8,7 @@ context:
   - E:/aaa-project/rag/_bmad-output/implementation-artifacts/epic-1-context.md
   - E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md
   - E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-model-environment-decision-2026-10-17.md
+completion_record: E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-acceptance-snapshot-2026-10-18.md
 ---
 
 ## Intent
@@ -22,10 +23,10 @@ context:
 
 ## Tasks & Acceptance
 
-- [ ] 在 Netcatty Linux 查证批准的镜像/软件版本可用性与来源，保存准确 digest；不可取得时保存原始错误，不静默换版。
-- [ ] 创建项目专属 Dockerfile/Compose/gateway 配置和可复现命令；私有成功及网关自产错误均 no-store、无条件缓存/静态私有资产直出；公开 hash 静态资源独立缓存。
-- [ ] PostgreSQL 数据和活动锁使用经核验的本地文件系统，最小权限挂载；不将对象存储当 POSIX。服务有限关闭，API/worker 使用相同 application 与锁依赖。
-- [ ] 后端/前端交付后进行构建、迁移、启动、健康、真实 Uvicorn/worker、停止/重启和干净 Linux 重建，记录实际副作用、hash/digest。未执行保持未执行。
+- [x] 在 Netcatty Linux 查证批准的镜像/软件版本可用性与来源，保存准确 digest；不可取得时保存原始错误，不静默换版。
+- [x] 创建项目专属 Dockerfile/Compose/gateway 配置和可复现命令；私有成功及网关自产错误均 no-store、无条件缓存/静态私有资产直出；公开 hash 静态资源独立缓存。
+- [x] PostgreSQL 数据和活动锁使用经核验的本地文件系统，最小权限挂载；不将对象存储当 POSIX。服务有限关闭，API/worker 使用相同 application 与锁依赖。
+- [x] 后端/前端交付后进行构建、迁移、启动、健康、真实 Uvicorn/worker、停止/重启和干净 Linux 重建，记录实际副作用、hash/digest。未执行保持未执行。
 
 Given 已锁四服务，when 构建/启动/停止，then 各进程和 PG 扩展版本可核且无额外常驻服务。Given 私有或失败响应，when 经过 gateway，then 不缓存也不泄秘密。Given 依赖未交付或上游版本不可取得，when 验证，then 明确阻塞而不伪装通过。
 

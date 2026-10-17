@@ -110,3 +110,11 @@ Confucius实际阶段交付后，主控直接读取服务器JUnit及generate/che
 Netcatty在整个外部chat `__external_mcp__` 互斥；独立terminal并不能并发命令。曾被一次只读调用拒绝，之后由主控调度唯一terminal调用时段，避免重试锁。后端者专属terminal为 `1eaffce6-3c45-45cb-84bd-18bd6fc84ea9`，部署者不再使用；主控现已把远程时段交Mencius做镜像版本证据及隔离PG准备，Confucius仅本地返修，完成后再交接后端回归。
 
 来源的限范围裁决：腾讯云官方《腾讯云软件源加速软件包下载安装和更新》（`cloud.tencent.com/document/product/213/8623`）及TencentOS镜像概述（`cloud.tencent.com/document/product/1397/130430`）列明 `mirror.ccs.tencentyun.com` 为其缓存服务；Docker官方pull说明支持按digest固定准确内容。当前已授权部署可在现有腾讯云服务器以此官方缓存传输经发布方官方registry实核digest的原始镜像，保留发布方与传输缓存两种来源，不伪称官方直连，不改tag/版本/内容、不新增全局配置/网络服务/费用。Mencius需在其归属文档修订旧准备方案并保存实际来源。该裁决不放宽完整index/platform/config/层、真实版本及归档证据门。
+
+## 最终父 Story 验收
+
+Story1.1原四AC、全部拆分项、开发者/Step5实际独立运行及全新6.1Sol/medium正式审查/相关修复已闭环，父门passed/done。最终功能源码25232d0，原审查R1已由Kimi最小修复、开发者和独立者各14相关回归及同审查者窄复核关闭。D最后实际容器UID/权限/共享inode/flock/atomic原要求已补实测，并由独立者核原始记录；未增加通用硬化或审查轮。
+
+迁移/stop-start原工具输出已按call_id脱敏封存到桶，未为归档重跑。clean wrapper退出未记录、CJK测试截图缺字形继续如实保留，不填假值或扩大为不属于原AC的新门。完整事实、模型/环境、hash和原始证据见 [验收快照](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-acceptance-snapshot-2026-10-18.md:1)、[最终模型记录](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-final-model-evidence.json:1)。四名实现/审查者已确认冻结并关闭，独立者最后只更新归档索引后关闭；主控只保存完成元数据和跨会话交接。
+
+下一Story为1.2，依赖1.1已满足。使用同一saved rag local项目创建新的Amelia（6.1Sol/max），先只读接手合并诊断，主控登记ID/发布交接状态并发送启动信号后认领，防止同文件双写。下一会话负责一个完整Story，继续同一Sprint的串行接力授权。后续S0/P0/目标机等未到期门不提前签署。

@@ -1,29 +1,17 @@
 # Story 1.1 父 Story 交付与接力门
 
-更新：2026-10-17，Asia/Shanghai。唯一认领以 [relay state](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/sprint-relay-state.json:1) 为准。续接先读 [当前工作集](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-working-set.md:1)；仅满足需回读条件时读取完整材料。原 Story 真源为 [epics](/E:/aaa-project/rag/_bmad-output/planning-artifacts/epics.md:184)，拆分不减少四项 AC。
+最终状态：done / passed。原始四AC不变，完整实际证据与限制见 [验收快照](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-acceptance-snapshot-2026-10-18.md:1) 和 [验收台账](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-acceptance-ledger.md:1)。原Story真源为 [epics](/E:/aaa-project/rag/_bmad-output/planning-artifacts/epics.md:184)。
 
-## 当前决定
+| 分段 | 原AC | 已完成 |
+| --- | --- | --- |
+| A | AC1后端/AC2 | 精确3.12.8、锁/locked、Uvicorn、八模块/短UoW；真实PG18.6/vector0.8.7六必跑+worker两项，迁移/回滚/namespace/清理 |
+| B/H | AC4 | 后端唯一真源、17DTO/5枚举、51工件/check、52正负样例、H与HTTP边界；静态与实际运行发现修复闭环 |
+| C | AC1前端 | 官方Vue TS/Router/Pinia骨架、Node/hash、实际依赖/peer锁、健康页/生成契约消费、单元/类型/构建与真实浏览器/页面缩放/键盘 |
+| D | AC1四服务/AC3Linux | 真实构建/迁移/healthy/停止重启、gateway缓存/维护探针/预算边界、实际UID/挂载/secret/共享inode/flock/atomic、干净重建 |
+| E | AC3 | 来源/许可证声明/依赖与改造边界、镜像发布方/缓存传输、完整层/归档hash、Linux实际工件与原始证据索引 |
 
-当前主会话本身为 Amelia，实际 `group/auto-gpt-6-1-sol / max`；全部后端/部署/RAG新实现改由DeepSeek默认档位，前端Kimi、独立验证Step5、全新审查6.1 Sol/medium。每个Amelia主会话只负责一个完整Story，通过全部门后才创建下一Amelia会话并核实交接。
+主控实际6.1Sol/max；后端/部署DeepSeek默认实际max、前端Kimi默认实际max、独立Step5默认实际high、正式审查全新6.1Sol/medium。模型实证见 [最终模型记录](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-final-model-evidence.json:1)。主控未接管应用/测试/部署实现；实际角色、旧偏差与修复归属保留原记录，不追改历史。
 
-Python目标精确3.12.8，A1历史证据保留。Git授权与两远端同步已恢复，服务器已从Gitee固定检出 `a269d492fb33b3b13d95265fa11589d39260c4e0`；Confucius接替A2a/B0a/B0c开发者验证及正式B，Mencius独占D镜像获取恢复。详细认领、实际模型及未通过门见 [当前工作集](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-working-set.md:1) 与 [本轮主控记录](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-amelia-control-2026-10-17.md:1)。
+原四AC、各拆分项、开发者测试、Step5实际独立运行、全新正式审查及相关修复回归均已闭环。clean wrapper退出未记录与CJK截图环境限制保留，未伪造通过值，不追加不属于原AC的验收门。comparison、后续业务/供应方/目标机及S0整体签署均按原规划到期。
 
-| 分段 | 原 AC | 归属 | 状态及剩余门 |
-| --- | --- | --- | --- |
-| A 后端基线 | AC1后端、AC2 | DeepSeek；当前worker短规格独占 | A1历史证据保留，A2a/Linux固定提交、PG18.6+vector0.8.7六项/迁移循环/namespace与回滚未验。 |
-| B contracts | AC4 | Confucius；DeepSeek | 固定Git来源已恢复；执行B0a/B0c开发者门，通过后正式生成；尚无新运行通过证据。 |
-| C frontend | AC1前端 | frontend/**；Kimi K3默认 | 等待B；create-vue3.23.0 TS/Router/Pinia、peer锁、GitHub规范记录与实际页面验证未交付。 |
-| D 四服务 | AC1四服务、AC3Linux | deploy/**；DeepSeek | 远程Engine可用；骨架修复准备中，完整镜像digest、真实PG及生命周期未完成，外部源超时保留。 |
-| E 来源台账 | AC3 | 主会话协调文档、实现者提供实际工件 | 来源仅部分登记；依赖/peer、完整许可证、hash/digest、上游改造边界及干净Linux工件未齐。 |
-
-## 证据与验收语义
-
-历史3.12.8补充回归、审查修复和真实PG skipped均按原记录保留，不能重新命名为新基线通过。此前“指定模型无法核实”的结论已被实际turn_context纠正：两个实现子智能体均记录6.1 Sol medium，但均未交付。无需继续重复身份探测；底层供应方身份未取得时仍不宣称已核。
-
-真实PG、Linux、浏览器、供应方与目标机证据分开登记。用户改变Python和测试地点，不改变PG/扩展精确版本、六项必跑、短UoW、C1/C2/H、Uvicorn、四服务及独立验证/审查分母。存储桶路径是/fileOfRag，已有材料保留；Docker为空不等于宿主绑定目录已删除或任何RAG验收已通过。
-
-## 串行接力
-
-当前仍为Story1.1 in-progress，1.2 backlog。新会话在同一已保存rag项目以local和明确6.1 Sol/max创建；转出会话保存唯一待交接认领与提示词，只登记创建结果并核实接手，随后停止写入。
-
-完整完成门为父Story全部必需AC、各拆分项、开发者测试、Step5独立验证、全新6.1 Sol medium独立审查及修复回归都有通过证据。通过后才能选择第一个依赖满足且未认领的下一Story并自动创建单一接续会话。不可用或仅有同一外部阻塞且无可执行工作时保存阻塞，不循环建会话。本接力没有创建定时自动化。
+当前1.1完成后只选择依赖已满足且无认领的1.2。主控保存唯一待交接认领/短工作集/提示词，在已保存rag项目创建新的本地6.1Sol/max Amelia；核实接手后本会话释放写入，不留在此会话开发1.2。接力仅限当前Sprint，不创建定时自动化；相同外部阻塞无新工作不创建空会话。

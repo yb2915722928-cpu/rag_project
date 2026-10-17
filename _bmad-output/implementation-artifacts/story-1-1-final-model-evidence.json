@@ -1,0 +1,55 @@
+{
+  "recorded_at": "2026-10-18T02:49:55.9334545+08:00",
+  "source_commit": "25232d0bebc230c35837153b6fd572ff734977aa",
+  "method": "Parent read selected fields from actual local rollout turn_context; no self-report or global config substitution",
+  "role_records": [
+    {
+      "role": "controller",
+      "thread_or_agent_id": "01a14973-8555-7131-8fd2-e9eec12f53fe",
+      "actual_model": "group/auto-gpt-6-1-sol",
+      "actual_effort": "max",
+      "observed_turn_timestamp": "2026-10-17T14:15:03.548Z",
+      "provider_identity": "not_independently_observed"
+    },
+    {
+      "role": "backend_developer",
+      "thread_or_agent_id": "01a14a3e-989e-7c72-b98c-90c3a9e9b5c9",
+      "actual_model": "zayuapi/deepseek-v4.1-flash",
+      "actual_effort": "max",
+      "observed_turn_timestamp": "2026-10-17T18:46:01.108Z",
+      "provider_identity": "not_independently_observed"
+    },
+    {
+      "role": "deploy_developer",
+      "thread_or_agent_id": "01a14a3e-ba7c-74e3-a162-b8f092a80308",
+      "actual_model": "zayuapi/deepseek-v4.1-flash",
+      "actual_effort": "max",
+      "observed_turn_timestamp": "2026-10-17T18:46:34.403Z",
+      "provider_identity": "not_independently_observed"
+    },
+    {
+      "role": "frontend_developer",
+      "thread_or_agent_id": "01a14a7b-8d53-7123-b700-b3a1b76cc0bd",
+      "actual_model": "kimi/kimi-k3",
+      "actual_effort": "max",
+      "observed_turn_timestamp": "2026-10-17T18:46:19.16Z",
+      "provider_identity": "not_independently_observed"
+    },
+    {
+      "role": "independent_verifier",
+      "thread_or_agent_id": "01a14ad7-beb6-70c2-9098-4a2734b79c17",
+      "actual_model": "stepfun/step-5-preview",
+      "actual_effort": "high",
+      "observed_turn_timestamp": "2026-10-17T18:45:46.393Z",
+      "provider_identity": "not_independently_observed"
+    },
+    {
+      "role": "fresh_formal_reviewer",
+      "thread_or_agent_id": "01a14afb-d1eb-75d0-b981-ee0cae4235e0",
+      "actual_model": "group/auto-gpt-6-1-sol",
+      "actual_effort": "medium",
+      "observed_turn_timestamp": "2026-10-17T18:46:51.265Z",
+      "provider_identity": "not_independently_observed"
+    }
+  ]
+}

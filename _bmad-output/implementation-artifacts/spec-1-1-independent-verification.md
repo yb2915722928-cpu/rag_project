@@ -1,6 +1,6 @@
 ---
 title: 'Story 1.1 独立运行验证'
-status: ready-for-dev
+status: done
 route: dispatch
 baseline_commit: dd44834383de2bd9af9768a6ecc7fe2c48427eff
 context:
@@ -10,6 +10,7 @@ context:
   - E:/aaa-project/rag/docs/story-1-1-linux-developer-gates.md
   - E:/aaa-project/rag/docs/story-1-1-frontend-delivery.md
   - E:/aaa-project/rag/docs/story-1-1-deploy-delivery.md
+completion_record: E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-acceptance-snapshot-2026-10-18.md
 ---
 
 ## Intent 与前置
@@ -22,12 +23,12 @@ Step 5 Preview默认档位、未参与实现的新实例，独立验证当前Sto
 
 ## Tasks & Acceptance
 
-- [ ] Given主控提供固定Gitee提交、当前文件/hash和实际四服务环境，when核对，then输入、解释器/锁、PG/扩展、四服务版本均对应实际字节；检查已有开发者原始日志/JUnit与计数，不把报告自述当唯一证据。
-- [ ] Given精确CPython3.12.8和隔离PG18.6/vector0.8.7，when在Linux独立运行一次当前后端必需回归（含require-postgres八项），then保存原始命令、退出码、JUnit和skip/筛除分母；非目标解释器负例独立真实执行。复用安全凭据文件，仅source，不打印DSN/秘密，不清理非本任务schema。
-- [ ] Given正式contracts，when独立执行check及52样例，then真实输出一致；comparison等未来业务仍按原规划延期，不扩验收分母，不额外重新生成未变化工件。
-- [ ] Given正式前端锁及源码，when独立核锁/当前单元测试和实际gateway页面，then类型方向正确、同源health与失败/超时状态、320/768/1440/200%及键盘要求有真实证据。已有相同源码构建证据可审阅，不重复构建不相关目标。
-- [ ] Given四服务实际运行，when核验liveness、gateway维护探针/缓存边界和已有停止/重启/干净重建证据，then与原D要求一致，必要的实际访问有原始结果；不把模拟或静态检查当真实运行。不要扩未来上传、供应方或目标性能业务。
-- [ ] Given当前结果，when交付，then逐AC列passed/failed/not-executed及准确证据，独立发现只记录可证问题和影响；适当验证通过就停止，不追加通用硬化、假设性风险或新测试矩阵。
+- [x] Given主控提供固定Gitee提交、当前文件/hash和实际四服务环境，when核对，then输入、解释器/锁、PG/扩展、四服务版本均对应实际字节；检查已有开发者原始日志/JUnit与计数，不把报告自述当唯一证据。
+- [x] Given精确CPython3.12.8和隔离PG18.6/vector0.8.7，when在Linux独立运行一次当前后端必需回归（含require-postgres八项），then保存原始命令、退出码、JUnit和skip/筛除分母；非目标解释器负例独立真实执行。复用安全凭据文件，仅source，不打印DSN/秘密，不清理非本任务schema。
+- [x] Given正式contracts，when独立执行check及52样例，then真实输出一致；comparison等未来业务仍按原规划延期，不扩验收分母，不额外重新生成未变化工件。
+- [x] Given正式前端锁及源码，when独立核锁/当前单元测试和实际gateway页面，then类型方向正确、同源health与失败/超时状态、320/768/1440/200%及键盘要求有真实证据。已有相同源码构建证据可审阅，不重复构建不相关目标。
+- [x] Given四服务实际运行，when核验liveness、gateway维护探针/缓存边界和已有停止/重启/干净重建证据，then与原D要求一致，必要的实际访问有原始结果；不把模拟或静态检查当真实运行。不要扩未来上传、供应方或目标性能业务。
+- [x] Given当前结果，when交付，then逐AC列passed/failed/not-executed及准确证据，独立发现只记录可证问题和影响；适当验证通过就停止，不追加通用硬化、假设性风险或新测试矩阵。
 
 ## 证据与交付
 

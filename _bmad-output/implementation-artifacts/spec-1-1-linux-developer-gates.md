@@ -1,6 +1,6 @@
 ---
 title: 'Story 1.1 Linux 开发者运行门与正式契约生成'
-status: in-progress
+status: done
 route: dispatch
 baseline_commit: a269d492fb33b3b13d95265fa11589d39260c4e0
 context:
@@ -10,6 +10,7 @@ context:
   - E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-1-contract-models.md
   - E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-1-contract-http.md
   - E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-contracts-dispatch.md
+completion_record: E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-acceptance-snapshot-2026-10-18.md
 ---
 
 ## Intent
@@ -24,11 +25,11 @@ GitHub/Gitee main 已同为 baseline。Netcatty 目标 `120.53.251.166`，先 ge
 
 ## Tasks & Acceptance
 
-- [ ] Given 固定 checkout，when 测试前后核对 commit、源码 SHA-256、锁和实际解释器/Uvicorn，then 证据与当前字节绑定；新增文件也列清单。
-- [ ] Given 既有 runtime/public/HTTP/H 实现，when 执行 Linux 非 PG 全量开发者回归，then 保存原始日志、JUnit、命令、退出码及每项失败/跳过/未执行分母。真实错误解释器负例独立执行；不能把 PG 条件筛除计通过。
-- [ ] Given B0a/B0c 门全部通过，when 正式生成 OpenAPI/Schema/TypeScript、执行检查及52条样例，then 保存真实工件、计数、hash和一致性证据；延期的 comparison 业务仍按原分派。
-- [ ] Given 运行失败，when 修复，then 仅在本地认领文件修改并报告主控；由主控发布新固定提交后服务器再从 Gitee 拉取回归。不得远程改源码或自行提交推送。契约变化先由主控协调。
-- [ ] Given 正式 B，when 交付前端，then 列出准确接口和未通过门；不得提前标父 Story done。
+- [x] Given 固定 checkout，when 测试前后核对 commit、源码 SHA-256、锁和实际解释器/Uvicorn，then 证据与当前字节绑定；新增文件也列清单。
+- [x] Given 既有 runtime/public/HTTP/H 实现，when 执行 Linux 非 PG 全量开发者回归，then 保存原始日志、JUnit、命令、退出码及每项失败/跳过/未执行分母。真实错误解释器负例独立执行；不能把 PG 条件筛除计通过。
+- [x] Given B0a/B0c 门全部通过，when 正式生成 OpenAPI/Schema/TypeScript、执行检查及52条样例，then 保存真实工件、计数、hash和一致性证据；延期的 comparison 业务仍按原分派。
+- [x] Given 运行失败，when 修复，then 仅在本地认领文件修改并报告主控；由主控发布新固定提交后服务器再从 Gitee 拉取回归。不得远程改源码或自行提交推送。契约变化先由主控协调。
+- [x] Given 正式 B，when 交付前端，then 列出准确接口和未通过门；不得提前标父 Story done。
 
 ## a269 运行发现与本次返修裁决
 

@@ -1,0 +1,10 @@
+{
+  "file": "docs/story-1-1-independent-verification.md",
+  "original_frozen_sha256": "db81cfdeab7a3d5395523dd8bdb2853ecf3b3df60b96ab900d9e77516fff5705",
+  "published_sha256": "9c084183edab5924dc9d752310104ddc01f0261038c30c5ce4811224e6b1af1d",
+  "original_bytes": 45899,
+  "published_bytes": 45898,
+  "operation": "Remove one extra final LF only to satisfy Git diff whitespace check",
+  "all_prior_bytes_preserved": true,
+  "runtime_evidence_or_verdict_changed": false
+}

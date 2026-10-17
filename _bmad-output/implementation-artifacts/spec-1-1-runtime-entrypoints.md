@@ -1,12 +1,13 @@
 ---
 title: 'Story 1.1 A2a 四服务运行入口'
-status: in-progress
+status: done
 route: dispatch
 baseline_commit: NO_VCS
 context:
   - E:/aaa-project/rag/AGENTS.md
   - E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-1-python-3128.md
   - E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/runtime-operations.md
+completion_record: E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-acceptance-snapshot-2026-10-18.md
 ---
 
 ## Intent
@@ -21,10 +22,10 @@ context:
 
 ## Tasks & Acceptance
 
-- [ ] API使用受托绑定设置，仍校验精确Python/Uvicorn；默认保持安全loopback。Compose所需设置交主会话协调部署者。
-- [ ] worker启动使用同一bootstrap/application做短DB检查，之后有限内存空闲等待，SIGTERM/SIGINT唤醒并释放runtime；不持Session/事务等待，不建额外业务表/后台队列，不做外部调用。
-- [ ] 启动失败/DB失败/关闭失败保留原失败与清理诊断，仅输出有限安全码；现有check-database语义/测试保持。
-- [ ] 验证配置正负例、CLI选择、实际Linux子进程启动/存活/TERM/INT退出与资源清理；PG检查未能实际执行时明确未执行，不以mock证明四服务通过。
+- [x] API使用受托绑定设置，仍校验精确Python/Uvicorn；默认保持安全loopback。Compose所需设置交主会话协调部署者。
+- [x] worker启动使用同一bootstrap/application做短DB检查，之后有限内存空闲等待，SIGTERM/SIGINT唤醒并释放runtime；不持Session/事务等待，不建额外业务表/后台队列，不做外部调用。
+- [x] 启动失败/DB失败/关闭失败保留原失败与清理诊断，仅输出有限安全码；现有check-database语义/测试保持。
+- [x] 验证配置正负例、CLI选择、实际Linux子进程启动/存活/TERM/INT退出与资源清理；PG检查未能实际执行时明确未执行，不以mock证明四服务通过。
 
 Given受托bind配置，when启动API，then监听地址/端口与配置一致并可由同网关访问。Given合法DB与worker，when启动并TERM/INT，then持续运行后有限退出，等待间无活动事务。Given不兼容环境，when启动，then安全失败且不伪造ready。
 

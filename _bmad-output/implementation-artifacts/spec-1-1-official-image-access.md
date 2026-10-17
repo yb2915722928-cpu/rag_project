@@ -1,6 +1,6 @@
 ---
 title: 'Story 1.1 官方准确镜像获取恢复'
-status: in-progress
+status: done
 route: dispatch
 baseline_commit: a269d492fb33b3b13d95265fa11589d39260c4e0
 context:
@@ -8,6 +8,7 @@ context:
   - E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-working-set.md
   - E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-1-deploy.md
   - E:/aaa-project/rag/deploy/offline-images.md
+completion_record: E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-acceptance-snapshot-2026-10-18.md
 ---
 
 ## Intent
@@ -22,10 +23,10 @@ DeepSeek 默认档位的新部署接替者独占 `deploy/**`、`docs/story-1-1-o
 
 ## Tasks & Acceptance
 
-- [ ] Given 新网络证据，when 查核官方仓库/发布源，then 确认 Python3.12.8、Nginx1.30.6、PG18.6、pgvector0.8.7、uv候选的真实可用版本及linux/amd64；不存在的准确版本如实阻塞，不能自行换版。
-- [ ] Given 官方镜像，when 取完整工件，then 分别保存 index/platform digest、完整层、image ID、版本及归档SHA-256；只有manifest不能通过。
-- [ ] Given 服务器，when 使用Netcatty，then先get_environment；仅操作项目资源，活动目录在 `/opt/rag-story-1-1`，最终证据在 `/fileOfRag/testOfRAG/metadata/story-1-1/official-image-access`；不删除其他项目或桶。
-- [ ] Given 获取不可行，when 报告，then区分网络、授权、准确tag/源码不存在、缺层与未获准通道；保存一次有效诊断及触发条件，不空转探测。
+- [x] Given 新网络证据，when 查核官方仓库/发布源，then 确认 Python3.12.8、Nginx1.30.6、PG18.6、pgvector0.8.7、uv候选的真实可用版本及linux/amd64；不存在的准确版本如实阻塞，不能自行换版。
+- [x] Given 官方镜像，when 取完整工件，then 分别保存 index/platform digest、完整层、image ID、版本及归档SHA-256；只有manifest不能通过。
+- [x] Given 服务器，when 使用Netcatty，then先get_environment；仅操作项目资源，活动目录在 `/opt/rag-story-1-1`，最终证据在 `/fileOfRag/testOfRAG/metadata/story-1-1/official-image-access`；不删除其他项目或桶。
+- [x] Given 获取不可行，when 报告，then区分网络、授权、准确tag/源码不存在、缺层与未获准通道；保存一次有效诊断及触发条件，不空转探测。
 
 ## 交付
 

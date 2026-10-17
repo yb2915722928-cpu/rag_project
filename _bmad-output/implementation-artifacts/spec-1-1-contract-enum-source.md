@@ -1,12 +1,13 @@
 ---
 title: 'Story 1.1 B 枚举真源与准备闭合'
-status: in-progress
+status: done
 route: dispatch
 baseline_commit: a52ae3090948e7eeea6df87590f15ce35351d247
 context:
   - E:/aaa-project/rag/AGENTS.md
   - E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-contracts-dispatch.md
   - E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-1-contract-models.md
+completion_record: E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-acceptance-snapshot-2026-10-18.md
 ---
 
 ## Intent
@@ -21,10 +22,10 @@ context:
 
 ## Tasks & Acceptance
 
-- [ ] Given 后端现有枚举，when 读取 PUBLIC_ENUMS，then 类型身份与原类一致，wire值不变；保持 PUBLIC_MODELS 及五种维护 HTTP Response 选择不变。
-- [ ] Given 导出准备和样例，when 后续在固定 Linux commit 执行，then JobState wire合法/非法样例可由后端原枚举验证，TS/schema不复制枚举值；四类状态含义不混同。
-- [ ] `comparison.v1` 业务载荷按原按需增量规则延期，不伪造通过，也不因未来 Story 尚无业务模型而让本条必需样例永久失败。job_state、非BMP、HTTP错误及H等本条必需样例不能按此规则延期。
-- [ ] 引用的样例文件、索引和后续命令完整可审阅；正式 OpenAPI/schema/TS 尚未生成需写清楚。未获同一 Gitee commit 前不执行应用导入、测试或生成，不提交、不重试外部阻塞。
+- [x] Given 后端现有枚举，when 读取 PUBLIC_ENUMS，then 类型身份与原类一致，wire值不变；保持 PUBLIC_MODELS 及五种维护 HTTP Response 选择不变。
+- [x] Given 导出准备和样例，when 后续在固定 Linux commit 执行，then JobState wire合法/非法样例可由后端原枚举验证，TS/schema不复制枚举值；四类状态含义不混同。
+- [x] `comparison.v1` 业务载荷按原按需增量规则延期，不伪造通过，也不因未来 Story 尚无业务模型而让本条必需样例永久失败。job_state、非BMP、HTTP错误及H等本条必需样例不能按此规则延期。
+- [x] 引用的样例文件、索引和后续命令完整可审阅；正式 OpenAPI/schema/TS 尚未生成需写清楚。未获同一 Gitee commit 前不执行应用导入、测试或生成，不提交、不重试外部阻塞。
 
 ## 交付
 

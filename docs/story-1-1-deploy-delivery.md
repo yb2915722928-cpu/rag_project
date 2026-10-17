@@ -23,13 +23,15 @@
 | 最终文件上传和 SHA-256 | 传输包 SHA-256 `18320beb7231f4c54fe472659dc6ff9e9a251dab1a905c257cc4b1711212d5ad`，远程解包前已核；核心文件 hash 见本地 evidence |
 | `/opt` 文件系统 | `findmnt`: `/dev/vda2 ext4 rw,relatime` |
 | `/fileOfRag` 文件系统 | `findmnt`: `cosfs fuse.cosfs`；只归档证据 |
-| 宿主 ext4 临时探针 | SH 阻另一进程 EX、关闭后 EX 成功、replace/file fsync 通过；临时目录已清理，不能代替容器跨挂载/UID证明 |
+| 宿主 ext4 临时探针 | SH 阻另一进程 EX、关闭后 EX 成功、replace/file fsync 通过；临时目录已清理。**宿主观测本身不能代替容器跨挂载/UID 证明；容器内对应真实诊断已于 2026-10-18 补做，见文末"跨容器锁 / 原子替换 / UID"节** |
 | Docker Hub urllib | 四个目标探测均 `URLError [Errno 101] Network is unreachable`；此错误不能代表所有网络不可达 |
 | Docker manifest Python | 退出 124，registry ping 超时；未取得 digest |
 | 独立 IPv4 curl registry/auth | 两项退出 28，各连接 4s 超时；补证不是只有 IPv6 失败 |
 | GitHub IPv4 release HEAD | 200；只证明该 URL 可达 |
 | GitHub raw Dockerfile IPv4 | PG18、Nginx 两项 8s 超时；未核实最终镜像 UID/源码 |
 | 整栈构建/迁移/进程/重启/干净重建 | `not-executed`，不宣称四服务已可用 |
+
+> 上表是 2026-10-17 当时状态。整栈构建、迁移、进程、重启、跨容器锁/UID 与干净重建均已在其后的集成中实际执行，结果见「2026-10-18 D 四服务实际集成（已运行）」各节；上表不再代表当前状态。
 
 远程证据：专属目录 `/opt/rag-story-1-1/deploy/evidence/`；归档 `/fileOfRag/testOfRAG/metadata/story-1-1/deploy/`。文件包括 `source-probe.json`、`ipv4-and-official-dockerfiles.json`。错误原样保留，不输出 token、密码或业务正文。Docker Hub 无可用镜像/准确 digest，未换版本或第三方源。
 
@@ -248,3 +250,429 @@ A1 正常锁已由原作者在 Linux 生成，主会话报告 locked 同步仍�
 ```
 
 提交收尾说明：上文局部hash属于对应静态交付/复核时点。其后仅清理少量源码/配置/文档的单个EOF空白行，字节前缀一致性已记录；原始wire输入保持原字节。最终源码与Git规范化内容hash以 [准备来源快照](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-preparation-source-hashes.json:1) 为准，EOF前后证明见 [收尾证据](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-eof-normalization.json:1)。这些均不构成任何运行通过。
+
+## 2026-10-18 D 四服务实际集成（已运行）
+
+本节记录实际集成结果。运行全部在 Netcatty Linux 主机 `120.53.251.166`，
+固定提交 `dd44834383de2bd9af9768a6ecc7fe2c48427eff`（仅从 Gitee 拉取）。
+除"未执行项"一节列出的内容外，其余均为真实运行结果。
+
+### 本轮本地修改与撤回记录（已撤回项标 SUPERSEDED）
+
+> **SUPERSEDED — 以下三项改进曾存在，已被主控要求撤回，不是当前源码状态，也不是发布内容。**
+> 保留此记录只为说明过程；任何读者不得据此认为源码含 `pull_policy: never`、
+> 必填 `RAG_PGDATA_ROOT` 或 `integration.env.example`。
+
+曾对以下三份文件做过可选改进（在 `compose.yaml` 增加四服务 pull policy、
+把 PG 数据目录改为必填变量、把示例默认目录改成自定义新目录），
+主控判定**不是当前阻塞**并明确要求撤回，已用 `apply_patch` 逐项还原，
+未使用 `git checkout/reset`：
+
+| 文件 | 当前 SHA-256 | 状态 |
+| --- | --- | --- |
+| [compose.yaml](/E:/aaa-project/rag/deploy/compose.yaml:1) | `64c48784661cfc49f64114e740d6f1772bfa8887baa112ed10a46046a59c5951` | 与 `dd44834` 一致 |
+| [preflight.py](/E:/aaa-project/rag/deploy/preflight.py:1) | `cedda5af4d598f5a4058aac9b92625d583f3a8c27fe3147e31225c1abce7a0e1` | 与 `dd44834` 一致 |
+| [.env.example](/E:/aaa-project/rag/deploy/.env.example:1) | `feff1d95291a049c03d1940d018f4d1eadb005c5b7afa01f7f95722f4d54ce2c` | 与 `dd44834` 一致 |
+
+因此实际运行用的是发布提交 `dd44834` 里的**原配置**：
+
+- `compose.yaml` 中没有任何 pull policy 字段；离线保证来自命令行 `--pull never`
+  （以及 `build --pull=false`）。`up`/`run` 每条命令都显式传了它。
+- `compose.yaml` 的 PG 数据目录默认值仍是 `/opt/rag-story-1-1/postgres`；
+  本轮通过 operator 侧 env 文件把 `RAG_PGDATA_ROOT` 显式覆盖为**新目录**
+  `/opt/rag-story-1-1/postgres-d`，未改源码、未触碰旧目录。
+- `preflight.py` 的默认值同样是 `/opt/rag-story-1-1/postgres`；实际运行先 `source`
+  了 operator env 文件，因此校验的是 `postgres-d`。
+- 仓库中不存在 integration env 的示例文件；实际操作使用的是仓库外
+  `/opt/rag-story-1-1/deploy-integration.env`（`0600 root`），其键集合与
+  `deploy/.env.example` 相同。
+
+保留的本地修改：
+
+- [story-1-1-official-image-access.md](/E:/aaa-project/rag/docs/story-1-1-official-image-access.md:1)：
+  删除“把内容重新 `docker tag` 回官方 tag+digest”的错误提示。`docker tag` 只能生成 `repo:tag`，
+  不能制造 `repo@digest`；引用选择以既有 receipt 记录的发布方 digest 与 daemon 实际
+  `RepoDigests`/image ID 映射为准。
+
+### 复用的已核输入（实际采用值）
+
+来源与版本证据沿用 [official-image-access](/E:/aaa-project/rag/docs/story-1-1-official-image-access.md:1)，
+不重复拉取或探测：
+
+PG 测试环境已由 Git 提交 `9da9af2` 的冻结脚本验证，八项后端测试已由后端者全部通过，
+本轮不重复。
+
+**实际采用的是 daemon 为离线加载内容报告的 `repo@digest`**（下表"实际引用"列），
+不是发布方 index digest：实测在该 daemon 上，
+`python:3.12.8-slim-bookworm@sha256:2199a628…`、
+`nginx:1.30.6-alpine@sha256:97036422…`、
+`pgvector/pgvector:0.8.7-pg18-bookworm@sha256:2358fcba…`、
+`ghcr.io/astral-sh/uv:0.12.9@sha256:8b940d3a…` 四种发布方 digest 形式均不可解析
+（`docker image inspect` 非零），而下面的 daemon digest 可解析且层内容与 receipt 一致。
+这一事实如实记录，未回退到浮动 tag、未另造 `docker tag` 流程。
+
+| 输入 | 发布方 index digest（记录用） | 实际引用（构建/运行使用） |
+| --- | --- | --- |
+| CPython 3.12.8 | `sha256:2199a628…` | `python:3.12.8-slim-bookworm@sha256:0709a3f3…` |
+| Nginx 1.30.6 | `sha256:97036422…` | `nginx:1.30.6-alpine@sha256:35b34a15…` |
+| PG 18.6 + vector 0.8.7 | `sha256:2358fcba…` | `pgvector/pgvector:0.8.7-pg18-bookworm@sha256:12837756…` |
+| uv 0.12.9 | `sha256:8b940d3a…` | `ghcr.io/astral-sh/uv:0.12.9@sha256:537416e3…` |
+
+### 实际准备的宿主资源（均在 `/opt/rag-story-1-1` 本地 ext4）
+
+```sh
+BASE=/opt/rag-story-1-1
+SECRETS=$BASE/secrets
+mkdir -p "$BASE/postgres-d" "$SECRETS"
+chown 999:999 "$BASE/postgres-d"; chmod 0700 "$BASE/postgres-d"
+chown 65532:65532 "$BASE/assets" "$BASE/locks"; chmod 0750 "$BASE/assets" "$BASE/locks"
+chown 65532:65532 "$BASE/epoch"; chmod 0550 "$BASE/epoch"
+# secrets: password (PG UID), pgpass and TLS (65532), all mode 0400
+```
+
+实际权限为 `assets 750`、`locks 750`、`epoch 550`（均 `65532:65532`），
+与 `preflight.py` 的 owner read+execute 要求一致。
+
+秘密只通过文件交接，不写入 argv、日志或仓库。PG 密码文件复用既有随机值：
+
+```sh
+install -m 0400 -o 999 -g 999 \
+  "$BASE/postgres-test/secrets/postgres-password" "$SECRETS/postgres-password"
+awk -F: 'BEGIN{printf "postgres:5432:rag:rag:"} {printf "%s\n",$0}' \
+  "$SECRETS/postgres-password" > "$SECRETS/postgres-pgpass"
+chown 65532:65532 "$SECRETS/postgres-pgpass"; chmod 0400 "$SECRETS/postgres-pgpass"
+openssl req -x509 -newkey rsa:2048 -nodes -days 2 -subj "/CN=localhost" \
+  -keyout "$SECRETS/tls-key.pem" -out "$SECRETS/tls-cert.pem" >/dev/null 2>&1
+chown 65532:65532 "$SECRETS/tls-key.pem" "$SECRETS/tls-cert.pem"
+chmod 0400 "$SECRETS/tls-key.pem" "$SECRETS/tls-cert.pem"
+```
+
+证书仅用于本机回环联调；链/主机名正确性不属于本轮验收。`preflight.py` 对四个秘密文件
+只接受 `0400`/`0600`，因此证书也用 `0400`（可读即可，无需 `0444`）。
+
+### 执行顺序（固定提交、Gitee 检出）
+
+本节是**实际执行的顺序**，不是计划草案。
+
+1. 在 `/opt/rag-story-1-1/repo-dd44834` 只从 Gitee `fetch --depth 1` 提交
+   `dd44834383de2bd9af9768a6ecc7fe2c48427eff` 并 detached checkout；
+   `git status --porcelain` 为空。
+2. 核对 `frontend/package-lock.json` `4b6d69e7…`、`backend/uv.lock` `7ad33ac0…`，
+   并把已交付的 dist 放入 `frontend/dist`（dist 按设计不入 Git）。
+3. 生成 operator 侧 `/opt/rag-story-1-1/deploy-integration.env`（仓库外，`0600 root`），
+   填本机路径与上表四个 `repo@digest`，然后执行：
+
+```sh
+cd /opt/rag-story-1-1/repo-dd44834
+set -a; . /opt/rag-story-1-1/deploy-integration.env; set +a
+/root/.local/share/uv/python/cpython-3.12.8-linux-x86_64-gnu/bin/python3.12 deploy/preflight.py
+docker compose -f deploy/compose.yaml config --quiet
+docker compose -f deploy/compose.yaml build --pull=false
+docker compose -f deploy/compose.yaml up -d --no-build --pull never postgres
+docker compose -f deploy/compose.yaml run --rm --no-deps api python -m rag_app migrate head
+docker compose -f deploy/compose.yaml run --rm --no-deps api python -m rag_app check-database
+docker compose -f deploy/compose.yaml up -d --no-build --pull never api worker gateway
+docker compose -f deploy/compose.yaml ps
+```
+
+4. 记录实际镜像 ID/层、容器 UID、PG `server_version_num=180006`、`vector.extversion=0.8.7`、
+   实际 Uvicorn/worker 进程、挂载与端口；健康只作 liveness。
+5. 网关与私有路由负例按规格 3 执行：`/health` 经 TLS；私有响应与自产错误 `Cache-Control: no-store`；
+   `/assets/<hash>` 仅 200 可 immutable；`/__maintenance/` 固定 404；
+   条件请求头不被缓存绕过；JSON 1MiB 与原件 PUT 20MiB 的边界各保留真实结果。
+6. 生命周期：`stop --timeout`、`start`、再次核版本与数据；不执行 `down -v`、prune 或删除宿主目录。
+7. 干净重建：在第二个全新检出目录用同一提交与同一输入重复构建/启动，记录可复现结论；
+   若镜像 ID 不一致，如实记录差异来源，不用缓存结果冒充重建。
+8. 证据归档 `/fileOfRag/testOfRAG/metadata/story-1-1/deploy-integration/`，
+   `sha256sum` 清单随同保存。**本轮尚未归档**（terminal 时段不在本会话手中）；
+   下一次短时段按下方"证据归档清单"逐项复制，不重跑已通过的命令。
+
+### 证据归档清单（待下一次短时段执行）
+
+#### 已完成归档（可直接读取）
+
+本段没有新增归档；以下既有归档可直接读取，未改动：
+
+| 桶内路径 | 内容 |
+| --- | --- |
+| `/fileOfRag/testOfRAG/metadata/story-1-1/postgres-test-environment/` | PG 隔离环境证据：`postgres-test-environment.json`、`formal-setup.log`、`formal-setup-9da9af2.sh`、`loopback-role-check.log`、`provision-sql.log`、`role-privilege-check.json`、`inspect-python/nginx/pgvector.json`、`container-mounts.json`、`SHA256SUMS.bucket.txt` |
+| `/fileOfRag/testOfRAG/metadata/story-1-1/official-image-access/` | 镜像 digest 交叉核对：`image-digest-crosscheck.json`、`from-digest-build-probes.txt`、`archive-import-verification.txt`、`post-load-content-identity.txt`、4 个 `*-receipt.json`、`SHA256SUMS.bucket.txt` |
+| `/fileOfRag/testOfRAG/derived/story-1-1/official-image-access/` | 4 个 `*-image.docker.tar` 及其 receipt |
+
+#### D 四服务运行证据：已归档（2026-10-18 完成）
+
+`/fileOfRag/testOfRAG/metadata/story-1-1/deploy-integration/`，共 18 个文件 +
+`SHA256SUMS.bucket.txt`。归档时用只读命令固化，未重跑迁移或启停。
+
+| 文件 | 内容 |
+| --- | --- |
+| `build.log` | 四镜像构建完整输出 |
+| `preflight-out.json` | `{"status":"ready-for-build","failures":[]}` |
+| `deploy-integration.env.keys.txt` | operator 输入键名（值全部 `<redacted>`） |
+| `clean-npm-ci.log` | 干净重建 `npm ci`（286 包） |
+| `clean-build.log` | 干净重建 `npm run build`（1598 modules，dist hash 与交付一致） |
+| `clean-build-images.log` | 独立标签 no-cache 重建的 BuildKit 日志（两目标 `Built`） |
+| `clean-rebuild-fingerprint.txt` | clean 镜像 ID/层数/逐层 digest，与运行镜像对照 |
+| `gateway-252-build.log` | 252 前端 gateway 的 `--no-cache` 构建日志（exit 0） |
+| `gateway-252-inspect.json` | 新网关镜像 inspect |
+| `gateway-container-dist.txt` | 容器内 `/usr/share/nginx/html` 的四个文件 hash |
+| `compose-ps.txt` | 四服务最终状态与端口 |
+| `container-identity.txt` | 四个容器的 ID / image / user / health |
+| `pg-versions.txt` | `180006\|0.8.7\|0001_baseline` |
+| `http-health-body.json`、`http-health-headers.txt` | `/health` 响应与头 |
+| `http-new-index-headers.txt`、`http-new-js-headers.txt` | 新 `index.html` 与新 JS 响应头 |
+| `locks-assets-uid-probe.txt` | 跨容器 UID/挂载权限/同 inode/flock 争用/os.replace 的原始输出 |
+
+该目录最终为 19 个文件 + `SHA256SUMS.bucket.txt`（新增探针文件后重算）。
+
+秘密扫描：15 个内容文件对两枚已知密码明文 **0 命中**。
+
+### 实际运行结果 — 构建
+
+命令（服务器，`/opt/rag-story-1-1/repo-dd44834`，固定提交 `dd44834`）：
+
+```sh
+set -a; . /opt/rag-story-1-1/deploy-integration.env; set +a
+docker compose -f deploy/compose.yaml build --pull=false
+```
+
+**退出码 0**。日志 `/opt/rag-story-1-1/build.log`。
+
+| 产物 | image ID | 层数 | 说明 |
+| --- | --- | --- | --- |
+| `rag-story-1-1-api:local` | `sha256:75a1e1bc5f99f11e5f1f77a4104bcee18b493f29bd1e792ee06a9221c7dd19e9` | 13 | API 与 worker 共用 |
+| `rag-story-1-1-gateway:local` | `sha256:145a459118af5123bf6dd517ee5b812751fa64df6e4b4480de33e90c25116c64` | 11 | 仅静态 dist + nginx |
+
+镜像内实测：`python 3.12.8 cpython`、`uvicorn 0.37.0`、`uv 0.12.9`。
+`uv sync --locked` 成功（41 包解析，无 `--frozen`/换源/改锁）。
+
+实际使用的输入（`/opt/rag-story-1-1/deploy-integration.env`，仓库外，`0600 root`）：
+
+```text
+PYTHON_BASE_IMAGE=python:3.12.8-slim-bookworm@sha256:0709a3f36ed3e893f6b8f1e05e7a41a815f10061696f59898531296bb47d98b8
+UV_BASE_IMAGE=ghcr.io/astral-sh/uv:0.12.9@sha256:537416e395bab291a4f19ebfbea6ee0751cf660c102360045a0eed8930464f68
+NGINX_BASE_IMAGE=nginx:1.30.6-alpine@sha256:35b34a15ae8b2c2cb9e12d733b9fc95312977bfec20c722cd2ba40eb7333452f
+POSTGRES_IMAGE=pgvector/pgvector:0.8.7-pg18-bookworm@sha256:12837756808d6306035c264ca6fe91ea0e5436e5dc69bc186545aac8dea10d3f
+```
+
+这四个是离线 `docker load` 后 daemon 实际报告的 `repo@digest`；与发布方 index digest
+的映射、逐层等价证据见 [official-image-access](/E:/aaa-project/rag/docs/story-1-1-official-image-access.md:1)。
+发布方 index digest 形式的 `python`/`nginx`/`pgvector`/`uv` 在该 daemon 上不可解析，
+已如实记录，未回退到浮动 tag。
+
+### 实际运行结果 — 预检 / 迁移 / 启动
+
+| 步骤 | 命令 | 退出码 | 关键输出 |
+| --- | --- | --- | --- |
+| 预检（无 env） | `python3.12 deploy/preflight.py` | 2 | `blocked`，9 项缺失（负例） |
+| 预检（加载 env） | `python3.12 deploy/preflight.py` | **0** | `{"status":"ready-for-build","failures":[]}` |
+| Compose 结构 | `docker compose config --quiet` | **0** | 4 服务：postgres/api/gateway/worker |
+| 缺 `POSTGRES_IMAGE` | `env -u POSTGRES_IMAGE … config` | 1 | 明确拒绝插值 |
+| PG 启动 | `up -d --no-build --pull never postgres` | **0** | healthy，`server_version_num=180006` |
+| 迁移 | `run --rm --no-deps --pull never api python -m rag_app migrate head` | **0** | `vector 0.8.7`、`alembic 0001_baseline` |
+| 基线检查 | `… check-database` | **0** | `DATABASE_BASELINE_OK` |
+| 四服务启动 | `up -d --no-build --pull never api worker gateway` | **0** | 全 `healthy` |
+
+表结构仅 `alembic_version`、`rag_uow_probe`，未创建任何后续业务表或生产 vector 列。
+PG 数据在**新目录** `/opt/rag-story-1-1/postgres-d`（ext4，`0700 999:999`，1281 文件），
+旧的 `/opt/rag-story-1-1/postgres` 未被触碰。
+
+### 实际运行结果 — 运行时标识
+
+| 服务 | 容器 ID | 镜像 | UID | 进程 |
+| --- | --- | --- | --- | --- |
+| api | `c2b1db78cd624ead736a4868225ab6d2b730a6574a151c568013b422cc6e1267` | `rag-story-1-1-api:local` `75a1e1bc…` | 65532 | `/sbin/docker-init -- python -m rag_app api` |
+| worker | `a8dc891159167a9fbccc681277972588a68a413a2fcad34d5d578fdb83180cb1` | 同一 `75a1e1bc…` | 65532 | `/sbin/docker-init -- python -m rag_app worker` |
+| gateway | `1a306b1975c83c04d2d76ca8411c9366cd5b0a37a14433c120d79910a9915432` | `rag-story-1-1-gateway:local` `145a4591…` | 65532 | nginx |
+| postgres | `ea70ab2d503d6b8b4f09cfc4b72ad3ef6ef86333fc50bb81e79948e881234785` | `pgvector/pgvector…@12837756808d…` | 999 | postgres 18.6 |
+
+**访问地址：`https://127.0.0.1:8443`**（宿主仅 `127.0.0.1` 回环，自签证书）。
+同一 Netcatty Linux 主机上的浏览器直接访问，**不需要 SSH 隧道**；
+从 Windows 开发机访问才需要 `-L 8443:127.0.0.1:8443`，那不是本项目运行方案。
+`/health` 返回 `200`、`{"status":"alive","service":"rag-api","check":"liveness"}`、`Cache-Control: no-store`。
+健康检查只证明 liveness，不证明 schema/供应方就绪。
+
+### 实际运行结果 — 网关边界（真实 HTTPS 请求）
+
+| 用例 | 实际结果 |
+| --- | --- |
+| 私有 `/health` 成功 | `200`，`Cache-Control: no-store`，无 `ETag`/`Last-Modified` |
+| 自产 404（`/api/does-not-exist`） | `404`，JSON 错误包络，`no-store`，`nosniff` |
+| 维护探针 `/__maintenance/contracts/health` | `404`，`no-store`（fail closed） |
+| `/api` 精确路径 | `404` |
+| SPA `/` 与 `/index.html` | `200`，`no-store` |
+| hash 资源 `/assets/index-CrqoaFFe.js` | `200`，`public, max-age=31536000, immutable` |
+| 缺失 hash 资源 / 未 hash 资源 | `404`，`no-store` |
+| 条件请求（`If-None-Match`/`If-Modified-Since`） | 仍 `200`，未出现 `304` |
+| 2 MiB JSON POST | `413`（1 MiB 界生效） |
+| 1.5 MiB 原件 PUT | `404`（路由未实现，**不是** 413；20 MiB 上传界未被 1 MiB 截断） |
+| 20 KB 请求头 | `400`（16 KiB 头上限生效） |
+
+原始请求/响应日志保留于 `/opt/rag-story-1-1/` 下会话记录；正文为真实服务输出。
+
+### 实际运行结果 — 停止 / 重启
+
+```text
+docker compose stop --timeout 20   → exit 0
+docker compose start              → exit 0
+```
+
+- 停止后容器状态：gateway `Exited (0)`、worker `Exited (0)`、postgres `Exited (0)`、
+  api `Exited (143)`（收到 SIGTERM，属正常有限退出）。
+- 数据保留：`postgres-d` 内 1281 个文件仍在；重启后 `server_version_num=180006`、
+  `vector 0.8.7`、`alembic 0001_baseline` 不变，`rag_uow_probe` 计数 0。
+- 重启后四服务恢复 `healthy`，`/health` 仍 `200`。
+
+### 实际运行结果 — 干净重建
+
+独立目录 `/opt/rag-story-1-1/repo-dd44834-clean`，同样只从 Gitee 拉取 `dd44834`，
+`git status --porcelain` 为空，锁 hash 与主分支检出相同
+（`uv.lock 7ad33ac0…`、`package-lock.json 4b6d69e7…`）。
+
+```text
+npm ci --no-audit --no-fund   → exit 0（286 packages，7s）
+npm run build                 → exit 0（1598 modules，约 1.0s）
+```
+
+重建 dist 与 C 交付逐字节一致：
+
+| 文件 | SHA-256 |
+| --- | --- |
+| `dist/index.html` | `70174d6bd99333af16c404c49d316550185166a565e283d7868791385eeb4d72` |
+| `dist/assets/index-AMOFkByE.css` | `9a485ada3a2f3713c75dea8fc76b4766aeb384a8cea6de0a3116ed27c2f7ca3a` |
+| `dist/assets/index-CrqoaFFe.js` | `ae4aaa9099801a7afd102789d3e219684b32614646418fdd38043ba401473b45` |
+| `dist/favicon.ico` | `db74ab0b78338c1f778f8398c45f4103c99aea0e845a3118a7750b4eeafd3445` |
+
+总计 1,388,465 字节。Node `v24.22.0`、npm `11.19.1`。
+
+镜像 `--no-cache` 重建在独立 Compose 项目 `rag-story-1-1-clean`、独立标签
+`rag-story-1-1-api:clean-dd44834` / `rag-story-1-1-gateway:clean-dd44834` 下执行，
+不替换正在验证的服务。作业 `job_mvcoe2a7_47c17b71d8ce`，日志
+`/opt/rag-story-1-1/clean-build-images.log`。
+
+**wrapper 退出码：未记录。** 事后再取该作业时 `terminal_poll` 返回
+`Background job not found`，因此没有可引用的包装脚本退出码；
+**不以任何数值代替**，也不把整段干净重建标成 `pending`。
+
+重建结论由以下可复核事实支撑，而不是由 wrapper 退出码支撑：
+
+| 证据 | 内容 |
+| --- | --- |
+| BuildKit 完成日志 | `clean-build-images.log` 中 api 与 gateway 两目标均为 `Built`，各自 `exporting to image`、`resolving provenance` 均 `DONE`，无错误行 |
+| 实际镜像存在 | `rag-story-1-1-api:clean-dd44834` = `sha256:a8389949fcf0bcabfc9b1645f7e8ff6f46a2ab082ba8b3831f53f8ff2918e540`（13 层）；`rag-story-1-1-gateway:clean-dd44834` = `sha256:18161db2d220d89caba7de11f1e749c5523b379b8b87cfa5a9a9b3c52142b49a`（11 层） |
+| 应用/venv 一致指纹 | 与 dd44834 运行镜像共用相同的基础镜像层前缀；应用层由同一 `uv sync --locked` 生成，`clean-rebuild-fingerprint.txt` 记录逐层 digest |
+
+因此本次干净重建的记录口径是：**BuildKit 两目标构建完成、镜像实际存在、层指纹可复核；
+包装器退出码未记录（Job not found）**。不写 0、不写 pass。
+
+### 实际运行结果 — 跨容器锁 / 原子替换 / UID（原 AC3 缺项，已闭合）
+
+此前记录只做过宿主 ext4 探针，明确说明"不替代实际容器跨挂载/UID 锁/原子操作"。
+2026-10-18 在运行中的四服务上完成真实诊断，证据
+`/fileOfRag/testOfRAG/metadata/story-1-1/deploy-integration/locks-assets-uid-probe.txt`
+（SHA-256 `f5ae1a320a71ae18a901e149cc5845a6cc6a95ea37c6d69d32f80436ffb072fd`）。
+
+**实际 UID**：API `65532:65532`、worker `65532:65532`、gateway `65532:65532`、
+PostgreSQL `999(postgres):999`。
+
+**实际挂载与权限**（host 与容器内一致，未读取任何秘密值）：
+
+| 路径 | host mode/uid/gid | 容器内 | 读写 |
+| --- | --- | --- | --- |
+| `/opt/rag-story-1-1/assets` → `/var/lib/rag/assets` | `750 65532:65532` | `750 65532:65532` | RW（API+worker 同源） |
+| `/opt/rag-story-1-1/locks` → `/var/lib/rag/locks` | `750 65532:65532` | `750 65532:65532` | RW（API+worker 同源） |
+| `/opt/rag-story-1-1/epoch` → `/var/lib/rag/epoch` | `550 65532:65532` | `550 65532:65532` | RO |
+| `secrets/postgres-pgpass` → `/run/secrets/postgres_pgpass` | `400 65532:65532` | `400 65532:65532` | RO |
+| `secrets/tls-cert.pem` → `/run/tls/cert.pem` | `400 65532:65532` | `400 65532:65532` | RO |
+| `secrets/tls-key.pem` → `/run/tls/key.pem` | `400 65532:65532` | `400 65532:65532` | RO |
+
+**文件系统**：`locks` 与 `assets` 均 `findmnt` 为 `ext4 /dev/vda2 /`（宿主本地盘，非对象存储）。
+
+**同 inode**（本任务唯一 probe 文件 `ragprobe20261018a.lock` / `.final`）：
+host、API、worker 三处 `stat` 报同一 inode `674851` / `674852`，
+mode `640 uid=65532 gid=65532` 完全一致。
+
+**flock 跨容器争用**：
+
+| 步骤 | 实际结果 |
+| --- | --- |
+| worker 取 `LOCK_EX` 并持锁 12s | 成功，写入 held 标记 |
+| API 在持锁期间 `LOCK_EX\|LOCK_NB` | `BlockingIOError`（EWOULDBLOCK），**未取到** |
+| worker 释放后 API 再取 `LOCK_EX` | 成功，随后正常释放 |
+
+**os.replace 跨容器可见性**：worker 在同一 assets 挂载内写 `ragprobe20261018a.tmp` 并
+`os.replace` 为 `.final`；API 立即读到内容 `atomic-replace-v2`，
+原 `.tmp` 在 API 侧已不存在（`No such file or directory`），
+`.final` 保持原 inode `674852`。
+
+**清理**：仅删除本任务新建的三个 probe 文件与私有 scratch 目录
+`/opt/rag-story-1-1/probe-locks-20261018`；未触碰应用锁或既有数据，
+`locks`/`assets` 目录文件数均回到 0。诊断结束后四服务仍全 `healthy`，`/health` 200。
+
+### 实际运行结果 — 252 前端 gateway 更新（单独记录）
+
+固定提交 `25232d0bebc230c35837153b6fd572ff734977aa`，Gitee 干净检出
+`/opt/rag-story-1-1/repo-252`，`git status --porcelain` 为空。与 `dd44834` 的差异
+只有 2 个前端源码文件与文档；`uv.lock`（`7ad33ac0…`）、`package-lock.json`
+（`4b6d69e7…`）与整个 `backend/`、`deploy/` 内容均未变，因此 **API/worker 镜像不重建**。
+
+```sh
+docker compose -f deploy/compose.yaml build --no-cache --pull=false gateway
+```
+
+**退出码 0**（单独记录，与上面的 clean wrapper 无关）。日志
+`/opt/rag-story-1-1/gateway-252-build.log`。
+
+| 项 | 值 |
+| --- | --- |
+| 镜像 | `rag-story-1-1-gateway:local`，`sha256:6ae64cf42fc2a0edc2b145b1a09f5e9c5541453318e21a7d0043afd922923ffa`，11 层 |
+| 容器 | `rag-story-1-1-gateway-1`，`999aca6a1129ee26b4287bfac9bbf253a182ead771a4a4bc07eaecddfffd7897` |
+| 替换方式 | `up -d --no-build --pull never --no-deps gateway`，只重建 gateway |
+| API/worker/PG | 未重启：`Up 53 minutes (healthy)` 不变 |
+
+输入/产物核对：
+
+| 项 | SHA-256 |
+| --- | --- |
+| `dist/index.html`（提交内与容器内） | `4bd67fe33d6d6a226846e2c1b4c37931f02159f4f158319d313d2e124fe5817f` |
+| `dist/assets/index-CDataiw2.js` | `fade5263dc4a33deba1bc7de956fc2497fc1f1d343ce2de0acdb781f8de9348a` |
+| `dist/assets/index-AMOFkByE.css` | `9a485ada3a2f3713c75dea8fc76b4766aeb384a8cea6de0a3116ed27c2f7ca3a` |
+| `dist/favicon.ico` | `db74ab0b78338c1f778f8398c45f4103c99aea0e845a3118a7750b4eeafd3445` |
+
+烟测（真实 HTTPS，`https://127.0.0.1:8443`）：
+
+| 用例 | 结果 |
+| --- | --- |
+| `/health` | `200`，`no-store`，`{"status":"alive","service":"rag-api","check":"liveness"}` |
+| `/assets/index-CDataiw2.js` | `200`，`immutable`，`Content-Length 1019439`，下发内容 sha256 与交付一致 |
+| 旧 `/assets/index-CrqoaFFe.js` | `404`，`no-store` |
+| `/assets/index-AMOFkByE.css` | `200`，`immutable` |
+| `/index.html` | `200`，`no-store`，内容 sha256 `4bd67fe3…`，引用新 JS |
+| `/__maintenance/contracts/health` | `404` |
+
+### 未执行项
+
+| 项 | 状态 |
+| --- | --- |
+| 干净重建镜像作业的包装器退出码 | **未记录** — 作业 `job_mvcoe2a7_47c17b71d8ce` 已不可取（`terminal_poll` 返回 `Background job not found`）。不以任何数值代替；重建结论以 BuildKit 完成日志 + 实际镜像 + 层指纹为准（见上一节） |
+| 浏览器真实证据（320/768/1440、200% 缩放、键盘） | 由前端角色执行，非本段；C 已报告完成 |
+| 离线 override + `--pull never` 全离线启动 | 未单独执行；本轮每条命令已显式传 `--pull never` |
+| E 来源/许可证最终清单 | 见 [provenance.md](/E:/aaa-project/rag/docs/provenance.md:1)，本轮只登记已有元数据 |
+| 后端八项真实 PG 测试 | 已由后端者在 `9da9af2` 全部通过，本轮按指令不重复 |
+
+### 本轮本地文件 SHA-256（冻结观察值）
+
+下表前三个 hash 是**当前工作区**且与 `dd44834` 一致（可选改进已撤回）；
+被撤回版本的 hash 不再列出，避免被误读为当前状态。
+
+| 文件 | SHA-256 | 是否需发布 |
+| --- | --- | --- |
+| [compose.yaml](/E:/aaa-project/rag/deploy/compose.yaml:1) | `64c48784661cfc49f64114e740d6f1772bfa8887baa112ed10a46046a59c5951` | 否，与 `dd44834` 相同 |
+| [preflight.py](/E:/aaa-project/rag/deploy/preflight.py:1) | `cedda5af4d598f5a4058aac9b92625d583f3a8c27fe3147e31225c1abce7a0e1` | 否，与 `dd44834` 相同 |
+| [.env.example](/E:/aaa-project/rag/deploy/.env.example:1) | `feff1d95291a049c03d1940d018f4d1eadb005c5b7afa01f7f95722f4d54ce2c` | 否，与 `dd44834` 相同 |
+| [offline-images.md](/E:/aaa-project/rag/deploy/offline-images.md:1) | `9c22dfce87dbaaff34237738beb9bad3959f9798d9166ebb600605afcc545b8b` | 是（来源裁决与工件记录） |
+| [story-1-1-official-image-access.md](/E:/aaa-project/rag/docs/story-1-1-official-image-access.md:1) | `b00016e8cd5b1ec7a85e78d9b7c11937da2f73d4a173ce1c84183fd105c65541` | 是（镜像/PG 证据与纠错） |
+| 本记录 | 冻结后由主控取提交前实际值 | 是 |
+
+这些是工作区字节，不是提交号。`deploy/tools/acquire_official_images.py` 本轮未参与实际
+获取，**不纳入发布**，也不再打磨。

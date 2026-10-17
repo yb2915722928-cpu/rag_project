@@ -1,11 +1,12 @@
 ---
 title: 'Story 1.1 B0a 公共模型真源'
-status: in-progress
+status: done
 route: dispatch
 baseline_commit: NO_VCS
 context:
   - E:/aaa-project/rag/AGENTS.md
   - E:/aaa-project/rag/_bmad-output/planning-artifacts/architecture/architecture-RAG_all-2026-10-16/shared-contracts.md
+completion_record: E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-acceptance-snapshot-2026-10-18.md
 ---
 
 ## Intent
@@ -22,11 +23,11 @@ context:
 
 ## Tasks & Acceptance
 
-- [ ] 稳定 ID 为1–64 ASCII字母数字下划线连字符；UTC Z时间；拒孤立 surrogate，码点计数/半开区间与非BMP一致；默认不 trim/NFC/换行重排；稳定 UTF-8 键序列化，禁非有限数字。
-- [ ] 全部公共模型拒未知字段/版本；按需显式区分缺省与 null。有限十进制金额、未知 usage 为 null+unknown，不用浮点累加。
-- [ ] 扁平公共包、有限错误（code/message/http_status/retry_mode/白名单details）、202/完成/失败/GET operation/retrieval 最小载荷；status、outcome、operation_state、job_state 分离；retrieval 至多五块；202 无半答案。
-- [ ] 仅建安全 DTO/样例，不编业务表/权限/供应方；完成/202/失败的字段与状态一致性必须校验，受控 status_url 不接受任意 URL。错误/未认证投影不泄私有 operation ID、无权目标或上游正文。
-- [ ] 增加正负模型测试，运行开发者测试并保存结果；给 H/导出者列准确模型名称及调用方法。
+- [x] 稳定 ID 为1–64 ASCII字母数字下划线连字符；UTC Z时间；拒孤立 surrogate，码点计数/半开区间与非BMP一致；默认不 trim/NFC/换行重排；稳定 UTF-8 键序列化，禁非有限数字。
+- [x] 全部公共模型拒未知字段/版本；按需显式区分缺省与 null。有限十进制金额、未知 usage 为 null+unknown，不用浮点累加。
+- [x] 扁平公共包、有限错误（code/message/http_status/retry_mode/白名单details）、202/完成/失败/GET operation/retrieval 最小载荷；status、outcome、operation_state、job_state 分离；retrieval 至多五块；202 无半答案。
+- [x] 仅建安全 DTO/样例，不编业务表/权限/供应方；完成/202/失败的字段与状态一致性必须校验，受控 status_url 不接受任意 URL。错误/未认证投影不泄私有 operation ID、无权目标或上游正文。
+- [x] 增加正负模型测试，运行开发者测试并保存结果；给 H/导出者列准确模型名称及调用方法。
 
 Given 中文/组合字符/emoji，when 跨端序列化或切片，then 标量长度和原值保持。Given 未知字段、孤立 surrogate、非法 ID、枚举或互斥字段组合，when 校验，then 有限失败。Given 安全错误，when 导出，then 仅有限白名单。
 

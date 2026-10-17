@@ -1,6 +1,6 @@
 ---
 title: 'Story 1.1 一轮正式独立代码审查'
-status: in-review
+status: done
 baseline_commit: NO_VCS
 reviewed_commit: dd44834383de2bd9af9768a6ecc7fe2c48427eff
 context:
@@ -8,6 +8,7 @@ context:
   - E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-working-set.md
   - E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-delivery-plan.md
   - E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-acceptance-ledger.md
+completion_record: E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-acceptance-snapshot-2026-10-18.md
 ---
 
 ## 角色与唯一归属

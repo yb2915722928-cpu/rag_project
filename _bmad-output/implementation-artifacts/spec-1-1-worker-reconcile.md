@@ -1,12 +1,13 @@
 ---
 title: 'Story 1.1 A2a worker 临时改动归位'
-status: in-progress
+status: done
 route: dispatch
 baseline_commit: a52ae3090948e7eeea6df87590f15ce35351d247
 context:
   - E:/aaa-project/rag/AGENTS.md
   - E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-1-runtime-entrypoints.md
   - E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-amelia-control-2026-10-17.md
+completion_record: E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-acceptance-snapshot-2026-10-18.md
 ---
 
 ## Intent
@@ -21,10 +22,10 @@ context:
 
 ## Tasks & Acceptance
 
-- [ ] 先判断原 Linux self-pipe、signal wakeup 和有限关闭语义，不以 Windows 缺少 `pipe2` 判定 Linux 产品缺陷。选择最小修正；任何保留的 fallback 必须真正满足目标语义，不能靠 mock 宣称 Windows 真实进程可用。
-- [ ] Given Linux 精确 CPython 3.12.8 和已通过库检查，when worker 空闲及收到 SIGTERM/SIGINT，then 检查事务已结束、进程持久空闲并有限退出，恢复 handler/wakeup fd、关闭描述符和 engine。不得增加业务调度。
-- [ ] Given build/check/close 等错误，when 清理发生，then 保留主 SafeError、私密 diagnostic cause 与 cleanup errors，CLI 只输出有限消息。测试不能把目标平台以外的失败改为错误业务结论。
-- [ ] 维护可审阅测试变化与交付记录。所有应用运行/测试按 AGENTS 仅在 Netcatty Linux；GitHub/Gitee 未有相同可取 commit 时只完成源码准备，记录 `not-executed`。不本地运行、不重试认证/SFTP/镜像、不提交或推送。
+- [x] 先判断原 Linux self-pipe、signal wakeup 和有限关闭语义，不以 Windows 缺少 `pipe2` 判定 Linux 产品缺陷。选择最小修正；任何保留的 fallback 必须真正满足目标语义，不能靠 mock 宣称 Windows 真实进程可用。
+- [x] Given Linux 精确 CPython 3.12.8 和已通过库检查，when worker 空闲及收到 SIGTERM/SIGINT，then 检查事务已结束、进程持久空闲并有限退出，恢复 handler/wakeup fd、关闭描述符和 engine。不得增加业务调度。
+- [x] Given build/check/close 等错误，when 清理发生，then 保留主 SafeError、私密 diagnostic cause 与 cleanup errors，CLI 只输出有限消息。测试不能把目标平台以外的失败改为错误业务结论。
+- [x] 维护可审阅测试变化与交付记录。所有应用运行/测试按 AGENTS 仅在 Netcatty Linux；GitHub/Gitee 未有相同可取 commit 时只完成源码准备，记录 `not-executed`。不本地运行、不重试认证/SFTP/镜像、不提交或推送。
 
 ## 依赖与交付
 

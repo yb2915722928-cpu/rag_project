@@ -1,11 +1,12 @@
 ---
 title: 'Story 1.1 C1 原生负零的金额往返'
-status: in-progress
+status: done
 route: dispatch
 baseline_commit: a52ae3090948e7eeea6df87590f15ce35351d247
 context:
   - E:/aaa-project/rag/AGENTS.md
   - E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-1-contract-models.md
+completion_record: E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-acceptance-snapshot-2026-10-18.md
 ---
 
 ## Intent 与唯一归属
@@ -20,10 +21,10 @@ context:
 
 ## Tasks & Acceptance
 
-- [ ] Given原生Decimal负零（含 `-0`、`-0.00`），when构造并序列化Money，then输出为无负号零，保留原小数位/精度、不使用float或金额舍入，并能通过后端自身schema格式与JSON再读取。
-- [ ] Given正常零/正金额、真实负金额、非有限/float及非法带负号wire字符串，when沿用同一入口，then既有允许/拒绝规则不变；unknown仍用null而非零。
-- [ ] 新增针对本缺陷的回归源码，覆盖普通负零/带小数负零的dump→读取、schema格式与正常精度，不用大量镜像实现断言代替行为。
-- [ ] 只做源码准备。应用运行/测试只允许Netcatty Linux精确CPython3.12.8；固定Gitee提交未到位，不本机运行、不重试外部认证或SFTP、不提交/暂存。未执行即记录not-executed。
+- [x] Given原生Decimal负零（含 `-0`、`-0.00`），when构造并序列化Money，then输出为无负号零，保留原小数位/精度、不使用float或金额舍入，并能通过后端自身schema格式与JSON再读取。
+- [x] Given正常零/正金额、真实负金额、非有限/float及非法带负号wire字符串，when沿用同一入口，then既有允许/拒绝规则不变；unknown仍用null而非零。
+- [x] 新增针对本缺陷的回归源码，覆盖普通负零/带小数负零的dump→读取、schema格式与正常精度，不用大量镜像实现断言代替行为。
+- [x] 只做源码准备。应用运行/测试只允许Netcatty Linux精确CPython3.12.8；固定Gitee提交未到位，不本机运行、不重试外部认证或SFTP、不提交/暂存。未执行即记录not-executed。
 
 ## 交付
 

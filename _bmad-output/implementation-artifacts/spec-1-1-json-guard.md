@@ -1,11 +1,12 @@
 ---
 title: 'Story 1.1 B0b H 有界 JSON'
-status: in-progress
+status: done
 route: dispatch
 baseline_commit: NO_VCS
 context:
   - E:/aaa-project/rag/AGENTS.md
   - E:/aaa-project/rag/_bmad-output/planning-artifacts/prds/prd-RAG_all-2026-10-15/ir-review-2026-10-15/implementation-contract.md
+completion_record: E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-acceptance-snapshot-2026-10-18.md
 ---
 
 ## Intent
@@ -18,11 +19,11 @@ context:
 
 ## Tasks & Acceptance
 
-- [ ] 默认H：JSON实际流≤1048576字节、头≤16384字节；UTF-8、application/json可带UTF-8 charset、Content-Encoding缺省/identity；不只信Content-Length。
-- [ ] 单根object、深度≤8、节点≤8192、每object键≤64、每array项≤1024、每string≤65536标量、全部string≤131072标量。键也计入字符串预算，节点算法与深度定义写清；默认根object深度1，标量也是值节点。
-- [ ] 边读/词法解析边限界，在调用任何通用无界JSON加载前阻断结构/字符串超界；处理字符串转义/合法代理对、跨chunk多字节、重复键（含转义同键）、非法UTF-8/孤立surrogate/非有限数，拒尾随垃圾、超长数字或浮点溢出。不能先完整 json.loads 再数节点。
-- [ ] 明确1MiB只用于JSON入口，不作为原件二进制PUT入口中间件；累计读取有限，不回显请求体、原始异常、秘密或URL。
-- [ ] 覆盖各恰等上限/超一正负例、嵌套转义/非BMP/节点/重复键/错误编码/断流/实际字节越界；包括内容长度伪报与小chunk切边，验证有限错误及无日志泄漏。
+- [x] 默认H：JSON实际流≤1048576字节、头≤16384字节；UTF-8、application/json可带UTF-8 charset、Content-Encoding缺省/identity；不只信Content-Length。
+- [x] 单根object、深度≤8、节点≤8192、每object键≤64、每array项≤1024、每string≤65536标量、全部string≤131072标量。键也计入字符串预算，节点算法与深度定义写清；默认根object深度1，标量也是值节点。
+- [x] 边读/词法解析边限界，在调用任何通用无界JSON加载前阻断结构/字符串超界；处理字符串转义/合法代理对、跨chunk多字节、重复键（含转义同键）、非法UTF-8/孤立surrogate/非有限数，拒尾随垃圾、超长数字或浮点溢出。不能先完整 json.loads 再数节点。
+- [x] 明确1MiB只用于JSON入口，不作为原件二进制PUT入口中间件；累计读取有限，不回显请求体、原始异常、秘密或URL。
+- [x] 覆盖各恰等上限/超一正负例、嵌套转义/非BMP/节点/重复键/错误编码/断流/实际字节越界；包括内容长度伪报与小chunk切边，验证有限错误及无日志泄漏。
 
 Given 合法边界JSON，when 同步或流式解析，then 结果一致且保留原始解码值。Given 任何H超界或编码/结构错误，when 解析，then 在超界处有限失败且未调用无界后处理。Given 原件PUT，when 未调用此适配器，then 不受JSON界误伤。
 

@@ -1,25 +1,20 @@
-# Story 1.1 当前验收台账
+# Story 1.1 最终验收台账
 
-2026-10-17，Asia/Shanghai。当前 Amelia 主控 `01a14973-8555-7131-8fd2-e9eec12f53fe`，实际 `turn_context` 为 `group/auto-gpt-6-1-sol / max`。父 Story 仍 `in-progress`，完成门 `not_passed`；本文件不覆盖历史失败或运行日志。
+父 Story：done / passed。最终功能源码：`25232d0bebc230c35837153b6fd572ff734977aa`，GitHub/Gitee已同步；文档提交不冒充新的运行测试。完整逐AC/模型/工件/限制见 [验收快照](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-acceptance-snapshot-2026-10-18.md:1)。
 
-| 父 AC / 分段 | 当前工件/义务 | 状态 | 通过证据 |
-| --- | --- | --- | --- |
-| AC1/A1 | 精确3.12.8、正常uv锁、locked同步、Uvicorn进程 | 开发者验证已交付，待独立门 | 正常lock/locked通过；73passed+1条件skip，该负例在3.12.3单跑1passed；实际Uvicorn通过；46/46 hash一致 |
-| AC2/A2 | PG18.6、vector0.8.7、六项必跑及worker TERM/INT | 9da开发者8passed/0failed/0skipped，独立验证待执行 | 正式Gitee setup退出0，require-postgres八节点全收集通过，随机schema清理0，vector未变；见Linux交付记录原始JUnit |
-| AC4/B0a | 公共C1/C2模型、正负测试 | a70开发者契约/HTTP/H/金额专题395passed，当前修复闭环 | 对应固定源码/hash与原始JUnit；不重复已完成套件，独立门另验 |
-| AC4/B0b | H流式字节/编码/结构界 | 开发者165passed；Step5独立259passed/0failed/0skipped，含9项取消；全新审查两项已处置 | 同hash源码及桶内日志/JUnit；P2取消补测后关闭，P3抄录已更正，未见可证解析器缺陷 |
-| AC4/B0c+B | HTTP维护隔离入口、OpenAPI/JSON Schema/TS与样例 | a70样例52passed/0failed/0blocked、51工件生成/check通过；正式输出9da入库 | 原44/8保留历史，当前信封修复已由真实样例/回归闭环；manifest及输入/输出TS逐项hash核对 |
-| AC1/C | create-vue、peer锁、页面与真实浏览器/响应式 | dd44834固定源码18/18、type-check/build通过，dist/hash交D；浏览器pending | Node24.22.0官方hash及锁4b6d69e7…核实，现有腾讯云npm传输如实记录；浏览器仍需真实gateway |
-| AC1+AC3/D | 四服务、digest、Linux构建/启动/停止/重建 | 基础四镜像/完整归档就绪，gateway构建通过，API locked下载运行中；启动/生命周期/重建未执行 | 实际后台job及输入绑定dd44834，不能把gateway单镜像通过扩成四服务通过 |
-| AC3/E | 来源/许可证/依赖边界/hash/digest/改造 | partial | A1实际38项Linux依赖版本/许可证metadata与文件hash已取，另2项Windows marker；前端/镜像/干净重建未齐 |
-| 全Story | 开发者测试 | 当前a70非PG514passed/1条件skip；真实错误解释器负例另1passed，9da PG八项另8passed；C18/18 | Linux交付、PG原始JUnit与前端正式dd构建记录；D仍未完成，不将跨子门数量拼成一次全Story通过 |
-| 全Story | Step5独立验证 | Anscombe新实例开始核已交A/B/C原始证据，实际运行等待terminal时段 | actual stepfun/step-5-preview/high（派发默认），未参与实现；H历史子门不替代父Story |
-| 全Story | 全新6.1 Sol medium独立审查及回归 | 本轮独立静态预审/9项处置完成；全Story正式审查及运行回归未执行 | 静态预审、旧H审查均不替代本轮正式门 |
+| 原AC/分段 | 最终结果 | 证据 |
+| --- | --- | --- |
+| AC1/A1 | passed | 精确CPython3.12.8、正常uv锁/locked、Uvicorn0.37.0；独立非PG514passed，条件skip由真实3.12.3负例另1passed补证 |
+| AC2/A2 | passed | 开发者/独立者各8/8真实PG：六必跑及worker TERM/INT；PG18.6/vector0.8.7，迁移/回滚/namespace/清理0，未建生产vector(D) |
+| AC4/B | passed | 51正式工件/check一致、17DTO/5枚举，开发者/独立各52/52正负样例；原44/8失败保留，HTTP信封实际修复闭环 |
+| AC1/C | passed | 官方create-vue3.23.0 TS/Router/Pinia、真实锁/peer，Node24.22.0官方hash；dd18单元、252开发者/独立R1各14相关回归与type-check/build；真实gateway视口/键盘及真实200%页面缩放通过 |
+| AC1+AC3/D | passed | 四服务healthy、原迁移/stop-start退出0、数据保留、网关缓存/维护探针/预算原边界通过；容器实际UID/权限、共享inode、flock互斥/释放和原子替换实测并独立核对 |
+| AC3/E/干净重建 | passed | 来源/许可证声明/peer、发布方与实际缓存传输、层/归档hash登记；干净frontend dist一致，clean API/gateway Built及app/venv指纹同；252新gateway另有no-cache exit0 |
+| 独立验证 | passed | Anscombe实际Step5/high（默认），Linux514、负例1、PG8、样例52、R1十四及新gateway；原始证据均索引至桶 |
+| 正式审查/修复 | passed | 全新Cicero 6.1Sol/medium一轮发现R1/P2，原Kimi最小修复，相关回归及同实例窄复核关闭；无新增发现 |
 
-实现分段只降低上下文，不减少原四AC。`skipped`、unknown、未执行、静态检查和仅子规格完成不放行1.2。真实PG、Linux、浏览器、供应方与目标机分别标源；本Story不提前承担未来外发/目标4C4GB门，也不假称其通过。
+原四AC、各拆分项与必需回归分母不变。未来comparison/业务上传/真实供应方/目标机及S0整体门按原Story到期，不由1.1提前放行。各历史测试只绑定其原提交/hash，不合并成虚构的一次全量结果。
 
-2026-10-17用户澄清的测试口径已同步AGENTS：先判断失败是否属于当前Story或必要回归，不要求后续Story未实现功能提前通过。当前52样例内八个HTTP失败归AC4，另八个PG筛除归AC2，均不能转成未来延期；comparison.v1等原计划后续业务不纳当前验收分母。
+明确保留两项记录限制：原clean后台shell包装退出码未记录（作业过期），不填假0；直接BuildKit完成日志/实际镜像/指纹支撑真实重建。Linux headless缺CJK字体影响截图字形，不声称该环境完成中文字形视觉评估；布局/实际页面缩放/交互已有真实证据。
 
-本轮短规格 `cl100k_base` 实测：A1 1089、D 1108、B0a 1135、B0b 1045，均低于1600风险线。母A规格保留历史并自动拆分。
-
-Amelia续接补充：Windows本机基线 `457 passed / 6 failed / 3 errors / 13 skipped`，临时补丁后 `466 passed / 13 skipped / 1 warning`；没有固定服务器提交或桶内本轮JUnit，不打开正式门。主会话误改worker已交DeepSeek归位，Linux目标不扩大；[归位短规格](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-1-worker-reconcile.md:1) 为915 tokens。完整模型/来源/失败边界见 [主控记录](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-amelia-control-2026-10-17.md:1)。
+原迁移/启停工具观察已脱敏归档 `deploy-integration/lifecycle-original-tool-observations.json`，SHA256 `daeed77fc05261b5e15398697a1a8bf548c841e7ca6ade68e5824e7e178990c3`；容器探针 `locks-assets-uid-probe.txt` SHA256 `f5ae1a320a71ae18a901e149cc5845a6cc6a95ea37c6d69d32f80436ffb072fd`。桶根为 `/fileOfRag/testOfRAG/metadata/story-1-1/`。
