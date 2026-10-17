@@ -123,12 +123,52 @@ GET 投影、H 解析边界、no-store 与 request_id 轮换）通过。
 **前端消费方向**：`contracts.ts` 是服务端序列化输出类型，`contracts.input.ts` 是校验
 输入类型，两者 schema 存在差异，不能互替。
 
+## 真实 PostgreSQL 八项（`9da9af2`）
+
+主控已按 `deploy/postgres-test/setup.sh`（blob `65dc2616…`，SHA-256
+`0083b8f5d69cc968cd4da3fa8608dfb703ebbd3b92c5bf400ae6ff589226167a`）在 Gitee
+固定提交 `9da9af209123e8f57b2650e14b98175f4aa5fefd` 上完成 setup，exit 0。
+本段只复跑此前 `not-executed` 的 8 个 PG 节点，未重跑已通过的非 PG 与 B 套件。
+
+| 项目 | 实测 |
+| --- | --- |
+| 提交 | `9da9af2…`；`origin/main` 同值；`git status --porcelain` 0 行 |
+| `backend` 相对 `a70a7e2` 的 diff | **0 行**（仅新增 `contracts/**` 与 `deploy/postgres-test`） |
+| 解释器 | CPython 3.12.8 venv，psycopg 3.3.6 |
+| 服务端 | PostgreSQL `18.6 (Debian 18.6-1.pgdg12+2)`，`vector=0.8.7` |
+| 容器 / 端口 | `rag-story-1-1-postgres-test`，`127.0.0.1:55432→5432` |
+| 凭据装载 | 仅 `set -a; . <root 0400 env>`；只打印变量名与授权标志，未打印值或完整 DSN |
+| 命令 | `pytest --require-postgres -q` + 显式 8 个 node id |
+| JUnit | `tests=8 failures=0 errors=0 skipped=0` → **8 passed** |
+| 退出码 | 0 |
+
+覆盖节点：`test_real_migration_cycle`、`test_real_rollback_and_repository_boundary`、
+`test_real_driver_error_is_private`、`test_real_incompatible_version_is_read_only`、
+`test_real_namespace_cannot_fall_back`、`test_real_downgrade_missing_probe_preserves_peer`、
+`test_real_pg_worker_idle_has_no_transaction_and_exits[15]`、`…[2]`。
+`--require-postgres` 的会话级门保持启用：必须收集全部 8 个必需节点且逐一真实通过，
+skip/fail 会使会话失败，因此本结果不是条件筛除得来的通过。
+
+清理与共享资源：
+
+| 检查 | 结果 |
+| --- | --- |
+| 测试前 `rag_test_%` schema 数 | 0 |
+| 测试后 `rag_test_%` schema 数 | **0**（`leftover-schemas.txt` 为空） |
+| `public` schema 表数 | 0（未被 fixture 触碰） |
+| `vector` 扩展 | 仍在 `public`，`0.8.7`，未重建/未删除 |
+| 凭据泄漏扫描 | 证据目录内无 DSN、密码或 `password` 字样 |
+
+证据：`/fileOfRag/testOfRAG/metadata/story-1-1/linux-developer-gates/9da9af2-pg/`
+（`junit.xml` `79991de0…`、`pytest.log` `0891054a…`、`schema-counts.txt` `4df7e0c7…`，
+`archived-sha256.txt` 与源目录逐项一致）。
+
 ## 未执行与风险
 
-- `not-executed`：真实 PostgreSQL 18.6 / pgvector 0.8.7 八项、迁移循环、四服务生命周期
-  与干净重建、完整镜像/digest、浏览器与目标部署环境。
+- `not-executed`：四服务生命周期与干净重建、完整镜像/digest、浏览器与目标部署环境。
 - `not-executed`：Step 5 独立运行验证、全新 `GPT-6.1 Sol / medium` 独立审查及修复回归。
-- 已执行：修复后的 Linux 回归、51 工件重建与 `--check`、样例 52/52、证据归档。
+- 已执行：修复后的 Linux 回归、51 工件重建与 `--check`、样例 52/52、
+  真实 PostgreSQL 八项、证据归档。
 - 风险：JSON Schema 不能表达 Pydantic 跨字段校验；运行时权威仍是后端模型。
 - 风险：探针路径在 OpenAPI 中可见，生产网关必须阻断，部署侧尚未验证。
 

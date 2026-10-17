@@ -24,7 +24,7 @@
   "acceptance_gate": "not_passed",
   "next_story_key": null,
   "next_thread_id": null,
-  "dispatch_state": "B_developer_gate_passed_artifacts_publishing_frontend_active_PG_eight_pending",
+  "dispatch_state": "frontend_initial_source_publish_then_Linux_lock_and_build_A_B_complete",
   "handoff_id": "story-1-1-continued-01a14973",
   "handoff_kind": "same_story_serial_continuation",
   "handoff_source_thread_id": "01a148e2-1e11-7322-9626-6cbafb956f12",
@@ -168,9 +168,9 @@
     "old_docker_resources": "cleaned_by_explicit_user_authorization",
     "rag_runtime_acceptance": "A1 developer tests and H developer/independent unit tests recorded; PG, new HTTP/runtime, frontend and four-service gates not passed",
     "netcatty_terminal_lease": {
-      "holder_agent_id": null,
-      "holder_nickname": "unassigned",
-      "scope": "awaiting_controller_next_runtime_slot",
+      "holder_agent_id": "01a14a7b-8d53-7123-b700-b3a1b76cc0bd",
+      "holder_nickname": "Singer",
+      "scope": "frontend exact Node bootstrap then fixed-Gitee install/build/browser stage",
       "global_mutex": "__external_mcp__",
       "controller_and_backend_terminal_calls": "controller_and_Mencius_paused_until_Confucius_returns_slot",
       "backend_exclusive_session": "1eaffce6-3c45-45cb-84bd-18bd6fc84ea9",
@@ -185,12 +185,12 @@
       "data_path": "/opt/rag-story-1-1/postgres-test/data",
       "data_filesystem": "ext4",
       "setup_source_sha256": "6def3bb3e63ba179f3138b55fc5ef5012e3b4b9a52949f6f4d0831748a5a18a8",
-      "formal_Git_bound_setup": "not-executed_pending_script_publish_and_recheck",
-      "real_PG_eight_tests": "not-executed",
+      "formal_Git_bound_setup": "passed_9da9af209123e8f57b2650e14b98175f4aa5fefd_exit_0_sha256_0083b8f5d69cc968cd4da3fa8608dfb703ebbd3b92c5bf400ae6ff589226167a",
+      "real_PG_eight_tests": "passed_9da9af209123e8f57b2650e14b98175f4aa5fefd_8_passed_0_failed_0_skipped",
       "secret_value": "not_recorded"
     }
   },
-  "updated_at": "2026-10-17T23:48:17.3898634+08:00",
+  "updated_at": "2026-10-18T00:10:05.8016506+08:00",
   "handoff_registered_at": "2026-10-17T16:02:45.7798854+08:00",
   "handoff_acceptance_evidence": "Current rollout turn_context records group/auto-gpt-6-1-sol/max at 2026-10-17T10:41:11.525Z; source write released; unique current rag chat accepted Story 1.1. See story-1-1-amelia-control-2026-10-17.md.",
   "implementation_claims": [
@@ -440,7 +440,7 @@
       ],
       "spec": "_bmad-output/implementation-artifacts/spec-1-1-linux-developer-gates.md",
       "active_claim": true,
-      "status": "B_complete_generated_files_frozen_waiting_current_story_PG_tests",
+      "status": "A_B_developer_gates_complete_including_real_PG_8_remote_slot_returned",
       "requested_model": "zayuapi/deepseek-v4.1-flash",
       "requested_reasoning_effort": null,
       "actual_model": "zayuapi/deepseek-v4.1-flash",
@@ -458,7 +458,7 @@
       ],
       "spec": "_bmad-output/implementation-artifacts/spec-1-1-official-image-access.md",
       "active_claim": true,
-      "status": "remote_slot_returned_local_artifacts_and_setup_frozen_pending_Git_publication",
+      "status": "formal_PG_setup_passed_remote_slot_returned_no_extra_hardening",
       "requested_model": "zayuapi/deepseek-v4.1-flash",
       "requested_reasoning_effort": null,
       "actual_model": "zayuapi/deepseek-v4.1-flash",
@@ -478,7 +478,7 @@
       ],
       "spec": "_bmad-output/implementation-artifacts/spec-1-1-frontend-baseline.md",
       "active_claim": true,
-      "status": "model_verified_start_independent_scaffold_and_health_page_type_integration_waits_B_files_only",
+      "status": "local_scaffold_frozen_source_checkpoint_publishing_Linux_lock_generation_next",
       "requested_model": "kimi/kimi-k3",
       "requested_reasoning_effort": null,
       "actual_model": "kimi/kimi-k3",
@@ -494,7 +494,7 @@
     "creation_evidence": "GitHub browser page navigated from /new to /yb2915722928-cpu/rag_project and exposes private lock icon and clone URL",
     "local_branch": "main",
     "local_remote": "origin",
-    "commit": "a70a7e250ffda803f1e69e5ae5ce61615a2c02b7",
+    "commit": "9da9af209123e8f57b2650e14b98175f4aa5fefd",
     "push": "github_and_gitee_normal_push_exit_0_same_main_ref_verified",
     "remote_pull": "a70_pending_backend_remote_slot_previous_a269_verified",
     "integration_write": "failed_403_resource_not_accessible_by_integration",
@@ -509,7 +509,7 @@
       "update_or_mirror_mechanism": "direct_unattended_https_push_succeeded_without_force_existing_history_preserved"
     },
     "commit_semantics": "Verified synchronized Git revision and server checkout; current source checkpoint is included. Not yet developer-tested; later controller metadata commits do not inherit runtime acceptance.",
-    "last_pushed_commit": "a70a7e250ffda803f1e69e5ae5ce61615a2c02b7"
+    "last_pushed_commit": "9da9af209123e8f57b2650e14b98175f4aa5fefd"
   },
   "server_source_policy": {
     "development_upload_remote": "https://github.com/yb2915722928-cpu/rag_project.git",
@@ -587,7 +587,8 @@
     },
     "real_postgres": {
       "required_nodes": 8,
-      "status": "not-executed_current_story_AC2_not_future_work"
+      "status": "passed_current_story_AC2_8_of_8",
+      "tested_commit": "9da9af209123e8f57b2650e14b98175f4aa5fefd"
     },
     "future_comparison_v1": "deferred_as_original_plan_not_in_current_sample_denominator",
     "evidence_root": "/opt/rag-story-1-1/linux-developer-gates-work/evidence",

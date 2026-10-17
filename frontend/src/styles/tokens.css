@@ -1,0 +1,74 @@
+/* RAG_all design tokens (DESIGN.md, 2026-10-16, light mode) */
+:root {
+  --color-canvas: #f2f3f5;
+  --color-surface: #ffffff;
+  --color-surface-subtle: #f5f7fa;
+  --color-text-primary: #303133;
+  --color-text-secondary: #606266;
+  --color-text-disabled: #909399;
+  --color-border: #dcdfe6;
+  --color-border-control: #767a82;
+  --color-primary: #409eff; /* EP system blue: decoration/selection only */
+  --color-action: #1d6cc0;
+  --color-action-hover: #185ba1;
+  --color-action-active: #144b85;
+  --color-on-action: #ffffff;
+  --color-focus: #1d6cc0;
+  --color-selection: #ecf5ff;
+  --color-success: #2f6f17;
+  --color-success-surface: #f0f9eb;
+  --color-danger: #b42318;
+  --color-danger-surface: #fef0f0;
+  --color-warning: #8a5a00;
+  --color-warning-surface: #fdf6ec;
+  --color-info: #606266;
+  --color-info-surface: #f4f4f5;
+  --color-source-highlight: #fff0b3;
+
+  --font-body:
+    'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei',
+    '微软雅黑', Arial, sans-serif;
+  --font-code: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-full: 9999px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --panel-padding: 24px;
+  --touch-target: 44px;
+
+  /* Element Plus: bind EP semantics onto the approved token layer */
+  --el-color-primary: var(--color-action);
+  --el-color-primary-light-3: #4a90d9;
+  --el-color-primary-light-5: #7badde;
+  --el-color-primary-light-7: #aecbe8;
+  --el-color-primary-light-8: #c9d9f0;
+  --el-color-primary-light-9: var(--color-selection);
+  --el-color-primary-dark-2: var(--color-action-hover);
+  --el-color-success: var(--color-success);
+  --el-color-success-light-9: var(--color-success-surface);
+  --el-color-danger: var(--color-danger);
+  --el-color-error: var(--color-danger);
+  --el-color-danger-light-9: var(--color-danger-surface);
+  --el-color-error-light-9: var(--color-danger-surface);
+  --el-color-warning: var(--color-warning);
+  --el-color-warning-light-9: var(--color-warning-surface);
+  --el-color-info: var(--color-info);
+  --el-color-info-light-9: var(--color-info-surface);
+  --el-text-color-primary: var(--color-text-primary);
+  --el-text-color-regular: var(--color-text-secondary);
+  --el-text-color-secondary: var(--color-text-secondary);
+  --el-text-color-disabled: var(--color-text-disabled);
+  --el-border-color: var(--color-border);
+  --el-border-color-light: var(--color-border);
+  --el-border-color-lighter: var(--color-border);
+  --el-border-radius-base: var(--radius-md);
+  --el-font-size-base: 14px;
+  --el-font-family: var(--font-body);
+}

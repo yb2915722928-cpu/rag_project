@@ -1,0 +1,20 @@
+{
+  "files": [],
+  "compilerOptions": {
+    // Type-only access to the generated public contracts (contracts/typescript).
+    "paths": {
+      "@contracts/*": ["../contracts/typescript/*"]
+    }
+  },
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    },
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.vitest.json"
+    }
+  ]
+}
