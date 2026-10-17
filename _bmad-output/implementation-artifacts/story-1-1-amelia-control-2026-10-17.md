@@ -85,3 +85,18 @@ F1–F8及C1-NZ九项原缺陷已在各自冻结版本中获得独立静态修�
 原始暂存内容已完整导出为 [原始补丁](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-preparation-original-index-2026-10-17.diff:1)，143354字节，SHA-256 `0a71b2f52f91f0210bc2062856fe79724f013c72d939377d4e55f922d8553b31`；原tree ID `870dec86638d3bb980d7f35eac7724c5313db582`，基线 `a52ae3090948e7eeea6df87590f15ce35351d247`。这保留旧失败源码以供重建，后续暂存/检查点采用修复版；报告中的“原index”不再表示未来实时index。
 
 本轮全部实现认领已释放，无进行中的代码写者；原作者可在访问恢复后按新scope返修，已关闭实例不得无模型核验直接恢复。Amelia当前owner仍保留协调职责，relay为 `blocked_external`、父完成门 `not_passed`、下一Story/会话为空。剩余是未具备的GitHub/Gitee访问/固定提交与完整批准镜像，以及其后的开发者运行、B正式工件、C、D、E、Step5与全新正式审查。未创建下一会话或定时自动化。
+
+## 22:23 访问恢复与开发者运行接替
+
+以上阻塞是历史检查点。用户完成设备授权后，CLI实际确认账号 `yb2915722928-cpu`、keyring存储与HTTPS；API确认push权限，当前仓库public。Windows已有代理仅供此次CLI/Git进程复用，未改全局代理；已将原校验CLI等字节复制到稳定工具目录再配置Git凭据助手，没有记录token。
+
+GitHub与Gitee正常push均exit0，随后两端main均返回 `a269d492fb33b3b13d95265fa11589d39260c4e0`。服务器现有repo原先干净，仅从公开Gitee fetch并detached检出该提交，pyproject及uv.lock SHA-256逐项与本地相同；完整源码与运行证据由开发者补齐。Netcatty拒绝过含shell命令替换的批处理；随后采用独立、可审阅Git命令完成操作，不绕过账号授权或替换传输渠道。
+
+主控最新实际context为 `2026-10-17T14:15:03.548Z` 的 `group/auto-gpt-6-1-sol / max`。同项目仅本会话active，旧写者不恢复。新接替者均显式派发DeepSeek，未传推理档位；父会话只读核验：
+
+| 范围 | 实例 | 实际context |
+| --- | --- | --- |
+| backend/contracts开发者运行门、正式B | Confucius `01a14a3e-989e-7c72-b98c-90c3a9e9b5c9` | `zayuapi/deepseek-v4.1-flash / max`，`2026-10-17T14:23:01.517Z` |
+| deploy官方镜像获取恢复 | Mencius `01a14a3e-ba7c-74e3-a162-b8f092a80308` | `zayuapi/deepseek-v4.1-flash / max`，`2026-10-17T14:23:09.015Z` |
+
+新短规格实际为920/786 tokens（cl100k_base）。旧Docker失败记录仍有效；仅已观察到的本机官方源访问变化允许一次针对性复核，不宣称远程镜像、真实PG或父完成门已通过。
