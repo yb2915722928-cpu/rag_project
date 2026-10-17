@@ -97,6 +97,67 @@ describe('fetchHealth', () => {
     controller.abort()
     await expect(pending).rejects.toMatchObject({ name: 'AbortError' })
   })
+
+  it('classifies body-phase timeout as FetchTimeoutError after 200 headers', async () => {
+    vi.useFakeTimers()
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockImplementation((_url: string, init: RequestInit) => {
+        // Headers resolve immediately; body parsing waits on the caller's signal
+        // so an abort rejects json() with AbortError like a real stream.
+        const json = vi.fn().mockImplementation(
+          () =>
+            new Promise((_resolve, reject) => {
+              init.signal?.addEventListener('abort', () => {
+                reject(new DOMException('The operation was aborted.', 'AbortError'))
+              })
+            }),
+        )
+        return Promise.resolve({
+          ok: true,
+          status: 200,
+          json,
+        } as unknown as Response)
+      }),
+    )
+    const pending = fetchHealth({ timeoutMs: 1000 })
+    const assertion = expect(pending).rejects.toBeInstanceOf(FetchTimeoutError)
+    await vi.advanceTimersByTimeAsync(1000)
+    await assertion
+  })
+
+  it('propagates caller abort during body read, not as invalid-body', async () => {
+    let jsonEntered = false
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockImplementation((_url: string, init: RequestInit) => {
+        const json = vi.fn().mockImplementation(
+          () => {
+            jsonEntered = true
+            return new Promise((_resolve, reject) => {
+              init.signal?.addEventListener('abort', () => {
+                reject(new DOMException('The operation was aborted.', 'AbortError'))
+              })
+            })
+          },
+        )
+        return Promise.resolve({
+          ok: true,
+          status: 200,
+          json,
+        } as unknown as Response)
+      }),
+    )
+    const controller = new AbortController()
+    const pending = fetchHealth({ signal: controller.signal, timeoutMs: 60000 })
+    // Let the awaited fetch resolve and json() install its abort listener
+    // before signalling the caller abort, so the event is not missed.
+    await vi.waitFor(() => {
+      expect(jsonEntered).toBe(true)
+    })
+    controller.abort()
+    await expect(pending).rejects.toMatchObject({ name: 'AbortError' })
+  })
 })
 
 describe('health store', () => {

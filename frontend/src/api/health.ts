@@ -45,8 +45,16 @@ export async function fetchHealth(options: FetchHealthOptions = {}): Promise<Hea
       if (typeof parsed === 'object' && parsed !== null && !Array.isArray(parsed)) {
         json = parsed as Record<string, unknown>
       }
-    } catch {
-      json = undefined
+    } catch (error) {
+      // Only a genuine JSON syntax failure maps to invalid-body; anything else
+      // (body-phase timeout AbortError, caller abort, stream/transport error)
+      // propagates so the outer handler keeps the timeout/abort/network
+      // classification.
+      if (error instanceof SyntaxError) {
+        json = undefined
+      } else {
+        throw error
+      }
     }
 
     return { ok: response.ok, status: response.status, json }

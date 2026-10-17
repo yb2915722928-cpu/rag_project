@@ -5,15 +5,15 @@
 | 父 AC / 分段 | 当前工件/义务 | 状态 | 通过证据 |
 | --- | --- | --- | --- |
 | AC1/A1 | 精确3.12.8、正常uv锁、locked同步、Uvicorn进程 | 开发者验证已交付，待独立门 | 正常lock/locked通过；73passed+1条件skip，该负例在3.12.3单跑1passed；实际Uvicorn通过；46/46 hash一致 |
-| AC2/A2 | PG18.6、vector0.8.7、六项必跑、迁移循环/namespace/回滚/无生产向量/秘密 | not-executed | 旧补充/静态测试不替代 |
-| AC4/B0a | 公共C1/C2模型、正负测试 | 固定a269开发者契约/HTTP/H/金额专题394passed；后续HTTP信封修复需重新发布并回归 | 主控已直接读取服务器JUnit确认394/0/0，保留其原commit；不自动标为修复版通过 |
+| AC2/A2 | PG18.6、vector0.8.7、六项必跑及worker TERM/INT | 9da开发者8passed/0failed/0skipped，独立验证待执行 | 正式Gitee setup退出0，require-postgres八节点全收集通过，随机schema清理0，vector未变；见Linux交付记录原始JUnit |
+| AC4/B0a | 公共C1/C2模型、正负测试 | a70开发者契约/HTTP/H/金额专题395passed，当前修复闭环 | 对应固定源码/hash与原始JUnit；不重复已完成套件，独立门另验 |
 | AC4/B0b | H流式字节/编码/结构界 | 开发者165passed；Step5独立259passed/0failed/0skipped，含9项取消；全新审查两项已处置 | 同hash源码及桶内日志/JUnit；P2取消补测后关闭，P3抄录已更正，未见可证解析器缺陷 |
-| AC4/B0c+B | HTTP维护隔离入口、OpenAPI/JSON Schema/TS与样例 | a269正式生成51工件、--check通过；52样例44passed/8failed/0blocked，当前C2信封缺status，正在本地最小修复 | 主控已读原始generate/check/samples日志，八项均为现有failure_response序列化遗漏，非后续任务缺代码；C仍等待本段修复回归 |
-| AC1/C | create-vue、peer锁、页面与真实浏览器/响应式 | C0官方GitHub规范与Node SHASUMS已读；B后实施 | 来源记录有固定版本/规则；工具链工件与页面未生成 |
-| AC1+AC3/D | 四服务、digest、Linux构建/启动/停止/重建 | F5–F8均获独立静态修复确认，F8正确DeepSeek接替；真实门未执行 | DockerHub/auth超时、无完整镜像digest，静态改动不能算通过 |
+| AC4/B0c+B | HTTP维护隔离入口、OpenAPI/JSON Schema/TS与样例 | a70样例52passed/0failed/0blocked、51工件生成/check通过；正式输出9da入库 | 原44/8保留历史，当前信封修复已由真实样例/回归闭环；manifest及输入/输出TS逐项hash核对 |
+| AC1/C | create-vue、peer锁、页面与真实浏览器/响应式 | dd44834固定源码18/18、type-check/build通过，dist/hash交D；浏览器pending | Node24.22.0官方hash及锁4b6d69e7…核实，现有腾讯云npm传输如实记录；浏览器仍需真实gateway |
+| AC1+AC3/D | 四服务、digest、Linux构建/启动/停止/重建 | 基础四镜像/完整归档就绪，gateway构建通过，API locked下载运行中；启动/生命周期/重建未执行 | 实际后台job及输入绑定dd44834，不能把gateway单镜像通过扩成四服务通过 |
 | AC3/E | 来源/许可证/依赖边界/hash/digest/改造 | partial | A1实际38项Linux依赖版本/许可证metadata与文件hash已取，另2项Windows marker；前端/镜像/干净重建未齐 |
-| 全Story | 开发者测试 | Linux非PG基线513passed/1条件skip/8PG筛除；真实错误解释器负例另1passed，当前修复待回归 | 主控已直接解析对应JUnit：513/0/0/1与1/0/0/0；runtime专题47passed，2PG筛除；未执行PG不记通过 |
-| 全Story | Step5独立验证 | H历史子门已交付；本轮其它运行验证未执行 | 子门独立记录不替代父Story全量 |
+| 全Story | 开发者测试 | 当前a70非PG514passed/1条件skip；真实错误解释器负例另1passed，9da PG八项另8passed；C18/18 | Linux交付、PG原始JUnit与前端正式dd构建记录；D仍未完成，不将跨子门数量拼成一次全Story通过 |
+| 全Story | Step5独立验证 | Anscombe新实例开始核已交A/B/C原始证据，实际运行等待terminal时段 | actual stepfun/step-5-preview/high（派发默认），未参与实现；H历史子门不替代父Story |
 | 全Story | 全新6.1 Sol medium独立审查及回归 | 本轮独立静态预审/9项处置完成；全Story正式审查及运行回归未执行 | 静态预审、旧H审查均不替代本轮正式门 |
 
 实现分段只降低上下文，不减少原四AC。`skipped`、unknown、未执行、静态检查和仅子规格完成不放行1.2。真实PG、Linux、浏览器、供应方与目标机分别标源；本Story不提前承担未来外发/目标4C4GB门，也不假称其通过。

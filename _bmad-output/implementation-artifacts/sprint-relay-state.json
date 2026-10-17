@@ -24,7 +24,7 @@
   "acceptance_gate": "not_passed",
   "next_story_key": null,
   "next_thread_id": null,
-  "dispatch_state": "frontend_actual_fixes_publishing_then_fixed_Gitee_rebuild_dist_to_D",
+  "dispatch_state": "R1_publishing_two_frontend_files_no_backend_or_PG_changes",
   "handoff_id": "story-1-1-continued-01a14973",
   "handoff_kind": "same_story_serial_continuation",
   "handoff_source_thread_id": "01a148e2-1e11-7322-9626-6cbafb956f12",
@@ -168,9 +168,9 @@
     "old_docker_resources": "cleaned_by_explicit_user_authorization",
     "rag_runtime_acceptance": "A1 developer tests and H developer/independent unit tests recorded; PG, new HTTP/runtime, frontend and four-service gates not passed",
     "netcatty_terminal_lease": {
-      "holder_agent_id": "01a14a7b-8d53-7123-b700-b3a1b76cc0bd",
-      "holder_nickname": "Singer",
-      "scope": "frontend exact Node bootstrap then fixed-Gitee install/build/browser stage",
+      "holder_agent_id": "01a14ad7-beb6-70c2-9098-4a2734b79c17",
+      "holder_nickname": "Anscombe",
+      "scope": "one independent required backend/PG/contracts/frontend run and gateway smoke; inspect original clean build job, no third build",
       "global_mutex": "__external_mcp__",
       "controller_and_backend_terminal_calls": "controller_and_Mencius_paused_until_Confucius_returns_slot",
       "backend_exclusive_session": "1eaffce6-3c45-45cb-84bd-18bd6fc84ea9",
@@ -190,7 +190,7 @@
       "secret_value": "not_recorded"
     }
   },
-  "updated_at": "2026-10-18T00:44:45.4839107+08:00",
+  "updated_at": "2026-10-18T02:08:21.0310580+08:00",
   "handoff_registered_at": "2026-10-17T16:02:45.7798854+08:00",
   "handoff_acceptance_evidence": "Current rollout turn_context records group/auto-gpt-6-1-sol/max at 2026-10-17T10:41:11.525Z; source write released; unique current rag chat accepted Story 1.1. See story-1-1-amelia-control-2026-10-17.md.",
   "implementation_claims": [
@@ -459,7 +459,7 @@
       ],
       "spec": "_bmad-output/implementation-artifacts/spec-1-1-official-image-access.md",
       "active_claim": true,
-      "status": "formal_PG_setup_passed_remote_slot_returned_no_extra_hardening",
+      "status": "fixed_dd44834_four_service_integration_active",
       "requested_model": "zayuapi/deepseek-v4.1-flash",
       "requested_reasoning_effort": null,
       "actual_model": "zayuapi/deepseek-v4.1-flash",
@@ -479,13 +479,52 @@
       ],
       "spec": "_bmad-output/implementation-artifacts/spec-1-1-frontend-baseline.md",
       "active_claim": true,
-      "status": "local_scaffold_frozen_source_checkpoint_publishing_Linux_lock_generation_next",
+      "status": "C_developer_browser_and_code_build_complete_terminal_returned",
       "requested_model": "kimi/kimi-k3",
       "requested_reasoning_effort": null,
       "actual_model": "kimi/kimi-k3",
       "actual_effort": "max",
       "actual_turn_context": "2026-10-17T15:29:34.864Z",
       "baseline_commit": "0b576b65d3824e7f4319c39c38e80398caf08fb8"
+    },
+    {
+      "agent_id": "01a14ad7-beb6-70c2-9098-4a2734b79c17",
+      "nickname": "Anscombe",
+      "role": "independent_runtime_verification",
+      "scope": [
+        "docs/story-1-1-independent-verification.md",
+        "remote task-specific evidence only"
+      ],
+      "spec": "_bmad-output/implementation-artifacts/spec-1-1-independent-verification.md",
+      "active_claim": true,
+      "status": "exclusive_slot_for_one_actual_independent_runtime_verification",
+      "requested_model": "stepfun/step-5-preview",
+      "requested_reasoning_effort": null,
+      "actual_model": "stepfun/step-5-preview",
+      "actual_effort": "high",
+      "actual_turn_context": "2026-10-17T17:10:17.134Z",
+      "baseline_commit": "dd44834383de2bd9af9768a6ecc7fe2c48427eff",
+      "spec_tokens": 1191
+    },
+    {
+      "agent_id": "01a14afb-d1eb-75d0-b981-ee0cae4235e0",
+      "nickname": "Cicero",
+      "role": "fresh_formal_independent_code_review",
+      "scope": [
+        "docs/story-1-1-final-code-review.md"
+      ],
+      "spec": "_bmad-output/implementation-artifacts/spec-1-1-final-code-review.md",
+      "active_claim": true,
+      "status": "model_verified_one_current_story_evidence_based_review_in_parallel",
+      "requested_model": "group/auto-gpt-6-1-sol",
+      "requested_reasoning_effort": "medium",
+      "actual_model": "group/auto-gpt-6-1-sol",
+      "actual_effort": "medium",
+      "actual_turn_context": "2026-10-17T17:49:41.129Z",
+      "reviewed_commit": "dd44834383de2bd9af9768a6ecc7fe2c48427eff",
+      "diff_file": "C:/Users/29157/AppData/Local/Temp/rag-story-1-1-formal-review-dd448343.diff",
+      "diff_bytes": 824723,
+      "spec_tokens": 1124
     }
   ],
   "git_transport": {
@@ -670,5 +709,126 @@
     "formal_fixed_commit_rebuild": "pending_this_release",
     "dist": "preliminary_do_not_relabel_as_fixed_commit_artifact",
     "warnings": "1MB Element Plus chunk; no optimization gate added"
+  },
+  "frontend_formal_result": {
+    "commit": "dd44834383de2bd9af9768a6ecc7fe2c48427eff",
+    "node": "24.22.0",
+    "npm": "11.19.1",
+    "lock_sha256": "4b6d69e744af7ddac2255ce8fa9c3cc64cf0d9576ae343fc0b2e60babd8ae4c0",
+    "unit_tests": "18/18 passed",
+    "typecheck_and_build": "passed",
+    "dist_total_bytes": 1388465,
+    "dist_hashes": {
+      "index.html": "70174d6bd99333af16c404c49d316550185166a565e283d7868791385eeb4d72",
+      "assets/index-AMOFkByE.css": "9a485ada3a2f3713c75dea8fc76b4766aeb384a8cea6de0a3116ed27c2f7ca3a",
+      "assets/index-CrqoaFFe.js": "ae4aaa9099801a7afd102789d3e219684b32614646418fdd38043ba401473b45",
+      "favicon.ico": "db74ab0b78338c1f778f8398c45f4103c99aea0e845a3118a7750b4eeafd3445"
+    },
+    "browser_evidence": "developer_real_gateway_320_768_1440_zoom_keyboard_passed_console_0_pageerror_0; CJK_test_font_missing_recorded",
+    "dist_source": "fixed_Gitee_checkout_dd448343"
+  },
+  "active_D_background_build": {
+    "job_id": "job_mvcn2gmb_cc1e9e4be4db",
+    "session_id": "b8c5a59e-6c63-43b4-bb4e-ea7fd15aeb6d",
+    "commit": "dd44834383de2bd9af9768a6ecc7fe2c48427eff",
+    "log": "/opt/rag-story-1-1/build.log",
+    "last_observed": "completed_BUILD_EXIT_0",
+    "gateway_image": "rag-story-1-1-gateway:local",
+    "gateway_image_id_prefix": "145a459118af",
+    "rule": "retain job; no duplicate build or kill; terminal call ownership can move while process runs"
+  },
+  "browser_bootstrap_background": {
+    "job_id": "job_mvcnpw7b_4b714cda550a",
+    "package": "playwright-core@1.59.1",
+    "directory": "/opt/rag-story-1-1/browser-test",
+    "artifact": "Chrome Headless Shell 147.0.7727.15 official cdn.playwright.dev",
+    "last_bytes_observed_MB": 67.9,
+    "status": "downloading_with_observed_progress_no_error",
+    "still_pending": [
+      "extract",
+      "runtime_libraries",
+      "browser_smoke",
+      "actual_gateway_evidence"
+    ]
+  },
+  "four_service_first_run": {
+    "commit": "dd44834383de2bd9af9768a6ecc7fe2c48427eff",
+    "build_exit": 0,
+    "migration_exit": 0,
+    "baseline_check": "DATABASE_BASELINE_OK",
+    "gateway_url": "https://127.0.0.1:8443",
+    "bind": "127.0.0.1:8443",
+    "self_signed_test_TLS": true,
+    "health_HTTP": 200,
+    "health_cache_control": "no-store",
+    "services_healthy": [
+      "gateway",
+      "api",
+      "worker",
+      "postgres"
+    ],
+    "api_worker_same_image_id_prefix": "75a1e1bc5f99",
+    "gateway_image_id_prefix": "145a459118af",
+    "python": "3.12.8",
+    "uvicorn": "0.37.0",
+    "uv": "0.12.9",
+    "vector": "0.8.7",
+    "migration_revision": "0001_baseline",
+    "created_tables": [
+      "alembic_version",
+      "rag_uow_probe"
+    ],
+    "lifecycle_and_clean_rebuild": "developer_stop_exit_0_start_exit_0_healthy_versions_data_retained_clean_frontend_dist_matches_clean_image_build_background",
+    "browser_status": "waiting_D_stable_after_lifecycle"
+  },
+  "D_developer_lifecycle_result": {
+    "commit": "dd44834383de2bd9af9768a6ecc7fe2c48427eff",
+    "stop_exit": 0,
+    "start_exit": 0,
+    "services_after_restart": "all_healthy",
+    "data_file_count_retained": 1281,
+    "health_after_restart_HTTP": 200,
+    "gateway_original_cases": "private success/404/maintenance/api no-store; conditional no-304; hashed 200 immutable only; missing/unhashed no-store; JSON2MiB413; original1.5MiB404_not413; header20KB400",
+    "clean_frontend_ci_build": "passed_286_packages",
+    "clean_dist_four_hashes": "identical",
+    "clean_image_job": "job_mvcoe2a7_47c17b71d8ce",
+    "clean_image_log": "/opt/rag-story-1-1/clean-build-images.log",
+    "clean_image_tags": "clean-dd44834",
+    "running_gateway_not_modified_by_rebuild": true,
+    "clean_image_result": "running_not_passed_yet"
+  },
+  "formal_review_policy": {
+    "workflow": "bmad-build step-04 with explicit project/user review overrides",
+    "active_review": "one fresh GPT-6.1 Sol/medium current-story review",
+    "skipped_defaults": [
+      "minimum issue quota blind hunter",
+      "generic edge-case expansion",
+      "automatic additional review rounds"
+    ],
+    "reason": "User explicitly prohibits overdefensive review; project model ownership and actual current-story evidence govern",
+    "zero_findings_allowed": true,
+    "original_completion_gate": "unchanged_pending_runtime_browser_rebuild_and_real_findings"
+  },
+  "formal_review_result": {
+    "reviewer": "01a14afb-d1eb-75d0-b981-ee0cae4235e0",
+    "reviewed_commit": "dd44834383de2bd9af9768a6ecc7fe2c48427eff",
+    "substantiated_findings": 1,
+    "finding_id": "R1",
+    "severity": "P2 / medium",
+    "triage": "patch_current_story",
+    "trigger": "HTTP response headers received, response.json body read is aborted/times out",
+    "bad_result": "inner unconditional catch hides AbortError/transport errors and store reports invalid-body",
+    "owner": "01a14a7b-8d53-7123-b700-b3a1b76cc0bd",
+    "allowed_fix_scope": [
+      "frontend/src/api/health.ts",
+      "frontend/src/__tests__/health.spec.ts"
+    ],
+    "regression_scope": "related health tests and necessary updated frontend artifact only; no backend/PG or new broad review",
+    "status": "R1_local_fix_frozen_publishing_then_related_Linux_regression",
+    "same_reviewer_recheck_only": true,
+    "frozen_fix_hashes": {
+      "frontend/src/__tests__/health.spec.ts": "5041f8455613a835c220b292828dc861ac9f055f3146204bcaab2a4a25440b67",
+      "frontend/src/api/health.ts": "b8d74121f2277e4fcf2f83acd6fed201ee6d1b5ec4eae0d14cff6159cff4709a"
+    }
   }
 }
