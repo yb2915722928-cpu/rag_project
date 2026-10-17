@@ -6,16 +6,16 @@
   "project_path": "E:/aaa-project/rag",
   "host_id": "local",
   "mode": "serial-completion-triggered",
-  "state": "active",
+  "state": "blocked_external",
   "owner_thread_id": "01a148e2-1e11-7322-9626-6cbafb956f12",
   "current_story_key": "1-1-启动可重建的模块化项目",
-  "current_spec": "_bmad-output/implementation-artifacts/spec-1-1-python-3128.md",
-  "current_implementation_agent_id": "01a148e6-0fcd-7ff1-af01-c546f5146474",
-  "implementation_write_scope": ["backend/** except claims below for public/scalars/json_guard and their dedicated tests", "docs/story-1-1-python-3128-delivery.md"],
+  "current_spec": "_bmad-output/implementation-artifacts/spec-1-1-contract-http.md",
+  "current_implementation_agent_id": null,
+  "implementation_write_scope": [],
   "acceptance_gate": "not_passed",
   "next_story_key": null,
-  "next_thread_id": "01a148e2-1e11-7322-9626-6cbafb956f12",
-  "dispatch_state": "implementation_active",
+  "next_thread_id": null,
+  "dispatch_state": "local_checkpoint_ready_git_https_auth_blocked_no_duplicate_chat",
   "handoff_id": "story-1-1-sol-max-2026-10-17-01a1489a",
   "handoff_kind": "same_story_user_requested_model_change",
   "handoff_source_thread_id": "01a1489a-52c3-7590-9181-880dabdb3dd1",
@@ -30,15 +30,31 @@
   "handoff_authorization": "2026-10-17 explicit user request: update main-session model to group/auto-gpt-6-1-sol / max, then hand off to a new chat and continue the authorized current-Sprint serial relay; incomplete Story 1.1 remains current.",
   "automation_id": null,
   "remaining_parent_obligations": [
-    "Implement exact CPython 3.12.8 baseline and valid Uvicorn 0.37.0 uv lock with locked synchronization",
-    "Backend C1/C2/H contract source and bounded HTTP verification, followed by contracts exports",
+    "Independently validate A1 and run locally delivered A2a runtime entrypoints from the fixed Git commit",
+    "Run developer and independent C1/C2/HTTP tests after Git synchronization, finish H review followups, then export contracts",
     "Real PostgreSQL 18.6 / pgvector 0.8.7 six mandatory tests, migration cycle and namespace negatives",
     "create-vue frontend, peer lock, GitHub standards evidence and actual browser checks",
     "Four-service Linux lifecycle and reproducible rebuild on the Netcatty host",
     "Source, dependency, license and artifact hash/image digest provenance",
     "Developer tests, independent Step 5 validation, fresh 6.1 Sol medium review and repair regressions"
   ],
-  "blocked_conditions": [],
+  "blocked_conditions": [
+    {
+      "condition": "GitHub browser login and private repository creation succeeded, but Git HTTPS credentials are unavailable",
+      "first_observed": "2026-10-17",
+      "evidence": "Actual push to origin/main failed: Cannot prompt because user interactivity has been disabled; could not read Username for https://github.com. CLI device login returned unexpected EOF and connection timeout; GCM interaction failed without tty.",
+      "impact": "No code pushed and no server fixed-commit pull. Model, HTTP and runtime entrypoint developer tests wait on user-required Git transport.",
+      "recheck_trigger": "User completes machine Git HTTPS authentication or provides an authorized private-repository read/push mechanism; do not repeat unchanged auth probes.",
+      "no_workaround": "Do not retry the rejected SSH placeholder-target probe or rejected model SFTP upload. No tokens in chat, argv, logs, remote URLs, or repository."
+    },
+    {
+      "condition": "Docker Hub registry/auth IPv4 connections time out on remote and local official-source probes",
+      "first_observed": "2026-10-17",
+      "evidence": "Deploy source-probe, ipv4-and-official-dockerfiles, local-official-image-access and offline-images records preserve exact failures. GHCR uv manifest is not complete image-layer evidence.",
+      "impact": "Approved Python/Nginx/PG18.6+pgvector0.8.7 complete images and exact digests unavailable; four-service build, real PG and clean rebuild not executed.",
+      "recheck_trigger": "Network environment changes or exact approved official image archives/digests become available; do not repeat unchanged probes or substitute versions."
+    }
+  ],
   "deduplication_rule": "Recheck project threads and this claim before dispatch. Never create a second owner for the same story or retry an ambiguous creation before reconciling it.",
   "completion_rule": "All required parent-story acceptance and independent review/validation must pass before selecting and dispatching the next dependent story.",
   "handoff_history": [
@@ -93,10 +109,10 @@
   "working_set_path": "_bmad-output/implementation-artifacts/story-1-1-working-set.md",
   "latest_decision_path": "_bmad-output/implementation-artifacts/story-1-1-model-environment-decision-2026-10-17.md",
   "pending_prerequisites": [
-    "Approved Python version change is not yet implemented in application/tests/lock",
-    "Remote host needs an isolated exact Python 3.12.8 runtime; host Python is 3.12.3 and uv is absent",
-    "Backend public contract source is absent; do not dispatch export-only work before it exists",
-    "Real PostgreSQL 18.6 and pgvector 0.8.7 are not yet provisioned or verified"
+    "Machine Git HTTPS authentication and server read access to the new private repository",
+    "Push the recorded local checkpoint, then pull and hash-check a fixed commit before new runtime/model/HTTP tests",
+    "C1/C2 and HTTP source exists locally but remains unexecuted; finish developer tests before final exports and frontend",
+    "Approved official complete images with exact digests; real PostgreSQL 18.6 and pgvector 0.8.7 not provisioned or verified"
   ],
   "last_merged_diagnostic": {
     "recorded_at": "2026-10-17T16:01:50.9661513+08:00",
@@ -107,7 +123,7 @@
     "underlying_provider_identity": "not_observed",
     "active_rag_owner": "01a148e2-1e11-7322-9626-6cbafb956f12",
     "other_recent_rag_development_chats": "source performs read-only handoff verification; older development chats idle",
-    "implementation_claim": "none"
+    "implementation_claim": "All application code frozen in the first local checkpoint; H independent verification and fresh review completed. Git HTTPS auth and approved complete images remain external blockers."
   },
   "runtime_environment": {
     "execution_via": "netcatty-external",
@@ -122,9 +138,9 @@
     "storage_mount": "/fileOfRag",
     "test_material_root": "/fileOfRag/testOfRAG",
     "old_docker_resources": "cleaned_by_explicit_user_authorization",
-    "rag_runtime_acceptance": "not-executed"
+    "rag_runtime_acceptance": "A1 developer tests and H developer/independent unit tests recorded; PG, new HTTP/runtime, frontend and four-service gates not passed"
   },
-  "updated_at": "2026-10-17T16:02:45.7798854+08:00",
+  "updated_at": "2026-10-17T17:15:16.0874010+08:00",
   "handoff_registered_at": "2026-10-17T16:02:45.7798854+08:00",
   "handoff_acceptance_evidence": "Current rollout turn_context 2026-10-17T08:02:22.031Z records group/auto-gpt-6-1-sol effort=max; relay registered this owner and source_write_released=true before acceptance. Netcatty get_environment confirms existing connected Linux session.",
   "implementation_claims": [
@@ -134,9 +150,12 @@
       "model": "group/auto-gpt-6-1-sol",
       "reasoning_effort": "medium",
       "spec": "_bmad-output/implementation-artifacts/spec-1-1-python-3128.md",
-      "scope": ["existing backend/** excluding public.py/scalars.py/json_guard.py and dedicated tests", "docs/story-1-1-python-3128-delivery.md"],
+      "scope": [
+        "existing backend/** excluding public.py/scalars.py/json_guard.py and dedicated tests",
+        "docs/story-1-1-python-3128-delivery.md"
+      ],
       "remote_scope": "/opt/rag-story-1-1/backend-work",
-      "status": "A1_locked_sync_in_progress_and_A2a_runtime_entrypoints_dispatched",
+      "status": "A1_developer_verification_delivered_A2a_local_frozen_write_released",
       "next_spec": "_bmad-output/implementation-artifacts/spec-1-1-runtime-entrypoints.md",
       "observed_turn_context": "2026-10-17T08:06:40.334Z model group/auto-gpt-6-1-sol effort=medium"
     },
@@ -146,7 +165,10 @@
       "model": "group/auto-gpt-6-1-sol",
       "reasoning_effort": "medium",
       "spec": "_bmad-output/implementation-artifacts/spec-1-1-deploy.md",
-      "scope": ["deploy/**", "docs/story-1-1-deploy-delivery.md"],
+      "scope": [
+        "deploy/**",
+        "docs/story-1-1-deploy-delivery.md"
+      ],
       "remote_scope": "/opt/rag-story-1-1/deploy",
       "status": "partial_blocked_write_released",
       "observed_turn_context": "2026-10-17T08:06:45.730Z model group/auto-gpt-6-1-sol effort=medium"
@@ -158,9 +180,15 @@
       "reasoning_effort": "medium",
       "observed_turn_context": "2026-10-17T08:08:46.669Z and 08:10:14.661Z; model matches, effort=medium",
       "spec": "_bmad-output/implementation-artifacts/spec-1-1-contract-models.md",
-      "scope": ["backend/src/rag_app/contracts/public.py", "backend/src/rag_app/contracts/scalars.py", "backend/tests/test_public_contracts.py", "docs/story-1-1-contract-models-delivery.md"],
+      "scope": [
+        "backend/src/rag_app/contracts/public.py",
+        "backend/src/rag_app/contracts/scalars.py",
+        "backend/tests/test_public_contracts.py",
+        "docs/story-1-1-contract-models-delivery.md"
+      ],
       "remote_scope": "/opt/rag-story-1-1/contract-models-work",
-      "status": "code_delivered_tests_pending_git_sync_after_sftp_auto_review_rejection"
+      "status": "code_and_finite_error_policy_frozen_developer_tests_waiting_git_sync",
+      "code_hash": "bde6d8b50b7731b94204b285666ca9f337e836532a71c26a3c508c30bade5c69"
     },
     {
       "agent_id": "01a148f1-834b-7920-82f2-bfa8a81d7ede",
@@ -168,9 +196,20 @@
       "model": "group/auto-gpt-6-1-sol",
       "reasoning_effort": "medium",
       "spec": "_bmad-output/implementation-artifacts/spec-1-1-json-guard.md",
-      "scope": ["backend/src/rag_app/entrypoints/json_guard.py", "backend/tests/test_json_guard.py", "docs/story-1-1-json-guard-delivery.md"],
+      "scope": [
+        "backend/src/rag_app/entrypoints/json_guard.py",
+        "backend/tests/test_json_guard.py",
+        "docs/story-1-1-json-guard-delivery.md"
+      ],
       "remote_scope": "/opt/rag-story-1-1/json-guard-work",
-      "status": "developer_tests_165_passed_0_skipped_code_frozen_independent_validation_in_progress"
+      "status": "H_165_passed_code_frozen_B0c_HTTP_local_frozen_developer_tests_waiting_git_sync",
+      "next_spec": "_bmad-output/implementation-artifacts/spec-1-1-contract-http.md",
+      "next_scope": [
+        "backend/src/rag_app/entrypoints/api.py",
+        "backend/src/rag_app/entrypoints/contract_probe.py",
+        "backend/tests/test_contract_http.py",
+        "docs/story-1-1-contract-http-delivery.md"
+      ]
     },
     {
       "agent_id": "01a148f4-d67c-7b52-8d29-88d69b7c20e3",
@@ -178,9 +217,12 @@
       "model": "kimi/kimi-k3",
       "reasoning_effort": "model_default_not_explicitly_set",
       "spec": "_bmad-output/implementation-artifacts/spec-1-1-frontend-preflight.md",
-      "scope": ["docs/story-1-1-frontend-standards.md"],
+      "scope": [
+        "docs/story-1-1-frontend-standards.md"
+      ],
       "remote_scope": "read_only_preflight",
-      "status": "preflight_delivered_partial_sources_and_hash_pending_no_frontend_implementation_before_B"
+      "status": "preflight_complete_official_sources_and_SHASUMS_read_no_frontend_implementation_before_B",
+      "observed_turn_context": "kimi/kimi-k3 effort=max actual default; no reasoning override passed"
     },
     {
       "agent_id": "01a148fe-6660-7262-af52-d29c7a10dbcc",
@@ -188,16 +230,34 @@
       "model": "stepfun/step-5-preview",
       "reasoning_effort": "model_default_not_explicitly_set",
       "spec": "_bmad-output/implementation-artifacts/story-1-1-json-guard-independent-dispatch.md",
-      "scope": ["docs/story-1-1-json-guard-independent-validation.md"],
-      "status": "active_independent_validation"
+      "scope": [
+        "docs/story-1-1-json-guard-independent-validation.md"
+      ],
+      "status": "259_passed_0_failed_0_skipped_including_9_cancellation_probes",
+      "observed_turn_context": "stepfun/step-5-preview effort=high actual default; no reasoning override passed"
     },
     {
       "agent_id": "01a148fd-135d-7280-bd9c-34c9c083e8e2",
       "nickname": "Hubble",
       "model": "group/auto-gpt-5-6-sol",
       "reasoning_effort": "high",
-      "scope": [".gitignore", "docs/story-1-1-git-publish-scope.md"],
-      "status": "22_ignore_checks_passed_final_scope_reconciliation"
+      "scope": [
+        ".gitignore",
+        "docs/story-1-1-git-publish-scope.md"
+      ],
+      "status": "22_ignore_checks_passed_scope_reconciled_write_released",
+      "observed_turn_context": "group/auto-gpt-5-6-sol effort=high"
+    },
+    {
+      "agent_id": "01a14915-f0f6-7420-a4cc-d4ca31df4da3",
+      "nickname": "Singer",
+      "model": "group/auto-gpt-6-1-sol",
+      "reasoning_effort": "medium",
+      "observed_turn_context": "2026-10-17T08:58:58.565Z group/auto-gpt-6-1-sol effort=medium",
+      "scope": [
+        "docs/story-1-1-json-guard-review.md"
+      ],
+      "status": "no_proven_parser_defect_P2_closed_after_actual_task_cancel_tests_P3_corrected"
     }
   ],
   "git_transport": {
@@ -207,10 +267,11 @@
     "creation_evidence": "GitHub browser page navigated from /new to /yb2915722928-cpu/rag_project and exposes private lock icon and clone URL",
     "local_branch": "main",
     "local_remote": "origin",
-    "commit": null,
-    "push": "not_executed_git_auth_pending",
+    "commit": "d1fbdf4f4979dcebc451609919a30fd0e9d4e4dd",
+    "push": "failed_git_https_username_credentials_unavailable",
     "remote_pull": "not_executed"
   },
-  "spec_scope_check": "cl100k_base actual counts before H dispatch: A1 1072, D 1108, B0a 1135; all below 1600 risk line. A parent record retained as history and split; H count pending.",
+  "latest_handoff_path": "_bmad-output/implementation-artifacts/story-1-1-handoff-git-auth-2026-10-17.md",
+  "spec_scope_check": "cl100k_base actual counts: A1 1089, D 1108, B0a 1135, H 1045, runtime 919, HTTP 1114 before one small C2 route clarification, frontend preflight 916, Git hygiene 725. All dispatched short specs below 1600; parent A retained as history and split.",
   "handoff_source_after_registration": "Read-only verification only; no further project writes or implementation dispatch by the source chat."
 }

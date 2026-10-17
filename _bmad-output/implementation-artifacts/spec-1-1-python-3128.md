@@ -20,9 +20,9 @@ context:
 
 ## Tasks & Acceptance
 
-- [ ] 同步项目声明、解释器选择、runtime、安全错误和门禁/启动测试为精确 3.12.8；保留其他锁定依赖及 `uvicorn==0.37.0`。
-- [ ] 经 Netcatty Linux 的项目隔离环境使用真实 3.12.8 正常重算 `backend/uv.lock`，执行 `uv sync --locked`；不手改锁、不用 frozen、不替换系统 Python。
-- [ ] 运行开发者非 PG 回归和 Uvicorn 实际进程验证，保留历史结果；真实 PG 六项/迁移循环留后续 A2，不将 skipped 算通过。
+- [x] 同步项目声明、解释器选择、runtime、安全错误和门禁/启动测试为精确 3.12.8；保留其他锁定依赖及 `uvicorn==0.37.0`。
+- [x] 经 Netcatty Linux 的项目隔离环境使用真实 3.12.8 正常重算 `backend/uv.lock`，执行 `uv sync --locked`；不手改锁、不用 frozen、不替换系统 Python。
+- [x] 运行开发者非 PG 回归和 Uvicorn 实际进程验证，保留历史结果；真实 PG 六项/迁移循环留后续 A2，不将 skipped 算通过。
 
 Given 精确解释器，when 锁同步及启动，then 声明、实际版本、锁和进程一致。Given 其他版本，when 启动，then 有限拒绝且不泄秘密。Given 锁或源不可用，when 正常解算失败，then 保存原始错误与可核来源，不改用未授权版本。
 
@@ -33,3 +33,5 @@ Given 精确解释器，when 锁同步及启动，then 声明、实际版本、�
 ## 拆分与承接
 
 旧 A 长规格超风险线，自动 Split again。本规格只接 A1；A2 承接真实 PG/迁移/Uvicorn门，B0 承接公共模型与 H，B 承接生成物，C/D/E 各保留父计划归属。低于风险线即执行，不等待常规确认。
+
+开发者交付见 `docs/story-1-1-python-3128-delivery.md`：3.12.8下73pass/1条件skip，要求其他解释器的该负例另在3.12.3真实运行1pass，不能以skip放行。A1实际Uvicorn/locked证据不覆盖后增A2a/HTTP代码或整个父Story；独立门和父AC仍未全部完成。

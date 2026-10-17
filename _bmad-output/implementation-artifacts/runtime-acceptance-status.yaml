@@ -4,7 +4,15 @@ planning_gate: PASS
 implementation_started: true
 runtime_acceptance: not-executed
 status_semantics: not-executed=尚未运行，无运行结论；不是failed，也不是已核凭据缺失blocked。证据齐备后逐子门更新，不从故事/文档PASS推定。
-consumption_rule: DOC/MIX的1/4档分别消费；一条Story整体backlog不得覆盖已经取得的真实子门证据，也不得凭backlog以外的规划状态假通过。本次全部未执行。
+consumption_rule: DOC/MIX的1/4档分别消费；Story整体状态不得覆盖已经取得的真实子项证据，也不得凭静态或子规格通过关闭父门。S0等整体门仍未执行完成；当前1.1局部证据见下。
+story_1_1_partial_evidence:
+  parent_story_gate: not_passed
+  a1_developer: 'Linux CPython3.12.8正常lock/locked/Uvicorn已通过；73passed及其他解释器单跑1passed，真实PG六项未执行'
+  h_developer: '165passed/0skipped，冻结工件hash'
+  h_independent: '259passed/0failed/0skipped，含9项真实任务取消探针；全新审查P2关闭/P3历史更正'
+  a2a_models_http: '本地实现冻结，Git固定提交同步与开发者测试未执行'
+  contracts_frontend_four_services: '未通过；B生成物、C页面与完整镜像/PG/生命周期仍待'
+  evidence_ledger: docs/story-1-1-acceptance-ledger.md
 gates:
 - id: S0
   responsible_stories:

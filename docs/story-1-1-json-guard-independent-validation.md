@@ -44,8 +44,9 @@ sha256sum src/rag_app/entrypoints/json_guard.py tests/test_json_guard.py
 | 运行 | 结果 | 退出码 |
 | --- | --- | --- |
 | 开发者 165 项套件，独立重跑 | **165 passed / 0 failed / 0 error / 0 skipped**，3.97s | 0 |
-| 验证者自写对抗探针 | **85 passed / 0 failed / 0 skipped**，1.57s | 0 |
-| 四份文件同一次合并运行 | **250 passed / 0 failed / 0 skipped**，5.42s | 0 |
+| 验证者自写对抗探针（边界/编码/头三项） | **85 passed / 0 failed / 0 skipped** | 0 |
+| 追加任务取消探针（`probe_cancel.py`） | **9 passed / 0 failed / 0 skipped** | 0 |
+| 五份文件同一次合并运行 | **259 passed / 0 failed / 0 skipped**，5.17s | 0 |
 
 JUnit XML 属性核验：`tests=165, failures=0, errors=0, skipped=0` 与
 `tests=85, failures=0, errors=0, skipped=0`；无 `xfail`、无 `skip` 标记节点。
@@ -103,11 +104,19 @@ JUnit XML 属性核验：`tests=165, failures=0, errors=0, skipped=0` 与
 - 二进制 PUT 隔离：未挂适配器时 `application/octet-stream` 的 1048577 字节原件
   由原处理器完整读走，数量一致；H 不存在任何应用注册或中间件挂载。
 - 无日志泄漏：`caplog` 设 DEBUG 级后跑正常、畸形与断流路径，秘密串不出现在日志文本中。
+- 任务取消（asyncio.CancelledError）：async for 只捕获 BoundedJsonError 与 Exception，
+  CancelledError 继承 BaseException，因此取消既不被吞也不被改写。九项探针分别验证：
+  流中途取消原样抛出且 transport.reads 停在取消点、未读完 body；取消不被二次包装成
+  REQUEST_STREAM_ERROR；首 chunk 前取消同样传播；外层 task.cancel() 后 task.cancelled()
+  为真且提前停止读取；取消先于后续结构限额到达时取消胜出；反向顺序下结构限额仍给出
+  有限错误并早停；传输层异常实例按身份原样传播（caught.value is sentinel）；
+  守卫不给取消异常附加 code/message 属性，异常链 __cause__/__context__ 为 None；
+  取消过程不把请求体内容带入守卫状态。
 - 幂等：同一输入两次解析结果相等，无隐藏状态。
 
 ## 5. 探针过程中修正的自身预期（非实现缺陷）
 
-以下 6 处最初由验证者写错的预期，经复核规格与 CPython/标准库行为后改正，均非实现问题：
+以下 7 处最初由验证者写错的预期，经复核规格与 CPython/标准库行为后改正，均非实现问题：
 
 - 数组预算是「每 array」，两个 array 共 1025 项合法。
 - 单字符串值 65536 标量在 131072 总预算内合法。
@@ -116,17 +125,17 @@ JUnit XML 属性核验：`tests=165, failures=0, errors=0, skipped=0` 与
 - 节点上限用「根 + 8 array + 标量」形状实测为 8192，符合「容器+标量、键不计」定义。
 - `charset = utf-8` 中 `=` 两侧空格被容忍（实现按 `split(b"=")` 后 `strip()` 处理）。
 
-另记录一条**规格未定义、实现已自行取舍**的行为，交由父 Story 裁决，不算缺陷：
+主会话已就 escaped NUL/C0 键下发公共契约裁决，记为解释澄清，不构成未定义阻塞：
 
-- 解码后确实不同的键不判重，例如 `{"a":1,"a\u0000":2}` 得到两个键
-  `'a'` 与 `'a\x00'`。规格只要求「重复键（含转义同键）」拒绝，未规定含 NUL 等
-  控制字符的键是否应拒绝。当前行为与 `json.loads` 一致，但建议父 Story 在
-  HTTP 契约里明确是否允许控制字符键。
+- H 保留完整解码值，不授权对 escaped NUL/C0 键做归一、截断或额外全局禁令；
+  `"a"` 与 `"a\u0000"` 是不同键，重复检查按完整解码键进行。
+- 后续严格公共 Pydantic 模型自然拒未知字段；原始未转义控制字符在 JSON 字符串内仍非法。
+- 因此验证探针中断言的 `{"a":1,"a\u0000":2}` 得到两个键，属于契约认可行为，不是缺陷。
 
 ## 6. 未执行项与真实限度
 
-- 未跑完整 backend `--locked` 重建：本项目锁同步尚未完成，本 H 只使用独立
-  `uv` 缓存中的 pytest，属开发者单元测试证据，不能当作 backend `--locked` 通过。
+- 未验证完整项目 `--locked` 重建：本 H 只用独立 `uv` 缓存中的 pytest 8.4.2 与冻结源副本，
+  属单元测试级证据。A1 的 locked 同步通过证据由主会话另行裁决，本记录不把它算作本 H 已核验。
 - 未做 HTTP 层验证：未挂接到任何路由/ASGI 应用，未验证状态码、错误信封、
   OpenAPI 注册、未知字段与版本号拒绝（那是后续 HTTP handoff）。
 - 未做真实 PostgreSQL、pgvector、四服务生命周期验证；本 H 不需要 PG。
@@ -139,15 +148,21 @@ JUnit XML 属性核验：`tests=165, failures=0, errors=0, skipped=0` 与
   探针无法在无真实服务器的情况下证伪或证实。
 - Netcatty 工具侧：执行期间出现过同 session 忙与全局 chat session 占用提示，
   已按规则改为单次短命令完成，未把工具忙记为测试通过；上述结果均为实际退出码 0 的运行。
+- 本记录第 12 行 tests hash 曾误抄为 087e02881bfef96704669cbf076893893e33853c7f0dc87f0deaa4ba964423244d9（多一段 893），
+  已校正为实测值 087e02881bfef96704669cbf076893e33853c7f0dc87f0deaa4ba964423244d9；
+  实现与测试文件本身未被改动（验证前后 hash 一致）。
+- 探针首轮取消用例曾把结构限额先触发误当作取消被吞，复核后确认那是限额先到达的
+  正常有限失败，已改为两种顺序分别断言；另有一例外层 cancel 改用带协作让出点的流复现。
 
 ## 7. 结论
 
 H 子门在冻结 hash `6e796460…373b` / `087e0288…44d9` 下，于 Linux 精确 CPython 3.12.8
-实测 **250 passed / 0 failed / 0 skipped**（165 项开发者套件独立重跑 + 85 项验证者对抗探针），
-退出码均为 0。未发现实现缺陷；发现 1 条规格未定义行为（含 NUL 的键不判重）需父 Story 裁决。
-父 Story 四项 AC、HTTP 接入、真实 PG、`--locked` 重建与四服务生命周期义务不变，
+实测 **259 passed / 0 failed / 0 skipped**（165 项开发者套件独立重跑 + 94 项验证者对抗探针，
+含 9 项任务取消），退出码均为 0。未发现实现缺陷；escaped NUL/C0 键按主会话裁决属契约认可行为。
+父 Story 四项 AC、HTTP 接入、真实 PG、完整项目 `--locked` 重建与四服务生命周期义务不变，
 本记录不放行这些门。
 
 证据归档：`/fileOfRag/testOfRAG/metadata/story-1-1/json-guard-validation/`
-（`combined-output.txt`、`versions.txt`、`evidence-independent-junit.xml`、
-`evidence-probe-junit.xml`、`source-sha256.txt`）。输出中不含 DSN 或任何秘密。
+（`combined-output.txt`、`versions.txt`、`evidence-final-junit.xml`、
+`source-sha256.txt`、`probe_cancel.py`、`probe_limits.py`、`probe_encoding.py`、
+`probe_headers.py`、`probe_core.py`）。输出中不含 DSN 或任何秘密。
