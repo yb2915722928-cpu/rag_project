@@ -7,7 +7,7 @@
 - 当前唯一 Amelia 主控：`01a14973-8555-7131-8fd2-e9eec12f53fe`，实际 `group/auto-gpt-6-1-sol / max`。原主控已释放；Story 1.1 仍 `in-progress / not_passed`，不能提前启动 1.2。
 - 本会话就是 Amelia。每个主会话完成一个完整 Story 后，才在同一已保存 `rag` 项目（`61e1f316-4db1-4b50-a56e-62c5604d7d25`，local）创建下一 Amelia，核实接手并释放原会话写入，循环当前 Sprint 至完成或用户停止。没有定时自动化。
 - 新实现按 [AGENTS.md](/E:/aaa-project/rag/AGENTS.md:1)：后端/部署/RAG全部DeepSeek默认；前端Kimi默认；独立运行验证Step5默认；正式审查全新6.1 Sol/medium。主会话只写文档/协调/验收，不接管应用、测试、锁或部署实现。
-- 本轮Boole（B/C1）、Laplace（worker）、Russell（F8）均已冻结并释放写入；Hypatia已完成静态复核。精确ID、范围、模型和hash见 [relay](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/sprint-relay-state.json:1)。无进行中的实现认领；保留原作者实例供恢复后返修。
+- 本轮Boole（B/C1）、Laplace（worker）、Russell（F8）均已冻结并释放写入；Hypatia已完成静态复核，所有本轮实例已关闭。精确ID、范围、模型和hash见 [relay](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/sprint-relay-state.json:1)。无进行中的实现认领；后续返修引用原作者证据，以明确模型新建接替者或核实恢复路由，不假定关闭后能保留模型。
 - Bohr关闭后恢复F8曾变为6.1 Sol/max，已停止并关闭。错路由草案保留，Russell以显式DeepSeek接替并修正；原D截至F7和独立复核的正确模型证据不追改。后续不假定恢复工具保留原模型。
 
 ## 当前逐段状态
@@ -21,7 +21,7 @@
 | D | 四服务骨架、bind/secret/健康/网关/构建上下文修订已交；F5–F8静态复核确认。准确完整镜像、PG/扩展、BuildKit、权限、启停/重启/干净Linux重建仍未执行。 |
 | E | A1锁依赖/许可证metadata历史归档可用；新增源码无新运行依赖。前端peer、原生/镜像层、完整digest与干净重建证据未齐。 |
 
-9项已知静态发现（F1–F8及C1-NZ）均获独立静态修复确认，**不是运行通过或全工作区无缺陷结论**。原报告与修订记录见 [独立预审](/E:/aaa-project/rag/docs/story-1-1-preparation-review.md:1)。原暂存补丁另已归档；恢复时读取真实HEAD/暂存/工作区，不把本轮起点 `a52ae3090948e7eeea6df87590f15ce35351d247` 当作最新提交。核心来源hash见 [准备来源快照](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-preparation-source-hashes.json:1)。
+9项已知静态发现（F1–F8及C1-NZ）均获独立静态修复确认，**不是运行通过或全工作区无缺陷结论**。源码检查点为 `09b2c080ea82563d48dbbc8e0d9864063b61f11a`，仅本地、尚未上传；其后可能只有主控元数据提交，恢复时须读取真实HEAD/暂存/工作区。原报告与修订记录见 [独立预审](/E:/aaa-project/rag/docs/story-1-1-preparation-review.md:1)，核心来源hash见 [准备来源快照](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-preparation-source-hashes.json:1)。
 
 ## 已核实外部阻塞与触发条件
 

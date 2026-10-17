@@ -150,7 +150,7 @@
     "old_docker_resources": "cleaned_by_explicit_user_authorization",
     "rag_runtime_acceptance": "A1 developer tests and H developer/independent unit tests recorded; PG, new HTTP/runtime, frontend and four-service gates not passed"
   },
-  "updated_at": "2026-10-17T21:54:45+08:00",
+  "updated_at": "2026-10-17T21:59:59+08:00",
   "handoff_registered_at": "2026-10-17T16:02:45.7798854+08:00",
   "handoff_acceptance_evidence": "Current rollout turn_context records group/auto-gpt-6-1-sol/max at 2026-10-17T10:41:11.525Z; source write released; unique current rag chat accepted Story 1.1. See story-1-1-amelia-control-2026-10-17.md.",
   "implementation_claims": [
@@ -397,11 +397,11 @@
     "creation_evidence": "GitHub browser page navigated from /new to /yb2915722928-cpu/rag_project and exposes private lock icon and clone URL",
     "local_branch": "main",
     "local_remote": "origin",
-    "commit": "a52ae3090948e7eeea6df87590f15ce35351d247",
+    "commit": "09b2c080ea82563d48dbbc8e0d9864063b61f11a",
     "push": "failed_git_https_username_credentials_unavailable",
     "remote_pull": "not_executed_no_verified_Gitee_commit",
     "integration_write": "failed_403_resource_not_accessible_by_integration",
-    "commit_semantics": "commit field retains session-start baseline; actual pending checkpoint must be obtained from current Git HEAD. No remote commit was verified."
+    "commit_semantics": "Local source checkpoint, not uploaded or server-tested; later metadata-only commits may follow. Read actual HEAD for a future synchronized revision."
   },
   "server_source_policy": {
     "development_upload_remote": "https://github.com/yb2915722928-cpu/rag_project.git",
@@ -432,11 +432,19 @@
   "current_owner_write_released": false,
   "final_source_snapshot": {
     "path": "_bmad-output/implementation-artifacts/story-1-1-preparation-source-hashes.json",
-    "source_records": 145,
+    "source_records": 146,
     "whitespace": "source/docs exit0, original diff and wire input data excluded intentionally",
     "eof_proof": "_bmad-output/implementation-artifacts/story-1-1-eof-normalization.json",
     "newline_proof": "_bmad-output/implementation-artifacts/story-1-1-git-newline-normalization.json",
     "server_checkout": "not_verified",
     "runtime": "not-executed"
+  },
+  "source_checkpoint": {
+    "commit": "09b2c080ea82563d48dbbc8e0d9864063b61f11a",
+    "evidence": "_bmad-output/implementation-artifacts/story-1-1-checkpoint-2026-10-17.md",
+    "upload": "not_verified",
+    "server_tests": "not-executed",
+    "all_child_instances": "closed_write_released",
+    "next_story": "not_started"
   }
 }

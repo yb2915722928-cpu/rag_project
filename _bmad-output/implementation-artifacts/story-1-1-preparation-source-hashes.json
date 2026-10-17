@@ -1,6 +1,6 @@
 {
   "schema_version": "story-1-1-source-snapshot.v1",
-  "recorded_at": "2026-10-17T21:56:12+08:00",
+  "recorded_at": "2026-10-17T22:00:00+08:00",
   "baseline_commit": "a52ae3090948e7eeea6df87590f15ce35351d247",
   "content_source": "Final staged source after independent static fixes and exact single-LF cleanup; actual checkpoint commit must be read from Git HEAD",
   "runtime_execution": "not-executed",
@@ -38,8 +38,8 @@
     },
     {
       "path": "_bmad-output/implementation-artifacts/sprint-relay-state.json",
-      "working_file_sha256": "898e938868b96c4dc60988e8903da63d358cd640393d95c229276e29f32d6986",
-      "git_index_content_sha256": "fad73671a99b5e32e82eb8a22369fe8909c80e07371ac67ce91e1e26243551b1"
+      "working_file_sha256": "7e279da953e20258bcec4dcfab701ae3293762de21ffe40f9a384c122d2f0fa9",
+      "git_index_content_sha256": "5f28c79dcc74fa1f0d5f9d24773b84c421b802492ff9a44fde3eb1bff8e54da3"
     },
     {
       "path": "_bmad-output/implementation-artifacts/story-1-1-acceptance-ledger.md",
@@ -93,8 +93,8 @@
     },
     {
       "path": "_bmad-output/implementation-artifacts/story-1-1-working-set.md",
-      "working_file_sha256": "179cfca0cd5f14f3eb1c4493f3885794ae43fce9ed7b5ffa671035872efc037d",
-      "git_index_content_sha256": "c41d4cc1736629860b1be41c09ac0de546887fc1905374378a293a8034ada0dd"
+      "working_file_sha256": "dee3d3e5f9372929a7f1fcc5bc395d00cac2c66d48ff887fa3633f0f25c1788a",
+      "git_index_content_sha256": "5d499b82be306972d2d0cacadb6ba8d82235d6d040c8f879f26de8a51d3911e8"
     },
     {
       "path": "AGENTS.md",
@@ -735,6 +735,11 @@
       "path": "_bmad-output/implementation-artifacts/story-1-1-git-newline-normalization.json",
       "working_file_sha256": "51e6a2be22d75a08c3f5458da0cc80ce9fc63d3cd3e080a9363f325ef58e6cdc",
       "git_index_content_sha256": "b07e2ec5253d1bde16b1967bcbf2dba3d3e35618d66b0398c348846622ab8b69"
+    },
+    {
+      "path": "_bmad-output/implementation-artifacts/story-1-1-checkpoint-2026-10-17.md",
+      "working_file_sha256": "ab76b2acb149cdd49bc7cf926c1c2a5d77eb11ad43500313e04f3883d8929d97",
+      "git_index_content_sha256": "ab76b2acb149cdd49bc7cf926c1c2a5d77eb11ad43500313e04f3883d8929d97"
     }
   ],
   "history": [
@@ -782,5 +787,6 @@
         }
       ]
     }
-  ]
+  ],
+  "source_checkpoint": "09b2c080ea82563d48dbbc8e0d9864063b61f11a"
 }
