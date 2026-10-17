@@ -1,13 +1,3 @@
-/** HealthStatus mirrors the `HealthStatus` schema in contracts/openapi.json:
- *  an object with free-form string fields (no enum of possible values), so a
- *  type-only import from the generated DTOs cannot express it. The wire shape
- *  is validated at runtime in the health store before use. */
-export interface HealthStatusBody {
-  status?: string
-  service?: string
-  check?: string
-}
-
 export interface HealthFetchResult {
   ok: boolean
   status: number

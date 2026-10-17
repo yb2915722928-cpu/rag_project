@@ -119,7 +119,7 @@ onMounted(() => {
       <div v-if="store.loading" v-loading="true" class="loading-region" aria-label="正在检查" />
 
       <section
-        v-if="showResult && store.phase === 'success' && store.body !== null"
+        v-if="showResult && store.phase === 'success'"
         class="result"
         aria-label="健康检查结果"
       >
@@ -127,18 +127,6 @@ onMounted(() => {
           <div class="row">
             <dt>HTTP 状态</dt>
             <dd>{{ store.httpStatus }}</dd>
-          </div>
-          <div class="row">
-            <dt>服务状态（status）</dt>
-            <dd>{{ store.body.status ?? '—' }}</dd>
-          </div>
-          <div class="row">
-            <dt>服务名称（service）</dt>
-            <dd>{{ store.body.service ?? '—' }}</dd>
-          </div>
-          <div class="row">
-            <dt>检查类型（check）</dt>
-            <dd>{{ store.body.check ?? '—' }}</dd>
           </div>
           <div class="row">
             <dt>最近检查时间</dt>

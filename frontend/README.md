@@ -24,7 +24,7 @@ npm run dev         # 开发服务器（仅开发用）
 ## 生成契约类型
 
 `../contracts/typescript/` 由后端真源生成（见 `contracts/README.md`），本前端只消费其公共
-类型（如 `PublicError`），不维护第二套手写业务 DTO；类型检查经
+类型（如 `FailedResponse`/`PublicError`），不维护第二套手写业务 DTO；类型检查经
 `tsconfig.app.json` include 与根 `tsconfig.json` paths 覆盖该目录，打包经
-`vite.config.ts` 的 `@contracts` 别名解析。`HealthStatus` 在 OpenAPI 中为无枚举的
-自由字符串字段对象，其线形校验在 `src/stores/health.ts` 运行时完成。
+`vite.config.ts` 的 `@contracts` 别名解析。健康页仅展示同源 `/health` 的 HTTP 可达性，
+成功响应体只要求为 JSON 对象，不消费其字段、不镜像 `HealthStatus` DTO。

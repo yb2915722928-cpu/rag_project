@@ -24,7 +24,7 @@
   "acceptance_gate": "not_passed",
   "next_story_key": null,
   "next_thread_id": null,
-  "dispatch_state": "frontend_initial_source_publish_then_Linux_lock_and_build_A_B_complete",
+  "dispatch_state": "frontend_lock_and_current_interface_alignment_publishing_then_formal_Linux_checks",
   "handoff_id": "story-1-1-continued-01a14973",
   "handoff_kind": "same_story_serial_continuation",
   "handoff_source_thread_id": "01a148e2-1e11-7322-9626-6cbafb956f12",
@@ -190,7 +190,7 @@
       "secret_value": "not_recorded"
     }
   },
-  "updated_at": "2026-10-18T00:10:05.8016506+08:00",
+  "updated_at": "2026-10-18T00:25:54.1284328+08:00",
   "handoff_registered_at": "2026-10-17T16:02:45.7798854+08:00",
   "handoff_acceptance_evidence": "Current rollout turn_context records group/auto-gpt-6-1-sol/max at 2026-10-17T10:41:11.525Z; source write released; unique current rag chat accepted Story 1.1. See story-1-1-amelia-control-2026-10-17.md.",
   "implementation_claims": [
@@ -638,5 +638,22 @@
     "stop_condition": "stop adding checks after proportionate checks pass; repeat only for material new changes, actual failures or concrete open findings",
     "required_independent_verification_and_review": "retained_without_extra_rounds_for_hypothetical_risks",
     "current_actions": "Singer starts frontend independent work now; backend confirms actual HTTP correction; deploy keeps exact digest correction without speculative expansion"
+  },
+  "frontend_dependency_resolution": {
+    "source_commit": "abcd79beaa3997e78a37e49df69d14f867ed52cf",
+    "node": "24.22.0",
+    "npm": "11.19.1",
+    "lock_sha256": "4b6d69e744af7ddac2255ce8fa9c3cc64cf0d9576ae343fc0b2e60babd8ae4c0",
+    "installed_packages": 286,
+    "vue": "3.5.44",
+    "vite": "8.3.4",
+    "typescript": "6.0.3",
+    "vue_router": "5.4.0",
+    "element_plus": "2.14.7",
+    "pinia": "4.1.0",
+    "vue_devtools_api": "8.2.1",
+    "registry_transport": "existing Tencent Cloud internal npm mirror; lock resolved URLs retained",
+    "controller_decision": "Accept normal compatible template-range resolution; record exact lock and peers, no unrequested rollback to seed minor.",
+    "formal_ci_typecheck_tests_build": "pending_published_lock_revision"
   }
 }

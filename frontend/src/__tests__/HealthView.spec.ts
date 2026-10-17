@@ -39,16 +39,21 @@ describe('HealthView', () => {
     })
     const text = wrapper.text()
     expect(text).toContain('不代表数据库已就绪')
-    expect(text).toContain('alive')
+    expect(text).toContain('HTTP 状态')
     wrapper.unmount()
   })
 
   it('shows a readable error without raw body on HTTP failure', async () => {
     mockFetch(500, {
-      code: 'INTERNAL_ERROR',
-      message: 'postgres://secret-internal-url',
-      http_status: 500,
-      retry_mode: 'none',
+      status: 'failed',
+      request_id: 'req-3',
+      schema_version: 'operation.v1',
+      error: {
+        code: 'INTERNAL_ERROR',
+        message: 'postgres://secret-internal-url',
+        http_status: 500,
+        retry_mode: 'none',
+      },
     })
     const wrapper = mountView()
     await vi.waitFor(() => {

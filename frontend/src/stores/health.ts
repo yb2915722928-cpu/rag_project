@@ -1,9 +1,9 @@
 import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 
-import type { PublicError } from '@contracts/contracts'
+import type { FailedResponse, PublicError } from '@contracts/contracts'
 
-import { fetchHealth, FetchTimeoutError, type HealthStatusBody } from '@/api/health'
+import { fetchHealth, FetchTimeoutError } from '@/api/health'
 
 export type HealthPhase =
   | 'idle'
@@ -20,40 +20,30 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
 }
 
-/** The health body is an OpenAPI object with free-form string fields; only
- *  validate the wire shape, never treat it as a database/business signal. */
-function parseHealthBody(value: unknown): HealthStatusBody | null {
-  if (!isRecord(value)) {
-    return null
-  }
-  const out: HealthStatusBody = {}
-  for (const key of ['status', 'service', 'check'] as const) {
-    const field = value[key]
-    if (field === undefined) {
-      continue
-    }
-    if (typeof field !== 'string') {
-      return null
-    }
-    out[key] = field
-  }
-  return out
+/** A reachable 2xx only means "the API answered" (reachability); the payload
+ *  shape is not consumed as a database/business signal. */
+function isReachableBody(value: unknown): boolean {
+  return isRecord(value)
 }
 
-/** Error responses follow the public PublicError policy; extract the stable
- *  code only, never the raw message/details (may carry private text). */
+/** FailedResponse envelope: the public error lives at body.error (see
+ *  contracts/typescript/contracts.ts). Extract the stable code only, never
+ *  the raw message/details (may carry private text). */
 function extractErrorCode(value: unknown): PublicError['code'] | undefined {
   if (!isRecord(value)) {
     return undefined
   }
-  const code = value.code
+  const error = (value as Partial<FailedResponse>).error
+  if (!isRecord(error)) {
+    return undefined
+  }
+  const code = error.code
   return typeof code === 'string' ? (code as PublicError['code']) : undefined
 }
 
 export const useHealthStore = defineStore('health', () => {
   const phase = ref<HealthPhase>('idle')
   const httpStatus = ref<number | undefined>(undefined)
-  const body = ref<HealthStatusBody | null>(null)
   const errorCode = ref<PublicError['code'] | undefined>(undefined)
   const lastUpdatedAt = ref<number | null>(null)
   const checkedAt = ref<number | null>(null)
@@ -71,7 +61,6 @@ export const useHealthStore = defineStore('health', () => {
 
   function resetResult(): void {
     httpStatus.value = undefined
-    body.value = null
     errorCode.value = undefined
   }
 
@@ -103,12 +92,10 @@ export const useHealthStore = defineStore('health', () => {
         return
       }
 
-      const parsed = parseHealthBody(result.json)
-      if (parsed === null) {
+      if (!isReachableBody(result.json)) {
         phase.value = 'invalid-body'
         return
       }
-      body.value = parsed
       errorCode.value = undefined
       phase.value = 'success'
       lastUpdatedAt.value = checkedAt.value
@@ -142,7 +129,6 @@ export const useHealthStore = defineStore('health', () => {
     phase,
     loading,
     httpStatus,
-    body,
     errorCode,
     lastUpdatedAt,
     checkedAt,

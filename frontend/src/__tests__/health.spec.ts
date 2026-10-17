@@ -44,16 +44,23 @@ describe('fetchHealth', () => {
     mockFetchOnce({
       status: 503,
       body: {
-        code: 'DEPENDENCY_UNAVAILABLE',
-        message: 'private detail',
-        http_status: 503,
-        retry_mode: 'none',
+        status: 'failed',
+        request_id: 'req-1',
+        schema_version: 'operation.v1',
+        error: {
+          code: 'DEPENDENCY_UNAVAILABLE',
+          message: 'private detail',
+          http_status: 503,
+          retry_mode: 'none',
+        },
       },
     })
     const result = await fetchHealth()
     expect(result.ok).toBe(false)
     expect(result.status).toBe(503)
-    expect(result.json?.code).toBe('DEPENDENCY_UNAVAILABLE')
+    expect((result.json?.error as Record<string, unknown> | undefined)?.code).toBe(
+      'DEPENDENCY_UNAVAILABLE',
+    )
   })
 
   it('distinguishes timeout from caller abort', async () => {
@@ -101,35 +108,38 @@ describe('health store', () => {
     vi.unstubAllGlobals()
   })
 
-  it('starts idle and records success without claiming db readiness', async () => {
+  it('starts idle and records reachability success without consuming payload fields', async () => {
     mockFetchOnce({ body: { status: 'alive', service: 'rag-api', check: 'liveness' } })
     const store = useHealthStore()
     expect(store.phase).toBe('idle')
     await store.refresh()
     expect(store.phase).toBe('success')
     expect(store.httpStatus).toBe(200)
-    expect(store.body).toEqual({ status: 'alive', service: 'rag-api', check: 'liveness' })
     expect(store.errorCode).toBeUndefined()
     expect(fetchMock()).toHaveBeenCalledTimes(1)
   })
 
-  it('accepts an empty object body (all health fields optional)', async () => {
+  it('accepts an empty object body (only object-ness is required)', async () => {
     mockFetchOnce({ body: {} })
     const store = useHealthStore()
     await store.refresh()
     expect(store.phase).toBe('success')
-    expect(store.body).toEqual({})
   })
 
-  it('keeps only the public error code on HTTP errors, never the raw message', async () => {
+  it('reads error code from the FailedResponse envelope, never the raw message', async () => {
     mockFetchOnce({
       status: 500,
       body: {
-        code: 'INTERNAL_ERROR',
-        message: 'private database url: postgres://internal-host/db',
-        http_status: 500,
-        retry_mode: 'none',
-        details: { trace_id: 'abc' },
+        status: 'failed',
+        request_id: 'req-2',
+        schema_version: 'operation.v1',
+        error: {
+          code: 'INTERNAL_ERROR',
+          message: 'private database url: postgres://internal-host/db',
+          http_status: 500,
+          retry_mode: 'none',
+          details: { trace_id: 'abc' },
+        },
       },
     })
     const store = useHealthStore()
@@ -137,21 +147,15 @@ describe('health store', () => {
     expect(store.phase).toBe('http-error')
     expect(store.httpStatus).toBe(500)
     expect(store.errorCode).toBe('INTERNAL_ERROR')
-    expect(store.body).toBeNull()
     const snapshot = JSON.stringify(store.$state)
     expect(snapshot).not.toContain('postgres://')
     expect(snapshot).not.toContain('internal-host')
     expect(snapshot).not.toContain('trace_id')
   })
 
-  it('flags non-object or wrongly typed bodies as invalid', async () => {
+  it('flags non-object bodies as invalid', async () => {
     mockFetchOnce({ rawBody: '"just-a-string"' })
     const store = useHealthStore()
-    await store.refresh()
-    expect(store.phase).toBe('invalid-body')
-    expect(store.body).toBeNull()
-
-    mockFetchOnce({ body: { status: 200 } })
     await store.refresh()
     expect(store.phase).toBe('invalid-body')
   })
@@ -205,7 +209,6 @@ describe('health store', () => {
     await Promise.all([first, second])
 
     expect(store.phase).toBe('success')
-    expect(store.body?.status).toBe('alive')
     expect(impl).toHaveBeenCalledTimes(2)
   })
 
