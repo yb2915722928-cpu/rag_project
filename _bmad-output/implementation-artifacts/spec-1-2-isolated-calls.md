@@ -7,6 +7,8 @@ route: dispatch
 review_loop_iteration: 0
 baseline_commit: '96e7fb3ee94c025c3fae804ddabf8ad71d8b08d5'
 story_key: '1-2-隔离执行并保存每次调用事实'
+review_snapshot_tree: '1eff8cf456f705b8c5e0b21985b87ad9d6a846d2'
+review_gate: 'not-passed; known E fixes and D/E execution pending'
 ---
 
 <frozen-after-approval>
@@ -54,6 +56,14 @@ C完成native四源后，主控将未冻结的call_dispatch及unit/PG矩阵明�
 ## Spec Change Log
 
 ## Review Triage Log
+
+唯一全新6.1Sol/medium已完成tree1eff8cf审查，新增0；[完整报告](/E:/aaa-project/rag/docs/story-1-2-code-review.md:1)。
+
+| 项 | 裁决/路由 |
+| --- | --- |
+| 已知F2 | medium/patch；query业务用途与api传输用途不能强等值，DeepSeek502未修 |
+| 已知E矩阵 | medium/patch；修正确实不一致的输入/断言并补真实child+PG故障证据，未修未验 |
+| D运行 | 必需验证待执行，不臆记源码失败；通道阻塞时不放行 |
 
 ## Verification
 

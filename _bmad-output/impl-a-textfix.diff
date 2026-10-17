@@ -1,0 +1,173 @@
+diff --git a/backend/src/rag_app/adapters/call_postgres.py b/backend/src/rag_app/adapters/call_postgres.py
+index 73270a9..c254672 100644
+--- a/backend/src/rag_app/adapters/call_postgres.py
++++ b/backend/src/rag_app/adapters/call_postgres.py
+@@ -104,8 +104,8 @@ class CallRepository:
+             ":call_id, :epoch, :owner_context_id, :holder_id, :space_id, "
+             ":purpose, :stage, :attempt, :claim_token_digest, "
+             ":config_fingerprint, :request_hash, 'prepared', :prepared_at, "
+-            ":lease_until, :hard_deadline)",
+-            {
++            ":lease_until, :hard_deadline)"
++        ), {
+                 "call_id": call_id, "epoch": fence.epoch,
+                 "owner_context_id": fence.owner_context_id,
+                 "holder_id": holder_id, "space_id": space_id,
+@@ -115,8 +115,7 @@ class CallRepository:
+                 "request_hash": request_hash, "prepared_at": now,
+                 "lease_until": fence.lease_until,
+                 "hard_deadline": fence.hard_deadline,
+-            },
+-        ))
++        })
+ 
+     def lock_call(self, call_id: str) -> dict[str, Any] | None:
+         self._ready()
+@@ -124,9 +123,8 @@ class CallRepository:
+             self._lock_order.acquire("call")
+         row = self._session.execute(text(
+             f"SELECT {CALL_COLUMNS} FROM {_call_table(self._schema)} AS c "
+-            "WHERE c.call_id = :call_id FOR UPDATE",
+-            {"call_id": call_id},
+-        )).one_or_none()
++            "WHERE c.call_id = :call_id FOR UPDATE"
++        ), {"call_id": call_id}).one_or_none()
+         return None if row is None else call_record(row)
+ 
+     def lock_context(self, context_id: str) -> dict[str, Any] | None:
+@@ -138,9 +136,8 @@ class CallRepository:
+             "config_fingerprint, attempt, claim_token_digest, lease_until, "
+             "hard_deadline, state "
+             f"FROM {_context_table(self._schema)} "
+-            "WHERE context_id = :context_id FOR UPDATE",
+-            {"context_id": context_id},
+-        )).one_or_none()
++            "WHERE context_id = :context_id FOR UPDATE"
++        ), {"context_id": context_id}).one_or_none()
+         if row is None:
+             return None
+         names = (
+@@ -165,15 +162,14 @@ class CallRepository:
+             ") VALUES ("
+             ":context_id, :epoch, :holder_id, :space_id, :purpose, "
+             ":config_fingerprint, :attempt, :claim_token_digest, :lease_until, "
+-            ":hard_deadline, 'active')",
+-            {
++            ":hard_deadline, 'active')"
++        ), {
+                 "context_id": context_id, "epoch": epoch,
+                 "holder_id": holder_id, "space_id": space_id,
+                 "purpose": purpose, "config_fingerprint": config_fingerprint,
+                 "attempt": attempt, "claim_token_digest": claim_token_digest,
+                 "lease_until": lease_until, "hard_deadline": hard_deadline,
+-            },
+-        ))
++        })
+ 
+     def replace_attempt(
+         self, *, context_id: str, attempt: int, claim_token_digest: str,
+@@ -185,13 +181,12 @@ class CallRepository:
+             "lease_until = :lease_until, hard_deadline = :hard_deadline, "
+             "state = 'active' "
+             "WHERE context_id = :context_id AND state = 'active' "
+-            "AND attempt < :attempt",
+-            {
++            "AND attempt < :attempt"
++        ), {
+                 "context_id": context_id, "attempt": attempt,
+                 "claim_token_digest": claim_token_digest,
+                 "lease_until": lease_until, "hard_deadline": hard_deadline,
+-            },
+-        ))
++        })
+         return result.rowcount == 1
+ 
+     def terminate_context(
+@@ -199,9 +194,8 @@ class CallRepository:
+     ) -> bool:
+         result = self._session.execute(text(
+             f"UPDATE {_context_table(self._schema)} SET state = :state "
+-            "WHERE context_id = :context_id AND state = 'active'",
+-            {"context_id": context_id, "state": state},
+-        ))
++            "WHERE context_id = :context_id AND state = 'active'"
++        ), {"context_id": context_id, "state": state})
+         return result.rowcount == 1
+ 
+     def mark_may_have_sent(
+@@ -212,13 +206,12 @@ class CallRepository:
+             f"UPDATE {_call_table(self._schema)} SET state = 'may_have_sent', "
+             "grant_id = :grant_id, boot_id = :boot_id, "
+             "child_instance = :child_instance, may_have_sent_at = :now "
+-            "WHERE call_id = :call_id AND state = 'prepared'",
+-            {
++            "WHERE call_id = :call_id AND state = 'prepared'"
++        ), {
+                 "call_id": record["call_id"], "grant_id": grant_id,
+                 "boot_id": boot_id, "child_instance": child_instance,
+                 "now": now,
+-            },
+-        ))
++        })
+         return result.rowcount == 1
+ 
+     def record_terminal(
+@@ -233,8 +226,8 @@ class CallRepository:
+             "total_tokens = :total_tokens, cost_kind = :cost_kind, "
+             "cost_amount = :cost_amount, cost_currency = :cost_currency, "
+             "cost_basis = :cost_basis "
+-            "WHERE call_id = :call_id AND state = 'may_have_sent'",
+-            {
++            "WHERE call_id = :call_id AND state = 'may_have_sent'"
++        ), {
+                 "call_id": record["call_id"], "outcome": outcome, "at": at,
+                 "provider_ref": provider_ref,
+                 "usage_status": "unknown" if usage is None else usage.status,
+@@ -247,16 +240,14 @@ class CallRepository:
+                 "cost_amount": None if cost is None else cost.amount,
+                 "cost_currency": None if cost is None else cost.currency,
+                 "cost_basis": None if cost is None else cost.basis,
+-            },
+-        ))
++        })
+ 
+     def list_facts(self, call_id: str) -> list[dict[str, Any]]:
+         rows = self._session.execute(text(
+             "SELECT " + ", ".join(FACT_FIELDS)
+             + f" FROM {_fact_table(self._schema)} WHERE call_id = :call_id "
+-            "ORDER BY fact_id",
+-            {"call_id": call_id},
+-        )).all()
++            "ORDER BY fact_id"
++        ), {"call_id": call_id}).all()
+         return [
+             {name: row[index] for index, name in enumerate(FACT_FIELDS)}
+             for row in rows
+@@ -276,8 +267,8 @@ class CallRepository:
+             ":call_id, :fact_digest, :provider_ref, :usage_status, "
+             ":prompt_tokens, :completion_tokens, :total_tokens, :cost_kind, "
+             ":cost_amount, :cost_currency, :cost_basis, :source, :received_at, "
+-            ":disposition) ON CONFLICT (call_id, fact_digest) DO NOTHING",
+-            {
++            ":disposition) ON CONFLICT (call_id, fact_digest) DO NOTHING"
++        ), {
+                 "call_id": call_id, "fact_digest": digest,
+                 "provider_ref": provider_ref,
+                 "usage_status": "unknown" if usage is None else usage.status,
+@@ -292,13 +283,11 @@ class CallRepository:
+                 "cost_basis": None if cost is None else cost.basis,
+                 "source": source, "received_at": received_at,
+                 "disposition": disposition,
+-            },
+-        ))
++        })
+         return result.rowcount == 1
+ 
+     def require_reconciliation(self, call_id: str) -> None:
+         self._session.execute(text(
+             f"UPDATE {_call_table(self._schema)} SET "
+-            "reconciliation_status = 'required' WHERE call_id = :call_id",
+-            {"call_id": call_id},
+-        ))
++            "reconciliation_status = 'required' WHERE call_id = :call_id"
++        ), {"call_id": call_id})

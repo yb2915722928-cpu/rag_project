@@ -23,7 +23,7 @@ review_loop_iteration: 0
 
 ## Tasks & Acceptance
 
-- [ ] [监督领域](/E:/aaa-project/rag/backend/src/rag_app/modules/execution/supervision.py) / [监督适配器](/E:/aaa-project/rag/backend/src/rag_app/adapters/child_supervisor.py) / [child入口](/E:/aaa-project/rag/backend/src/rag_app/entrypoints/call_child.py)：有限IPC与真实Linux监督。
+- [x] [监督领域](/E:/aaa-project/rag/backend/src/rag_app/modules/execution/supervision.py) / [监督适配器](/E:/aaa-project/rag/backend/src/rag_app/adapters/child_supervisor.py) / [child入口](/E:/aaa-project/rag/backend/src/rag_app/entrypoints/call_child.py)：有限IPC与真实Linux监督；96c64fb native22+架构3实测通过。
 - [ ] [call_dispatch.py](/E:/aaa-project/rag/backend/src/rag_app/application/call_dispatch.py)：按A/B公共签名装配，复核资格、持久状态、目标守卫、单grant/响应事实。
 - [ ] [child测试](/E:/aaa-project/rag/backend/tests/test_child_supervisor.py) / [dispatch测试](/E:/aaa-project/rag/backend/tests/test_call_dispatch.py) / [PG集成](/E:/aaa-project/rag/backend/tests/test_call_dispatch_postgres.py)：故障矩阵和集成；[C交付文档](/E:/aaa-project/rag/docs/story-1-2-c-delivery.md)。
 
@@ -47,6 +47,8 @@ review_loop_iteration: 0
 初次四文件冻结经主控完整检查，I2物理槽仅内存/按boot分离及不可核实停止误判、I3分段recv重置相对timeout仍未满足原AC2/R1；按公共契约C纠正项重开同四文件最小修正，补跨实例/新boot未证停止、身份错绑不误杀、proc未知与慢速分段绝对deadline负例后再次冻结。原公开方法不变；本地语法编译不作为Linux证据。
 
 主控后续并行拆分：未冻结call_dispatch及其unit/PG两文件已转交现有A按[E规格](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-2-e-dispatch-integration.md:1)接管，C不再写这三文件；C只继续四个native child文件与本C交付。父AC/故障矩阵仍由E完整承接，未延期/缩减。
+
+C native25的原JUnit/exit/HEAD/Git及六源hash已由主控核实，I2/I3当前实现缺口关闭；[C交付](/E:/aaa-project/rag/docs/story-1-2-c-delivery.md:1)保留草稿/受测来源。剩余C原端到端两任务完整在E，父独立/审查未通过，不将本子段状态标父完成。
 
 ## Spec Change Log
 

@@ -1,0 +1,42 @@
+{
+  "story": "1.2",
+  "captured_at": "2026-10-18T06:26:58.257162+08:00",
+  "previous_instances_closed": [
+    "01a14b4b-3d07-7a12-a4ea-8ae0f9db0540",
+    "01a14b4b-41ea-7bd0-9b61-0e9475aadae8"
+  ],
+  "reason": "Long-running continuations produced no new tool output or source changes; preserve work and hand narrowly scoped unfinished tasks to fresh instances of the same required model. No model unavailability or route mismatch is asserted.",
+  "last_observed_E_tool_before_interrupt": "2026-10-17T22:07:43Z",
+  "E_interrupt_and_running_context": "2026-10-17T22:20:52Z zayuapi/deepseek-v4.1-flash effort=max",
+  "last_observed_D_tool": "2026-10-17T22:11:21Z",
+  "server_canonical_commit": "96c64fbab0fa8d3d824f2e592196c02570550c70",
+  "unfinished_E": "F2 logical vs transport purpose, meaningful late-fact fixtures, actual child kill tied to PG, then fixed-commit tests",
+  "unfinished_D": "new backend build/epoch startup regression; inspect task-owned remote files/jobs first",
+  "files": [
+    {
+      "path": "backend/src/rag_app/application/call_dispatch.py",
+      "sha256": "2fa30b50f8c2e372f3ebb8502be308f84142b88260dfcc5926a613e85d5126b9",
+      "bytes": 26503
+    },
+    {
+      "path": "backend/tests/test_call_dispatch.py",
+      "sha256": "39965705b0856f148ba6ae75cc61bf4fe973a99d81dd28cf4d03b3a6c9e65bd1",
+      "bytes": 19333
+    },
+    {
+      "path": "backend/tests/test_call_dispatch_postgres.py",
+      "sha256": "ec36f9b496fb037232701b5f8ac145fdba71f7990baee642f7483c8d5f256b8c",
+      "bytes": 19497
+    },
+    {
+      "path": "deploy/compose.yaml",
+      "sha256": "c05e4594a939432e87bba40dd57307d89e185176ecfa852da82efc2e168f77db",
+      "bytes": 8157
+    },
+    {
+      "path": "docs/story-1-2-epoch-deploy.md",
+      "sha256": "26e7a07db095ccb712356cd98e6802f8f331a43a6ad23bffb9962c6263169377",
+      "bytes": 10486
+    }
+  ]
+}

@@ -43,6 +43,8 @@ review_loop_iteration: 0
 
 主控已核B实际DeepSeek/max默认路由，采纳预读方案：两服务同变量，默认 `/var/lib/rag/epoch/epoch-control.json`；首次维护临时以服务UID在RW目录0700初始化，之后epoch目录恢复0550、文件0400/65532，普通只读挂载满足既有preflight。部署说明须清楚分开维护与普通启动，不覆盖已有控制记录。A服务器草稿覆盖检出已停用；所有D实测等主控提供新的干净Gitee固定检出，不能直接修改服务器源。
 
+原B/D续跑长时间无新工具输出，主控已关闭并释放写入/RPC；既有两文件均固定96c64fb，见[接替快照](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-2-ed-successor-source-snapshot.json:1)。新同模型DeepSeek仅接尚未执行的运行回归：先只读ready，等D_SUCCESSOR_MODEL_RELEASE核模型/给RPC。复用既有测试PG环境文件（setup.sh第162行指定，root0400）与rag-story-1-1-test网络、postgres-test:5432；不猜rag角色/pgpass，不打印秘密，不重探旧DockerHub阻塞。先看Story1.2专属远程目录/已有后台进程，避免重复构建；旧1.1基镜像构建可复用缓存。代码96c不改，任何新失败先报主控，不server覆盖。
+
 ## Verification
 
 只跑当前启动接线必要回归并留commit/hash/命令/退出码/epoch不变证据；最终证据放 `/fileOfRag/testOfRAG/metadata/story-1-2/epoch-deploy`，活动目录为本地FS `/opt/rag-story-1-2`。文档归档不阻塞其他独立工作。

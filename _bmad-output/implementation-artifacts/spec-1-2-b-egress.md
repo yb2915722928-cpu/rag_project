@@ -2,7 +2,7 @@
 title: '1.2 B 共用 EgressTarget'
 type: feature
 created: '2026-10-18'
-status: in-progress
+status: done
 route: dispatch
 review_loop_iteration: 0
 ---
@@ -21,9 +21,9 @@ review_loop_iteration: 0
 
 ## Tasks & Acceptance
 
-- [ ] [领域egress](/E:/aaa-project/rag/backend/src/rag_app/modules/execution/egress.py)定义无框架值对象和端口；[egress适配器](/E:/aaa-project/rag/backend/src/rag_app/adapters/egress.py)实现解析、DNS校验和绑定连接；对外接口先回报主控供C使用。
-- [ ] [test_egress.py](/E:/aaa-project/rag/backend/tests/test_egress.py)覆盖准确允许表、长度、混合A/AAAA、DNS变化、TLS主机和地址绑定、redirect、凭据分域/秘密哨兵。
-- [ ] [B交付文档](/E:/aaa-project/rag/docs/story-1-2-b-delivery.md)记录命令、固定提交/hash、假件边界与结果。
+- [x] [领域egress](/E:/aaa-project/rag/backend/src/rag_app/modules/execution/egress.py)定义无框架值对象和端口；[egress适配器](/E:/aaa-project/rag/backend/src/rag_app/adapters/egress.py)实现解析、DNS校验和绑定连接；对外接口先回报主控供C使用。
+- [x] [test_egress.py](/E:/aaa-project/rag/backend/tests/test_egress.py)覆盖准确允许表、长度、混合A/AAAA、DNS变化、TLS主机和地址绑定、redirect、凭据分域/秘密哨兵。
+- [x] [B交付文档](/E:/aaa-project/rag/docs/story-1-2-b-delivery.md)记录命令、固定提交/hash、假件边界与结果。
 
 ## Acceptance Criteria
 
@@ -43,6 +43,8 @@ review_loop_iteration: 0
 唯一 DeepSeek 默认；只写 Tasks 列举的四个文件，不改依赖锁/入口/其他实现者文件。第一阶段只读并回报对外签名，等待主控核实际模型后发送 `IMPLEMENTATION_MODEL_RELEASE` 才写入。接口需让 C 的受监督单 call 使用；可以实现生产连接构件，但 S0 运行入口显式禁真实供应方。主控同步 GitHub/Gitee 后，分配 Netcatty Linux 开发者测试时段。
 
 主控已核实际模型并登记 [公共契约](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-2-public-contracts.md:1)：独立有限 EgressError、不修改共享错误文件；可见ASCII wire URL、原样query；选定一个已核IP、无自动回退；C复用OneShotHttpTransport。收到release后直接编码，代码冻结后等待主控发布固定提交；本地不运行应用/测试。
+
+开发者固定78402858fb003dfd62d57ed481f4f131e69424bf专题153/架构3/UoW13共169通过，主控核桶中原JUnit/exit/Git/源码hash；原结果不重标后续提交。父Story独立/正式审查仍待，B三源冻结。
 
 ## Spec Change Log
 

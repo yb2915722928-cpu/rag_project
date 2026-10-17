@@ -2,7 +2,7 @@
 title: '1.2 A 持久执行与调用事实'
 type: feature
 created: '2026-10-18'
-status: in-progress
+status: done
 route: dispatch
 review_loop_iteration: 0
 ---
@@ -23,9 +23,9 @@ review_loop_iteration: 0
 
 ## Tasks & Acceptance
 
-- [ ] 在 [execution](/E:/aaa-project/rag/backend/src/rag_app/modules/execution/) / [ledger](/E:/aaa-project/rag/backend/src/rag_app/modules/ledger/) 增加无框架模型/端口；[call_lifecycle.py](/E:/aaa-project/rag/backend/src/rag_app/application/call_lifecycle.py)实现用例；[call_postgres.py](/E:/aaa-project/rag/backend/src/rag_app/adapters/call_postgres.py) / [epoch_control.py](/E:/aaa-project/rag/backend/src/rag_app/adapters/epoch_control.py)实现持久化。
-- [ ] 新增 [0002迁移](/E:/aaa-project/rag/backend/migrations/versions/0002_isolated_calls.py)；必要时修改 [postgres.py](/E:/aaa-project/rag/backend/src/rag_app/adapters/postgres.py)、bootstrap和相关旧测试，使 revision/启动校验可集成，不回退旧迁移义务。
-- [ ] 新增 [持久化测试](/E:/aaa-project/rag/backend/tests/test_call_persistence.py) / [PG测试](/E:/aaa-project/rag/backend/tests/test_call_postgres.py) / [epoch测试](/E:/aaa-project/rag/backend/tests/test_epoch_control.py)，必要时维护conftest必跑集合；交付 [A文档](/E:/aaa-project/rag/docs/story-1-2-a-delivery.md)。
+- [x] 在 [execution](/E:/aaa-project/rag/backend/src/rag_app/modules/execution/) / [ledger](/E:/aaa-project/rag/backend/src/rag_app/modules/ledger/) 增加无框架模型/端口；[call_lifecycle.py](/E:/aaa-project/rag/backend/src/rag_app/application/call_lifecycle.py)实现用例；[call_postgres.py](/E:/aaa-project/rag/backend/src/rag_app/adapters/call_postgres.py) / [epoch_control.py](/E:/aaa-project/rag/backend/src/rag_app/adapters/epoch_control.py)实现持久化。
+- [x] 新增 [0002迁移](/E:/aaa-project/rag/backend/migrations/versions/0002_isolated_calls.py)；必要时修改 [postgres.py](/E:/aaa-project/rag/backend/src/rag_app/adapters/postgres.py)、bootstrap和相关旧测试，使 revision/启动校验可集成，不回退旧迁移义务。
+- [x] 新增 [持久化测试](/E:/aaa-project/rag/backend/tests/test_call_persistence.py) / [PG测试](/E:/aaa-project/rag/backend/tests/test_call_postgres.py) / [epoch测试](/E:/aaa-project/rag/backend/tests/test_epoch_control.py)，维护conftest必跑集合；已交付 [A文档](/E:/aaa-project/rag/docs/story-1-2-a-delivery.md)。
 
 ## Acceptance Criteria
 
@@ -49,6 +49,8 @@ review_loop_iteration: 0
 集成已确认现有call快照不足以证明当前fence失效；按公共契约“当前上下文权威核对”补最小持久context及受控初始化/终结/换attempt端口，prepare/mark/当前业务转换复核持久权威，迟到仅call。真实PG测试须通过实际context变更证明旧fence失效；原五方法签名不变，C的夹具初始化签名由A及时回报。
 
 I1同时复核取锁后的实际当前时间；传入now或事实result.at不能在PG行锁等待后回拨租约/期限资格。按公共契约补DB当前时刻端口与一个实际持锁跨期限负例，原方法签名保持不变。
+
+开发者完成证据：af6ce5099166960e714a1e8b45f004cc8ac9f77a干净Gitee检出，88+48非PG/15PG均通过且主控核原JUnit/exit/Git/19hash。52ccb1f失败及服务器覆盖仅草稿保留，不计完成；父Story独立验证/正式审查仍待，A源冻结。
 
 ## Spec Change Log
 

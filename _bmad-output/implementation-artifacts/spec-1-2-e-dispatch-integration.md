@@ -44,6 +44,12 @@ review_loop_iteration: 0
 
 首阶段只读接管草稿并5行内ready，等待E_MODEL_RELEASE后写。保持原草稿来源；没有同文件并发写者。所有运行/测试只在Netcatty Linux，从Gitee固定提交，主控发布前不跑；绝不临改server源码，失败先本地修补再发布。当前C将持terminal，E只本地实现；证据归 `/fileOfRag/testOfRAG/metadata/story-1-2/dispatch`。
 
+E首稿静态检查发现F2：将A业务purpose与B传输EgressPurpose强制同值，且PG helper硬写api而context默认query，合法成功路径必被拒。主控已明确两字段独立；移除该未约定限制，执行helper传current.purpose，补合法query+API共存断言，错误业务用途仍由A真实context拒绝，下载Authorization守卫不变。实现者未实测的“凭记忆hash”一律不入证据，主控从磁盘/Git计算。
+
+续跑长时间无工具输出/源变动，原A/E已关闭并释放三文件，来源见[接替快照](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-2-ed-successor-source-snapshot.json:1)。改由新同模型DeepSeek实例接替窄范围，无模型失效/错路由结论。只读加载本规格、公共契约用途分层和现有三文件，等E_SUCCESSOR_MODEL_RELEASE后直接完成F2、正常成功断言、可信result_fact晚到工厂、一例真实child SIGSTOP/KILL+PGunknown/无二grant。无需重新规划/加载全部历史；首阶段简短ready即可，源改完马上冻给主控发布后实测。
+
+首个新接替9d40实例已报真实502/DeepSeek chat/completions EOF且关闭，无新源写入。主控仅再用同一指定模型一次有界重试；新实例先只读ready，待E_RETRY_MODEL_RELEASE才窄修。若再遇通道错误，保留原错/实际未完成项，不换模型、不本地运行/不自造hash或PASS。
+
 ## Verification
 
 当前E专题、全部必需PG门与必要回归；不重跑全仓/前端或1.3限流/1.4清理。开发者、Step5独立验证和全新6.1medium审查各自留真证据，子段完成不代表父Story完成。

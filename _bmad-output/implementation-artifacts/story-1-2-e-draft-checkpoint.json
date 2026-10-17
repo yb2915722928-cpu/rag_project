@@ -1,0 +1,29 @@
+{
+  "story": "1.2",
+  "captured_at": "2026-10-18T07:05:55.566080+08:00",
+  "source_review_tree": "1eff8cf456f705b8c5e0b21985b87ad9d6a846d2",
+  "required_model_failure": "two fresh required DeepSeek instances returned502 chat/completions EOF; both closed without source writes",
+  "E_known_open": [
+    "F2 logical versus transport purpose",
+    "success/late fact fixtures and real child kill PG matrix"
+  ],
+  "D_runtime_status": "not-executed; no Story1.2 runtime resources observed",
+  "acceptance_gate": "not-passed",
+  "files": [
+    {
+      "path": "backend/src/rag_app/application/call_dispatch.py",
+      "sha256": "2fa30b50f8c2e372f3ebb8502be308f84142b88260dfcc5926a613e85d5126b9",
+      "state": "unfixed_E_draft_no_runtime_PASS"
+    },
+    {
+      "path": "backend/tests/test_call_dispatch.py",
+      "sha256": "39965705b0856f148ba6ae75cc61bf4fe973a99d81dd28cf4d03b3a6c9e65bd1",
+      "state": "unfixed_E_draft_no_runtime_PASS"
+    },
+    {
+      "path": "backend/tests/test_call_dispatch_postgres.py",
+      "sha256": "ec36f9b496fb037232701b5f8ac145fdba71f7990baee642f7483c8d5f256b8c",
+      "state": "unfixed_E_draft_no_runtime_PASS"
+    }
+  ]
+}

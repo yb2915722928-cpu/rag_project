@@ -88,4 +88,6 @@ I1受控初始化接口已落盘，供C集成，均位于上述CallLifecycle；�
 
 C以返回的epoch/context_id/attempt/token/lease/deadline构造既有ExecutionFence，或读取ExecutionContext提供的fence投影。真实PG夹具仍为call_persistence，组装函数及原五方法不变。I1仅完成代码补齐，运行负例通过前不关闭。
 
+用途字段分层：A的context/call `purpose`是业务用途（例如query、embedding等受控标签），由持久context核对；B的EgressPurpose(api/upload/download)是传输/凭据用途。两者不能强制同值。E须原样把逻辑用途交A、独立保留B目标与Authorization守卫，不能因query≠api拒绝合法调用。当前PG夹具默认query；端到端执行helper必须使用current.purpose，不硬写api。
+
 I1差异检查补充：当前prepare/mark仍以进入事务前的传入now判断租约，record_result以事实result.at判断；等待context/call行锁时实际期限可能已过。取所需锁后用新鲜权威当前时间复核，真实PG适配器提供DB当前时刻，参数now/result.at只用于事件/事实元数据，不能回拨资格时钟。补一个真实PG持锁等待越过lease/deadline、传入旧now仍零grant/当前业务写的负例；迟到可信事实通路不受影响。原公开五方法不变，不扩展1.3窗口/跳钟测试。

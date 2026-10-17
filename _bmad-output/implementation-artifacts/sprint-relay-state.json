@@ -6,16 +6,16 @@
   "project_path": "E:/aaa-project/rag",
   "host_id": "local",
   "mode": "serial-completion-triggered",
-  "state": "story_1_2_implementation",
+  "state": "story_1_2_blocked_required_DeepSeek_EOF_snapshot_review_finishing",
   "owner_thread_id": "01a14b42-689c-7533-90a3-9bd187d93039",
   "current_story_key": "1-2-隔离执行并保存每次调用事实",
   "current_spec": "_bmad-output/implementation-artifacts/spec-1-2-isolated-calls.md",
   "current_implementation_agent_id": null,
   "implementation_write_scope": [],
-  "acceptance_gate": "not-executed",
-  "next_story_key": "1-2-隔离执行并保存每次调用事实",
-  "next_thread_id": "01a14b42-689c-7533-90a3-9bd187d93039",
-  "dispatch_state": "A_af6_canonical_151_parent_verified_C_child_and_D_six_files_frozen_for_publication_C_dispatch_PG_still_pending",
+  "acceptance_gate": "not-passed",
+  "next_story_key": null,
+  "next_thread_id": null,
+  "dispatch_state": "DeepSeek_successor502_E_one_same_model_retry_pending_base_independent_done_fresh6.1_medium_snapshot_review_active",
   "handoff_id": "3dff3d78-c0f5-42cf-9860-fc2ad4250ab4",
   "handoff_kind": "completed_story_serial_relay",
   "handoff_source_thread_id": "01a14973-8555-7131-8fd2-e9eec12f53fe",
@@ -36,7 +36,24 @@
     "Story1.2 original AC4: A real PG facts/lock negatives passed; E real child/transaction/late-fact integration and independent evidence pending",
     "D/E developer verification, Step5 independent verification, one fresh GPT6.1Sol medium review and actual fix regressions, final acceptance snapshot and next serial relay"
   ],
-  "blocked_conditions": [],
+  "blocked_conditions": [
+    {
+      "condition": "Required DeepSeek implementation route returned502 upstream EOF on both fresh E successor and the one bounded retry.",
+      "first_observed": "2026-10-18T06:44:08+08:00",
+      "last_observed": "2026-10-18T07:01:31+08:00",
+      "raw_error": "unexpected status 502 Bad Gateway: DeepSeek: Post \"https://api.zayuapi.com/chat/completions\": EOF, url: http://127.0.0.1:3425/backend-api/codex/responses",
+      "instances": [
+        "01a14bfa-9d40-7f03-a3f7-3c823d20b28c",
+        "01a14c0b-4f69-7131-934e-f06f931cbd1a"
+      ],
+      "actual_turn_context": "Both requested/observed zayuapi/deepseek-v4.1-flash effort=max; no reasoning override. No underlying provider identity beyond route error is asserted.",
+      "impact": "E three-file current defects and developer tests cannot advance using the required implementer; D current startup regression remains unexecuted. Story1.2 original gate stays not-passed.",
+      "source_mutations_by_failed_instances": false,
+      "both_instances_closed": true,
+      "recheck_trigger": "User reports recovery or changes the required route/environment; a new explicit instruction authorizes another bounded attempt. Do not repeatedly probe unchanged failure.",
+      "no_fallback": "No alternate model/channel or controller-authored application/tests/deployment; no new empty relay chat for the same external blocker."
+    }
+  ],
   "deduplication_rule": "Recheck project threads and this claim before dispatch. Never create a second owner for the same story or retry an ambiguous creation before reconciling it.",
   "completion_rule": "All required parent-story acceptance and independent review/validation must pass before selecting and dispatching the next dependent story.",
   "handoff_history": [
@@ -149,7 +166,7 @@
     "execution_via": "netcatty-external",
     "ssh_host": "120.53.251.166",
     "vault_host_id": "91d8bbe7-7f0e-469f-b3e1-4800d56b4cd3",
-    "latest_session_id": "0d682d12-5a9c-4260-85b5-86713c7d4304",
+    "latest_session_id": "94bede36-0e0e-444c-a8b7-f332d2542962",
     "session_rule": "Refresh with get_environment only when using the remote host or reconnecting.",
     "python_target": "CPython 3.12.8",
     "remote_host_python": "3.12.3",
@@ -160,11 +177,11 @@
     "old_docker_resources": "cleaned_by_explicit_user_authorization",
     "rag_runtime_acceptance": "Story1.1 passed as final_acceptance and its frozen snapshot; Story1.2 runtime not-executed.",
     "netcatty_terminal_lease": {
-      "holder_agent_id": "01a14b4b-41ea-7bd0-9b61-0e9475aadae8",
-      "holder_nickname": "Faraday",
-      "scope": "D96c64fb_dedicated_epoch_startup_backend_image_regression",
+      "holder_agent_id": null,
+      "holder_nickname": "independent_base_complete_no_holder",
+      "scope": "base96c_independent_complete_E_D_pending",
       "global_mutex": "__external_mcp__",
-      "controller_and_backend_terminal_calls": "controller_A_E_C_Pascal_wait_until_Faraday_returns_D_slot",
+      "controller_and_backend_terminal_calls": "controller_E_C_wait_until_Pascal_returns_partial_independent_slot",
       "backend_exclusive_session": "1eaffce6-3c45-45cb-84bd-18bd6fc84ea9",
       "rule": "No concurrent terminal requests across sessions; no repeated unchanged mutex probes."
     },
@@ -902,7 +919,7 @@
   },
   "next_story_claim": {
     "story_key": "1-2-隔离执行并保存每次调用事实",
-    "state": "accepted_active_unique_owner",
+    "state": "active_current_story_owner_blocked_no_next_handoff_pending",
     "handoff_id": "3dff3d78-c0f5-42cf-9860-fc2ad4250ab4",
     "thread_id": "01a14b42-689c-7533-90a3-9bd187d93039",
     "parent_dependency": "Story1.1_done_passed",
@@ -949,7 +966,7 @@
       "provider_identity": "not_independently_visible"
     },
     "baseline_commit": "96e7fb3ee94c025c3fae804ddabf8ad71d8b08d5",
-    "acceptance_gate": "not-executed",
+    "acceptance_gate": "not-passed",
     "original_AC_count": 4,
     "spec_tokenizer": "tiktoken o200k encoding",
     "initial_spec_tokens": {
@@ -969,8 +986,8 @@
         "observed_effort": "max",
         "observed_timestamp": "2026-10-17T19:16:25Z",
         "spec": "_bmad-output/implementation-artifacts/spec-1-2-a-persistence.md",
-        "active_claim": true,
-        "state": "af6ce50_clean_canonical_88_plus_48_nonPG_15_PG_passed_parent_raw_verified_source_frozen"
+        "active_claim": false,
+        "state": "A_verified_sources_frozen_old_A_E_instance_closed_E_successor_narrow_scope"
       },
       {
         "agent_id": "01a14b4b-41ea-7bd0-9b61-0e9475aadae8",
@@ -982,8 +999,8 @@
         "observed_effort": "max",
         "observed_timestamp": "2026-10-17T19:16:26Z",
         "spec": "_bmad-output/implementation-artifacts/spec-1-2-b-egress.md",
-        "active_claim": true,
-        "state": "developer_169_passed_0_fail_0_skip_fixed_7840285_terminal_returned_source_frozen"
+        "active_claim": false,
+        "state": "B_verified_sources_frozen_old_B_D_instance_closed_D_successor_narrow_scope"
       },
       {
         "agent_id": "01a14b57-dbf8-7e11-8a3f-f678f9146dd0",
@@ -999,7 +1016,96 @@
         "state": "native96c64fb_developer25_parent_raw_verified_four_sources_frozen_doc_only_E_dispatch_transferred"
       }
     ],
-    "terminal_holder": "01a14b4b-41ea-7bd0-9b61-0e9475aadae8",
+    "terminal_holder": null,
+    "formal_review_claim_1_2": {
+      "agent_id": "01a14c16-28e7-7c61-8444-de4c9b2ad09e",
+      "nickname": "Pasteur",
+      "requested_model": "group/auto-gpt-6-1-sol",
+      "requested_reasoning_effort": "medium",
+      "observed_model": "group/auto-gpt-6-1-sol",
+      "observed_effort": "medium",
+      "observed_timestamp": "2026-10-17T22:58:04.779Z",
+      "fresh_context": true,
+      "implementation_or_analysis_participation": false,
+      "state": "snapshot_review_complete_zero_new_known_F2_E_D_open_not_passed",
+      "snapshot_tree": "1eff8cf456f705b8c5e0b21985b87ad9d6a846d2",
+      "diff_sha256": "b9a19d5beab26888cce9edc7f75cffb74eb90ec87a70fe8849e66b0b8ad79e21",
+      "archived_diff": "_bmad-output/implementation-artifacts/story-1-2-reviewed-source.diff",
+      "report": "docs/story-1-2-code-review.md",
+      "report_sha256": "bc59f75da568c34f159ba8d37151e4f1228596712af08277f591bf7e0469e997",
+      "new_findings": 0,
+      "known_open": ["F2_PURPOSE_DIMENSIONS", "E_TEST_ALIGNMENT", "D_not_executed"],
+      "reviewed_implementation_matches_checkpoint_index": true,
+      "scope": "docs/story-1-2-code-review.md only",
+      "policy": "one substantive current-AC review, zero new findings allowed, no quota/generic future hardening; known E/D unresolved stays unpassed"
+    },
+    "E_same_model_retry": {
+      "agent_id": "01a14c0b-4f69-7131-934e-f06f931cbd1a",
+      "nickname": "Halley",
+      "requested_model": "zayuapi/deepseek-v4.1-flash",
+      "requested_reasoning_effort": null,
+      "observed_model": "zayuapi/deepseek-v4.1-flash",
+      "observed_effort": "max",
+      "observed_timestamp": "2026-10-17T22:46:13.335Z",
+      "state": "same502_EOF_failed_closed_without_source_changes_no_further_retry",
+      "actual_error": "unexpected status 502 Bad Gateway: DeepSeek: Post \"https://api.zayuapi.com/chat/completions\": EOF, url: http://127.0.0.1:3425/backend-api/codex/responses",
+      "completed_at_UTC": "2026-10-17T23:01:31.500Z",
+      "no_additional_retry_without_new_trigger": true
+    },
+    "independent_base_result": {
+      "commit": "96c64fbab0fa8d3d824f2e592196c02570550c70",
+      "verifier": "01a14b8d-7d2f-7b62-875b-a324944c561c",
+      "non_PG_passed": 311,
+      "PG_passed": 15,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "actual_non_PG_deselected": "two worker real-PG parameter nodes in test_runtime_entrypoints",
+      "parent_XML_modules_source_Git_verified": true,
+      "parent_unique_snapshot_hashes_verified": 28,
+      "source_hash_mismatches": 0,
+      "Python": "3.12.8",
+      "scope": "stable A/B/C base only; no complete E crash matrix or D deployment qualification",
+      "evidence_root": "/fileOfRag/testOfRAG/metadata/story-1-2/independent/base96c",
+      "report": "docs/story-1-2-independent-verification.md",
+      "final_parent_corrected_report_sha256": "f7a91830112602a391dd9e972e01178236f52c553ac88b05142851ed8c830afc",
+      "report_factual_corrections": "verifier_corrected_scope_counts_then_parent_corrected_XML311_and_future_business_attribution_no_extra_runtime_checks",
+      "evidence_sha256": {
+        "base96c-junit-nonpg.xml": "13b55c51e8b32f5c9fc2898c2f392d2a9882a4bd10e4e730b6a389e8d61c14fd",
+        "base96c-junit-pg.xml": "2b91af2466b72a9fb1fa7a230316628eee97d5dd9bea062ce987610224a4da3a",
+        "base96c-nonpg.log": "aa0a566799da9bd323117117b1d4f724525469a1e4951300c410dc5354889758",
+        "base96c-pg.log": "d07373aee0370547d623db42be6edfda8e3198eced15c76ee45c2f54631fc9ac",
+        "base96c-source-hashes.txt": "a3bccdc4fd0a93fd7cd52b9746291a3ed1ba9847bb6a2391ebbe21e05713f290"
+      },
+      "full_Story_gate": "not-passed",
+      "terminal_returned": true
+    },
+    "D_runtime_last_parent_read_only_state": {
+      "session": "94bede36-0e0e-444c-a8b7-f332d2542962",
+      "Story1.2_containers_matching_name": 0,
+      "Story1.2_images_matching_reference": 0,
+      "epoch_deploy_and_epoch_directories": "not_present_at_read",
+      "canonical_repo_HEAD": "96c64fbab0fa8d3d824f2e592196c02570550c70",
+      "canonical_repo_clean": true,
+      "acceptance": "not-executed"
+    },
+    "terminal_session_recovery": {
+      "failed_session": "0d682d12-5a9c-4260-85b5-86713c7d4304",
+      "evidence": "Parent read-only directory command and then printf each timed out after60s with exit-1; get_environment still listed connected.",
+      "working_session": "94bede36-0e0e-444c-a8b7-f332d2542962",
+      "verification": "Parent printf probe returned expected marker exit0 in0.865s.",
+      "scope": "Original session execution path unresolved; host not declared unavailable.",
+      "recheck_trigger": "Explicit reconnect/session-state change; do not repeat failed0d probes."
+    },
+    "E_D_successor_transition": {
+      "previous_A_E": "01a14b4b-3d07-7a12-a4ea-8ae0f9db0540",
+      "previous_B_D": "01a14b4b-41ea-7bd0-9b61-0e9475aadae8",
+      "both_previous_statuses_on_close": "running",
+      "both_closed_write_RPC_released": true,
+      "reason": "Long-running continuations produced no new tools/source; preserve work and use fresh instances of exactly the same user-required model for narrowly unfinished tasks.",
+      "not_claimed": "No underlying provider identity, model unavailability, route mismatch or permanent blocking diagnosis is asserted.",
+      "source_snapshot": "_bmad-output/implementation-artifacts/story-1-2-ed-successor-source-snapshot.json"
+    },
     "C_native_developer_result": {
       "commit": "96c64fbab0fa8d3d824f2e592196c02570550c70",
       "passed": 25,
@@ -1025,7 +1131,7 @@
       "agent_id": "01a14b4b-3d07-7a12-a4ea-8ae0f9db0540",
       "model": "zayuapi/deepseek-v4.1-flash",
       "reasoning_override": null,
-      "state": "E_model_released_local_dispatch_implementation_A19_frozen_no_terminal",
+      "state": "old_E_writer_closed_ownership_transferred_to_E_successor",
       "observed_model": "zayuapi/deepseek-v4.1-flash",
       "observed_effort": "max",
       "observed_timestamp": "2026-10-17T21:50:08.660Z",
@@ -1039,6 +1145,33 @@
       "previous_draft_sha256": "aee1099e9c401d7d408f3177d1e56bfdddb5115c8c30acd9ea13ac8dbe8f41a2",
       "previous_writer_stopped_and_notified": true,
       "parent_obligations_preserved": true
+    },
+    "E_successor": {
+      "agent_id": "01a14bfa-9d40-7f03-a3f7-3c823d20b28c",
+      "nickname": "Beauvoir",
+      "requested_model": "zayuapi/deepseek-v4.1-flash",
+      "requested_reasoning_effort": null,
+      "observed_model": "zayuapi/deepseek-v4.1-flash",
+      "observed_effort": "max",
+      "observed_timestamp": "2026-10-17T22:27:59Z",
+      "state": "errored_502_DeepSeek_chat_completions_EOF_closed_no_source_writes",
+      "previous_E_closed": true,
+      "actual_error": "unexpected status 502 Bad Gateway: DeepSeek: Post https://api.zayuapi.com/chat/completions: EOF; local backend responses endpoint returned502",
+      "error_scope": "E narrow code fixes and developer tests could not advance; D runtime still unexecuted, no D-specific502 claimed",
+      "retry_policy": "one fresh instance of same zayuapi/deepseek-v4.1-flash default; no model/channel fallback",
+      "scope": "E spec three source/test files and dispatch delivery doc; A19/C4 frozen"
+    },
+    "D_successor": {
+      "agent_id": "01a14bfa-a310-70c0-b4d9-a76fbb426a41",
+      "nickname": "Ampere",
+      "requested_model": "zayuapi/deepseek-v4.1-flash",
+      "requested_reasoning_effort": null,
+      "observed_model": "zayuapi/deepseek-v4.1-flash",
+      "observed_effort": "max",
+      "observed_timestamp": "2026-10-17T22:28:00Z",
+      "state": "closed_after_no_first_tool_output_runtime_D_still_not_executed",
+      "previous_D_closed": true,
+      "scope": "D spec two source/doc files and Story1.2 dedicated runtime resources"
     },
     "A_canonical_result": {
       "commit": "af6ce5099166960e714a1e8b45f004cc8ac9f77a",
@@ -1103,7 +1236,7 @@
       "observed_model": "zayuapi/deepseek-v4.1-flash",
       "observed_effort": "max",
       "observed_timestamp": "2026-10-17T20:59:51Z",
-      "state": "D_runtime_release_96c64fb_dedicated_epoch_startup_backend_image_test_slot",
+      "state": "old_D_instance_closed_runtime_transferred_to_D_successor",
       "scope": [
         "deploy/compose.yaml",
         "docs/story-1-2-epoch-deploy.md"
@@ -1118,7 +1251,7 @@
       "observed_model": "stepfun/step-5-preview",
       "observed_effort": "high",
       "observed_timestamp": "2026-10-17T20:28:47Z",
-      "state": "read_only_ready_no_runtime_release_yet",
+      "state": "partial96c_stable_A_B_C_base_independent_model_and_RPC_released_full_E_D_pending",
       "scope": "docs/story-1-2-independent-verification.md and isolated verification evidence only",
       "denominator": "all substantive clauses of original four ACs; table rows are only an index"
     },
@@ -1184,6 +1317,22 @@
         "owner": "01a14b4b-3d07-7a12-a4ea-8ae0f9db0540",
         "status": "closed_by_af6ce50_clean_canonical_15_PG_pass_parent_raw_verified",
         "original_failed_and_overlay_evidence_preserved": true
+      },
+      {
+        "id": "F2_PURPOSE_DIMENSIONS",
+        "original_AC": "AC1/AC2 lawful execution context and EgressTarget integration",
+        "evidence": "E draft compared logical context purpose=query to transport EgressPurpose=api and hardcoded api in a PG helper while fixture persisted query.",
+        "owner": "01a14b4b-3d07-7a12-a4ea-8ae0f9db0540",
+        "status": "returned_to_original_E_developer_before_publication",
+        "required_evidence": "A checks logical purpose against durable context while B independently checks API/upload/download credential purpose; lawful query+API end-to-end passes."
+      },
+      {
+        "id": "E_TEST_ALIGNMENT",
+        "original_AC": "AC2 real child crash and AC4 trustworthy late facts",
+        "evidence": "E draft normal success asserted fact_recorded=False, a late path used a result with no provider/usage/cost, and PG crash wrappers only raised exceptions.",
+        "owner": "01a14b4b-3d07-7a12-a4ea-8ae0f9db0540",
+        "status": "same_prepublication_E_patch_pending",
+        "required_evidence": "Meaningful success and trusted-late tests, and one actual stopped/killed owned child tied to PG unknown/no-repeat-grant assertions."
       }
     ],
     "linux_preparation": {
