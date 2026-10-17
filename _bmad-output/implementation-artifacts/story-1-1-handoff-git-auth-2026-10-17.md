@@ -2,7 +2,7 @@
 
 2026-10-17，Asia/Shanghai。续接先读 [当前工作集](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-working-set.md:1)，不重新加载全部规划。主控仍为 `01a148e2-1e11-7322-9626-6cbafb956f12`，实际6.1 Sol/max。父Story未完成，不能进入1.2；同一阻塞无新工作时不新建会话。
 
-## 已准备的Git结果
+## 已准备的Git结果与服务器来源策略
 
 - 用户明确要求本地开发→Git推送→服务器拉代码，并要求新仓库 `rag_project`。
 - 已在用户登录的账户创建私有 `yb2915722928-cpu/rag_project`，本地origin为 `https://github.com/yb2915722928-cpu/rag_project.git`，分支main。
@@ -10,6 +10,7 @@
 - 显式范围包含源、锁、测试、部署、项目规格/必要规划与工具；854文件。忽略规则22项通过；常见密钥标记只读检查无命中，未上传虚拟环境、缓存、本地配置、秘密或个人面试材料。
 - 旧规划/技能材料中diff whitespace检查退出2（564条输出，包含既有尾空格/末尾空行）；未擅自格式化历史材料，不记为检查通过。
 - 实际push失败：`fatal: Cannot prompt because user interactivity has been disabled.` 与 `could not read Username for 'https://github.com': terminal prompts disabled`。没有代码推送或服务器拉取通过证据。
+- 用户最新明确：开发者继续上传 GitHub，但服务器改从 Gitee `https://gitee.com/QAQsdsdsdsds/rag_project.git` 拉取。后续同步必须验证 GitHub 与 Gitee 指向同一 commit；服务器不得直接以 GitHub 为源。当前 Gitee mirror/ref 尚未核实。
 
 ## 必须保留的认证证据与限制
 

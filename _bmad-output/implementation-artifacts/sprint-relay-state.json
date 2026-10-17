@@ -271,6 +271,13 @@
     "push": "failed_git_https_username_credentials_unavailable",
     "remote_pull": "not_executed"
   },
+  "server_source_policy": {
+    "development_upload_remote": "https://github.com/yb2915722928-cpu/rag_project.git",
+    "server_pull_remote": "https://gitee.com/QAQsdsdsdsds/rag_project.git",
+    "required_invariant": "GitHub and Gitee refs must resolve to the same fixed commit before server tests",
+    "current_status": "policy_recorded_sync_not_verified",
+    "server_pull_not_verified": true
+  },
   "latest_handoff_path": "_bmad-output/implementation-artifacts/story-1-1-handoff-git-auth-2026-10-17.md",
   "spec_scope_check": "cl100k_base actual counts: A1 1089, D 1108, B0a 1135, H 1045, runtime 919, HTTP 1114 before one small C2 route clarification, frontend preflight 916, Git hygiene 725. All dispatched short specs below 1600; parent A retained as history and split.",
   "handoff_source_after_registration": "Read-only verification only; no further project writes or implementation dispatch by the source chat."
