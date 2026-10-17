@@ -11,6 +11,8 @@
 - 当前剩余：原 AC1 epoch/fence；AC2 child/IPC/一次 grant/崩溃；AC3 EgressTarget；AC4 迟到事实/冲突/PG 锁序；全部开发者测试、独立验证和一次全新审查及修复。无新环境阻塞。
 - [母规格](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-2-isolated-calls.md:1)已按预授权进入开发；A持久化、B目标守卫、C监督分段均低于1600 tokens，A/B/C公共签名已登记。
 - A 唯一认领 Euclid `01a14b4b-3d07-7a12-a4ea-8ae0f9db0540`；B 唯一认领 Faraday `01a14b4b-41ea-7bd0-9b61-0e9475aadae8`；C 唯一认领 Heisenberg `01a14b57-dbf8-7e11-8a3f-f678f9146dd0`。均已按[公共契约](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-2-public-contracts.md:1)收到编码release。A额外唯一拥有共享errors.py的必要有限错误/revision文案；B/C不修改。C的PG组装/夹具等A实际交付，其余集成接口已开放。三者各按子规格文件集；实际路由均为 `zayuapi/deepseek-v4.1-flash / max`，未传推理覆盖。
+- 集成开放问题 I1（原AC1，已交回A）：现有prepare只存传入fence、mark只比call旧快照，缺当前持久context权威。A补最小context/current attempt-token-lease-deadline-state/归属配置与context→call锁、受控初始化/终结/换attempt入口；迟到账仍仅call。C五调用方法不变，PG测试需用真实context变更验证旧fence失效，等A给初始化入口。该问题未关闭，不是未来Story延期。
+- B三份源/测试已冻结，主控完整读取2201行实际diff，暂存/工作区均LF、hash已记录；只有AST/签名静态检查，无运行通过声明。下一步主控提交同步后分配B独占Linux专题测试时段；B交付文档随后补，不阻塞测试。A/C文件仍由各自唯一写者修改，不随B提前发布。
 
 ## 已核实可复用的基线
 

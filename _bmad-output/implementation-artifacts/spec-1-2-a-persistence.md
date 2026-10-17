@@ -23,9 +23,9 @@ review_loop_iteration: 0
 
 ## Tasks & Acceptance
 
-- [ ] 在 `modules/execution/`、`modules/ledger/` 增加无框架模型/端口；`application/call_lifecycle.py` 实现用例；`adapters/call_postgres.py`、`adapters/epoch_control.py` 实现持久化。
-- [ ] 新增 `migrations/versions/0002_isolated_calls.py`；必要时修改 `adapters/postgres.py`、bootstrap 和相关旧测试，使 revision/启动校验可集成，不回退旧迁移义务。
-- [ ] 新增 `tests/test_call_persistence.py`、`test_call_postgres.py`、`test_epoch_control.py`，必要时维护 conftest 的必跑集合；交付 `docs/story-1-2-a-delivery.md`。
+- [ ] 在 [execution](/E:/aaa-project/rag/backend/src/rag_app/modules/execution/) / [ledger](/E:/aaa-project/rag/backend/src/rag_app/modules/ledger/) 增加无框架模型/端口；[call_lifecycle.py](/E:/aaa-project/rag/backend/src/rag_app/application/call_lifecycle.py)实现用例；[call_postgres.py](/E:/aaa-project/rag/backend/src/rag_app/adapters/call_postgres.py) / [epoch_control.py](/E:/aaa-project/rag/backend/src/rag_app/adapters/epoch_control.py)实现持久化。
+- [ ] 新增 [0002迁移](/E:/aaa-project/rag/backend/migrations/versions/0002_isolated_calls.py)；必要时修改 [postgres.py](/E:/aaa-project/rag/backend/src/rag_app/adapters/postgres.py)、bootstrap和相关旧测试，使 revision/启动校验可集成，不回退旧迁移义务。
+- [ ] 新增 [持久化测试](/E:/aaa-project/rag/backend/tests/test_call_persistence.py) / [PG测试](/E:/aaa-project/rag/backend/tests/test_call_postgres.py) / [epoch测试](/E:/aaa-project/rag/backend/tests/test_epoch_control.py)，必要时维护conftest必跑集合；交付 [A文档](/E:/aaa-project/rag/docs/story-1-2-a-delivery.md)。
 
 ## Acceptance Criteria
 
@@ -38,13 +38,15 @@ review_loop_iteration: 0
 
 ## Code Map
 
-复用 `application/uow.py`、`adapters/postgres.py` 的 engine/namespace、既有独占 schema 夹具和 Alembic；不预建正式向量表。所有路径以本项目 backend 为根。
+复用 [uow.py](/E:/aaa-project/rag/backend/src/rag_app/application/uow.py)与上述PG适配器的engine/namespace、既有独占schema夹具和Alembic；不预建正式向量表。
 
 ## Implementation Notes
 
 唯一实现者 DeepSeek 默认；独占本规格列举的源/测试/交付文档。其他实现者拥有 egress/supervisor 文件，不得修改。第一阶段仅只读，向主控返回供 C 集成的精确模型/方法签名并等待 `IMPLEMENTATION_MODEL_RELEASE`；主控核实际模型及契约后才写入。不启动 C 的工作。代码先冻结、主控提交同步，随后分配 Netcatty 时段运行开发者测试。
 
 主控已登记 [公共签名与唯一归属](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-2-public-contracts.md:1)：execution/calls 与 ledger/facts 及 CallLifecycle 按已回报签名实现。A追加拥有共享 errors.py 的必要有限错误/revision文案；B/C不写此文件。仓储/epoch构造可自行决定，交付给出C可复用的真实PG上下文夹具和组装入口。epoch文件读取/OS等待不跨PG事务，迟到事实不受旧epoch业务fence限制。收到release后直接编码，不继续长方案阶段。
+
+集成已确认现有call快照不足以证明当前fence失效；按公共契约“当前上下文权威核对”补最小持久context及受控初始化/终结/换attempt端口，prepare/mark/当前业务转换复核持久权威，迟到仅call。真实PG测试须通过实际context变更证明旧fence失效；原五方法签名不变，C的夹具初始化签名由A及时回报。
 
 ## Spec Change Log
 

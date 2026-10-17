@@ -51,3 +51,14 @@ C 先写无 A 依赖的监督/child/专题测试；A 的调用集成签名登记
 `prepare` 和 `mark_may_have_sent` 均核当前 fence 与归属/配置；mark 仅 prepared 原子转换一次且提交后返回grant，重复/旧fence无grant。C 将 A 的 CallGrant 身份字段转换为其 SendGrant，补本地有界stop-by和已核plan/request；不得自行生成第二次grant资格。旧fence的业务发布失败，可信迟到结果转 record_late_fact，保持原业务/许可不变。
 
 A 的仓储与 epoch 适配器组装细节自行实现并在交付中给出构造/夹具入口，C 不提前猜测；这些不改变上表。A 唯一拥有上述文件、其余非egress/非supervision的execution/ledger持久端口、[call_postgres.py](/E:/aaa-project/rag/backend/src/rag_app/adapters/call_postgres.py:1)、[epoch_control.py](/E:/aaa-project/rag/backend/src/rag_app/adapters/epoch_control.py:1)、新0002迁移、bootstrap、必要旧迁移/revision测试、conftest和[errors.py](/E:/aaa-project/rag/backend/src/rag_app/contracts/errors.py:1)中所需有限错误。B/C不修改这些文件。A负责准备C可复用的真实PG配置/上下文夹具入口，禁止自动建立生产epoch。
+
+已落盘组装入口为 [build_call_lifecycle(control,schema)](/E:/aaa-project/rag/backend/src/rag_app/bootstrap/runtime.py:67)，返回 `CallLifecycle(control,stores)`；[call_persistence夹具](/E:/aaa-project/rag/backend/tests/conftest.py:176)提供 engine/schema/uow/control/epoch/lifecycle/control_path。
+
+### 当前上下文权威核对
+
+2026-10-18 集成检查确认：现有 prepare 仅持久传入fence、后续仅与call快照比较，尚不能证明终结/替换attempt后旧fence失效。这是原AC1/C4/R2的必需补齐，不新增未来身份/预算/gate功能：
+
+- A 在本条0002中加入最小持久执行上下文，保存当前owner_context_id/epoch/attempt/token摘要/lease/deadline、active/terminal/isolated状态、holder/space及配置归属。
+- prepare、mark与有当前资格要求的业务转换从当前上下文读取并复核，按context业务锁→call锁；不能将传入快照或call旧快照当成当前权威。当前lease/deadline必须来自持久行，不允许调用者延长期限。
+- A 提供供显式假件受理/测试使用的受控上下文初始化/终结/换attempt入口，交付精确签名给C；现有五个调用方法不变。PG负例须先在持久上下文终结/更换token或attempt，再验证旧fence零grant/零业务写；不能仅构造不同入参来证明。
+- 迟到可信事实仍只锁call，不读取该上下文、不因其终结或旧epoch而拒绝，也不改变上下文/产品/会话/许可。上下文表只承担本条最小执行权威，后续真实业务继续由所属模块提供资格。

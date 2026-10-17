@@ -23,9 +23,9 @@ review_loop_iteration: 0
 
 ## Tasks & Acceptance
 
-- [ ] `modules/execution/supervision.py`、`adapters/child_supervisor.py`、`entrypoints/call_child.py`：有限 IPC 与真实 Linux 监督。
-- [ ] `application/call_dispatch.py`：按主控登记的 A/B 公共签名装配，复核资格、持久状态、目标守卫、单 grant/响应事实。
-- [ ] `tests/test_child_supervisor.py`、`test_call_dispatch.py`、`test_call_dispatch_postgres.py`：故障矩阵和集成；`docs/story-1-2-c-delivery.md`。
+- [ ] [监督领域](/E:/aaa-project/rag/backend/src/rag_app/modules/execution/supervision.py) / [监督适配器](/E:/aaa-project/rag/backend/src/rag_app/adapters/child_supervisor.py) / [child入口](/E:/aaa-project/rag/backend/src/rag_app/entrypoints/call_child.py)：有限IPC与真实Linux监督。
+- [ ] [call_dispatch.py](/E:/aaa-project/rag/backend/src/rag_app/application/call_dispatch.py)：按A/B公共签名装配，复核资格、持久状态、目标守卫、单grant/响应事实。
+- [ ] [child测试](/E:/aaa-project/rag/backend/tests/test_child_supervisor.py) / [dispatch测试](/E:/aaa-project/rag/backend/tests/test_call_dispatch.py) / [PG集成](/E:/aaa-project/rag/backend/tests/test_call_dispatch_postgres.py)：故障矩阵和集成；[C交付文档](/E:/aaa-project/rag/docs/story-1-2-c-delivery.md)。
 
 ## Acceptance Criteria
 
@@ -38,7 +38,7 @@ review_loop_iteration: 0
 
 ## Code Map
 
-复用 A 的 `application/call_lifecycle.py` 与 B 的 `modules/execution/egress.py`/`adapters/egress.py`；调用集成前主控确认具体签名。不得修改 A/B 文件；契约问题回报主控。
+复用[公共契约](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-2-public-contracts.md)所列A生命周期与B的egress接口；不得修改A/B文件，契约问题回报主控。
 
 ## Implementation Notes
 

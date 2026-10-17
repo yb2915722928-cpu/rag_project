@@ -5,7 +5,7 @@
 | 原 AC | 必需结果 | 实现归属 | 当前证据 |
 | --- | --- | --- | --- |
 | AC1 | 独立持久 epoch 与 DB 镜像一致；普通重启不换 epoch | A | not-executed |
-| AC1 | 缺失/损坏/矛盾隔离；旧 attempt/epoch/token/租约/期限不能提交业务 | A+C | not-executed |
+| AC1 | 缺失/损坏/矛盾隔离；旧 attempt/epoch/token/租约/期限不能提交业务 | A+C | not-executed；I1当前context权威缺口已交回A，须真实context变更负例 |
 | AC1 | 模型/解析/embedding/图意仅显式假件，无实际供应方外发 | C | not-executed |
 | AC2 | prepared 前后、may_have_sent 后、响应前后崩溃/超时均沿真实路径注入 | A+C | not-executed |
 | AC2 | 原 call 至多一次 grant，重启/重领不恢复重发，unknown 为 NULL+unknown | A+C | not-executed |

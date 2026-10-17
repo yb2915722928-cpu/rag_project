@@ -1,0 +1,23 @@
+{
+  "story": "1.2",
+  "segment": "B",
+  "developer_agent": "01a14b4b-41ea-7bd0-9b61-0e9475aadae8",
+  "source_state": "frozen_before_Linux_developer_tests",
+  "parent_diff_read": "complete_2201_added_lines",
+  "line_endings": "git_index_LF_and_workspace_LF",
+  "runtime_tests": "not-executed",
+  "files": [
+    {
+      "path": "backend/src/rag_app/modules/execution/egress.py",
+      "sha256": "6eb831c5ee88756797b76268ab11fb3a3af03efec2861a1218dd3863f30d757a"
+    },
+    {
+      "path": "backend/src/rag_app/adapters/egress.py",
+      "sha256": "de890142ea9f756d2fb218f5fafe685d2492683df858cb5761452e13620a00af"
+    },
+    {
+      "path": "backend/tests/test_egress.py",
+      "sha256": "468099fbdc7aee2e51f2860c8b22a311313a4ebdd241763c99ba16b4e5e6a726"
+    }
+  ]
+}

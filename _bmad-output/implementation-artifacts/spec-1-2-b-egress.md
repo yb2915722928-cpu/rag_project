@@ -21,9 +21,9 @@ review_loop_iteration: 0
 
 ## Tasks & Acceptance
 
-- [ ] `modules/execution/egress.py` 定义无框架值对象和端口；`adapters/egress.py` 实现解析、DNS 校验和绑定连接；对外接口先回报主控供 C 使用。
-- [ ] `tests/test_egress.py` 覆盖准确允许表、长度、混合 A/AAAA、DNS 变化、TLS 主机和地址绑定、redirect、凭据分域/秘密哨兵。
-- [ ] `docs/story-1-2-b-delivery.md` 记录执行命令、固定提交/hash、假件边界与结果。
+- [ ] [领域egress](/E:/aaa-project/rag/backend/src/rag_app/modules/execution/egress.py)定义无框架值对象和端口；[egress适配器](/E:/aaa-project/rag/backend/src/rag_app/adapters/egress.py)实现解析、DNS校验和绑定连接；对外接口先回报主控供C使用。
+- [ ] [test_egress.py](/E:/aaa-project/rag/backend/tests/test_egress.py)覆盖准确允许表、长度、混合A/AAAA、DNS变化、TLS主机和地址绑定、redirect、凭据分域/秘密哨兵。
+- [ ] [B交付文档](/E:/aaa-project/rag/docs/story-1-2-b-delivery.md)记录命令、固定提交/hash、假件边界与结果。
 
 ## Acceptance Criteria
 
@@ -36,7 +36,7 @@ review_loop_iteration: 0
 
 ## Code Map
 
-复用 `contracts/errors.py` 的有限错误；领域不导入框架/HTTP SDK。C4 当前资格与调用账由 A/C 负责，目标守卫不能绕过它们。
+有限错误遵守 [errors.py](/E:/aaa-project/rag/backend/src/rag_app/contracts/errors.py)的既有边界，B按公共契约使用独立EgressError；领域不导入框架/HTTP SDK。C4资格与调用账由A/C负责，目标守卫不能绕过它们。
 
 ## Implementation Notes
 
