@@ -111,7 +111,7 @@ onMounted(() => {
 
       <div class="status-line">
         <el-tag :type="tagType" disable-transitions>{{ statusText }}</el-tag>
-        <el-button type="primary" :loading="store.loading" @click="refresh">
+        <el-button type="primary" :loading="store.loading" :disabled="store.loading" @click="refresh">
           {{ store.loading ? '检查中' : '重新检查' }}
         </el-button>
       </div>

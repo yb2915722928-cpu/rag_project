@@ -35,11 +35,11 @@ describe('HealthView', () => {
     mockFetch(200, { status: 'alive', service: 'rag-api', check: 'liveness' })
     const wrapper = mountView()
     await vi.waitFor(() => {
-      expect(wrapper.text()).toContain('接口可达')
+      expect(wrapper.text()).toContain('HTTP 状态')
     })
     const text = wrapper.text()
+    expect(text).toContain('接口可达')
     expect(text).toContain('不代表数据库已就绪')
-    expect(text).toContain('HTTP 状态')
     wrapper.unmount()
   })
 
@@ -70,14 +70,15 @@ describe('HealthView', () => {
     const impl = mockFetch(200, { status: 'alive' })
     const wrapper = mountView()
     await vi.waitFor(() => {
-      expect(wrapper.text()).toContain('接口可达')
+      expect(wrapper.text()).toContain('HTTP 状态')
     })
     const button = wrapper.find('button')
     expect(button.attributes('disabled')).toBeUndefined()
-    await button.trigger('click')
+    const click = button.trigger('click')
     await vi.waitFor(() => {
       expect(impl.mock.calls.length).toBe(2)
     })
+    await click
     wrapper.unmount()
   })
 })

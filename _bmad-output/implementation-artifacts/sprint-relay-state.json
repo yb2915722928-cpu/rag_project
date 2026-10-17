@@ -9,8 +9,8 @@
   "state": "in_progress",
   "owner_thread_id": "01a14973-8555-7131-8fd2-e9eec12f53fe",
   "current_story_key": "1-1-启动可重建的模块化项目",
-  "current_spec": "_bmad-output/implementation-artifacts/spec-1-1-linux-developer-gates.md",
-  "current_implementation_agent_id": "01a14a3e-989e-7c72-b98c-90c3a9e9b5c9",
+  "current_spec": "_bmad-output/implementation-artifacts/spec-1-1-frontend-baseline.md",
+  "current_implementation_agent_id": "01a14a7b-8d53-7123-b700-b3a1b76cc0bd",
   "implementation_write_scope": [
     "backend/**",
     "contracts/**",
@@ -24,7 +24,7 @@
   "acceptance_gate": "not_passed",
   "next_story_key": null,
   "next_thread_id": null,
-  "dispatch_state": "frontend_lock_and_current_interface_alignment_publishing_then_formal_Linux_checks",
+  "dispatch_state": "frontend_actual_fixes_publishing_then_fixed_Gitee_rebuild_dist_to_D",
   "handoff_id": "story-1-1-continued-01a14973",
   "handoff_kind": "same_story_serial_continuation",
   "handoff_source_thread_id": "01a148e2-1e11-7322-9626-6cbafb956f12",
@@ -47,15 +47,7 @@
     "Source, dependency, license and artifact hash/image digest provenance",
     "Developer tests, independent Step 5 validation, fresh 6.1 Sol medium review and repair regressions"
   ],
-  "blocked_conditions": [
-    {
-      "condition": "Docker Hub registry/auth IPv4 connections time out on remote and local official-source probes",
-      "first_observed": "2026-10-17",
-      "evidence": "Deploy source-probe, ipv4-and-official-dockerfiles, local-official-image-access and offline-images records preserve exact failures. GHCR uv manifest is not complete image-layer evidence.",
-      "impact": "Approved Python/Nginx/PG18.6+pgvector0.8.7 complete images and exact digests unavailable; four-service build, real PG and clean rebuild not executed.",
-      "recheck_trigger": "Network environment changes or exact approved official image archives/digests become available; do not repeat unchanged probes or substitute versions."
-    }
-  ],
+  "blocked_conditions": [],
   "deduplication_rule": "Recheck project threads and this claim before dispatch. Never create a second owner for the same story or retry an ambiguous creation before reconciling it.",
   "completion_rule": "All required parent-story acceptance and independent review/validation must pass before selecting and dispatching the next dependent story.",
   "handoff_history": [
@@ -123,6 +115,14 @@
       "recheck_trigger": "The live device authorization process completes after user browser approval, expires or reports a concrete failure; do not repeat unchanged auth probes.",
       "no_workaround": "Do not retry the rejected SSH placeholder-target probe or rejected model SFTP upload. No tokens in chat, argv, logs, remote URLs, or repository.",
       "resolution": "User completed device authorization; CLI account/keyring/push permission verified. Normal GitHub and Gitee pushes succeeded and both main refs equal a269d492fb33b3b13d95265fa11589d39260c4e0; Netcatty server fetched only Gitee and checked out that exact commit cleanly."
+    },
+    {
+      "condition": "Docker Hub registry/auth IPv4 connections time out on remote and local official-source probes",
+      "first_observed": "2026-10-17",
+      "evidence": "Deploy source-probe, ipv4-and-official-dockerfiles, local-official-image-access and offline-images records preserve exact failures. GHCR uv manifest is not complete image-layer evidence.",
+      "impact": "Approved Python/Nginx/PG18.6+pgvector0.8.7 complete images and exact digests unavailable; four-service build, real PG and clean rebuild not executed.",
+      "recheck_trigger": "Network environment changes or exact approved official image archives/digests become available; do not repeat unchanged probes or substitute versions.",
+      "resolution": "Required four base images and archives acquired through approved publisher-digest verification plus existing Tencent cache/local official GHCR acquisition. Direct-source historic timeout retained, no longer an active implementation blocker; full four-service build still pending C dist."
     }
   ],
   "working_set_path": "_bmad-output/implementation-artifacts/story-1-1-working-set.md",
@@ -190,7 +190,7 @@
       "secret_value": "not_recorded"
     }
   },
-  "updated_at": "2026-10-18T00:25:54.1284328+08:00",
+  "updated_at": "2026-10-18T00:44:45.4839107+08:00",
   "handoff_registered_at": "2026-10-17T16:02:45.7798854+08:00",
   "handoff_acceptance_evidence": "Current rollout turn_context records group/auto-gpt-6-1-sol/max at 2026-10-17T10:41:11.525Z; source write released; unique current rag chat accepted Story 1.1. See story-1-1-amelia-control-2026-10-17.md.",
   "implementation_claims": [
@@ -454,6 +454,7 @@
       "role": "deploy_image_access_successor",
       "scope": [
         "deploy/**",
+        "docs/story-1-1-deploy-delivery.md",
         "docs/story-1-1-official-image-access.md"
       ],
       "spec": "_bmad-output/implementation-artifacts/spec-1-1-official-image-access.md",
@@ -465,7 +466,7 @@
       "actual_effort": "max",
       "actual_turn_context": "2026-10-17T14:47:07.56Z",
       "baseline_commit": "a269d492fb33b3b13d95265fa11589d39260c4e0",
-      "followup_spec": "_bmad-output/implementation-artifacts/spec-1-1-postgres-test-environment.md"
+      "followup_spec": "_bmad-output/implementation-artifacts/spec-1-1-four-service-integration.md"
     },
     {
       "agent_id": "01a14a7b-8d53-7123-b700-b3a1b76cc0bd",
@@ -494,7 +495,7 @@
     "creation_evidence": "GitHub browser page navigated from /new to /yb2915722928-cpu/rag_project and exposes private lock icon and clone URL",
     "local_branch": "main",
     "local_remote": "origin",
-    "commit": "9da9af209123e8f57b2650e14b98175f4aa5fefd",
+    "commit": "b6e22bcf16dbf0c080eda4da9da6884c1af5a408",
     "push": "github_and_gitee_normal_push_exit_0_same_main_ref_verified",
     "remote_pull": "a70_pending_backend_remote_slot_previous_a269_verified",
     "integration_write": "failed_403_resource_not_accessible_by_integration",
@@ -509,7 +510,7 @@
       "update_or_mirror_mechanism": "direct_unattended_https_push_succeeded_without_force_existing_history_preserved"
     },
     "commit_semantics": "Verified synchronized Git revision and server checkout; current source checkpoint is included. Not yet developer-tested; later controller metadata commits do not inherit runtime acceptance.",
-    "last_pushed_commit": "9da9af209123e8f57b2650e14b98175f4aa5fefd"
+    "last_pushed_commit": "b6e22bcf16dbf0c080eda4da9da6884c1af5a408"
   },
   "server_source_policy": {
     "development_upload_remote": "https://github.com/yb2915722928-cpu/rag_project.git",
@@ -655,5 +656,19 @@
     "registry_transport": "existing Tencent Cloud internal npm mirror; lock resolved URLs retained",
     "controller_decision": "Accept normal compatible template-range resolution; record exact lock and peers, no unrequested rollback to seed minor.",
     "formal_ci_typecheck_tests_build": "pending_published_lock_revision"
+  },
+  "frontend_preliminary_build": {
+    "base_commit": "b6e22bcf16dbf0c080eda4da9da6884c1af5a408",
+    "overlay_files": [
+      "frontend/src/views/HealthView.vue",
+      "frontend/src/__tests__/HealthView.spec.ts",
+      "frontend/tsconfig.app.json",
+      "frontend/tsconfig.vitest.json"
+    ],
+    "unit_tests_passed": 18,
+    "typecheck_and_build": "passed_on_overlay",
+    "formal_fixed_commit_rebuild": "pending_this_release",
+    "dist": "preliminary_do_not_relabel_as_fixed_commit_artifact",
+    "warnings": "1MB Element Plus chunk; no optimization gate added"
   }
 }
