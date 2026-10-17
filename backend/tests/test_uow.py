@@ -5,7 +5,7 @@ from unittest.mock import Mock
 import pytest
 
 from rag_app.application.uow import UnitOfWork
-from rag_app.contracts.errors import SafeError
+from rag_app.contracts.errors import GuardError, SafeError
 
 
 def test_uow_commits_once_after_success() -> None:
@@ -85,4 +85,15 @@ def test_repository_executes_without_committing() -> None:
     session.commit.assert_not_called()
     session.rollback.assert_not_called()
     session.close.assert_not_called()
+
+
+def test_guard_failure_rolls_back_and_keeps_its_finite_code() -> None:
+    session = Mock()
+    with pytest.raises(GuardError) as caught:
+        with UnitOfWork(lambda: session).transaction():
+            raise GuardError("CALL_FENCE_STALE")
+    assert caught.value.code == "CALL_FENCE_STALE"
+    session.rollback.assert_called_once_with()
+    session.commit.assert_not_called()
+    session.close.assert_called_once_with()
 

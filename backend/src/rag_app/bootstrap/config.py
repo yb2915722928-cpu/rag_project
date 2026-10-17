@@ -17,6 +17,7 @@ class Settings(BaseSettings):
     database_schema: str = "public"
     api_host: str = "127.0.0.1"
     api_port: int = Field(default=8000, ge=1, le=65535)
+    epoch_control_file: str | None = None
 
     def __init__(self, **values):
         try:
@@ -53,5 +54,14 @@ class Settings(BaseSettings):
             return int(value)
         if not isinstance(value, int):
             raise ValueError("API port must be an integer.")
+        return value
+
+    @field_validator("epoch_control_file")
+    @classmethod
+    def epoch_control_path(cls, value: str | None) -> str | None:
+        if value is None or value == "":
+            return None
+        if len(value) > 4096 or "\x00" in value:
+            raise ValueError("epoch control path is invalid")
         return value
 

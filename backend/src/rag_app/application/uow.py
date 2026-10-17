@@ -5,7 +5,7 @@ from contextlib import contextmanager
 
 from typing import Any, Protocol
 
-from rag_app.contracts.errors import SafeError
+from rag_app.contracts.errors import GuardError, SafeError
 
 
 class TransactionSession(Protocol):
@@ -44,6 +44,10 @@ class UnitOfWork:
                 except BaseException as close_error:
                     cleanup.append(close_error)
         if failure is not None:
+            if isinstance(failure, GuardError) and not cleanup:
+                # A finite execution guard decision is not a database failure;
+                # it rolls back and keeps its own code for the caller.
+                raise failure from None
             if not isinstance(failure, Exception):
                 raise failure
             code = failure.code if isinstance(failure, SafeError) else "DATABASE_OPERATION_FAILED"

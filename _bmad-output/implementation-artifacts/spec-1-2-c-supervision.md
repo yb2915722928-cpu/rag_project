@@ -44,6 +44,8 @@ review_loop_iteration: 0
 
 唯一 DeepSeek 默认；文件归属仅 Tasks 所列八件。先只读提出监督端口简短签名，等待 `IMPLEMENTATION_MODEL_RELEASE` 后开始无依赖的 child/IPC/监督部分；A 持久端口登记前不写依赖 A 的调用集成。B/C 端口已登记于 [公共契约](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-2-public-contracts.md:1)，grant 使用已核 EgressPlan，不能在 child 重新 DNS。主控核实际模型才写入。只在主控分配的 Netcatty 时段从 Gitee 固定提交运行；原始证据存桶。无意图空缺。
 
+初次四文件冻结经主控完整检查，I2物理槽仅内存/按boot分离及不可核实停止误判、I3分段recv重置相对timeout仍未满足原AC2/R1；按公共契约C纠正项重开同四文件最小修正，补跨实例/新boot未证停止、身份错绑不误杀、proc未知与慢速分段绝对deadline负例后再次冻结。原公开方法不变；本地语法编译不作为Linux证据。
+
 ## Spec Change Log
 
 ## Review Triage Log

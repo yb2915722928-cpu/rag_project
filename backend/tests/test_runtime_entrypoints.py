@@ -383,14 +383,24 @@ def test_real_pg_worker_idle_has_no_transaction_and_exits(isolated_database, tmp
     from alembic import command
     from alembic.config import Config
     from sqlalchemy import text
+    from rag_app.adapters.epoch_control import (
+        initialize_epoch_control, mirror_epoch,
+    )
+    from rag_app.adapters.postgres import create_uow
 
     engine, schema = isolated_database
     command.upgrade(Config(str(Path(__file__).parents[1] / "alembic.ini")), "head")
+    control_path = tmp_path / "epoch-control.json"
+    control = initialize_epoch_control(
+        control_path, deployment_id="worker_test",
+    )
+    mirror_epoch(create_uow(engine), control, schema=schema)
     name = "rag_idle_" + uuid.uuid4().hex
     env = os.environ.copy()
     env.update(
         RAG_DATABASE_URL=os.environ["RAG_TEST_DATABASE_URL"],
         RAG_DATABASE_SCHEMA=schema, PGAPPNAME=name,
+        RAG_EPOCH_CONTROL_FILE=str(control_path),
     )
     with (tmp_path / "worker-pg.log").open("w") as log:
         process = subprocess.Popen([sys.executable, "-m", "rag_app", "worker"], env=env, stdout=log, stderr=log)

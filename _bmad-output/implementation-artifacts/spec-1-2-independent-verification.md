@@ -2,7 +2,7 @@
 title: 'Story 1.2 独立运行验证'
 type: chore
 created: '2026-10-18'
-status: draft
+status: in-progress
 route: dispatch
 review_loop_iteration: 0
 ---
@@ -36,6 +36,8 @@ Given 主控发布的固定提交，When 独立运行，Then 当前四条原 AC 
 ## Implementation Notes
 
 首阶段先只读并回复ready，等待 `VERIFICATION_MODEL_RELEASE` 与固定提交/terminal时段；主控核实际模型后开放。使用模型默认推理，不自行更换模型。完成后保留实例供具体问题的相关复核。
+
+首阶段只需工作集/原AC/台账的简短就绪核对，8行内回复；A/C仍有已证当前缺口在修正，不提前对变动代码下运行结论，不调用Netcatty、不写报告。代码冻结和开发者测试完成后主控才给最终固定提交/源码hash和验证时段。只据具体当前AC检查，零发现允许。
 
 ## Verification
 

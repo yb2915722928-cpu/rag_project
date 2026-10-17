@@ -15,6 +15,12 @@ REQUIRED_POSTGRES = {
     "test_real_driver_error_is_private", "test_real_incompatible_version_is_read_only",
     "test_real_namespace_cannot_fall_back",
     "test_real_downgrade_missing_probe_preserves_peer",
+    "test_real_call_lifecycle_and_single_grant",
+    "test_real_terminal_idempotency_and_late_facts",
+    "test_real_late_fact_does_not_take_parent_lock",
+    "test_real_failed_transaction_leaves_no_call",
+    "test_real_epoch_mirror_restart_and_contradiction",
+    "test_real_lease_expiry_under_held_context_lock_denies_old_now",
 }
 
 
@@ -165,4 +171,59 @@ def isolated_peer_schema(isolated_database):
                 "DATABASE_CLEANUP_FAILED", diagnostic_cause=cleanup_errors[0],
                 cleanup_errors=cleanup_errors[1:],
             ) from None
+
+
+@pytest.fixture
+def call_persistence(isolated_database, tmp_path):
+    """Real-PG context reused by the C integration: migrated schema, control, lifecycle."""
+
+    from types import SimpleNamespace
+
+    from alembic import command
+    from alembic.config import Config
+
+    from rag_app.adapters.epoch_control import (
+        FileEpochControl, initialize_epoch_control, mirror_epoch,
+    )
+    from rag_app.adapters.postgres import create_uow
+    from rag_app.bootstrap.runtime import build_call_lifecycle
+
+    engine, schema = isolated_database
+    command.upgrade(Config(str(Path(__file__).parents[1] / "alembic.ini")), "head")
+    control = initialize_epoch_control(
+        tmp_path / "epoch-control.json", deployment_id="test_deployment",
+    )
+    mirror_epoch(create_uow(engine), control, schema=schema)
+    reader = FileEpochControl(tmp_path / "epoch-control.json", schema=schema)
+    context = SimpleNamespace(
+        engine=engine, schema=schema, uow=create_uow(engine),
+        control=reader, epoch=control,
+        lifecycle=build_call_lifecycle(reader, schema),
+        control_path=tmp_path / "epoch-control.json",
+    )
+    context.initialize_context = lambda **values: _seeded_context(
+        context, **values,
+    )
+    return context
+
+
+def _seeded_context(
+    context, *, context_id="context-1", holder_id="holder-1",
+    space_id="space-1", purpose="query", config_fingerprint="config:v1",
+    claim_token="claim-token-0000000000000001",
+    lease_seconds=300, deadline_seconds=600,
+):
+    """C/test seam: create current authority against the migrated real schema."""
+
+    from datetime import datetime, timedelta, timezone
+
+    now = datetime.now(timezone.utc)
+    return context.lifecycle.initialize_context(
+        context.uow, context_id=context_id, holder_id=holder_id,
+        space_id=space_id, purpose=purpose,
+        config_fingerprint=config_fingerprint, attempt=1,
+        claim_token=claim_token,
+        lease_until=now + timedelta(seconds=lease_seconds),
+        hard_deadline=now + timedelta(seconds=deadline_seconds), now=now,
+    )
 

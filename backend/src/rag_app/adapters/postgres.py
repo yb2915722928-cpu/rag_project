@@ -12,6 +12,8 @@ from sqlalchemy.sql import quoted_name
 from rag_app.application.uow import UnitOfWork
 from rag_app.contracts.errors import SafeError
 
+HEAD_REVISION = "0002_isolated_calls"
+
 
 def validate_database_url(value: str) -> URL:
     try:
@@ -128,6 +130,6 @@ class BaselineRepository:
         verify_namespace(self._session, self._schema)
         verify_versions(self._session.connection())
         revision = self._session.execute(select(self._version.c.version_num)).scalar_one()
-        if revision != "0001_baseline":
+        if revision != HEAD_REVISION:
             raise SafeError("DATABASE_REVISION_MISMATCH")
 

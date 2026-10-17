@@ -11,7 +11,8 @@ import pytest
 from sqlalchemy import inspect, text
 
 from rag_app.adapters.postgres import (
-    BaselineRepository, ProbeRepository, create_uow, verify_versions,
+    HEAD_REVISION, BaselineRepository, ProbeRepository, create_uow,
+    verify_versions,
 )
 from rag_app.contracts.errors import SafeError
 
@@ -31,10 +32,15 @@ def assert_baseline(engine, schema):
         )).scalar_one() == "0.8.7"
         assert connection.execute(text(
             f'SELECT version_num FROM "{schema}".alembic_version'
-        )).scalar_one() == "0001_baseline"
+        )).scalar_one() == HEAD_REVISION
         columns = inspect(connection).get_columns("rag_uow_probe", schema=schema)
         assert {c["name"] for c in columns} == {"probe_id", "value"}
         assert all(not c["nullable"] for c in columns)
+        tables = set(inspect(connection).get_table_names(schema=schema))
+        assert {
+            "rag_epoch_mirror", "execution_context", "execution_call",
+            "ledger_call_fact",
+        } <= tables
         # Cover the whole application namespace, not only the probe table.
         assert connection.execute(text(
             "SELECT count(*) FROM pg_attribute a JOIN pg_class c ON c.oid=a.attrelid "
@@ -192,7 +198,13 @@ def test_real_downgrade_missing_probe_preserves_peer(
         assert not inspect(connection).has_table("rag_uow_probe", schema=schema)
         assert connection.execute(text(
             f'SELECT version_num FROM "{schema}"."alembic_version"'
-        )).scalar_one() == "0001_baseline"
+        )).scalar_one() == HEAD_REVISION
+        # The failed 0001 downgrade rolled the 0002 downgrade back too.
+        tables = set(inspect(connection).get_table_names(schema=schema))
+        assert {
+            "rag_epoch_mirror", "execution_context", "execution_call",
+            "ledger_call_fact",
+        } <= tables
     assert_baseline(peer, peer_schema)
     with peer.connect() as connection:
         assert connection.execute(text(

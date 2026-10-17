@@ -7,6 +7,8 @@ from rag_app.adapters import postgres
 from rag_app.bootstrap import runtime as bootstrap
 from rag_app.bootstrap.config import Settings
 from rag_app.contracts.errors import SafeError
+from rag_app.modules.execution.calls import Epoch
+from datetime import datetime, timezone
 
 
 def test_engine_has_no_application_search_path_fallback(monkeypatch):
@@ -37,7 +39,7 @@ def test_missing_or_inaccessible_namespace_fails_before_application_sql(
 def test_application_sql_uses_explicit_quoted_schema(repository, monkeypatch):
     session = Mock()
     session.execute.return_value.scalar_one_or_none.return_value = True
-    session.execute.return_value.scalar_one.return_value = "0001_baseline"
+    session.execute.return_value.scalar_one.return_value = "0002_isolated_calls"
     monkeypatch.setattr(postgres, "verify_versions", Mock())
     instance = repository(session, schema="select")
     instance.check() if repository is postgres.BaselineRepository else instance.add(1, "body")
@@ -64,5 +66,12 @@ def test_bootstrap_passes_configured_namespace_to_repository(monkeypatch):
     monkeypatch.setattr(bootstrap, "BaselineRepository", factory)
     runtime = bootstrap.build_runtime(Settings(database_schema="target"))
     assert runtime.schema == "target"
+    runtime.control = Mock()
+    runtime.control.current.return_value = Epoch(
+        deployment_id="deployment-1", epoch="e" * 43,
+        cutover_at=datetime(2026, 10, 18, tzinfo=timezone.utc),
+        maintenance_version=1,
+    )
     runtime.check_database()
     factory.assert_called_once_with(session, schema="target")
+    runtime.control.verify_mirror.assert_called_once()

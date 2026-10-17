@@ -48,6 +48,8 @@ review_loop_iteration: 0
 
 集成已确认现有call快照不足以证明当前fence失效；按公共契约“当前上下文权威核对”补最小持久context及受控初始化/终结/换attempt端口，prepare/mark/当前业务转换复核持久权威，迟到仅call。真实PG测试须通过实际context变更证明旧fence失效；原五方法签名不变，C的夹具初始化签名由A及时回报。
 
+I1同时复核取锁后的实际当前时间；传入now或事实result.at不能在PG行锁等待后回拨租约/期限资格。按公共契约补DB当前时刻端口与一个实际持锁跨期限负例，原方法签名保持不变。
+
 ## Spec Change Log
 
 ## Review Triage Log

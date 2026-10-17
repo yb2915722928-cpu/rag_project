@@ -15,7 +15,7 @@
   "acceptance_gate": "not-executed",
   "next_story_key": "1-2-隔离执行并保存每次调用事实",
   "next_thread_id": "01a14b42-689c-7533-90a3-9bd187d93039",
-  "dispatch_state": "A_I1_current_context_fix_C_integration_active_B_source_frozen_for_fixed_commit_Linux_tests",
+  "dispatch_state": "B_169_passed_A19_files_I1_context_DB_clock_frozen_for_commit_C_I2_I3_fixes_active_Step5_readonly_ready",
   "handoff_id": "3dff3d78-c0f5-42cf-9860-fc2ad4250ab4",
   "handoff_kind": "completed_story_serial_relay",
   "handoff_source_thread_id": "01a14973-8555-7131-8fd2-e9eec12f53fe",
@@ -29,7 +29,13 @@
   "handoff_source_write_released": true,
   "handoff_authorization": "2026-10-17 user explicitly authorizes each main Amelia chat to finish one Story, use skills and assigned subagents, and create the next Amelia chat in the same project after completion; repeat within current Sprint until complete or stopped.",
   "automation_id": null,
-  "remaining_parent_obligations": [],
+  "remaining_parent_obligations": [
+    "Story1.2 original AC1 epoch/current persisted fence including lock-after DB time: A code frozen, required Linux/PG evidence pending",
+    "Story1.2 original AC2 bounded supervised child/IPC/grant/crash matrix: C I2/I3 and dispatch integration plus Linux/PG evidence pending",
+    "Story1.2 original AC3 EgressTarget: B developer 169 passed at 7840285; C integration and independent verification pending",
+    "Story1.2 original AC4 late idempotent/conflicting facts and real PG lock/transaction negatives pending",
+    "A/C developer verification, Step5 independent verification, one fresh GPT6.1Sol medium review and actual fix regressions, final acceptance snapshot and next serial relay"
+  ],
   "blocked_conditions": [],
   "deduplication_rule": "Recheck project threads and this claim before dispatch. Never create a second owner for the same story or retry an ambiguous creation before reconciling it.",
   "completion_rule": "All required parent-story acceptance and independent review/validation must pass before selecting and dispatching the next dependent story.",
@@ -155,10 +161,10 @@
     "rag_runtime_acceptance": "Story1.1 passed as final_acceptance and its frozen snapshot; Story1.2 runtime not-executed.",
     "netcatty_terminal_lease": {
       "holder_agent_id": null,
-      "holder_nickname": "unassigned_all_Story1.1_writers_closed",
-      "scope": "none_pending_new_chat_acceptance",
+      "holder_nickname": "controller_between_B_and_C",
+      "scope": "parent_read_only_B_evidence_then_C_fixed_commit",
       "global_mutex": "__external_mcp__",
-      "controller_and_backend_terminal_calls": "controller_and_Mencius_paused_until_Confucius_returns_slot",
+      "controller_and_backend_terminal_calls": "A_B_C_wait_for_controller_assignment",
       "backend_exclusive_session": "1eaffce6-3c45-45cb-84bd-18bd6fc84ea9",
       "rule": "No concurrent terminal requests across sessions; no repeated unchanged mutex probes."
     },
@@ -964,7 +970,7 @@
         "observed_timestamp": "2026-10-17T19:16:25Z",
         "spec": "_bmad-output/implementation-artifacts/spec-1-2-a-persistence.md",
         "active_claim": true,
-        "state": "implementing_with_I1_current_persisted_context_authority_required"
+        "state": "nineteen_source_test_files_frozen_I1_context_and_lock_after_DB_clock_prepared_runtime_pending"
       },
       {
         "agent_id": "01a14b4b-41ea-7bd0-9b61-0e9475aadae8",
@@ -977,7 +983,7 @@
         "observed_timestamp": "2026-10-17T19:16:26Z",
         "spec": "_bmad-output/implementation-artifacts/spec-1-2-b-egress.md",
         "active_claim": true,
-        "state": "three_source_test_files_frozen_parent_full_diff_read_Linux_developer_tests_pending"
+        "state": "developer_169_passed_0_fail_0_skip_fixed_7840285_terminal_returned_source_frozen"
       },
       {
         "agent_id": "01a14b57-dbf8-7e11-8a3f-f678f9146dd0",
@@ -990,19 +996,76 @@
         "observed_timestamp": "2026-10-17T19:30:12Z",
         "spec": "_bmad-output/implementation-artifacts/spec-1-2-c-supervision.md",
         "active_claim": true,
-        "state": "supervision_model_released_A_integration_waits_A_contract"
+        "state": "initial_child_draft_reopened_for_current_AC2_I2_I3_fixes_not_published_or_tested"
       }
     ],
     "terminal_holder": null,
+    "verification_claim": {
+      "agent_id": "01a14b8d-7d2f-7b62-875b-a324944c561c",
+      "nickname": "Pascal",
+      "requested_model": "stepfun/step-5-preview",
+      "requested_reasoning_effort": null,
+      "observed_model": "stepfun/step-5-preview",
+      "observed_effort": "high",
+      "observed_timestamp": "2026-10-17T20:28:47Z",
+      "state": "read_only_ready_no_runtime_release_yet",
+      "scope": "docs/story-1-2-independent-verification.md and isolated verification evidence only",
+      "denominator": "all substantive clauses of original four ACs; table rows are only an index"
+    },
+    "A_initial_unpublished_draft_tree": "006e66936f3d9b29623e7b0b90158d312e1d2dd7",
+    "B_published_source_commit": "78402858fb003dfd62d57ed481f4f131e69424bf",
+    "B_developer_result": {
+      "passed": 169,
+      "topic_passed": 153,
+      "architecture_passed": 3,
+      "uow_passed": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "exit_code": 0,
+      "parent_raw_JUnit_verified": true,
+      "parent_raw_source_commit_hash_verified": true,
+      "JUnit_sha256": "c2d09fc9f41ace428717230569e84a0cb73b796fec02cc29a65fcf15218e3288",
+      "log_sha256": "684dd59cb19f261b997e44dee2a7c0f2abea75c014c0c163d8ba20b876f37162",
+      "environment_source_sha256": "f5f1dde99ad08f317c960329ebd3e3265e003e89f2058120b6d612b367bef693",
+      "independent_verification": "pending"
+    },
+    "C_initial_unpublished_draft": {
+      "git_tree": "7d9f05959370f17ae4a3532d882b2e11100b1c0d",
+      "source_only_not_runtime_pass": true,
+      "state": "reopened_before_runtime_for_I2_I3",
+      "files_sha256": {
+        "backend/src/rag_app/modules/execution/supervision.py": "58bdf7cd17a3f2522335fec0de63c61af7a850d0f838b41e24f24152764d05a0",
+        "backend/src/rag_app/adapters/child_supervisor.py": "8a7611c3d89fb54eb688439c8838cbc7e19a9966db0039a2382900306e861015",
+        "backend/src/rag_app/entrypoints/call_child.py": "522a673d90899fad5e31d351c7b3a0a8bd1e84a3987934e9902eeb98c339f89a",
+        "backend/tests/test_child_supervisor.py": "5e5ff252eae3eeaa1de569a8a48ea718aceb2eb38f598160528c679d9f508f70"
+      }
+    },
     "integration_open_findings": [
       {
         "id": "I1",
         "original_AC": "AC1/C4/R2",
         "evidence": "Current prepare persists caller fence and mark compares only call snapshot; no durable current owner-context authority exists yet.",
         "owner": "01a14b4b-3d07-7a12-a4ea-8ae0f9db0540",
-        "status": "returned_to_original_developer_current_scope_fix",
+        "status": "current_context_code_added_runtime_negative_proof_pending",
         "contract": "_bmad-output/implementation-artifacts/story-1-2-public-contracts.md current-context section",
         "required_evidence": "Real PG persistent context termination/attempt-token changes reject original fence without new grant/business write; late facts remain call-only."
+      },
+      {
+        "id": "I2",
+        "original_AC": "AC2/R1",
+        "evidence": "Supervisor occupancy is only in memory and key includes boot; proc unknown is treated as empty and unknown identity may signal a reused group.",
+        "owner": "01a14b57-dbf8-7e11-8a3f-f678f9146dd0",
+        "status": "returned_to_original_developer_current_scope_fix",
+        "required_evidence": "Persistent physical slot across supervisor/controller/boot; unproven stop blocks; unknown proc and mismatched identity do not prove stop or signal unrelated processes."
+      },
+      {
+        "id": "I3",
+        "original_AC": "AC2/R1 absolute IPC deadline",
+        "evidence": "_recv_exact loops without recomputing absolute remaining time; socket relative timeout resets after each small recv.",
+        "owner": "01a14b57-dbf8-7e11-8a3f-f678f9146dd0",
+        "status": "returned_to_original_developer_current_scope_fix",
+        "required_evidence": "Linux socketpair slow segmented input terminates by original deadline, including retries."
       }
     ],
     "linux_preparation": {
