@@ -30,6 +30,14 @@ GitHub/Gitee main 已同为 baseline。Netcatty 目标 `120.53.251.166`，先 ge
 - [ ] Given 运行失败，when 修复，then 仅在本地认领文件修改并报告主控；由主控发布新固定提交后服务器再从 Gitee 拉取回归。不得远程改源码或自行提交推送。契约变化先由主控协调。
 - [ ] Given 正式 B，when 交付前端，then 列出准确接口和未通过门；不得提前标父 Story done。
 
+## a269 运行发现与本次返修裁决
+
+非PG513passed，错误解释器负例另1passed，契约专题394passed；生成51工件及check通过，52样例44passed/8failed。失败均为现有failure_response未显式set默认status、被exclude_unset过滤，归当前AC4。原始失败证据必须保留。
+
+只在 `backend/src/rag_app/entrypoints/contract_probe.py` 与 `backend/tests/test_contract_http.py` 最小返修：失败信封显式设置status；合法输入省略默认字段时，成功回显也始终输出schema_version/request_id/status。保持原输入接受范围、17 DTO及其余字段缺省/null区别，不全局输出所有默认/None值。测试先直接断言wire三元组，再做模型验证，增加合法省略默认字段的覆盖。两文件冻结交hash后由主控发布新Git提交，再运行相关回归、生成/check及52样例。
+
+后续comparison等仍按原计划延期；不能要求未来业务先实现，也不能把上述当前已有缺陷归入未来延期。
+
 ## 交付
 
 报告实际模型/环境、文件/hash、原始证据位置、测试计数与未完成项。主控确认运行门后再派 Kimi；本实现者不兼任独立验证或审查。

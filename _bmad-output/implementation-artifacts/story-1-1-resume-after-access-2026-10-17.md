@@ -4,6 +4,14 @@
 
 优先读取 [工作集](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-working-set.md:1)、当前 [AGENTS.md](/E:/aaa-project/rag/AGENTS.md:1) 和 [relay](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/sprint-relay-state.json:1)。工作集、原始四项 AC 和完成门不一致时按工作集需回读条件加载原规格、epics 与架构，不无条件重读全部规划。
 
+## 访问已恢复
+
+用户已完成GitHub设备授权；正确账号、keyring与push权限已核实，GitHub/Gitee两次正常无人值守推送成功。源码运行基线 `a269d492fb33b3b13d95265fa11589d39260c4e0` 已在两远端核同ref，并由服务器只从Gitee固定检出；依赖声明/锁hash一致，完整源码hash与运行由Confucius补齐。其后主控文档提交不自动继承运行证据，续接读取真实HEAD。
+
+GitHub进程复用Windows现有代理 `http://127.0.0.1:65532`；不要把该本机回环地址当服务器代理，也不修改全局代理。代理变化后读取当前设置，不硬套旧端口。已将原校验CLI等字节复制为 [GitHub CLI](/C:/Users/29157/.codex/tools/gh/2.102.0/gh.exe) 并配置凭据助手；临时下载目录不是后续会话的工具依赖。不需要重新设备登录或要求用户提供token。Gitee公开读取无需认证，现有写入凭据已由实际push证明。
+
+Confucius接替backend/contracts开发者门，Mencius接替deploy镜像恢复；实际模型、短规格和唯一归属见工作集/relay。不能重复派发这些文件或恢复旧实例抢写。
+
 ## 认领与版本
 
 继续当前 Story 1.1，不提前开始 1.2，不创建替代 Story owner。恢复时以一次合并诊断读取实际 Git HEAD、暂存/工作区、同项目会话、relay 和实现认领；不要把本轮起始基线 `a52ae3090948e7eeea6df87590f15ce35351d247` 自动当作恢复时最新提交。主会话只维护规格、文档、集成协调和验收，代码修复交原作者或明确接替者。
@@ -12,7 +20,7 @@
 
 ## 只在新触发条件出现后复核
 
-- Git 写入认证或集成权限变化后，主会话统一提交并同步 GitHub/Gitee，同一明确 commit 后服务器仅从 Gitee 拉取；核 checkout 状态和源码内容 SHA-256。此前 GitHub空仓库/API403、Gitee无refs的证据保留，不在没有变化时重复认证探测。
+- Git主路径已恢复，旧GitHub空仓库/API403、Gitee无refs仅保留历史。后续主控统一提交并正常同步两远端，同一明确commit后服务器仅从Gitee拉取并核checkout及源码SHA-256；不把连接器旧403误当现有Git凭据失败，不重复设备授权。
 - 准确批准镜像的完整工件或网络状态变化后，才复核 digest/平台/来源。不得用仅 manifest、占位 digest 或其他版本放行，不重复 Docker Hub/auth 超时探测。
 - Netcatty 实际使用或重连时先 `get_environment`，以返回 session 为准。目标主机 `120.53.251.166`，活动工作目录 `/opt/rag-story-1-1`，测试/最终证据归档 `/fileOfRag/testOfRAG/{originals,derived,metadata}`；不改拼写，不在对象存储上假定 POSIX 锁/数据库语义。
 

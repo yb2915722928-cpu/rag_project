@@ -14,6 +14,7 @@ from pydantic.json_schema import models_json_schema
 
 from rag_app.contracts.public import (
     PUBLIC_MODELS, AcceptedResponse, FailedResponse, OperationResponse, PublicError,
+    Status,
 )
 from rag_app.entrypoints.json_guard import BoundedJsonError, read_bounded_json
 
@@ -26,7 +27,8 @@ def failure_response(request_id: str, code: str) -> JSONResponse:
     """Project only public policy; never serialize an exception or private ID."""
     error = PublicError.from_code(code)
     dto = FailedResponse(
-        schema_version="operation.v1", request_id=request_id, error=error,
+        schema_version="operation.v1", request_id=request_id,
+        status=Status.FAILED, error=error,
     )
     return JSONResponse(
         dto.model_dump(mode="json", exclude_unset=True),
@@ -116,8 +118,13 @@ def register_contract_probe(app: FastAPI, token: SecretStr | None) -> None:
         except ValidationError:
             return failure_response(request_id, "VALIDATION_ERROR")
         result = dto.model_dump(mode="json", exclude_unset=True)
-        if "request_id" in model.model_fields:
-            result["request_id"] = request_id
+        # The C2 envelope is mandatory on every public response. Complete only
+        # these three wire fields from the already-validated DTO; every other
+        # field keeps the original exclude_unset explicit-null/absent semantics.
+        result.update(dto.model_dump(
+            mode="json", include={"schema_version", "request_id", "status"},
+        ))
+        result["request_id"] = request_id
         status = 200
         if isinstance(dto, AcceptedResponse):
             status = 202

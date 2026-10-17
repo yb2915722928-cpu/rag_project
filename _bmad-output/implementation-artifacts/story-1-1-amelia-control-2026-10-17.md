@@ -100,3 +100,13 @@ GitHub与Gitee正常push均exit0，随后两端main均返回 `a269d492fb33b3b13d
 | deploy官方镜像获取恢复 | Mencius `01a14a3e-ba7c-74e3-a162-b8f092a80308` | `zayuapi/deepseek-v4.1-flash / max`，`2026-10-17T14:23:09.015Z` |
 
 新短规格实际为920/786 tokens（cl100k_base）。旧Docker失败记录仍有效；仅已观察到的本机官方源访问变化允许一次针对性复核，不宣称远程镜像、真实PG或父完成门已通过。
+
+## 当前运行结果、测试归属与远程串行调用
+
+Confucius实际阶段交付后，主控直接读取服务器JUnit及generate/check/samples原始日志：固定a269非PG513passed/1条件skip/8PG筛除，真实3.12.3负例另1passed；契约/HTTP/H/金额专题394passed，runtime专题47passed/2PG筛除；51工件生成与check通过，52样例44passed/8failed/0blocked。失败均为现有 `failure_response` 构造时默认status未set、被exclude_unset抹掉，属于AC4。成功探针对合法省略默认信封字段的回显也有同类已有问题；主控选择在输出补齐三元组，保持原输入默认与其余缺省/null语义，只改同一HTTP实现和测试，由Confucius继续最小修复。新提交回归前不打开C门。
+
+用户明确不要求全仓未来功能提前通过。主控按当前Story必需AC/必要回归、后续未到期工作、环境阻塞分类，已同步AGENTS；不能因上述已实现路径的缺陷而归咎后续业务，也不把comparison.v1按原计划延期变成当前缺陷。
+
+Netcatty在整个外部chat `__external_mcp__` 互斥；独立terminal并不能并发命令。曾被一次只读调用拒绝，之后由主控调度唯一terminal调用时段，避免重试锁。后端者专属terminal为 `1eaffce6-3c45-45cb-84bd-18bd6fc84ea9`，部署者不再使用；主控现已把远程时段交Mencius做镜像版本证据及隔离PG准备，Confucius仅本地返修，完成后再交接后端回归。
+
+来源的限范围裁决：腾讯云官方《腾讯云软件源加速软件包下载安装和更新》（`cloud.tencent.com/document/product/213/8623`）及TencentOS镜像概述（`cloud.tencent.com/document/product/1397/130430`）列明 `mirror.ccs.tencentyun.com` 为其缓存服务；Docker官方pull说明支持按digest固定准确内容。当前已授权部署可在现有腾讯云服务器以此官方缓存传输经发布方官方registry实核digest的原始镜像，保留发布方与传输缓存两种来源，不伪称官方直连，不改tag/版本/内容、不新增全局配置/网络服务/费用。Mencius需在其归属文档修订旧准备方案并保存实际来源。该裁决不放宽完整index/platform/config/层、真实版本及归档证据门。

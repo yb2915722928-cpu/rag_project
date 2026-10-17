@@ -116,11 +116,16 @@ def assert_private(response):
 
 def assert_failure(response, code):
     assert_private(response)
-    dto = PUBLIC_MODELS["FailedResponse"].model_validate(response.json())
+    body = response.json()
+    # The C2 envelope is mandatory on every response; `status` must be present on
+    # the wire, not merely defaulted back in by the model during validation.
+    assert {"schema_version", "request_id", "status"} <= set(body)
+    assert body["status"] == "failed"
+    dto = PUBLIC_MODELS["FailedResponse"].model_validate(body)
     assert dto.error == PublicError.from_code(code)
     assert response.status_code == dto.error.http_status
     assert dto.request_id == response.headers["x-request-id"]
-    assert "operation_id" not in response.json()
+    assert "operation_id" not in body
     assert SECRET not in response.text
     return dto
 
@@ -145,6 +150,44 @@ def test_five_public_response_models_have_authorized_dto_roundtrips(monkeypatch)
             assert dto == expected
             request_ids.add(response.headers["x-request-id"])
         assert len(request_ids) == len(RESPONSE_NAMES)
+
+
+def test_probe_completes_only_the_defaulted_c2_envelope_on_the_wire(monkeypatch):
+    samples = fixtures()
+    with isolated_client(monkeypatch) as client:
+        for name in sorted(RESPONSE_NAMES):
+            fields = PUBLIC_MODELS[name].model_fields
+            # Drop exactly the envelope fields the model lets a client omit.
+            payload = {
+                key: value for key, value in samples[name].items()
+                if key not in ("schema_version", "status")
+                or fields[key].is_required()
+            }
+            assert set(samples[name]) - set(payload), name
+            if name == "FailedResponse":
+                payload.pop("operation_id")  # optional, non-envelope field
+            if name == "AcceptedResponse":
+                payload.pop("retry_mode")  # defaulted, non-envelope field
+            response = client.post(PATH + name, json=payload, headers=HEADERS)
+            assert_private(response)
+            body = response.json()
+            envelope = {"schema_version", "request_id", "status"}
+            # Exactly the submitted keys plus the three envelope fields: no other
+            # defaulted or None field may be materialized by the probe.
+            assert set(body) == set(payload) | envelope, name
+            assert {"schema_version", "request_id", "status"} <= set(body)
+            assert body["schema_version"] == samples[name]["schema_version"]
+            assert body["status"] == samples[name]["status"]
+            assert body["request_id"] == response.headers["x-request-id"]
+            # Everything outside the envelope must be the submitted value verbatim;
+            # only request_id is replaced, by a server-issued attempt ID.
+            for key in set(body) - envelope:
+                assert body[key] == payload[key], (name, key)
+            assert PUBLIC_MODELS[name].model_validate(body)
+            if name == "AcceptedResponse":
+                assert "retry_mode" not in body
+            if name == "FailedResponse":
+                assert "operation_id" not in body
 
 
 def test_helper_dtos_are_not_bare_http_responses(monkeypatch):

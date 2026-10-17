@@ -21,7 +21,7 @@
   "acceptance_gate": "not_passed",
   "next_story_key": null,
   "next_thread_id": null,
-  "dispatch_state": "linux_developer_gates_and_official_image_access_model_verified",
+  "dispatch_state": "backend_local_HTTP_envelope_fix_deploy_remote_PG_test_environment_C_waits_B",
   "handoff_id": "story-1-1-continued-01a14973",
   "handoff_kind": "same_story_serial_continuation",
   "handoff_source_thread_id": "01a148e2-1e11-7322-9626-6cbafb956f12",
@@ -125,9 +125,9 @@
   "working_set_path": "_bmad-output/implementation-artifacts/story-1-1-working-set.md",
   "latest_decision_path": "_bmad-output/implementation-artifacts/story-1-1-model-environment-decision-2026-10-17.md",
   "pending_prerequisites": [
-    "Developer verifies complete source hashes before and after fixed-commit Linux A2a/B0a/B0c regressions; record all skipped or unexecuted denominators",
-    "Formal B generation/check/samples, then C frontend with exact toolchain and actual browser evidence",
-    "Approved complete exact-version images/digests; real PG18.6/pgvector0.8.7 and four-service lifecycle/rebuild",
+    "Publish the current-story HTTP envelope correction, then run relevant fixed-commit Linux regressions and B generation/check/samples; current 44/8 result remains failed",
+    "Complete formal B artifacts and C frontend with exact toolchain, peer lock and actual browser evidence; C is not dispatched until B current-story gates pass",
+    "Verify image/config/layer provenance and exact container versions; provision isolated PG18.6/vector0.8.7 for eight current-story PG nodes; full four-service lifecycle/rebuild remains pending",
     "E provenance, Step 5 independent runtime validation and fresh 6.1 Sol/medium formal review with fixes/regression"
   ],
   "last_merged_diagnostic": {
@@ -145,7 +145,7 @@
     "server_checkout": "/opt/rag-story-1-1/repo",
     "spec_token_counts": {
       "encoding": "cl100k_base",
-      "linux_developer_gates": 920,
+      "linux_developer_gates": 1239,
       "official_image_access": 786
     },
     "underlying_provider_identity": "not_observed"
@@ -163,9 +163,18 @@
     "storage_mount": "/fileOfRag",
     "test_material_root": "/fileOfRag/testOfRAG",
     "old_docker_resources": "cleaned_by_explicit_user_authorization",
-    "rag_runtime_acceptance": "A1 developer tests and H developer/independent unit tests recorded; PG, new HTTP/runtime, frontend and four-service gates not passed"
+    "rag_runtime_acceptance": "A1 developer tests and H developer/independent unit tests recorded; PG, new HTTP/runtime, frontend and four-service gates not passed",
+    "netcatty_terminal_lease": {
+      "holder_agent_id": "01a14a3e-ba7c-74e3-a162-b8f092a80308",
+      "holder_nickname": "Mencius",
+      "scope": "image inspect/version receipts and isolated current-story PG test infrastructure",
+      "global_mutex": "__external_mcp__",
+      "controller_and_backend_terminal_calls": "paused_until_explicit_return",
+      "backend_exclusive_session": "1eaffce6-3c45-45cb-84bd-18bd6fc84ea9",
+      "rule": "No concurrent terminal requests across sessions; no repeated unchanged mutex probes."
+    }
   },
-  "updated_at": "2026-10-17T22:25:29.1373954+08:00",
+  "updated_at": "2026-10-17T23:02:57.3089323+08:00",
   "handoff_registered_at": "2026-10-17T16:02:45.7798854+08:00",
   "handoff_acceptance_evidence": "Current rollout turn_context records group/auto-gpt-6-1-sol/max at 2026-10-17T10:41:11.525Z; source write released; unique current rag chat accepted Story 1.1. See story-1-1-amelia-control-2026-10-17.md.",
   "implementation_claims": [
@@ -415,12 +424,12 @@
       ],
       "spec": "_bmad-output/implementation-artifacts/spec-1-1-linux-developer-gates.md",
       "active_claim": true,
-      "status": "model_verified_ready_to_run",
+      "status": "local_current_story_HTTP_envelope_fix_then_controller_publish_and_Linux_regression",
       "requested_model": "zayuapi/deepseek-v4.1-flash",
       "requested_reasoning_effort": null,
       "actual_model": "zayuapi/deepseek-v4.1-flash",
       "actual_effort": "max",
-      "actual_turn_context": "2026-10-17T14:23:01.517Z",
+      "actual_turn_context": "2026-10-17T14:46:58.865Z",
       "baseline_commit": "a269d492fb33b3b13d95265fa11589d39260c4e0"
     },
     {
@@ -433,13 +442,14 @@
       ],
       "spec": "_bmad-output/implementation-artifacts/spec-1-1-official-image-access.md",
       "active_claim": true,
-      "status": "model_verified_ready_to_run",
+      "status": "exclusive_remote_slot_for_image_receipts_and_isolated_current_story_PostgreSQL_test_infrastructure",
       "requested_model": "zayuapi/deepseek-v4.1-flash",
       "requested_reasoning_effort": null,
       "actual_model": "zayuapi/deepseek-v4.1-flash",
       "actual_effort": "max",
-      "actual_turn_context": "2026-10-17T14:23:09.015Z",
-      "baseline_commit": "a269d492fb33b3b13d95265fa11589d39260c4e0"
+      "actual_turn_context": "2026-10-17T14:47:07.56Z",
+      "baseline_commit": "a269d492fb33b3b13d95265fa11589d39260c4e0",
+      "followup_spec": "_bmad-output/implementation-artifacts/spec-1-1-postgres-test-environment.md"
     }
   ],
   "git_transport": {
@@ -463,7 +473,8 @@
       "local_head_at_verification": "a269d492fb33b3b13d95265fa11589d39260c4e0",
       "update_or_mirror_mechanism": "direct_unattended_https_push_succeeded_without_force_existing_history_preserved"
     },
-    "commit_semantics": "Verified synchronized Git revision and server checkout; current source checkpoint is included. Not yet developer-tested; later controller metadata commits do not inherit runtime acceptance."
+    "commit_semantics": "Verified synchronized Git revision and server checkout; current source checkpoint is included. Not yet developer-tested; later controller metadata commits do not inherit runtime acceptance.",
+    "last_pushed_commit": "0b576b65d3824e7f4319c39c38e80398caf08fb8"
   },
   "server_source_policy": {
     "development_upload_remote": "https://github.com/yb2915722928-cpu/rag_project.git",
@@ -508,5 +519,55 @@
     "server_tests": "not-executed",
     "all_child_instances": "closed_write_released",
     "next_story": "not_started"
+  },
+  "current_story_test_classification": {
+    "user_clarification_date": "2026-10-17",
+    "policy": "Judge against current-story required ACs and necessary regressions. Attribute future unimplemented work explicitly and defer without calling it passed; do not reduce current-story obligations.",
+    "baseline_commit": "a269d492fb33b3b13d95265fa11589d39260c4e0",
+    "backend_tree": "55aabf35fc5fff6344c089081103b4a9324977f4",
+    "contracts_tree": "99041babed4e1b2c0f328afd813ac8ddc28faf5b",
+    "non_pg": {
+      "passed": 513,
+      "skipped": 1,
+      "postgres_deselected": 8,
+      "raw_JUnit_controller_verified": true
+    },
+    "non_target_runtime": {
+      "passed": 1,
+      "skipped": 0,
+      "raw_JUnit_controller_verified": true
+    },
+    "contract_topic_passed": 394,
+    "runtime_topic_passed": 47,
+    "generated_artifacts": 51,
+    "generation_check": "passed",
+    "samples": {
+      "defined": 52,
+      "passed": 44,
+      "failed": 8,
+      "blocked": 0,
+      "root_cause": "Existing failure_response omitted default status through exclude_unset; current Story AC4 defect, not future missing code.",
+      "raw_log_controller_verified": true,
+      "followup": "Canonical success-envelope defaults must also be projected without changing accepted inputs or optional null/absence."
+    },
+    "real_postgres": {
+      "required_nodes": 8,
+      "status": "not-executed_current_story_AC2_not_future_work"
+    },
+    "future_comparison_v1": "deferred_as_original_plan_not_in_current_sample_denominator",
+    "evidence_root": "/opt/rag-story-1-1/linux-developer-gates-work/evidence",
+    "frontend_spec_token_count": 1031,
+    "postgres_infrastructure_spec_token_count": 907
+  },
+  "pending_HTTP_envelope_release": {
+    "baseline_commit": "a269d492fb33b3b13d95265fa11589d39260c4e0",
+    "implementation_agent": "01a14a3e-989e-7c72-b98c-90c3a9e9b5c9",
+    "files": {
+      "backend/src/rag_app/entrypoints/contract_probe.py": "079a9952c487cada067b30ba70ad08f64e20dd93d4a2fce84997b870564dc545",
+      "backend/tests/test_contract_http.py": "f3929ae78d4d240403224b429b00619976a9077909ac13b28c526c88f6817526"
+    },
+    "controller_diff_review": "completed",
+    "runtime_regression": "not-executed_pending_fixed_Git_release",
+    "current_story_scope": "AC4 mandatory response envelope; future comparison remains deferred"
   }
 }
