@@ -1,0 +1,39 @@
+{
+  "schema_version": "answer.v1",
+  "request_id": "req-c1-unicode",
+  "status": "completed",
+  "operation_id": "op-c1-unicode",
+  "replayed": false,
+  "accepted_at": "2026-10-17T08:00:00Z",
+  "completed_at": "2026-10-17T08:00:01Z",
+  "execution_snapshot_id": "snap-c1-unicode",
+  "outcome": "answered",
+  "summary": {
+    "text": " \r\n中文 A\u0301 \ud83d\ude80 ",
+    "fact_ids": ["f1"]
+  },
+  "facts": [
+    {
+      "id": "f1",
+      "kind": "step",
+      "order": 1,
+      "text": "中文 e\u0301 \ud83d\ude80",
+      "applicability": "",
+      "evidence_ids": ["e1"],
+      "quantity": null,
+      "conflict_sides": null
+    }
+  ],
+  "gaps": [],
+  "clarifications": [],
+  "evidence_catalog": [
+    {
+      "evidence_id": "e1",
+      "chunk_id": "c1",
+      "excerpt": "\ud83d\ude80",
+      "start": 0,
+      "end": 1
+    }
+  ]
+}
+

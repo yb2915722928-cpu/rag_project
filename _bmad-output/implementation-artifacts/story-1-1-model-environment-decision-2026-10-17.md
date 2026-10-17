@@ -2,6 +2,12 @@
 
 日期：2026-10-17，Asia/Shanghai。授权来自本会话用户的明确决定，优先于先前的技术 seed、旧工作集及旧交接描述。父 Story 原始四项 AC 与 A/B/C/D/E 完成分母不变。
 
+## 后续覆盖决定
+
+用户随后将全部后端、项目主控逻辑、部署与 RAG 实现改为 `zayuapi/deepseek-v4.1-flash` 默认档位；当前主会话本身采用 Amelia 角色，仍为 `group/auto-gpt-6-1-sol / max`，按 Story 完成后才创建下一 Amelia 主会话。前端、独立验证、独立审查分工不变，以当前 [AGENTS.md](/E:/aaa-project/rag/AGENTS.md:1) 为准。
+
+以下“生效决定”和其后证据保留原交接时点历史。精确 Python 3.12.8 的 A1 锁/运行证据此后已交付，但不覆盖 A2a/HTTP/PG 或父 Story。当前 owner、DeepSeek 实际 turn_context 和 Git/Gitee 阻塞见 [本轮主控记录](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-amelia-control-2026-10-17.md:1)，不能把下文旧角色/未调整状态继续当作当前有效状态。
+
 ## 生效决定
 
 | 项目 | 当前决定 | 实施状态 |

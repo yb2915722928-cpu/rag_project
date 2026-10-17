@@ -1,0 +1,81 @@
+# BuildKit Dockerfile-specific ignore list for the API/worker build context.
+# First deny everything, then re-allow only the inputs api.Dockerfile consumes,
+# then narrow that allowlist again. The last matching rule wins, so every
+# exclusion belongs after "!src/**"/"!migrations/**", and the placeholder
+# exceptions belong after "**/.env.*".
+*
+!pyproject.toml
+!uv.lock
+!.python-version
+!alembic.ini
+!src/
+!src/**
+!migrations/
+!migrations/**
+
+# Environment files. Real dotenv files and dotenv tooling never enter the
+# context. The three documented placeholder suffixes are re-included only
+# inside the allowlisted trees, so backend-root examples stay out.
+**/.env
+**/.env.*
+!src/**/.env.example
+!src/**/.env.sample
+!src/**/.env.template
+!migrations/**/.env.example
+!migrations/**/.env.sample
+!migrations/**/.env.template
+**/.envrc
+**/.direnv
+**/.direnv/**
+
+# Certificates, private keys, SSH keys and key stores. No "example"/"sample"
+# suffix exception is granted: such a name does not prove the file is inert.
+**/*.pem
+**/*.crt
+**/*.cer
+**/*.csr
+**/*.key
+**/*.p8
+**/*.ppk
+**/*.p12
+**/*.pfx
+**/*.jks
+**/*.keystore
+**/id_rsa*
+**/id_ecdsa*
+**/id_ed25519*
+
+# PostgreSQL password files, secret directories and credential payloads. The
+# credential rules stay bounded to payload extensions (json/yaml/yml), so a
+# legitimate Python module such as "credentials.py" is never dropped silently.
+**/.pgpass
+**/*.pgpass
+**/pgpass.conf
+**/.netrc
+**/secrets
+**/secrets/**
+**/.secrets
+**/.secrets/**
+**/*credential*.json
+**/*credential*.yaml
+**/*credential*.yml
+**/*service-account*.json
+**/*service-account*.yaml
+**/*service-account*.yml
+**/*service_account*.json
+**/*service_account*.yaml
+**/*service_account*.yml
+**/*serviceaccount*.json
+**/*serviceaccount*.yaml
+**/*serviceaccount*.yml
+
+# Python caches and bytecode, excluded last so no earlier rule can re-include
+# them. "*.py[cod]" is the documented form and covers .pyc/.pyo/.pyd; the
+# explicit extensions keep the guarantee if a matcher treats the class
+# literally.
+**/__pycache__
+**/__pycache__/**
+**/*.py[cod]
+**/*.pyc
+**/*.pyo
+**/*.pyd

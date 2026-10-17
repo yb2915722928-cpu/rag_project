@@ -123,12 +123,20 @@ def install_synthetic_signals(monkeypatch):
     return old, setter
 
 
+requires_linux_self_pipe = pytest.mark.skipif(
+    sys.platform != "linux",
+    reason="Worker self-pipe lifecycle is a Linux acceptance path; no Windows fallback.",
+)
+
+
+@requires_linux_self_pipe
 def test_worker_closes_short_uow_before_idle_and_restores_handlers(monkeypatch):
     old, setter = install_synthetic_signals(monkeypatch)
     actual_pipe = worker.os.pipe2
     descriptors = []
 
     def create_pipe(flags):
+        assert flags == os.O_NONBLOCK | os.O_CLOEXEC
         pair = actual_pipe(flags)
         descriptors.extend(pair)
         return pair
@@ -157,11 +165,16 @@ def test_worker_closes_short_uow_before_idle_and_restores_handlers(monkeypatch):
     runtime.check_database.assert_called_once()
     runtime.close.assert_called_once()
     assert [call.args for call in setter.call_args_list[-2:]] == list(old.items())
+    wakeup = worker.signal.set_wakeup_fd.call_args_list
+    assert wakeup[0].args == (descriptors[1],)
+    assert wakeup[0].kwargs == {"warn_on_full_buffer": False}
+    assert wakeup[-1].args == (-1,)
     for fd in descriptors:
         with pytest.raises(OSError):
             os.fstat(fd)
 
 
+@requires_linux_self_pipe
 @pytest.mark.parametrize("phase", ["build", "check", "check-raw", "close"])
 def test_worker_preserves_private_failure_and_cleanup(monkeypatch, phase):
     _, setter = install_synthetic_signals(monkeypatch)
@@ -208,6 +221,43 @@ def test_worker_preserves_private_failure_and_cleanup(monkeypatch, phase):
     assert "SENTINEL" not in str(caught.value)
 
 
+@requires_linux_self_pipe
+def test_worker_keeps_cleanup_failure_private_and_releases_resources(monkeypatch):
+    old, setter = install_synthetic_signals(monkeypatch)
+    actual_pipe = worker.os.pipe2
+    descriptors = []
+
+    def create_pipe(flags):
+        pair = actual_pipe(flags)
+        descriptors.extend(pair)
+        return pair
+
+    monkeypatch.setattr(worker.os, "pipe2", create_pipe)
+    restore_failure = RuntimeError("WAKEUP_RESTORE_SENTINEL")
+    monkeypatch.setattr(
+        worker.signal, "set_wakeup_fd", Mock(side_effect=[-1, restore_failure]),
+    )
+    runtime = Mock()
+
+    def wake(readers, writers, errors, timeout):
+        setter.call_args_list[0].args[1](signal.SIGINT, None)
+        return [], [], []
+
+    monkeypatch.setattr(worker.select, "select", Mock(side_effect=wake))
+    monkeypatch.setattr(worker, "build_runtime", Mock(return_value=runtime))
+    with pytest.raises(SafeError) as caught:
+        worker.run_worker(Settings())
+    assert caught.value.code == "DATABASE_CLEANUP_FAILED"
+    assert caught.value.diagnostic_cause is restore_failure
+    assert caught.value.cleanup_errors == ()
+    assert "SENTINEL" not in str(caught.value)
+    runtime.close.assert_called_once()
+    assert [call.args for call in setter.call_args_list[-2:]] == list(old.items())
+    for fd in descriptors:
+        with pytest.raises(OSError):
+            os.fstat(fd)
+
+
 def test_api_cli_converts_server_startup_exit_to_finite_error(monkeypatch, capsys):
     monkeypatch.setattr(sys, "argv", ["rag_app", "api"])
     monkeypatch.setattr(cli, "require_python", Mock())
@@ -221,6 +271,7 @@ def test_api_cli_converts_server_startup_exit_to_finite_error(monkeypatch, capsy
     assert "PRIVATE_SERVER_SENTINEL" not in output.out + output.err
 
 
+@requires_linux_self_pipe
 @pytest.mark.parametrize("failure", ["config", "connection"])
 def test_real_worker_cli_failure_is_private(failure):
     require_python()

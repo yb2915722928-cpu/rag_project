@@ -1,0 +1,9 @@
+{
+  "recorded_at": "2026-10-17T21:34:33+08:00",
+  "baseline_commit": "a52ae3090948e7eeea6df87590f15ce35351d247",
+  "original_index_tree_id": "870dec86638d3bb980d7f35eac7724c5313db582",
+  "patch": "_bmad-output/implementation-artifacts/story-1-1-preparation-original-index-2026-10-17.diff",
+  "patch_sha256": "0a71b2f52f91f0210bc2062856fe79724f013c72d939377d4e55f922d8553b31",
+  "bytes": 143354,
+  "scope": "Original frozen B/worker/D index before F1-F7 repairs; not execution evidence"
+}

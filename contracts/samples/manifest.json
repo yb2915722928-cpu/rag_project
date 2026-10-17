@@ -1,0 +1,740 @@
+{
+  "schema_version": "contracts-samples.v1",
+  "boundaries": {
+    "json": "The 1 MiB body limit belongs only to entrypoints/json_guard.py JSON parsing; it is not global middleware.",
+    "original_put": "Original binary PUT keeps its own byte budget and must never pass through the JSON guard. No original PUT route exists yet, so this boundary is not claimed as executed.",
+    "openapi_probe": "POST /__maintenance/contracts/{model_name} is an isolated DTO probe, disabled by default and required to be blocked by production gateways."
+  },
+  "cases": [
+    {
+      "id": "c1.unicode.values",
+      "boundary": "C1",
+      "operation": "model_validate_json",
+      "model": "CompletedResponse",
+      "file": "c1/unicode-values.json",
+      "expect": "accept",
+      "expected_fields": {
+        "summary.text": " \r\n中文 A\u0301 \ud83d\ude80 ",
+        "facts.0.text": "中文 e\u0301 \ud83d\ude80",
+        "facts.0.applicability": "",
+        "evidence_catalog.0.excerpt": "\ud83d\ude80",
+        "evidence_catalog.0.start": 0,
+        "evidence_catalog.0.end": 1
+      }
+    },
+    {
+      "id": "c1.unicode.scalar-length",
+      "boundary": "C1",
+      "operation": "scalar_length",
+      "file": "c1/scalar-span.json",
+      "expect": "accept"
+    },
+    {
+      "id": "c1.unicode.half-open-slice",
+      "boundary": "C1",
+      "operation": "scalar_slice",
+      "file": "c1/scalar-span.json",
+      "expect": "accept"
+    },
+    {
+      "id": "c1.serialization.stable-keys",
+      "boundary": "C1",
+      "operation": "stable_json_bytes",
+      "file": "c1/stable-keys.json",
+      "expect": "accept",
+      "expected_text": "{\"a\":null,\"b\":1,\"nested\":{\"a\":2,\"z\":\"🚀\"}}"
+    },
+    {
+      "id": "c1.null-and-absent.explicit-null",
+      "boundary": "C1",
+      "operation": "model_validate_json",
+      "model": "FailedResponse",
+      "file": "c1/failed-explicit-null.json",
+      "expect": "accept",
+      "expected_fields": {
+        "operation_id": null,
+        "error.details": null
+      }
+    },
+    {
+      "id": "c1.null-and-absent.missing",
+      "boundary": "C1",
+      "operation": "model_validate_json",
+      "model": "FailedResponse",
+      "file": "c1/failed-absent.json",
+      "expect": "accept",
+      "serialized_absent_fields": ["operation_id", "error.details"]
+    },
+    {
+      "id": "c1.reject.duplicate-key",
+      "boundary": "C1",
+      "operation": "model_validate_json",
+      "model": "CompletedResponse",
+      "file": "c1/duplicate-key.json",
+      "expect": "reject",
+      "error": "ValidationError",
+      "error_contains": "invalid contract JSON",
+      "control": {
+        "operation": "model_validate_json",
+        "model": "CompletedResponse",
+        "file": "c2/completed.json"
+      }
+    },
+    {
+      "id": "c1.reject.nan",
+      "boundary": "C1",
+      "operation": "model_validate_json",
+      "model": "CompletedResponse",
+      "file": "c1/nan.json",
+      "expect": "reject",
+      "error": "ValidationError",
+      "error_contains": "invalid contract JSON",
+      "control": {
+        "operation": "model_validate_json",
+        "model": "CompletedResponse",
+        "file": "c2/completed.json"
+      }
+    },
+    {
+      "id": "c1.reject.infinity",
+      "boundary": "C1",
+      "operation": "model_validate_json",
+      "model": "CompletedResponse",
+      "file": "c1/infinity.json",
+      "expect": "reject",
+      "error": "ValidationError",
+      "error_contains": "invalid contract JSON",
+      "control": {
+        "operation": "model_validate_json",
+        "model": "CompletedResponse",
+        "file": "c2/completed.json"
+      }
+    },
+    {
+      "id": "c1.reject.lone-surrogate",
+      "boundary": "C1",
+      "operation": "model_validate_json",
+      "model": "CompletedResponse",
+      "file": "c1/lone-surrogate.json",
+      "expect": "reject",
+      "error": "ValidationError",
+      "error_contains": "invalid contract JSON",
+      "control": {
+        "operation": "model_validate_json",
+        "model": "CompletedResponse",
+        "file": "c2/completed.json"
+      }
+    },
+    {
+      "id": "c1.reject.status-url-trailing-slash",
+      "boundary": "C1",
+      "operation": "model_validate_json",
+      "model": "AcceptedResponse",
+      "file": "c1/status-url-trailing-slash.json",
+      "expect": "reject",
+      "error": "ValidationError",
+      "error_contains": "string_pattern_mismatch",
+      "control": {
+        "operation": "model_validate_json",
+        "model": "AcceptedResponse",
+        "file": "c2/accepted.json"
+      }
+    },
+    {
+      "id": "c1.reject.unknown-field",
+      "boundary": "C1",
+      "operation": "model_validate_json",
+      "model": "CompletedResponse",
+      "file": "c1/unknown-field.json",
+      "expect": "reject",
+      "error": "ValidationError",
+      "error_contains": "extra_forbidden",
+      "control": {
+        "operation": "model_validate_json",
+        "model": "CompletedResponse",
+        "file": "c2/completed.json"
+      }
+    },
+    {
+      "id": "c1.reject.nested-unknown-field",
+      "boundary": "C1",
+      "operation": "model_validate_json",
+      "model": "CompletedResponse",
+      "file": "c1/nested-unknown-field.json",
+      "expect": "reject",
+      "error": "ValidationError",
+      "error_contains": "extra_forbidden",
+      "control": {
+        "operation": "model_validate_json",
+        "model": "CompletedResponse",
+        "file": "c2/completed.json"
+      }
+    },
+    {
+      "id": "c1.reject.absolute-status-url",
+      "boundary": "C1",
+      "operation": "model_validate_json",
+      "model": "AcceptedResponse",
+      "file": "c1/status-url-absolute.json",
+      "expect": "reject",
+      "error": "ValidationError",
+      "error_contains": "string_pattern_mismatch",
+      "control": {
+        "operation": "model_validate_json",
+        "model": "AcceptedResponse",
+        "file": "c2/accepted.json"
+      }
+    },
+    {
+      "id": "c2.accepted-202",
+      "boundary": "C2",
+      "operation": "model_validate_json",
+      "model": "AcceptedResponse",
+      "file": "c2/accepted.json",
+      "expect": "accept"
+    },
+    {
+      "id": "c2.completed-answer",
+      "boundary": "C2",
+      "operation": "model_validate_json",
+      "model": "CompletedResponse",
+      "file": "c2/completed.json",
+      "expect": "accept"
+    },
+    {
+      "id": "c2.failed-authorized",
+      "boundary": "C2",
+      "operation": "model_validate_json",
+      "model": "FailedResponse",
+      "file": "c2/failed-authorized.json",
+      "expect": "accept"
+    },
+    {
+      "id": "c2.failed-pre-auth-no-operation-id",
+      "boundary": "C2",
+      "operation": "model_validate_json",
+      "model": "FailedResponse",
+      "file": "c2/failed-pre-auth.json",
+      "expect": "accept"
+    },
+    {
+      "id": "c2.reject.pre-auth-private-operation-id",
+      "boundary": "C2",
+      "operation": "model_validate_json",
+      "model": "FailedResponse",
+      "file": "c2/failed-pre-auth-with-id.json",
+      "expect": "reject",
+      "error": "ValidationError",
+      "error_contains": "pre-authorization errors cannot disclose private operation IDs",
+      "control": {
+        "operation": "model_validate_json",
+        "model": "FailedResponse",
+        "file": "c2/failed-pre-auth.json"
+      }
+    },
+    {
+      "id": "c2.operation-failed-projection",
+      "boundary": "C2",
+      "operation": "model_validate_json",
+      "model": "OperationResponse",
+      "file": "c2/operation-failed.json",
+      "expect": "accept"
+    },
+    {
+      "id": "c2.retrieval",
+      "boundary": "C2",
+      "operation": "model_validate_json",
+      "model": "RetrievalResponse",
+      "file": "c2/retrieval.json",
+      "expect": "accept"
+    },
+    {
+      "id": "c2.reject.retrieval-six-blocks",
+      "boundary": "C2",
+      "operation": "model_validate_json",
+      "model": "RetrievalResponse",
+      "file": "c2/retrieval-six.json",
+      "expect": "reject",
+      "error": "ValidationError",
+      "error_contains": "too_long",
+      "control": {
+        "operation": "model_validate_json",
+        "model": "RetrievalResponse",
+        "file": "c2/retrieval.json"
+      }
+    },
+    {
+      "id": "c2.reject.outcome-status-mismatch",
+      "boundary": "C2",
+      "operation": "model_validate_json",
+      "model": "CompletedResponse",
+      "file": "c2/outcome-mismatch.json",
+      "expect": "reject",
+      "error": "ValidationError",
+      "error_contains": "answered requires supported facts",
+      "control": {
+        "operation": "model_validate_json",
+        "model": "CompletedResponse",
+        "file": "c2/completed.json"
+      }
+    },
+    {
+      "id": "c2.reject.forged-retry-mode",
+      "boundary": "C2",
+      "operation": "model_validate_json",
+      "model": "PublicError",
+      "file": "c2/forged-retry.json",
+      "expect": "reject",
+      "error": "ValidationError",
+      "error_contains": "error metadata must match the finite public policy",
+      "control": {
+        "operation": "model_validate_json",
+        "model": "PublicError",
+        "file": "c2/public-error.json"
+      }
+    },
+    {
+      "id": "c2.reject.retrieval-failed-with-operation-id",
+      "boundary": "C2",
+      "operation": "model_validate_json",
+      "model": "FailedResponse",
+      "file": "c2/retrieval-failed-with-operation.json",
+      "expect": "reject",
+      "error": "ValidationError",
+      "error_contains": "retrieval does not create a generation operation",
+      "control": {
+        "operation": "model_validate_json",
+        "model": "FailedResponse",
+        "file": "c2/failed-authorized.json"
+      }
+    },
+    {
+      "id": "c2.state-enums.separate",
+      "boundary": "C2",
+      "operation": "enum_set",
+      "file": "c2/state-enums.json",
+      "expect": "accept"
+    },
+    {
+      "id": "c2.reject.job-state-cross-enum",
+      "boundary": "C2",
+      "operation": "enum_set",
+      "file": "c2/job-state-invalid.json",
+      "expect": "reject",
+      "error": "ValidationError",
+      "invalid_fields": ["job_state"],
+      "control": {
+        "operation": "enum_set",
+        "file": "c2/state-enums.json"
+      }
+    },
+    {
+      "id": "h.parse.root-object",
+      "boundary": "H",
+      "operation": "parse_json_bytes",
+      "file": "h/valid-min.json",
+      "expect": "accept"
+    },
+    {
+      "id": "h.reject.root-array",
+      "boundary": "H",
+      "operation": "parse_json_bytes",
+      "file": "h/root-array.json",
+      "expect": "reject",
+      "error": "VALIDATION_ERROR",
+      "control": {
+        "operation": "parse_json_bytes",
+        "file": "h/valid-min.json"
+      }
+    },
+    {
+      "id": "h.reject.duplicate-key",
+      "boundary": "H",
+      "operation": "parse_json_bytes",
+      "file": "h/duplicate-key.json",
+      "expect": "reject",
+      "error": "VALIDATION_ERROR",
+      "control": {
+        "operation": "parse_json_bytes",
+        "file": "h/valid-a1.json"
+      }
+    },
+    {
+      "id": "h.reject.nan",
+      "boundary": "H",
+      "operation": "parse_json_bytes",
+      "file": "h/nan.json",
+      "expect": "reject",
+      "error": "VALIDATION_ERROR",
+      "control": {
+        "operation": "parse_json_bytes",
+        "file": "h/valid-a1.json"
+      }
+    },
+    {
+      "id": "h.reject.lone-surrogate",
+      "boundary": "H",
+      "operation": "parse_json_bytes",
+      "file": "h/lone-surrogate.json",
+      "expect": "reject",
+      "error": "VALIDATION_ERROR",
+      "control": {
+        "operation": "parse_json_bytes",
+        "file": "h/valid-a-x.json"
+      }
+    },
+    {
+      "id": "h.reject.trailing-data",
+      "boundary": "H",
+      "operation": "parse_json_bytes",
+      "raw_base64": "eyJhIjoxfXg=",
+      "expect": "reject",
+      "error": "VALIDATION_ERROR",
+      "control": {
+        "operation": "parse_json_bytes",
+        "file": "h/valid-a1.json"
+      }
+    },
+    {
+      "id": "h.reject.invalid-utf8",
+      "boundary": "H",
+      "operation": "parse_json_bytes",
+      "raw_base64": "eyJhIjoi/yJ9",
+      "expect": "reject",
+      "error": "VALIDATION_ERROR",
+      "control": {
+        "operation": "parse_json_bytes",
+        "file": "h/valid-a-x.json"
+      }
+    },
+    {
+      "id": "h.reject.number-overflow",
+      "boundary": "H",
+      "operation": "parse_json_bytes",
+      "file": "h/number-overflow.json",
+      "expect": "reject",
+      "error": "VALIDATION_ERROR",
+      "control": {
+        "operation": "parse_json_bytes",
+        "file": "h/valid-a1.json"
+      }
+    },
+    {
+      "id": "h.depth.exact",
+      "boundary": "H",
+      "operation": "parse_json_bytes",
+      "file": "h/depth-exact.json",
+      "expect": "accept"
+    },
+    {
+      "id": "h.reject.depth-over",
+      "boundary": "H",
+      "operation": "parse_json_bytes",
+      "file": "h/depth-over.json",
+      "expect": "reject",
+      "error": "PROTOCOL_STRUCTURE_LIMIT_EXCEEDED",
+      "control": {
+        "operation": "parse_json_bytes",
+        "file": "h/depth-exact.json"
+      }
+    },
+    {
+      "id": "h.nodes.exact",
+      "boundary": "H",
+      "operation": "parse_json_bytes",
+      "file": "h/nodes-exact.json",
+      "limits": {"max_nodes": 2},
+      "expect": "accept"
+    },
+    {
+      "id": "h.reject.nodes-over",
+      "boundary": "H",
+      "operation": "parse_json_bytes",
+      "file": "h/nodes-over.json",
+      "limits": {"max_nodes": 2},
+      "expect": "reject",
+      "error": "PROTOCOL_STRUCTURE_LIMIT_EXCEEDED",
+      "control": {
+        "operation": "parse_json_bytes",
+        "file": "h/nodes-exact.json",
+        "limits": {"max_nodes": 2}
+      }
+    },
+    {
+      "id": "h.reject.array-over",
+      "boundary": "H",
+      "operation": "parse_json_bytes",
+      "file": "h/array-three.json",
+      "limits": {"max_array_items": 2},
+      "expect": "reject",
+      "error": "PROTOCOL_STRUCTURE_LIMIT_EXCEEDED",
+      "control": {
+        "operation": "parse_json_bytes",
+        "file": "h/valid-a2.json",
+        "limits": {"max_array_items": 2}
+      }
+    },
+    {
+      "id": "h.body.exact-1mib",
+      "boundary": "H",
+      "operation": "parse_json_bytes",
+      "raw_generate": {"prefix": "{}", "pad": " ", "total_bytes": 1048576},
+      "expect": "accept"
+    },
+    {
+      "id": "h.reject.body-over-1mib",
+      "boundary": "H",
+      "operation": "parse_json_bytes",
+      "raw_generate": {"prefix": "{}", "pad": " ", "total_bytes": 1048577},
+      "expect": "reject",
+      "error": "REQUEST_BODY_LIMIT_EXCEEDED",
+      "control": {
+        "operation": "parse_json_bytes",
+        "raw_generate": {"prefix": "{}", "pad": " ", "total_bytes": 1048576}
+      }
+    },
+    {
+      "id": "h.reject.unknown-field",
+      "boundary": "H",
+      "operation": "model_validate_json",
+      "model": "CompletedResponse",
+      "file": "h/unknown-field.json",
+      "expect": "reject",
+      "error": "ValidationError",
+      "error_contains": "extra_forbidden",
+      "control": {
+        "operation": "model_validate_json",
+        "model": "CompletedResponse",
+        "file": "c2/completed.json"
+      }
+    },
+    {
+      "id": "h.http.valid-retrieval",
+      "boundary": "H",
+      "operation": "http_probe",
+      "response_model": "RetrievalResponse",
+      "request": {
+        "method": "POST",
+        "path": "/__maintenance/contracts/RetrievalResponse",
+        "headers": {
+          "Content-Type": "application/json",
+          "X-RAG-Contract-Test": "contracts-samples-token"
+        },
+        "file": "c2/retrieval.json"
+      },
+      "expect": "accept",
+      "expected_status": 200,
+      "attempts": 2,
+      "no_store": true,
+      "absent_fields": ["operation_id"],
+      "control": {
+        "operation": "model_validate_json",
+        "model": "RetrievalResponse",
+        "file": "c2/retrieval.json"
+      }
+    },
+    {
+      "id": "h.http.reject.unauthenticated",
+      "boundary": "H",
+      "operation": "http_probe",
+      "response_model": "FailedResponse",
+      "request": {
+        "method": "POST",
+        "path": "/__maintenance/contracts/RetrievalResponse",
+        "headers": {"Content-Type": "application/json"},
+        "file": "c2/retrieval.json"
+      },
+      "expect": "reject",
+      "expected_status": 401,
+      "expected_error": "AUTH_REQUIRED",
+      "attempts": 2,
+      "no_store": true,
+      "absent_fields": ["operation_id"],
+      "control": {
+        "operation": "model_validate_json",
+        "model": "FailedResponse",
+        "file": "c2/failed-pre-auth.json"
+      }
+    },
+    {
+      "id": "h.http.reject.unknown-field",
+      "boundary": "H",
+      "operation": "http_probe",
+      "response_model": "FailedResponse",
+      "request": {
+        "method": "POST",
+        "path": "/__maintenance/contracts/CompletedResponse",
+        "headers": {
+          "Content-Type": "application/json",
+          "X-RAG-Contract-Test": "contracts-samples-token"
+        },
+        "file": "c1/unknown-field.json"
+      },
+      "expect": "reject",
+      "expected_status": 422,
+      "expected_error": "VALIDATION_ERROR",
+      "attempts": 2,
+      "no_store": true,
+      "absent_fields": ["operation_id"],
+      "forbidden_substrings": ["PRIVATE_SENTINEL"],
+      "control": {
+        "operation": "model_validate_json",
+        "model": "CompletedResponse",
+        "file": "c2/completed.json"
+      }
+    },
+    {
+      "id": "h.http.reject.nested-unknown-field",
+      "boundary": "H",
+      "operation": "http_probe",
+      "response_model": "FailedResponse",
+      "request": {
+        "method": "POST",
+        "path": "/__maintenance/contracts/CompletedResponse",
+        "headers": {
+          "Content-Type": "application/json",
+          "X-RAG-Contract-Test": "contracts-samples-token"
+        },
+        "file": "c1/nested-unknown-field.json"
+      },
+      "expect": "reject",
+      "expected_status": 422,
+      "expected_error": "VALIDATION_ERROR",
+      "no_store": true,
+      "absent_fields": ["operation_id"],
+      "forbidden_substrings": ["PRIVATE_SENTINEL"],
+      "control": {
+        "operation": "model_validate_json",
+        "model": "CompletedResponse",
+        "file": "c2/completed.json"
+      }
+    },
+    {
+      "id": "h.http.reject.media-type",
+      "boundary": "H",
+      "operation": "http_probe",
+      "response_model": "FailedResponse",
+      "request": {
+        "method": "POST",
+        "path": "/__maintenance/contracts/RetrievalResponse",
+        "headers": {
+          "Content-Type": "text/plain",
+          "X-RAG-Contract-Test": "contracts-samples-token"
+        },
+        "file": "h/valid-min.json"
+      },
+      "expect": "reject",
+      "expected_status": 415,
+      "expected_error": "UNSUPPORTED_MEDIA_TYPE",
+      "no_store": true,
+      "absent_fields": ["operation_id"],
+      "control": {
+        "operation": "model_validate_json",
+        "model": "FailedResponse",
+        "file": "c2/failed-pre-auth.json"
+      }
+    },
+    {
+      "id": "h.http.reject.content-encoding",
+      "boundary": "H",
+      "operation": "http_probe",
+      "response_model": "FailedResponse",
+      "request": {
+        "method": "POST",
+        "path": "/__maintenance/contracts/RetrievalResponse",
+        "headers": {
+          "Content-Type": "application/json",
+          "Content-Encoding": "gzip",
+          "X-RAG-Contract-Test": "contracts-samples-token"
+        },
+        "file": "h/valid-min.json"
+      },
+      "expect": "reject",
+      "expected_status": 415,
+      "expected_error": "UNSUPPORTED_CONTENT_ENCODING",
+      "no_store": true,
+      "absent_fields": ["operation_id"],
+      "control": {
+        "operation": "model_validate_json",
+        "model": "FailedResponse",
+        "file": "c2/failed-pre-auth.json"
+      }
+    },
+    {
+      "id": "h.http.reject.headers-over",
+      "boundary": "H",
+      "operation": "http_probe",
+      "response_model": "FailedResponse",
+      "request": {
+        "method": "POST",
+        "path": "/__maintenance/contracts/RetrievalResponse",
+        "headers": {
+          "Content-Type": "application/json",
+          "X-RAG-Contract-Test": "contracts-samples-token"
+        },
+        "headers_generate": {"X-Large": 17000},
+        "file": "h/valid-min.json"
+      },
+      "expect": "reject",
+      "expected_status": 431,
+      "expected_error": "REQUEST_HEADERS_LIMIT_EXCEEDED",
+      "no_store": true,
+      "absent_fields": ["operation_id"],
+      "control": {
+        "operation": "model_validate_json",
+        "model": "FailedResponse",
+        "file": "c2/failed-pre-auth.json"
+      }
+    },
+    {
+      "id": "h.http.reject.body-over-1mib",
+      "boundary": "H",
+      "operation": "http_probe",
+      "response_model": "FailedResponse",
+      "request": {
+        "method": "POST",
+        "path": "/__maintenance/contracts/RetrievalResponse",
+        "headers": {
+          "Content-Type": "application/json",
+          "X-RAG-Contract-Test": "contracts-samples-token"
+        },
+        "raw_generate": {"prefix": "{}", "pad": " ", "total_bytes": 1048577}
+      },
+      "expect": "reject",
+      "expected_status": 413,
+      "expected_error": "REQUEST_BODY_LIMIT_EXCEEDED",
+      "no_store": true,
+      "absent_fields": ["operation_id"],
+      "control": {
+        "operation": "model_validate_json",
+        "model": "FailedResponse",
+        "file": "c2/failed-pre-auth.json"
+      }
+    },
+    {
+      "id": "h.http.reject.duplicate-key",
+      "boundary": "H",
+      "operation": "http_probe",
+      "response_model": "FailedResponse",
+      "request": {
+        "method": "POST",
+        "path": "/__maintenance/contracts/CompletedResponse",
+        "headers": {
+          "Content-Type": "application/json",
+          "X-RAG-Contract-Test": "contracts-samples-token"
+        },
+        "file": "c1/duplicate-key.json"
+      },
+      "expect": "reject",
+      "expected_status": 422,
+      "expected_error": "VALIDATION_ERROR",
+      "no_store": true,
+      "absent_fields": ["operation_id"],
+      "control": {
+        "operation": "model_validate_json",
+        "model": "CompletedResponse",
+        "file": "c2/completed.json"
+      }
+    }
+  ]
+}

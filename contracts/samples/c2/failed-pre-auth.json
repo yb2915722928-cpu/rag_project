@@ -1,0 +1,13 @@
+{
+  "schema_version": "operation.v1",
+  "request_id": "req-c2-pre-auth",
+  "status": "failed",
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "Invalid request.",
+    "http_status": 422,
+    "retry_mode": "none",
+    "details": {"field": "body", "reason": "invalid_format", "retry_after_seconds": null}
+  }
+}
+

@@ -12,15 +12,33 @@ x-runtime: &runtime
       max-size: "5m"
       max-file: "2"
 
+x-api-build: &api_build
+  context: ../backend
+  dockerfile: ../deploy/api.Dockerfile
+  args:
+    PYTHON_BASE_IMAGE: ${PYTHON_BASE_IMAGE:?set PYTHON_BASE_IMAGE to a verified image digest}
+    UV_BASE_IMAGE: ${UV_BASE_IMAGE:?set UV_BASE_IMAGE to a verified uv image digest}
+  additional_contexts:
+    worker_health: ./worker
+
 services:
   gateway:
     <<: *runtime
     mem_limit: 128m
+    stop_signal: SIGQUIT
+    # Bypass the image entrypoint scripts: nginx.conf is authoritative and the
+    # root filesystem is read-only.
+    entrypoint: ["nginx"]
+    command: ["-g", "daemon off;"]
     build:
-      context: ..
-      dockerfile: deploy/gateway/Dockerfile
+      # Build only from the prebuilt frontend; never send the repository,
+      # backend virtualenv or local secret material as build context.
+      context: ./gateway
+      dockerfile: Dockerfile
       args:
         NGINX_BASE_IMAGE: ${NGINX_BASE_IMAGE:?set NGINX_BASE_IMAGE to a verified image digest}
+      additional_contexts:
+        frontend_dist: ../frontend/dist
     image: ${RAG_GATEWAY_IMAGE:-rag-story-1-1-gateway:local}
     depends_on:
       api:
@@ -30,50 +48,82 @@ services:
     user: "65532:65532"
     read_only: true
     tmpfs:
-      - /var/cache/nginx:rw,noexec,nosuid,size=16m
-      - /var/run:rw,noexec,nosuid,size=1m
-      - /tmp:rw,noexec,nosuid,size=4m
+      - /var/cache/nginx:rw,noexec,nosuid,size=16m,mode=1777
+      - /var/run:rw,noexec,nosuid,size=1m,mode=1777
+      - /tmp:rw,noexec,nosuid,size=4m,mode=1777
     security_opt:
       - no-new-privileges:true
     cap_drop: [ALL]
+    healthcheck:
+      # Proves the TLS listener and the API proxy path. Certificate validation
+      # is intentionally skipped here because the deployment certificate is
+      # operator-supplied; chain/hostname correctness is a separate gate.
+      test: ["CMD-SHELL", "wget -q --no-check-certificate -O /dev/null https://127.0.0.1:8443/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 6
+      start_period: 10s
     volumes:
-      - ./gateway/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ${RAG_TLS_CERT_FILE:?set RAG_TLS_CERT_FILE}:/run/tls/cert.pem:ro
-      - ${RAG_TLS_KEY_FILE:?set RAG_TLS_KEY_FILE}:/run/tls/key.pem:ro
+      - type: bind
+        source: ${RAG_TLS_CERT_FILE:?set RAG_TLS_CERT_FILE}
+        target: /run/tls/cert.pem
+        read_only: true
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${RAG_TLS_KEY_FILE:?set RAG_TLS_KEY_FILE}
+        target: /run/tls/key.pem
+        read_only: true
+        bind: {create_host_path: false}
 
   api:
     <<: *runtime
     mem_limit: 768m
-    build:
-      context: ../backend
-      dockerfile: ../deploy/api.Dockerfile
-      args:
-        PYTHON_BASE_IMAGE: ${PYTHON_BASE_IMAGE:?set PYTHON_BASE_IMAGE to a verified image digest}
-        UV_BASE_IMAGE: ${UV_BASE_IMAGE:?set UV_BASE_IMAGE to a verified uv image digest}
+    user: "65532:65532"
+    build: *api_build
     image: ${RAG_API_IMAGE:-rag-story-1-1-api:local}
     command: ["python", "-m", "rag_app", "api"]
     environment:
       RAG_ENVIRONMENT: ${RAG_ENVIRONMENT:-production}
       RAG_DATABASE_URL: ${RAG_DATABASE_URL:?set RAG_DATABASE_URL}
       RAG_DATABASE_SCHEMA: ${RAG_DATABASE_SCHEMA:-public}
+      # Fixed container bind. The gateway upstream and both health checks use
+      # api:8000 / 127.0.0.1:8000; allowing an override here would silently
+      # disconnect the gateway. Change all three together if ever required.
+      RAG_API_HOST: "0.0.0.0"
+      RAG_API_PORT: "8000"
       PGPASSFILE: /run/secrets/postgres_pgpass
-    secrets: [postgres_pgpass]
+    secrets:
+      # File-based Compose secret = host bind mount. uid/gid/mode are omitted
+      # because Compose does not reliably apply them locally; the host file's
+      # ownership and mode are authoritative and checked by preflight.py.
+      - postgres_pgpass
     depends_on:
       postgres:
         condition: service_healthy
     expose: ["8000"]
     read_only: true
     tmpfs:
-      - /tmp:rw,noexec,nosuid,size=32m
+      - /tmp:rw,noexec,nosuid,size=32m,mode=1777
     volumes:
-      - ${RAG_ASSET_ROOT:-/opt/rag-story-1-1/assets}:/var/lib/rag/assets:rw
-      - ${RAG_LOCK_ROOT:-/opt/rag-story-1-1/locks}:/var/lib/rag/locks:rw
-      - ${RAG_EPOCH_ROOT:-/opt/rag-story-1-1/epoch}:/var/lib/rag/epoch:ro
+      - type: bind
+        source: ${RAG_ASSET_ROOT:-/opt/rag-story-1-1/assets}
+        target: /var/lib/rag/assets
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${RAG_LOCK_ROOT:-/opt/rag-story-1-1/locks}
+        target: /var/lib/rag/locks
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${RAG_EPOCH_ROOT:-/opt/rag-story-1-1/epoch}
+        target: /var/lib/rag/epoch
+        read_only: true
+        bind: {create_host_path: false}
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=2)"]
       interval: 5s
       timeout: 3s
       retries: 12
+      start_period: 10s
     security_opt:
       - no-new-privileges:true
     cap_drop: [ALL]
@@ -81,12 +131,8 @@ services:
   worker:
     <<: *runtime
     mem_limit: 768m
-    build:
-      context: ../backend
-      dockerfile: ../deploy/api.Dockerfile
-      args:
-        PYTHON_BASE_IMAGE: ${PYTHON_BASE_IMAGE:?set PYTHON_BASE_IMAGE to a verified image digest}
-        UV_BASE_IMAGE: ${UV_BASE_IMAGE:?set UV_BASE_IMAGE to a verified uv image digest}
+    user: "65532:65532"
+    build: *api_build
     image: ${RAG_API_IMAGE:-rag-story-1-1-api:local}
     command: ["python", "-m", "rag_app", "worker"]
     environment:
@@ -94,17 +140,37 @@ services:
       RAG_DATABASE_URL: ${RAG_DATABASE_URL:?set RAG_DATABASE_URL}
       RAG_DATABASE_SCHEMA: ${RAG_DATABASE_SCHEMA:-public}
       PGPASSFILE: /run/secrets/postgres_pgpass
-    secrets: [postgres_pgpass]
+    secrets:
+      # Same host-file ownership/mode requirement as the API service.
+      - postgres_pgpass
     depends_on:
       postgres:
         condition: service_healthy
     read_only: true
     tmpfs:
-      - /tmp:rw,noexec,nosuid,size=32m
+      - /tmp:rw,noexec,nosuid,size=32m,mode=1777
     volumes:
-      - ${RAG_ASSET_ROOT:-/opt/rag-story-1-1/assets}:/var/lib/rag/assets:rw
-      - ${RAG_LOCK_ROOT:-/opt/rag-story-1-1/locks}:/var/lib/rag/locks:rw
-      - ${RAG_EPOCH_ROOT:-/opt/rag-story-1-1/epoch}:/var/lib/rag/epoch:ro
+      - type: bind
+        source: ${RAG_ASSET_ROOT:-/opt/rag-story-1-1/assets}
+        target: /var/lib/rag/assets
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${RAG_LOCK_ROOT:-/opt/rag-story-1-1/locks}
+        target: /var/lib/rag/locks
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${RAG_EPOCH_ROOT:-/opt/rag-story-1-1/epoch}
+        target: /var/lib/rag/epoch
+        read_only: true
+        bind: {create_host_path: false}
+    healthcheck:
+      # Liveness only: the current backend exposes no worker health endpoint,
+      # so this proves the worker process still exists and is not stopped.
+      test: ["CMD", "python", "/usr/local/bin/rag-worker-healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
     security_opt:
       - no-new-privileges:true
     cap_drop: [ALL]
@@ -112,6 +178,10 @@ services:
   postgres:
     <<: *runtime
     mem_limit: 1g
+    shm_size: 256m
+    pids_limit: 256
+    stop_signal: SIGINT
+    stop_grace_period: 60s
     image: ${POSTGRES_IMAGE:?set POSTGRES_IMAGE to a verified PostgreSQL 18.6 + pgvector 0.8.7 digest}
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-rag}
@@ -119,19 +189,26 @@ services:
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
       PGDATA: /var/lib/postgresql/18/docker
     user: "${RAG_POSTGRES_UID:?set verified RAG_POSTGRES_UID}:${RAG_POSTGRES_GID:?set verified RAG_POSTGRES_GID}"
-    secrets: [postgres_password]
+    secrets:
+      # Bind-mounted host file; must already be owned by the verified
+      # PostgreSQL UID/GID with mode 0400/0600 (checked by preflight.py).
+      - postgres_password
     expose: ["5432"]
     volumes:
-      - ${RAG_PGDATA_ROOT:-/opt/rag-story-1-1/postgres}:/var/lib/postgresql:rw
+      - type: bind
+        source: ${RAG_PGDATA_ROOT:-/opt/rag-story-1-1/postgres}
+        target: /var/lib/postgresql
+        bind: {create_host_path: false}
     read_only: true
     tmpfs:
-      - /tmp:rw,noexec,nosuid,size=16m
+      - /tmp:rw,noexec,nosuid,size=16m,mode=1777
       - /var/run/postgresql:rw,noexec,nosuid,size=4m,mode=0777
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\""]
-      interval: 5s
-      timeout: 3s
+      test: ["CMD-SHELL", "pg_isready -h /var/run/postgresql -p 5432 -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\""]
+      interval: 10s
+      timeout: 5s
       retries: 12
+      start_period: 30s
     security_opt:
       - no-new-privileges:true
     cap_drop: [ALL]
@@ -140,4 +217,4 @@ secrets:
   postgres_password:
     file: ${RAG_POSTGRES_PASSWORD_FILE:?set RAG_POSTGRES_PASSWORD_FILE outside the repository}
   postgres_pgpass:
-    file: ${RAG_POSTGRES_PGPASS_FILE:?set RAG_POSTGRES_PGPASS_FILE with 0600 permissions for UID 65532}
+    file: ${RAG_POSTGRES_PGPASS_FILE:?set RAG_POSTGRES_PGPASS_FILE outside the repository}

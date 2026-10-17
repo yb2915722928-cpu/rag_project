@@ -1,0 +1,16 @@
+{
+  "schema_version": "retrieval.v1",
+  "request_id": "req-c2-retrieval-six",
+  "status": "completed",
+  "retrieval_execution_id": "retr-c2-six",
+  "deadline": "2026-10-17T08:00:05Z",
+  "evidence_catalog": [
+    {"evidence_id": "e1", "chunk_id": "c1", "excerpt": "x", "start": 0, "end": 1},
+    {"evidence_id": "e2", "chunk_id": "c2", "excerpt": "x", "start": 0, "end": 1},
+    {"evidence_id": "e3", "chunk_id": "c3", "excerpt": "x", "start": 0, "end": 1},
+    {"evidence_id": "e4", "chunk_id": "c4", "excerpt": "x", "start": 0, "end": 1},
+    {"evidence_id": "e5", "chunk_id": "c5", "excerpt": "x", "start": 0, "end": 1},
+    {"evidence_id": "e6", "chunk_id": "c6", "excerpt": "x", "start": 0, "end": 1}
+  ]
+}
+

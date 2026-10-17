@@ -1,0 +1,8 @@
+{
+  "code": "VALIDATION_ERROR",
+  "message": "Invalid request.",
+  "http_status": 422,
+  "retry_mode": "same_key_or_status",
+  "details": null
+}
+

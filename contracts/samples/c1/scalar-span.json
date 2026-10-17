@@ -1,0 +1,8 @@
+{
+  "text": "\u4e2dA\u0301\ud83d\ude80",
+  "expected_length": 4,
+  "start": 3,
+  "end": 4,
+  "expected_slice": "\ud83d\ude80"
+}
+

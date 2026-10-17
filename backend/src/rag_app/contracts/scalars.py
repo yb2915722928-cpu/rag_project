@@ -107,7 +107,23 @@ def decimal_amount(value: Any) -> Decimal:
         raise ValueError("invalid decimal amount") from None
     if not result.is_finite() or result < 0:
         raise ValueError("money must be nonnegative and finite")
+    # Decimal('-0.00') is finite and not < 0, but keeps its sign. Reject wire
+    # strings with a minus sign above, then normalize native negative zero so
+    # the value can be serialized without a sign and read back from JSON.
+    if result.is_zero() and result.is_signed():
+        result = result.copy_abs()
     return result
+
+
+def decimal_wire_text(value: Decimal) -> str:
+    """Format a validated amount without ever emitting a signed zero."""
+    if not isinstance(value, Decimal):
+        raise TypeError("amount must be a Decimal")
+    if not value.is_finite():
+        raise ValueError("amount must be finite")
+    if value.is_zero() and value.is_signed():
+        value = value.copy_abs()
+    return format(value, "f")
 
 
 WireText = Annotated[str, BeforeValidator(scalar_text)]
@@ -121,6 +137,6 @@ UtcDateTime = Annotated[
 ]
 FiniteDecimal = Annotated[
     Decimal, BeforeValidator(decimal_amount),
-    PlainSerializer(lambda value: format(value, "f"), return_type=str, when_used="json"),
+    PlainSerializer(decimal_wire_text, return_type=str, when_used="json"),
     WithJsonSchema({"type": "string", "pattern": r"^\d+(?:\.\d+)?$"}),
 ]

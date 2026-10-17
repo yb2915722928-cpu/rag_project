@@ -405,6 +405,16 @@ class RetrievalResponse(BaseResponse, RetrievalPayload):
     status: Literal[Status.COMPLETED] = Status.COMPLETED
 
 
+# Enums are exportable even when no DTO field currently references them.
+# Keys are exact class names; values are the original backend enum classes,
+# so generators cannot create a second copy of any wire value set.
+PUBLIC_ENUMS: dict[str, type[StrEnum]] = {
+    enum.__name__: enum for enum in (
+        Status, Outcome, OperationState, JobState, RetryMode,
+    )
+}
+
+
 PUBLIC_MODELS: dict[str, type[ContractModel]] = {
     model.__name__: model for model in (
         Usage, Money, ErrorDetails, PublicError, EvidenceBlock, RetrievalPayload,

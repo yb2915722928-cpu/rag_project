@@ -1,0 +1,71 @@
+{
+  "recorded_at": "2026-10-17T21:49:59+08:00",
+  "scope": "Mechanical single final-LF deletion after independent static review; no runtime or semantic verification asserted",
+  "wire_input_files_unchanged_from_reviewed_index": 42,
+  "files": [
+    {
+      "path": "backend/tests/test_decimal_wire_zero.py",
+      "before_sha256": "fda17b643bb72a553943a2772ff9556d76fb8b4170d73f89d6d12fe1bfc32612",
+      "after_sha256": "d50773492e7ab1a8f5490f6b6991a5281a23330a48ed19736f4f3c1a38de5b60",
+      "before_bytes": 4084,
+      "after_bytes": 4083,
+      "only_last_0A_removed": true
+    },
+    {
+      "path": "contracts/README.md",
+      "before_sha256": "d38f8164d68df330b5d76441671483712d30a47e2af096cf66060578586f6562",
+      "after_sha256": "7a0a9967fb943c80f3c3c454e33a086176b352ad836cc6b875dc0a94899caf3f",
+      "before_bytes": 6402,
+      "after_bytes": 6401,
+      "only_last_0A_removed": true
+    },
+    {
+      "path": "contracts/generate.py",
+      "before_sha256": "dd1fafc9008418ad09c5175d64029f1ff640e4092ab9d0894ab2219bad4e25e7",
+      "after_sha256": "7076c07e4b1648f0e61c2361d970a2ef18828d6c58a11847397afd10a06bc1ed",
+      "before_bytes": 16311,
+      "after_bytes": 16310,
+      "only_last_0A_removed": true
+    },
+    {
+      "path": "contracts/verify_samples.py",
+      "before_sha256": "e41e6407efb4ceb486e6533017328d4f24f4cdb9a8cb882d878532c432280e19",
+      "after_sha256": "f10617ac1de5556c9474620353864ed11f8f1f26b706e249e3936631702f8cd7",
+      "before_bytes": 17749,
+      "after_bytes": 17748,
+      "only_last_0A_removed": true
+    },
+    {
+      "path": "contracts/samples/manifest.json",
+      "before_sha256": "df659d241696d5262cd344c606bfe997b0286c1ab2b0d2af073340135712a834",
+      "after_sha256": "fb360c0dba4065835ecd479a18095fe7f6dfa5a946968a09b324aca607bb4a35",
+      "before_bytes": 22050,
+      "after_bytes": 22049,
+      "only_last_0A_removed": true
+    },
+    {
+      "path": "docs/story-1-1-contracts-delivery.md",
+      "before_sha256": "4f77889124e1b11a27e4ccb4032e89fa33a81cfd2f4094e0789e347ad8fe1b8f",
+      "after_sha256": "bf8edcf6ad783378124f79a510401fb2af1f102b7f58d1ea4b2dd5fb6d7e478f",
+      "before_bytes": 16435,
+      "after_bytes": 16434,
+      "only_last_0A_removed": true
+    },
+    {
+      "path": "docs/story-1-1-decimal-zero-delivery.md",
+      "before_sha256": "c5bc8e1e135ad2067b7e4da5714830f3463d4e72319d8e237add4fdded316189",
+      "after_sha256": "d85deb9863498a595cec259563bde4628362a12058ef764401a0f23ed643fcfd",
+      "before_bytes": 5404,
+      "after_bytes": 5403,
+      "only_last_0A_removed": true
+    },
+    {
+      "path": "deploy/compose.yaml",
+      "before_sha256": "2e438b05f9510b53c811256f2ac237d9e22f3f8096af462dbf30128c157d452e",
+      "after_sha256": "64c48784661cfc49f64114e740d6f1772bfa8887baa112ed10a46046a59c5951",
+      "before_bytes": 7605,
+      "after_bytes": 7604,
+      "only_last_0A_removed": true
+    }
+  ]
+}

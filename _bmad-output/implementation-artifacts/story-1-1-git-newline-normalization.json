@@ -1,0 +1,38 @@
+[
+  {
+    "path": "_bmad-output/implementation-artifacts/runtime-acceptance-status.yaml",
+    "only_git_CRLF_normalization": true
+  },
+  {
+    "path": "_bmad-output/implementation-artifacts/sprint-relay-state.json",
+    "only_git_CRLF_normalization": true
+  },
+  {
+    "path": "_bmad-output/implementation-artifacts/story-1-1-eof-normalization.json",
+    "only_git_CRLF_normalization": true
+  },
+  {
+    "path": "_bmad-output/implementation-artifacts/story-1-1-preparation-original-index.json",
+    "only_git_CRLF_normalization": true
+  },
+  {
+    "path": "_bmad-output/implementation-artifacts/story-1-1-working-set.md",
+    "only_git_CRLF_normalization": true
+  },
+  {
+    "path": "deploy/evidence/local-official-uv-manifest-probe.json",
+    "only_git_CRLF_normalization": true
+  },
+  {
+    "path": "docs/story-1-1-contracts-delivery.md",
+    "only_git_CRLF_normalization": true
+  },
+  {
+    "path": "docs/story-1-1-decimal-zero-delivery.md",
+    "only_git_CRLF_normalization": true
+  },
+  {
+    "path": "docs/story-1-1-deploy-delivery.md",
+    "only_git_CRLF_normalization": true
+  }
+]

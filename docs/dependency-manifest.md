@@ -2,6 +2,14 @@
 
 状态：`partial`，2026-10-17 当前记录。A1 已在真实 Linux / CPython 3.12.8 正常生成并同步锁；前端、镜像和干净重建仍未完成。历史 3.12.15 结果见重建证据，不改写为新成绩。
 
+## Amelia 续接时的来源边界
+
+2026-10-17 主会话只读访问 PostgreSQL 官方 [18.6 发布说明](https://www.postgresql.org/docs/release/18.6/) 与 pgvector 官方 [v0.8.7 release](https://github.com/pgvector/pgvector/releases/tag/v0.8.7)。两份来源分别标识要求的版本，pgvector release 页标识 2026-07-08 发布与提交前缀 `8cd527d`；此前缀是网页显示值，不冒充本地完整 commit 或源码 hash。
+
+上述证据仅确认官方发布来源。没有取得完整平台镜像、OCI digest、签名、对应 PG/扩展运行输出或本轮干净 Linux 重建，不能把发布页标识当成镜像已经可用或已部署。Docker registry/auth 的已知超时保持阻塞，不为这次文档核对重复拉取。
+
+当前 DeepSeek 子任务仅准备 contracts 与 deploy 源码，未引入新的已核运行依赖。前端仍等 B 正式工件，未初始化；本轮 Windows 补充测试不更新此前 Linux 安装/许可证台账，也不证明新提交通过。最新证据边界见 [Amelia 主控记录](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-amelia-control-2026-10-17.md:1)。
+
 ## 后端直接依赖
 
 | 组件 | 项目声明 | 当前锁/环境 | 来源 | 当前状态 |

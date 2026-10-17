@@ -1,0 +1,15 @@
+{
+  "schema_version": "operation.v1",
+  "request_id": "req-c2-operation",
+  "status": "failed",
+  "operation_id": "op-c2-operation",
+  "operation_state": "failed",
+  "error": {
+    "code": "DEPENDENCY_TIMEOUT",
+    "message": "Dependency timed out.",
+    "http_status": 504,
+    "retry_mode": "new_operation",
+    "details": null
+  }
+}
+

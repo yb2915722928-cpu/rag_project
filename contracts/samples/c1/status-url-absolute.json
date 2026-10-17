@@ -1,0 +1,11 @@
+{
+  "schema_version": "operation.v1",
+  "request_id": "req-c2-accepted",
+  "status": "in_progress",
+  "operation_id": "op-c2-accepted",
+  "operation_state": "accepted",
+  "accepted_at": "2026-10-17T08:00:00Z",
+  "status_url": "https://private.example/operations/op-c2-accepted",
+  "retry_mode": "same_key_or_status"
+}
+

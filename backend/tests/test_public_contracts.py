@@ -11,10 +11,10 @@ from pydantic import TypeAdapter, ValidationError
 
 from rag_app.contracts.errors import MESSAGES, SafeError
 from rag_app.contracts.public import (
-    ERROR_POLICY, PUBLIC_MODELS, AcceptedResponse, AnswerPayload, CompletedResponse,
-    ErrorCode, ErrorDetails,
-    EvidenceBlock, FailedResponse, JobState, Money, OperationResponse, PublicError,
-    RetrievalResponse, Usage,
+    ERROR_POLICY, PUBLIC_ENUMS, PUBLIC_MODELS, AcceptedResponse, AnswerPayload,
+    CompletedResponse, ErrorCode, ErrorDetails, EvidenceBlock, FailedResponse,
+    JobState, Money, OperationResponse, OperationState, Outcome, PublicError,
+    RetrievalResponse, RetryMode, Status, Usage,
 )
 from rag_app.contracts.scalars import (
     StableId, UtcDateTime, scalar_length, scalar_slice, stable_json_bytes,
@@ -532,6 +532,92 @@ def test_models_are_exportable_and_nested_objects_forbid_unknown_fields():
     with pytest.raises(ValidationError):
         CompletedResponse.model_validate(data)
     assert "awaiting_reconciliation" in {state.value for state in JobState}
+
+
+def test_public_enums_index_keeps_original_identity_and_wire_values():
+    assert PUBLIC_ENUMS == {
+        "Status": Status,
+        "Outcome": Outcome,
+        "OperationState": OperationState,
+        "JobState": JobState,
+        "RetryMode": RetryMode,
+    }
+    assert {name: enum.__name__ for name, enum in PUBLIC_ENUMS.items()} == {
+        name: name for name in PUBLIC_ENUMS
+    }
+    assert {state.value for state in Status} == {
+        "completed", "in_progress", "failed",
+    }
+    assert {result.value for result in Outcome} == {
+        "answered", "insufficient", "clarify", "conflict",
+    }
+    assert {state.value for state in OperationState} == {
+        "accepted", "running", "completed", "failed",
+    }
+    assert {state.value for state in JobState} == {
+        "queued", "running", "awaiting_reconciliation",
+        "succeeded", "failed", "cancelled", "expired",
+    }
+    assert {mode.value for mode in RetryMode} == {
+        "none", "same_key_or_status", "new_operation", "manual_reconcile",
+    }
+    assert set(PUBLIC_ENUMS) & set(PUBLIC_MODELS) == set()
+    assert len(PUBLIC_MODELS) == 17
+
+
+@pytest.mark.parametrize("name,enum", sorted(PUBLIC_ENUMS.items()))
+def test_public_enums_export_validation_and_serialization_schemas(name, enum):
+    adapter = TypeAdapter(enum)
+    expected = [item.value for item in enum]
+    assert set(PUBLIC_ENUMS[name]) == set(enum)
+    for mode in ("validation", "serialization"):
+        schema = adapter.json_schema(mode=mode)
+        definitions = schema.get("$defs", {})
+        target = definitions.get(name, schema)
+        assert target["type"] == "string"
+        assert target["enum"] == expected
+        assert isinstance(stable_json_bytes(schema), bytes)
+    for value in expected:
+        assert adapter.validate_python(value) is enum(value)
+        assert adapter.validate_json(stable_json_bytes(value)) is enum(value)
+    for value in ["paused", "unknown", "", "RUNNING", 1, None]:
+        if value in expected:
+            continue
+        with pytest.raises(ValidationError):
+            adapter.validate_python(value)
+
+
+def test_c2_state_meanings_are_indexed_separately():
+    field_enums = {
+        "status": "Status",
+        "outcome": "Outcome",
+        "operation_state": "OperationState",
+        "job_state": "JobState",
+    }
+    wire = {
+        "status": "in_progress",
+        "outcome": "answered",
+        "operation_state": "running",
+        "job_state": "succeeded",
+    }
+    assert set(wire) == set(field_enums)
+    assert set(field_enums.values()) <= set(PUBLIC_ENUMS)
+    for field, enum_name in field_enums.items():
+        enum = PUBLIC_ENUMS[enum_name]
+        assert enum.__name__ == enum_name
+        assert TypeAdapter(enum).validate_python(wire[field]).value == wire[field]
+    assert "RetryMode" not in field_enums.values()
+    assert TypeAdapter(PUBLIC_ENUMS["RetryMode"]).validate_python(
+        "same_key_or_status",
+    ).value == "same_key_or_status"
+    with pytest.raises(ValidationError):
+        TypeAdapter(Status).validate_python("succeeded")
+    with pytest.raises(ValidationError):
+        TypeAdapter(Outcome).validate_python("completed")
+    with pytest.raises(ValidationError):
+        TypeAdapter(JobState).validate_python("answered")
+    with pytest.raises(ValidationError):
+        TypeAdapter(RetryMode).validate_python("automatic")
 
 
 def test_all_nested_wire_strings_reject_surrogates():

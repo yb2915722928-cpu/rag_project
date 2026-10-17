@@ -1,46 +1,39 @@
 # Story 1.1 当前工作集
 
-更新时间：2026-10-17（Asia/Shanghai）。只记录当前状态；不替代原 Story、AC、架构和验收证据。
+更新：2026-10-17，Asia/Shanghai。短工作集不替代原需求、验收分母或运行证据。
 
-## 目标与唯一认领
+## 目标、角色与唯一认领
 
-- 继续 Story 1.1；父 Story 四项 AC 与 A/B/C/D/E 均完成后才进入 1.2，当前完成门 `not_passed`。
-- 项目 `rag`，目录 `E:/aaa-project/rag`，项目 ID `61e1f316-4db1-4b50-a56e-62c5604d7d25`；新会话使用 local。
-- 唯一 owner 及交接目标以 [relay state](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/sprint-relay-state.json:1) 为准；转出会话 `01a1489a-52c3-7590-9181-880dabdb3dd1` 仅负责创建登记，交接后释放写入。
-- 当前主控 `01a148e2-1e11-7322-9626-6cbafb956f12` 已接手，原会话已释放写入；旧 Turing/Laplace 无有效实现认领，不等待旧实例。
-- 当前实现：Jason（`01a148e6-0fcd-7ff1-af01-c546f5146474`，6.1 Sol/medium）独占后端及 A1 交付记录；Arendt（`01a148e6-261a-7922-8c94-74f5ad661466`，6.1 Sol/medium）独占 deploy 及 D 交付记录。远程目录分别是 `/opt/rag-story-1-1/backend-work`、`/opt/rag-story-1-1/deploy`，不得互改。
-- 后端认领排除新增 `contracts/public.py`、`scalars.py` 与专用测试（Schrodinger，`01a148e7-fe2c-7b22-a61a-1ed49999b7fa`，6.1 Sol/medium），以及 `entrypoints/json_guard.py` 与专用测试（Boyle，`01a148f1-834b-7920-82f2-bfa8a81d7ede`，6.1 Sol/medium）。二者分别独占 contract-models-work/json-guard-work 远程子目录。模型初稿已要求原作者修复；均未验收。
-- 主会话使用 `GPT-6.1 Sol / max`；其他角色按 [AGENTS.md](/E:/aaa-project/rag/AGENTS.md:7) 的当前模型名称分工，工具调用仍使用映射后的稳定 ID。
-- GitHub仓库 `yb2915722928-cpu/rag_project` 已建；用户最新约定改为服务器只从 Gitee `https://gitee.com/QAQsdsdsdsds/rag_project.git` 拉取，GitHub作为开发上传源。后续每个固定提交需同步到两个远端，服务器先核 commit/hash 再测试。现有本地检查点 `843b45af92241cc0603135b5a341605863df5ece` 尚未完成 GitHub/Gitee同步；此前服务器直接拉GitHub超时/缺认证的记录保留，不再作为服务器拉取路径重试。详见当前 [Git阻塞续接](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-handoff-git-auth-2026-10-17.md:1)。
+- 当前唯一 Amelia 主控：`01a14973-8555-7131-8fd2-e9eec12f53fe`，实际 `group/auto-gpt-6-1-sol / max`。原主控已释放；Story 1.1 仍 `in-progress / not_passed`，不能提前启动 1.2。
+- 本会话就是 Amelia。每个主会话完成一个完整 Story 后，才在同一已保存 `rag` 项目（`61e1f316-4db1-4b50-a56e-62c5604d7d25`，local）创建下一 Amelia，核实接手并释放原会话写入，循环当前 Sprint 至完成或用户停止。没有定时自动化。
+- 新实现按 [AGENTS.md](/E:/aaa-project/rag/AGENTS.md:1)：后端/部署/RAG全部DeepSeek默认；前端Kimi默认；独立运行验证Step5默认；正式审查全新6.1 Sol/medium。主会话只写文档/协调/验收，不接管应用、测试、锁或部署实现。
+- 本轮Boole（B/C1）、Laplace（worker）、Russell（F8）均已冻结并释放写入；Hypatia已完成静态复核。精确ID、范围、模型和hash见 [relay](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/sprint-relay-state.json:1)。无进行中的实现认领；保留原作者实例供恢复后返修。
+- Bohr关闭后恢复F8曾变为6.1 Sol/max，已停止并关闭。错路由草案保留，Russell以显式DeepSeek接替并修正；原D截至F7和独立复核的正确模型证据不追改。后续不假定恢复工具保留原模型。
 
-## 用户最新决定与已有证据
+## 当前逐段状态
 
-完整增量和 hash 见 [模型与环境决定](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-model-environment-decision-2026-10-17.md:1)。
-
-- Python精确3.12.8的A1声明/正常锁/locked同步及实际Uvicorn开发者证据已交付；不覆盖后增HTTP/worker代码或父Story全门。用户无需再安装3.12.15。远程与本地DockerHub IPv4/auth超时已补证，官方GHCR uv仅manifest可取，不等于完整镜像或全网不可用。
-- 构建/运行/测试使用 Netcatty SSH 主机 `120.53.251.166`。已验证 Engine 29.8.2、Compose v5.6.0；宿主 Python 3.12.3、无 uv，需项目隔离的 3.12.8 环境或镜像。
-- 实际存储桶挂载为 `/fileOfRag`，测试材料放 `/fileOfRag/testOfRAG/{originals,derived,metadata}`。不另建大小写不同的路径；活动数据库和 Linux 锁语义不得凭存储桶挂载推定。
-- 用户授权的旧 Docker 清理已完成：无容器/镜像/卷/Compose 项目，默认网络和存储桶保留；宿主绑定目录未删除。
-- 实际 turn_context 已证明主会话为 `GPT-6.1 Sol / max`，此前两次实现均为该模型 `medium`；原始 `turn_context.model` 路由 ID 保留在 relay 和历史证据中。已纠正先前仅凭子智能体自述作出的模型不可用结论；底层供应方身份未核。不再重复派发“确认自己模型”的空探测。
-
-## 剩余分段
-
-| 分段 | 状态与下一步 |
+| 分段 | 真实状态与剩余门 |
 | --- | --- |
-| A 后端 | A1正常lock/locked已过，73pass+1条件skip，真实3.12.3负例单跑1pass，Uvicorn实际进程通过；非PG原46工件hash对应，PG六项未跑。A2a可信bind/持久worker本地冻结，等Git固定提交验证；原作者Jason负责修复。 |
-| B contracts | 公模与B0c HTTP本地冻结待Git同步/开发者测试；H开发者165pass，Step5独立259pass无skip（含9项取消），全新审查P2关闭/P3更正，未见解析器可证缺陷。B导出尚未开始，不提前判B完成。 |
-| C frontend | C0官方create-vue/Router/Pinia/ElementPlus固定规范与Node SHASUMS已读，记录完成；仍等B再初始化frontend。Kimi原实例可续，未安装/生成前端。 |
-| D 四服务 | Arendt交付骨架/静态/文件系统证据，partial-blocked。Docker Hub IPv4 registry/auth连接超时已有原始证据，不重复探测；精确digest和PG镜像仍未取得。等待B/C与后端bind/worker，实际构建/生命周期未执行。 |
-| E 来源台账 | A1实际依赖/许可证metadata JSON已归档及下载，40第三方锁条目/38项Linux实际安装无版本差异，两项Windows marker未选；前端peer/完整原生与镜像层/digest/干净重建仍待补。 |
+| A | A1历史精确3.12.8、正常uv锁/locked、73passed及另一解释器负例1passed/Uvicorn证据保留。worker临时Windows fallback已撤回，原Linux实现hash恢复；补充测试源码未在目标环境运行。A2a固定提交/Linux、PG六项/迁移/回滚/namespace仍未执行。 |
+| B | PUBLIC_MODELS保持17种DTO，新增后端原枚举索引；生成器/校验器与52条样例定义已交。F1–F4静态修复确认；原生Decimal负零C1-NZ也已修订并独立静态确认。正式OpenAPI/Schema/TS、--check、样例及B0a/B0c Linux开发者测试均未执行。comparison业务仍按原按需增量延期。 |
+| H | 原解析器165开发者/259独立通过（含9项真实取消）及历史审查闭环保留其原hash，不标为本轮提交通过。 |
+| C | C0官方GitHub规范与Node SHASUMS已有记录；仍等B正式交付才初始化。未派前端业务实现、未建页面/lock/dist，未做真实浏览器/响应式。 |
+| D | 四服务骨架、bind/secret/健康/网关/构建上下文修订已交；F5–F8静态复核确认。准确完整镜像、PG/扩展、BuildKit、权限、启停/重启/干净Linux重建仍未执行。 |
+| E | A1锁依赖/许可证metadata历史归档可用；新增源码无新运行依赖。前端peer、原生/镜像层、完整digest与干净重建证据未齐。 |
 
-## 下一步与复核触发
+9项已知静态发现（F1–F8及C1-NZ）均获独立静态修复确认，**不是运行通过或全工作区无缺陷结论**。原报告与修订记录见 [独立预审](/E:/aaa-project/rag/docs/story-1-1-preparation-review.md:1)。原暂存补丁另已归档；恢复时读取真实HEAD/暂存/工作区，不把本轮起点 `a52ae3090948e7eeea6df87590f15ce35351d247` 当作最新提交。核心来源hash见 [准备来源快照](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-preparation-source-hashes.json:1)。
 
-接收会话先读本文件、项目规则、relay 及最新决定，合并核验实际模型/档位、同项目会话和唯一认领，取得职责后使用 bmad-build 恢复 1.1。先落实 Python 版本变更和后端契约前置，独立且文件不冲突的工作按契约调度。主会话不写应用、测试、锁或部署实现。
+## 已核实外部阻塞与触发条件
 
-仍未关闭：Git HTTPS认证/私库读取、新模型/HTTP/worker的固定提交测试、B生成物、真实PG18.6/pgvector0.8.7、精确完整镜像与四服务生命周期、C/E、父Story全量独立验证/审查与回归。旧本机Docker故障不再阻塞指定远程路径；模型执行记录已核，不能用旧标签继续卡住可执行工作。H取消验证/审查已闭环，仅文档收尾；不创建同一外部阻塞的空转接续会话。
+- GitHub原Git HTTPS无凭据，Contents API写入403；Gitee此前ls-remote exit0但无refs。本轮未核实任何成功同步或服务器固定checkout。只有用户认证/集成权限/仓库ref变化后才重查；不重复无变化认证探测，不重试被拒的代码SFTP替代路径。
+- DockerHub registry/auth超时已有本地/远程证据，无完整批准镜像/digest。官方PG18.6与pgvector0.8.7发布依据不等于镜像已到位。只有网络或准确官方工件到位后复核，不换版本。
+- 运行只走Netcatty主机 `120.53.251.166`，使用时get_environment确认session；宿主3.12.3不能替代目标精确3.12.8。活动目录 `/opt/rag-story-1-1` 用已核Linux本地FS；测试/证据归档 `/fileOfRag/testOfRAG/{originals,derived,metadata}`。不在对象存储上推定锁/数据库语义，不清理其他项目或桶。
+- 本轮Windows466passed/13skipped只是已经结束的补充观测，不覆盖当前修订。后续应用、构建、测试不用本机。
 
-连接断开、实现交付、源文件变化、部署或测试需要、用户环境变更才复核相应环境；不重复枚举已有清理结果或重试 3.12.15。保存失败与 unknown，不将静态、skipped 或旧补充测试转为新运行门通过。
+## 恢复顺序与需回读条件
 
-## 需回读条件
+先按 [恢复提示](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-resume-after-access-2026-10-17.md:1) 做一次合并诊断。GitHub/Gitee同一固定commit可取后核源码hash，运行A2a/B0a/B0c开发者测试；通过后正式生成B，再派Kimi做C，接D真实PG/四服务与E来源证据，随后Step5独立运行验证、全新6.1/medium正式审查、原作者修复/回归。
 
-派发某分段、修改 AC/契约/架构、出现审查冲突或本工作集与实际不一致时，选择性读取 [父 Story 计划](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-delivery-plan.md:1)、[A 规格](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-1-rebuildable-modular-project.md:1)、[后端契约前置](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-backend-contract-source-dispatch.md:1)、[B 规格](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-contracts-dispatch.md:1)、[原始 epics](/E:/aaa-project/rag/_bmad-output/planning-artifacts/epics.md:184) 及相关架构真源。验收时读取 [重建证据](/E:/aaa-project/rag/docs/rebuild-evidence.md:1)、[来源台账](/E:/aaa-project/rag/docs/dependency-manifest.md:1)、[Sprint](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/sprint-status.yaml:1) 和 [运行门](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/runtime-acceptance-status.yaml:1)。历史文件中的旧模型/3.12.15不覆盖本次授权，不无条件加载所有规划材料。
+原四AC与A/B/C/D/E分母不变。仅当全部必需门通过才改Story状态、选择下一满足依赖且未认领的Story并创建下一Amelia。相同外部阻塞且无新可执行工作时保存阻塞，不循环建空会话。
+
+派发某分段/契约变化/审查冲突时按需读取对应短规格和 [原始epics](/E:/aaa-project/rag/_bmad-output/planning-artifacts/epics.md:184)；验收再读 [父交付门](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-delivery-plan.md:1)、[验收台账](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-acceptance-ledger.md:1)、[运行门](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/runtime-acceptance-status.yaml:1)、Sprint及对应架构/UX真源。实际模型/错路由/旧观察详见 [主控记录](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-amelia-control-2026-10-17.md:1)，不无条件加载全部历史规划。

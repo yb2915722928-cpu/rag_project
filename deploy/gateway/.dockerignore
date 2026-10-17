@@ -1,0 +1,4 @@
+# Only the gateway configuration is needed from this context. The prebuilt
+# frontend is supplied as the separate frontend_dist named context.
+*
+!nginx.conf

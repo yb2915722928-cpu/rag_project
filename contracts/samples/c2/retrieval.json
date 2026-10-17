@@ -1,0 +1,17 @@
+{
+  "schema_version": "retrieval.v1",
+  "request_id": "req-c2-retrieval",
+  "status": "completed",
+  "retrieval_execution_id": "retr-c2",
+  "deadline": "2026-10-17T08:00:05Z",
+  "evidence_catalog": [
+    {
+      "evidence_id": "e1",
+      "chunk_id": "chunk-1",
+      "excerpt": "Verify the valve state.",
+      "start": 0,
+      "end": 23
+    }
+  ]
+}
+

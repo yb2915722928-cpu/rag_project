@@ -10,9 +10,13 @@ story_1_1_partial_evidence:
   a1_developer: 'Linux CPython3.12.8正常lock/locked/Uvicorn已通过；73passed及其他解释器单跑1passed，真实PG六项未执行'
   h_developer: '165passed/0skipped，冻结工件hash'
   h_independent: '259passed/0failed/0skipped，含9项真实任务取消探针；全新审查P2关闭/P3历史更正'
-  a2a_models_http: '本地实现冻结，Git固定提交同步与开发者测试未执行'
-  contracts_frontend_four_services: '未通过；B生成物、C页面与完整镜像/PG/生命周期仍待'
-  evidence_ledger: docs/story-1-1-acceptance-ledger.md
+  a2a_models_http: 'worker已归位、公模枚举/C1负零修订已静态复核；固定Gitee提交/Linux开发者测试未执行'
+  contracts_frontend_four_services: '源码准备及9项静态发现处置完成；B正式生成/C/完整D与E均未通过'
+  static_review_only: '全新6.1Sol/medium对F1-F8/C1-NZ静态确认；不替代任何运行或父Story门'
+  local_supplement_only: 'Windows466passed/13skipped不打开Linux/PG门；后续不本地运行应用'
+  evidence_ledger: _bmad-output/implementation-artifacts/story-1-1-acceptance-ledger.md
+  current_owner: 01a14973-8555-7131-8fd2-e9eec12f53fe
+  persona: Amelia
 gates:
 - id: S0
   responsible_stories:
