@@ -6,7 +6,7 @@
   "project_path": "E:/aaa-project/rag",
   "host_id": "local",
   "mode": "serial-completion-triggered",
-  "state": "story_1_2_blocked_required_DeepSeek_EOF_snapshot_review_finishing",
+  "state": "story_1_2_blocked_required_DeepSeek_EOF_checkpoint_saved_review_complete",
   "owner_thread_id": "01a14b42-689c-7533-90a3-9bd187d93039",
   "current_story_key": "1-2-隔离执行并保存每次调用事实",
   "current_spec": "_bmad-output/implementation-artifacts/spec-1-2-isolated-calls.md",
@@ -15,7 +15,7 @@
   "acceptance_gate": "not-passed",
   "next_story_key": null,
   "next_thread_id": null,
-  "dispatch_state": "DeepSeek_successor502_E_one_same_model_retry_pending_base_independent_done_fresh6.1_medium_snapshot_review_active",
+  "dispatch_state": "both_required_DeepSeek_attempts502_closed_base_independent_passed_snapshot_review_zero_new_E_D_open_no_next_Story",
   "handoff_id": "3dff3d78-c0f5-42cf-9860-fc2ad4250ab4",
   "handoff_kind": "completed_story_serial_relay",
   "handoff_source_thread_id": "01a14973-8555-7131-8fd2-e9eec12f53fe",
@@ -199,7 +199,7 @@
       "secret_value": "not_recorded"
     }
   },
-  "updated_at": "2026-10-18T03:16:40+08:00",
+  "updated_at": "2026-10-18T07:14:27.050963+08:00",
   "handoff_registered_at": "2026-10-18T03:07:41.6004268+08:00",
   "handoff_acceptance_evidence": "AMELIA_RELAY_RELEASE received; target 01a14b42-689c-7533-90a3-9bd187d93039 verified next_thread_id, Story1.2, handoff_id and Story1.1 passed gate, then accepted sole ownership. Source and all Story1.1 child writers released.",
   "implementation_claims": [
@@ -1034,7 +1034,11 @@
       "report": "docs/story-1-2-code-review.md",
       "report_sha256": "bc59f75da568c34f159ba8d37151e4f1228596712af08277f591bf7e0469e997",
       "new_findings": 0,
-      "known_open": ["F2_PURPOSE_DIMENSIONS", "E_TEST_ALIGNMENT", "D_not_executed"],
+      "known_open": [
+        "F2_PURPOSE_DIMENSIONS",
+        "E_TEST_ALIGNMENT",
+        "D_not_executed"
+      ],
       "reviewed_implementation_matches_checkpoint_index": true,
       "scope": "docs/story-1-2-code-review.md only",
       "policy": "one substantive current-AC review, zero new findings allowed, no quota/generic future hardening; known E/D unresolved stays unpassed"
@@ -1184,7 +1188,11 @@
       "failures": 0,
       "errors": 0,
       "skipped": 0,
-      "exit_codes": [0, 0, 0],
+      "exit_codes": [
+        0,
+        0,
+        0
+      ],
       "parent_raw_JUnit_commands_exit_HEAD_status_verified": true,
       "parent_source_hashes_verified_after_tests": 19,
       "source_mismatches": 0,
@@ -1350,6 +1358,20 @@
       "lock_sha256": "7ad33ac08870a9dfb0fccf3716207c4503d5fc745e0215b2adb7baadcea408ed",
       "test_status": "not-executed"
     },
-    "review_policy": "one fresh GPT6.1Sol medium current-AC review; zero findings allowed; no quotas or speculative gates"
+    "review_policy": "one fresh GPT6.1Sol medium current-AC review; zero findings allowed; no quotas or speculative gates",
+    "blocked_checkpoint": {
+      "source_commit": "a15e2914748081f03969dbea2dbc38c7e60db91c",
+      "github_and_gitee_main_verified_at_publication": "a15e2914748081f03969dbea2dbc38c7e60db91c",
+      "checkpoint_report": "_bmad-output/implementation-artifacts/story-1-2-checkpoint-2026-10-18.md",
+      "continuation": "_bmad-output/implementation-artifacts/continue-story-1-2-after-channel-recovery.md",
+      "checkpoint_includes_unfixed_E_draft": true,
+      "checkpoint_runtime_acceptance": "not-passed",
+      "last_actually_tested_base_commit": "96c64fbab0fa8d3d824f2e592196c02570550c70",
+      "all_implementation_sources_match_review_snapshot": true,
+      "current_active_implementation_writers": [],
+      "RPC_holder": null,
+      "new_relay_thread_created": false,
+      "background_automation_created": false
+    }
   }
 }
