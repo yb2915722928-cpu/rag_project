@@ -29,7 +29,7 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 # - Retrospective appends its action items to action_items; the status view surfaces open ones
 generated: 10-17-2026 00:03
-last_updated: 10-18-2026 02:58
+last_updated: 10-18-2026 03:16
 project: RAG_all
 project_key: NOKEY
 tracking_system: file-system
@@ -37,7 +37,7 @@ story_location: E:\aaa-project\rag\_bmad-output\implementation-artifacts
 development_status:
   epic-1: in-progress
   1-1-启动可重建的模块化项目: done
-  1-2-隔离执行并保存每次调用事实: backlog
+  1-2-隔离执行并保存每次调用事实: in-progress
   1-3-证明共享限流与双任务gate不会提前退额: backlog
   1-4-在真实停写后清理资产并释放预算: backlog
   1-5-签署s0本地门并交付隔离探路工具: backlog
