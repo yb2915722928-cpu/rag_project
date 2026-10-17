@@ -10,7 +10,7 @@
 - 当前主控 `01a148e2-1e11-7322-9626-6cbafb956f12` 已接手，原会话已释放写入；旧 Turing/Laplace 无有效实现认领，不等待旧实例。
 - 当前实现：Jason（`01a148e6-0fcd-7ff1-af01-c546f5146474`，6.1 Sol/medium）独占后端及 A1 交付记录；Arendt（`01a148e6-261a-7922-8c94-74f5ad661466`，6.1 Sol/medium）独占 deploy 及 D 交付记录。远程目录分别是 `/opt/rag-story-1-1/backend-work`、`/opt/rag-story-1-1/deploy`，不得互改。
 - 后端认领排除新增 `contracts/public.py`、`scalars.py` 与专用测试（Schrodinger，`01a148e7-fe2c-7b22-a61a-1ed49999b7fa`，6.1 Sol/medium），以及 `entrypoints/json_guard.py` 与专用测试（Boyle，`01a148f1-834b-7920-82f2-bfa8a81d7ede`，6.1 Sol/medium）。二者分别独占 contract-models-work/json-guard-work 远程子目录。模型初稿已要求原作者修复；均未验收。
-- 主会话改用 `group/auto-gpt-6-1-sol / max`；其他角色保持 [AGENTS.md](/E:/aaa-project/rag/AGENTS.md:7) 分工。
+- 主会话使用 `GPT-6.1 Sol / max`；其他角色按 [AGENTS.md](/E:/aaa-project/rag/AGENTS.md:7) 的当前模型名称分工，工具调用仍使用映射后的稳定 ID。
 - GitHub仓库 `yb2915722928-cpu/rag_project` 已建；用户最新约定改为服务器只从 Gitee `https://gitee.com/QAQsdsdsdsds/rag_project.git` 拉取，GitHub作为开发上传源。后续每个固定提交需同步到两个远端，服务器先核 commit/hash 再测试。现有本地检查点 `843b45af92241cc0603135b5a341605863df5ece` 尚未完成 GitHub/Gitee同步；此前服务器直接拉GitHub超时/缺认证的记录保留，不再作为服务器拉取路径重试。详见当前 [Git阻塞续接](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-handoff-git-auth-2026-10-17.md:1)。
 
 ## 用户最新决定与已有证据
@@ -21,7 +21,7 @@
 - 构建/运行/测试使用 Netcatty SSH 主机 `120.53.251.166`。已验证 Engine 29.8.2、Compose v5.6.0；宿主 Python 3.12.3、无 uv，需项目隔离的 3.12.8 环境或镜像。
 - 实际存储桶挂载为 `/fileOfRag`，测试材料放 `/fileOfRag/testOfRAG/{originals,derived,metadata}`。不另建大小写不同的路径；活动数据库和 Linux 锁语义不得凭存储桶挂载推定。
 - 用户授权的旧 Docker 清理已完成：无容器/镜像/卷/Compose 项目，默认网络和存储桶保留；宿主绑定目录未删除。
-- 实际 turn_context 已证明主会话为 `group/auto-gpt-6-1-sol / max`，此前两次实现均为该组 `medium`。纠正先前仅凭子智能体自述作出的模型不可用结论；底层供应方身份未核。不再重复派发“确认自己模型”的空探测。
+- 实际 turn_context 已证明主会话为 `GPT-6.1 Sol / max`，此前两次实现均为该模型 `medium`；原始 `turn_context.model` 路由 ID 保留在 relay 和历史证据中。已纠正先前仅凭子智能体自述作出的模型不可用结论；底层供应方身份未核。不再重复派发“确认自己模型”的空探测。
 
 ## 剩余分段
 

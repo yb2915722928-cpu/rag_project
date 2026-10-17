@@ -1,14 +1,14 @@
-# Story 1.1 串行接力交接提示词：6.1 Sol / max
+# Story 1.1 串行接力交接提示词：GPT-6.1 Sol / max
 
 日期：2026-10-17，Asia/Shanghai。用户明确要求改主会话分工并交接新会话继续串行开发。本次为同一 Story 的主控转交，不是放行 Story 1.2。
 
 ## 可直接执行的提示词
 
-接续 RAG_all Story 1.1。主会话必须是 `group/auto-gpt-6-1-sol / max`，创建时显式传入；不再要求 Astra、不自动切 ultra。主会话只做规格、契约、派发、协调和验收，不编写应用、测试、锁、实现脚本或部署。
+接续 RAG_all Story 1.1。主会话必须是 `GPT-6.1 Sol / max`，创建时按 AGENTS.md 的模型映射传入对应工具 ID；不再要求 GPT-6 Astra、不自动切 ultra。主会话只做规格、契约、派发、协调和验收，不编写应用、测试、锁、实现脚本或部署。
 
 先读 [当前工作集](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-working-set.md:1)，再读 [项目规则](/E:/aaa-project/rag/AGENTS.md:1)、[唯一认领](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/sprint-relay-state.json:1) 和 [最新模型/环境决定](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-1-model-environment-decision-2026-10-17.md:1)。其余完整材料按工作集的需回读条件加载，不无条件重读全部规划。
 
-做一次合并只读诊断：读取自己实际 rollout 的最新 `turn_context.model` 和 `effort`、可读取的路由信息、同项目会话、relay owner、实现认领及已有环境摘要。`reasoning_effort` 为空时查看实际 `effort`，不要误报没有档位。运行记录是路由组证据，不冒称不可读的底层供应方身份。两个旧实现子智能体的真实记录均为 `group/auto-gpt-6-1-sol / medium`；先前仅凭其自述判模型不可用的结论已纠正，不再派发“确认自己模型”的空任务。
+做一次合并只读诊断：读取自己实际 rollout 的最新 `turn_context.model` 和 `effort`、可读取的路由信息、同项目会话、relay owner、实现认领及已有环境摘要。`reasoning_effort` 为空时查看实际 `effort`，不要误报没有档位。运行记录是路由组证据，不冒称不可读的底层供应方身份。两个旧实现子智能体的真实记录均为 `GPT-6.1 Sol / medium`；原始路由 ID 保留在历史证据中。先前仅凭其自述判模型不可用的结论已纠正，不再派发“确认自己模型”的空任务。
 
 项目为 `rag`，ID `61e1f316-4db1-4b50-a56e-62c5604d7d25`，目录 `E:/aaa-project/rag`，local；不创建 worktree。转出会话 `01a1489a-52c3-7590-9181-880dabdb3dd1` 只记录你的 threadId 并核实接手，不再派发实现。若 relay 未登记你的 ID，只做只读恢复；登记且 `handoff_source_write_released=true` 后，接受交接、更新唯一 owner 状态并继续。旧 Turing 已关闭，Laplace 已停止且无文件交付，无有效实现写入认领。
 
