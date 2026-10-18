@@ -30,6 +30,13 @@ COPY --from=worker_health healthcheck.py /usr/local/bin/rag-worker-healthcheck
 RUN chown -R 0:0 /app \
     && chmod -R u+rwX,go+rX /app
 
+# The worker health probe is copied from the additional build context and
+# has the same umask-preserved 0600 mode. It is not under /app, so normalize
+# this exact file too; the service UID executes it through the Python
+# interpreter and must be able to read it.
+RUN chown 0:0 /usr/local/bin/rag-worker-healthcheck \
+    && chmod 0555 /usr/local/bin/rag-worker-healthcheck
+
 RUN /opt/venv/bin/python -c "import rag_app, rag_app.entrypoints.api, rag_app.entrypoints.worker" \
     && ! find /app -xdev -perm /022 -print -quit | grep -q .
 
@@ -38,4 +45,4 @@ USER 65532:65532
 # The final check runs as the actual service UID. It proves the package,
 # configuration and migrations are readable after the mode normalization;
 # root-only build-time imports did not catch the earlier 0700/0600 failure.
-RUN /opt/venv/bin/python -c "from pathlib import Path; files = ['/app/pyproject.toml', '/app/uv.lock', '/app/alembic.ini', '/app/migrations/env.py', '/app/migrations/versions/0002_isolated_calls.py']; [open(path, 'rb').read(1) for path in files]; import rag_app, rag_app.adapters.epoch_control, rag_app.adapters.postgres, rag_app.bootstrap.runtime, rag_app.entrypoints.api, rag_app.entrypoints.worker; print('SERVICE_UID_IMPORT_OK')"
+RUN /opt/venv/bin/python -c "from pathlib import Path; files = ['/app/pyproject.toml', '/app/uv.lock', '/app/alembic.ini', '/app/migrations/env.py', '/app/migrations/versions/0002_isolated_calls.py', '/usr/local/bin/rag-worker-healthcheck']; [open(path, 'rb').read(1) for path in files]; import rag_app, rag_app.adapters.epoch_control, rag_app.adapters.postgres, rag_app.bootstrap.runtime, rag_app.entrypoints.api, rag_app.entrypoints.worker; print('SERVICE_UID_IMPORT_OK')"

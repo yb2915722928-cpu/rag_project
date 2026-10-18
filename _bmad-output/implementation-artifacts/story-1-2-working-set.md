@@ -1,6 +1,6 @@
 # Story 1.2 当前工作集
 
-状态：父Story **in-progress/not-passed，E开发者及新增独立运行已过，D打包补丁已冻结待发布**。E d6开发者28PG/232非PG、独立20unit/28PG均0fail/error/skip；Step5正核并补报告。D已定位COPY继承0700/0600，Nash只改Dockerfile，归一化镜像权限并加最终65532校验，hash8044d708；D规格实测1449 tokens。未创建schema/epoch，待新固定提交构建/原D矩阵。
+状态：父Story **in-progress/not-passed，E两层已过，D helper补丁已冻结待发布**。Nash只给现有healthhelper设root0555并纳入最终UID读取，Dockerfile hash6e933822，源码未改；91两个容器已安全stop但保留，epoch hashf5d6a325/0550/0400/65532未变，schema不重建。新commit/tag/新容器名接续D重启及三负例；E无需重跑。
 
 唯一主控 `01a14b42-689c-7533-90a3-9bd187d93039`，实际 `group/auto-gpt-6-1-sol / max`；接力ID `3dff3d78-c0f5-42cf-9860-fc2ad4250ab4` 已释放/接手。当前认领/证据以 [relay](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/sprint-relay-state.json:1) 为准。主控不写应用/测试/部署实现，只文档/提交/构建测试/编排。
 
@@ -31,7 +31,7 @@
 - 当前路由：用户已明确改回前缀ID，原Unknown model不再作为当前指定ID的阻塞。Aquinas实际turn_context `2026-10-18T00:48:44.169Z` 为 `zayuapi/deepseek-v4.1-flash / max`，未传推理override；主控已看到实际function-call outputs及E源修改。无前缀拒绝与旧502保留，不改写旧失败。
 - Netcatty旧连接阻塞已解除：用户报告修复后，官方配置的external MCP stdio启动器认证、initialize/tools/list/get_environment均成功；94b真实命令exit0并确认repo-fixed96c干净、无Story1.2容器。工具传输由主控现有持久MCP客户端负责，终端RPC继续串行；没有本地跑项目/直接SSH。此前缺discovery与CLI端口拒绝保留历史，不再重复探测。
 - 历史前缀错误两次：北京时间06:44:08、07:01:31均502/DeepSeek upstream EOF且实例关闭，证据仍见[no-write proof](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-2-DeepSeek-blocked-no-write-proof.json:1)。新ID尚未进入供应方请求阶段，不能将本次Unknown model冒充同一502或已恢复。
-- D d6镜像已build成功（首次裸shaID引用失败保留，repo@digest重试exit0），但首次维护import即失败，未SCHEMA_CREATED/epoch。实测/app/src/rag_app为root0700，项目文件root0600，65532 Permission denied；主控把api.Dockerfile窄修唯一交Nash，不改宿主源码/不提权运行。新固定提交重建→UID导入→显式init→RO权限→启动重启/三负例；APIhealth只liveness，不清旧资源/不前移未来门。
+- D历史d6权限失败保留；91固定镜像id7e549b66...已build/服务UID导入通过，schema `d_story12_d6e8a0da` 现已迁移0002/6表/PG180006/vector0.8.7，`/opt/rag-story-1-2/epoch`已显式init+mirror，普通0550/0400/65532。维护job `job_mvd6qaku_1f090057fe58` exit0。启动job `job_mvd6xuob_6bc6f6074361` exit1：API/worker实际running，API200/DBbaselineOK，但健康helper0600权限失败，尚未restart。两个容器名 `rag-story-1-2-api` / `rag-story-1-2-worker`，原epoch/schema不删不轮换。Nash获Dockerfile具体helper窄修，后续新tag/新容器名接续重启/三负例，APIhealth仅liveness。
 - 正式tree `1eff8cf456f705b8c5e0b21985b87ad9d6a846d2`完成，[审查报告](/E:/aaa-project/rag/docs/story-1-2-code-review.md:1)新增0，F2/E矩阵/D未运行保持未关；diff原字节已归档，SHA `b9a19d5beab26888cce9edc7f75cffb74eb90ec87a70fe8849e66b0b8ad79e21`。主控核检查点所有实现blob与受审tree相同，只后续实质E/D增量复核。
 - 未来产品次数/会话/permit真实业务表不作为当前新增实现前置；现有call-only/context边界必须证明，未来联调按原后续Story归属延期且不记PASS。1.3/C8、1.4资产、1.5汇总/真实供应方/P0/目标机门未到期。
 
