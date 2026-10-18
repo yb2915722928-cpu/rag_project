@@ -1,6 +1,6 @@
 # Story 1.2 当前工作集
 
-状态：父Story **in-progress/not-passed，E URI假件补丁已再冻结待重测，Netcatty已恢复**。f3首轮28 PG为16pass/12fail，E单元20pass；原失败保留。Aquinas已在两测试API/下载目标处quote opaque参数，应用代码未变、B/A/C未放宽，已SOURCE_FROZEN。主控发布新提交后重跑必需PG及作者给的六模块专题/回归；D准备回归、Hilbert只审相关补丁。
+状态：父Story **in-progress/not-passed，E开发者canonical已过，D新镜像构建中**。固定d6e8a0d双远端同commit→Gitee检出，28真实PG+232非PG专题全部0fail/error/skip、exit0；主控已亲读XML、前后Git/hash。f3失败独立保留。D build专属新镜像正在运行，独立Step5新E/D及Hilbert相关复核仍待齐。
 
 唯一主控 `01a14b42-689c-7533-90a3-9bd187d93039`，实际 `group/auto-gpt-6-1-sol / max`；接力ID `3dff3d78-c0f5-42cf-9860-fc2ad4250ab4` 已释放/接手。当前认领/证据以 [relay](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/sprint-relay-state.json:1) 为准。主控不写应用/测试/部署实现，只文档/提交/构建测试/编排。
 
@@ -10,7 +10,7 @@
 | --- | --- | --- |
 | E Aquinas | `01a14c7b-78ff-7681-80fd-8f1e6155df95` | 实际前缀DeepSeek/max默认；URI假件窄修已SOURCE_FROZEN；负责测试命令/结果核对和交付文档 |
 | C Heisenberg | `01a14b57-dbf8-7e11-8a3f-f678f9146dd0` | native四源冻结、25已过，C交付已补；只保留供真实native问题修复，无RPC |
-| 独立 Pascal | `01a14b8d-7d2f-7b62-875b-a324944c561c` | actualStep5/high默认；base96c311非PG+15PG已过、RPC归还；报告partial，后续只补E/D实质新项 |
+| 独立 Linnaeus | `01a14cad-63e8-7540-a01f-603128992ad7` | Step5/high默认已核；旧Pascal工具not found，base311+15证据不变；仅补新E/D，计划准备中/未获RPC |
 | 正式增量审查 Hilbert | `01a14c84-e840-7bb2-afa7-5cee31958892` | 新6.1Sol/medium已核；旧Pasteur在工具中not found，原审查证据不变；等E冻结后仅相关增量 |
 | D Nash | `01a14c8a-4d7b-7542-a584-db86213f6eb7` | 实际前缀DeepSeek/max默认已核，两D文件唯一归属；只读准备，运行待固定提交/时段 |
 
@@ -27,11 +27,11 @@
 
 ## 剩余工作/真实阻塞
 
-- E五项窄修已在f3冻结并双远端同commit→Gitee固定检出，A19/C4未动。首轮作者PG命令 `--require-postgres -m postgres` 已由主控MCP转发，真实28项16pass/12fail；主控亲读原XML/Git/hash/exit、精确3.12.8/uvicorn0.37/locked sync，前后源码不变。E的SECRET占位含花括号被直接拼URI，B正确提前拒绝，矩阵多项未走到调用；原E只修测试构造，再发布重测。原失败证据见[首轮记录](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-2-e-first-canonical-pg.json:1)，不改写/不记PASS。
+- E canonical d6e8a0da94a88199e6c4795f3e10e26c821b454f：28必需PG（E13+旧15）及232非PG六模块全部通过、exit0，0fail/error/skip。主控亲读原XML/log/环境、命令/退出码、前后Git/hash；CPython3.12.8/uvicorn0.37/locked sync均实过，未server改源。证据及hash见[E通过索引](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-2-e-canonical-pass-d6e8a0d.json:1)。原f3失败/单元20pass仍在[首轮记录](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-2-e-first-canonical-pg.json:1)，不重标。A19/C4未改，独立E增量尚待。
 - 当前路由：用户已明确改回前缀ID，原Unknown model不再作为当前指定ID的阻塞。Aquinas实际turn_context `2026-10-18T00:48:44.169Z` 为 `zayuapi/deepseek-v4.1-flash / max`，未传推理override；主控已看到实际function-call outputs及E源修改。无前缀拒绝与旧502保留，不改写旧失败。
 - Netcatty旧连接阻塞已解除：用户报告修复后，官方配置的external MCP stdio启动器认证、initialize/tools/list/get_environment均成功；94b真实命令exit0并确认repo-fixed96c干净、无Story1.2容器。工具传输由主控现有持久MCP客户端负责，终端RPC继续串行；没有本地跑项目/直接SSH。此前缺discovery与CLI端口拒绝保留历史，不再重复探测。
 - 历史前缀错误两次：北京时间06:44:08、07:01:31均502/DeepSeek upstream EOF且实例关闭，证据仍见[no-write proof](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-2-DeepSeek-blocked-no-write-proof.json:1)。新ID尚未进入供应方请求阶段，不能将本次Unknown model冒充同一502或已恢复。
-- D既有Compose未传新epoch文件导致新worker隔离，两文件已在96c补齐；未建新后端镜像/未验项目专属启动重启/缺失不可读矛盾负例。[D规格](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-2-d-epoch-deploy.md:1)及[部署说明](/E:/aaa-project/rag/docs/story-1-2-epoch-deploy.md:1)已写首次显式维护init与普通RO0550/0400/UID65532；APIhealth只liveness。不重做1.1全套，不前移1.5S0资格工具。
+- D两源固定且未变；Nash给出的新镜像构建正在通过主控MCP执行，job `job_mvd5y714_6eab94d6f211`，镜像 `rag-story-1-2-api:d6e8a0da`，本地证据 `/opt/rag-story-1-2/evidence/D-d6e8a0da`。随后只做显式维护init→普通RO0550/0400/UID65532、合法启动重启与缺失不可读矛盾负例。APIhealth只liveness，不重做1.1/不前移1.5工具、不清旧资源。
 - 正式tree `1eff8cf456f705b8c5e0b21985b87ad9d6a846d2`完成，[审查报告](/E:/aaa-project/rag/docs/story-1-2-code-review.md:1)新增0，F2/E矩阵/D未运行保持未关；diff原字节已归档，SHA `b9a19d5beab26888cce9edc7f75cffb74eb90ec87a70fe8849e66b0b8ad79e21`。主控核检查点所有实现blob与受审tree相同，只后续实质E/D增量复核。
 - 未来产品次数/会话/permit真实业务表不作为当前新增实现前置；现有call-only/context边界必须证明，未来联调按原后续Story归属延期且不记PASS。1.3/C8、1.4资产、1.5汇总/真实供应方/P0/目标机门未到期。
 

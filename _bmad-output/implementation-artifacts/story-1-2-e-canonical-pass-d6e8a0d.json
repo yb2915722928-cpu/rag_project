@@ -1,0 +1,35 @@
+{
+  "commit": "d6e8a0da94a88199e6c4795f3e10e26c821b454f",
+  "PG": {
+    "tests": 28,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "exit": 0,
+    "xml_sha256": "56e0bac66a5eb2c78093a5e5ce40a475829a78354b5b23456e0389fde48e935d",
+    "log_sha256": "bcb1acd7237b7c9e0fc9b4a99dcbabff145da3e3b5f38ba3bf91ea83f524755f"
+  },
+  "nonPG": {
+    "tests": 232,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "exit": 0,
+    "xml_sha256": "9fb5827835ef43732a3ad31e7761e2c93b342875f5dda79a8385b2deeb285153",
+    "log_sha256": "50fa0788c942dbd6f9c540e380a6fc26d78c14f241585c3ab41276c1634783a9"
+  },
+  "environment_before": "2026-10-18T01:33:37Z\nd6e8a0da94a88199e6c4795f3e10e26c821b454f\nPython 3.12.8\nuvicorn 0.37.0\n",
+  "source_before": "ae8f70488275cec3a88e96ba0e9eea883e8a3d783a2186001925a08045bdb848  src/rag_app/application/call_dispatch.py\n1595bf6b9aba9b877ee8a4135b3006163226af3818752fbc21fd34b3a1de2450  tests/test_call_dispatch.py\nbdc14b9117d4fbf194315463aa8c878f53ad41145dfe516fd49567e12606cb82  tests/test_call_dispatch_postgres.py\n7ad33ac08870a9dfb0fccf3716207c4503d5fc745e0215b2adb7baadcea408ed  uv.lock\n",
+  "source_after": "ae8f70488275cec3a88e96ba0e9eea883e8a3d783a2186001925a08045bdb848  src/rag_app/application/call_dispatch.py\n1595bf6b9aba9b877ee8a4135b3006163226af3818752fbc21fd34b3a1de2450  tests/test_call_dispatch.py\nbdc14b9117d4fbf194315463aa8c878f53ad41145dfe516fd49567e12606cb82  tests/test_call_dispatch_postgres.py\n7ad33ac08870a9dfb0fccf3716207c4503d5fc745e0215b2adb7baadcea408ed  uv.lock\n",
+  "git_after": "d6e8a0da94a88199e6c4795f3e10e26c821b454f\n",
+  "nonpg_git_after": "d6e8a0da94a88199e6c4795f3e10e26c821b454f\n",
+  "nonpg_source_after": "ae8f70488275cec3a88e96ba0e9eea883e8a3d783a2186001925a08045bdb848  src/rag_app/application/call_dispatch.py\n1595bf6b9aba9b877ee8a4135b3006163226af3818752fbc21fd34b3a1de2450  tests/test_call_dispatch.py\nbdc14b9117d4fbf194315463aa8c878f53ad41145dfe516fd49567e12606cb82  tests/test_call_dispatch_postgres.py\n7ad33ac08870a9dfb0fccf3716207c4503d5fc745e0215b2adb7baadcea408ed  uv.lock\n",
+  "PG_command": "/opt/rag-story-1-2/venv-fixed/bin/python -m pytest --require-postgres -m postgres -q -p no:cacheprovider --junitxml=/opt/rag-story-1-2/evidence/E-d6e8a0d/pg.xml\n",
+  "nonPG_command": "/opt/rag-story-1-2/venv-fixed/bin/python -m pytest tests/test_call_dispatch.py tests/test_child_supervisor.py tests/test_call_persistence.py tests/test_egress.py tests/test_architecture.py tests/test_uow.py -q -p no:cacheprovider --junitxml=/opt/rag-story-1-2/evidence/E-d6e8a0d/nonpg.xml\n",
+  "evidence_sha256": "56e0bac66a5eb2c78093a5e5ce40a475829a78354b5b23456e0389fde48e935d  pg.xml\nbcb1acd7237b7c9e0fc9b4a99dcbabff145da3e3b5f38ba3bf91ea83f524755f  pg.log\n9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa  pg.exit\n63419c40c9b94d1695a57ebc25d4e26d06c956b5b055f6d5a20e22a42d24e925  pg-command.txt\ne240e663da4441fc0751df1bfa035c5657aab68ad405cbaff2dc08165edc68d0  source-before.txt\ne240e663da4441fc0751df1bfa035c5657aab68ad405cbaff2dc08165edc68d0  source-after.txt\nbffcdc61635ece45adad9447ab5335590075881a50861665735027c97d56f358  environment-before.txt\nb16f0d770f667b2be1023e91ca1c894e572dde9b0b96579f88170a07e23fb0df  git-after.txt\nb60c3ee7af3ec2d923054f499893ae8b7bff460da8de8cf0f0d5f1995bf0de73  sync.log\n9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa  sync.exit\n9fb5827835ef43732a3ad31e7761e2c93b342875f5dda79a8385b2deeb285153  nonpg.xml\n50fa0788c942dbd6f9c540e380a6fc26d78c14f241585c3ab41276c1634783a9  nonpg.log\n9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa  nonpg.exit\nb9de97d43999ee466914c4e907b155a0037962f024bad758438eac46d5060e31  nonpg-command.txt\nb16f0d770f667b2be1023e91ca1c894e572dde9b0b96579f88170a07e23fb0df  nonpg-git-after.txt\ne240e663da4441fc0751df1bfa035c5657aab68ad405cbaff2dc08165edc68d0  nonpg-source-after.txt\n",
+  "bucket": "/fileOfRag/testOfRAG/metadata/story-1-2/dispatch/E-d6e8a0d",
+  "controller_direct_original_XML_and_hash_read": true,
+  "parent_acceptance_gate": "not-passed",
+  "independent_E_D": "pending",
+  "D_runtime": "pending"
+}

@@ -133,3 +133,36 @@
 前次静态复核未识别此假件编码缺陷；“0 新增发现”保留为当时静态检查结果，本节按实际失败修正 E 测试可执行性的判断。此问题已由主控回交原 E 实现者，属于当前 E 已知失败处置，不重复计数或扩大审查范围。拟议修复是在测试构造处使用 `quote(SECRET, safe='')` 编码 opaque query 值；不放松 B 的 URI/凭据守卫，不改 A/C。拟议补丁尚未作为新固定提交交给本实例，故本节不宣称修补已落盘、已静态通过或已运行通过。
 
 运行状态据此由上节时间点的“未执行/待验”更新为本固定提交 **已执行、未通过（failed）**；目标调用路径中被输入拒绝挡住的断言仍未获验证。旧 15 项本轮通过成绩保留在 `f3f1caa` 来源下，不自动转为后续补丁提交通过。F2 及两处原输入/断言修复的窄静态判断保留，E 整体运行门不关闭。待收到小补丁的固定提交/差异及相关重跑原始证据后，继续同次限定增量复核；`fullrelease_gate=not-passed`，不签 E 运行或完整 Story PASS。
+
+### d6e8a0d URI 补丁与 E 重跑处置
+
+本次仅复核 `d6e8a0da94a88199e6c4795f3e10e26c821b454f` 相对 `f3f1caacc76cd9cf8bc72a8eba1fcd9bc246c36c` 的差异。固定提交可解析且差异仅为 [PG 测试文件](/E:/aaa-project/rag/backend/tests/test_call_dispatch_postgres.py:14) 引入 `urllib.parse.quote`，在[API 签名目标](/E:/aaa-project/rag/backend/tests/test_call_dispatch_postgres.py:69)和[下载拒绝目标](/E:/aaa-project/rag/backend/tests/test_call_dispatch_postgres.py:626)均以 `quote(SECRET, safe="")` 将 opaque 测试值编码为合法可见 ASCII URI。没有放松 B 的 URI 字符守卫、Authorization 守卫或目标匹配规则，也没有修改 A/C/应用源码。该补丁直接覆盖上一节记录的已知测试输入缺陷，未形成新增发现。
+
+主控提供的 `d6e8a0d` 运行证据为：PG 选集 28 项全部 exit 0；指定非 PG 选集 232 项全部 exit 0。运行时精确 CPython `3.12.8`、`uvicorn==0.37.0`、locked sync 均已核实；前后 Git 与源码 hash 已核实；证据归档于 `/fileOfRag/testOfRAG/metadata/story-1-2/dispatch/E-d6e8a0d`。这些是主控提供的执行与归档事实，本实例未自行登录 Netcatty 或重跑测试，未把本地静态检查冒充运行证据。
+
+据此，上一节 `f3f1caa` 的 SECRET 早期拒绝失败已由该测试输入小补丁处置；本次 E 相关运行结果更新为 **PG28/28、指定非 PG232/232 exit 0**。F2 用途分层、成功/可信迟到事实、真实 child SIGSTOP/KILL、PG unknown/NULL 及无二次 grant 等已知 E 项的运行门，以主控本次全选集通过证据视为关闭；其代码与测试归属仍按原报告记录。此结论仅覆盖本次 E 增量和主控明确提供的选集，不扩展 D 运行或未来 Story 门。
+
+本次限定增量 **0 新增发现**。`fullrelease_gate` 是否转为整体通过仍不由本次审查单独裁定；本报告不审 D、不新增未来门，并保留原报告全部历史记录。后续如无新的 E 实质差异或当前证据矛盾，不再为该 URI 补丁追加审查轮。
+
+### 原始 XML 直接核验：E13 PG、20 unit 与修复回归
+
+本实例已直接读取并以 PowerShell XML parser 解析主控提供的两份原始 XML，同时直接计算文件 SHA256，与[canonical 运行索引](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-2-e-canonical-pass-d6e8a0d.json:1)及主控提供值一致：
+
+| 原始工件 | 本实例计算的 SHA256 | XML 实际结果 |
+| --- | --- | --- |
+| [PG XML](/C:/Users/29157/AppData/Local/Temp/rag-story12-E-d6-pg.xml:1) | `56e0bac66a5eb2c78093a5e5ce40a475829a78354b5b23456e0389fde48e935d` | tests=28，failures=0，errors=0，skipped=0；其中 E PG 节点 13 个，逐项无 failure/error/skipped |
+| [非 PG XML](/C:/Users/29157/AppData/Local/Temp/rag-story12-E-d6-nonpg.xml:1) | `9fb5827835ef43732a3ad31e7761e2c93b342875f5dda79a8385b2deeb285153` | tests=232，failures=0，errors=0，skipped=0；其中 E unit 节点 20 个，逐项无 failure/error/skipped |
+
+E13 中直接核到了正常成功及 unknown usage、错误业务用途拒绝、终结/换 attempt/旧 epoch 拒绝、prepare/grant/response 故障、真实 SIGSTOP child unknown/NULL/无第二次 grant、响应后可信事实、迟到重复/冲突、四类显式假件、目标/下载凭据拒绝及 child 等待不占 PG 事务的对应节点。20 unit 中亦直接核到了用途独立、一次 grant、失败/超时、停止未证、结果记录失败转迟到观察、下载 Authorization 和不安全 DNS 拒绝等对应节点。以上是已执行节点的原始结果核验，没有复跑历史 311 基础集或扩展当前审查范围。
+
+索引记录 canonical commit 为 `d6e8a0da94a88199e6c4795f3e10e26c821b454f`，PG/nonPG 精确命令、exit=0、执行前 Python 3.12.8 与 uvicorn 0.37.0、Git 前后值、locked sync 日志/退出码工件 hash 及归档桶位置均有记录。环境与退出码仍归属主控服务器采集证据；本实例直接核验的是索引内容、两份 XML 原始字节及以下固定提交 Git blob hash。没有自行运行应用或把 XML 当作环境版本证明。
+
+| d6 固定源码 | 本实例计算的 Git blob SHA256，与运行前/后索引一致 |
+| --- | --- |
+| [派发实现](/E:/aaa-project/rag/backend/src/rag_app/application/call_dispatch.py:1) | `ae8f70488275cec3a88e96ba0e9eea883e8a3d783a2186001925a08045bdb848` |
+| [E unit](/E:/aaa-project/rag/backend/tests/test_call_dispatch.py:1) | `1595bf6b9aba9b877ee8a4135b3006163226af3818752fbc21fd34b3a1de2450` |
+| [E PG](/E:/aaa-project/rag/backend/tests/test_call_dispatch_postgres.py:1) | `bdc14b9117d4fbf194315463aa8c878f53ad41145dfe516fd49567e12606cb82` |
+
+**前节范围描述纠正：**此前只查看 PG 文件 diff 就写成“差异仅为 PG 测试文件”，该描述不完整。本次对固定提交三源一起比较，实际为两个测试文件共 10 行新增、3 行删除；[unit 目标假件](/E:/aaa-project/rag/backend/tests/test_call_dispatch.py:64)同样引入 quote 并编码 query SECRET，PG 有两处同类编码，应用源码不变。unit 小补丁也已核对，仍只修合法 URI 输入，未放松 B 守卫；对应 20 unit 已由上述原始 XML 直接确认通过。这一说明修正审查记录，不改写此前历史内容。
+
+本次 **0 新增代码发现**。URI 输入缺陷及既有 F2/E 项的开发者实现与相关运行修复已获上述原始证据支持，相关已知缺陷可关闭；这不代替独立执行验证。索引明确 `independent_E_D=pending`、`D_runtime=pending`、`parent_acceptance_gate=not-passed`，本实例保持这些状态，不审 D，不给父 Story 签 PASS。

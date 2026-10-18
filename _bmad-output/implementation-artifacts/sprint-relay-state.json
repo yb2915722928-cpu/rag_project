@@ -6,7 +6,7 @@
   "project_path": "E:/aaa-project/rag",
   "host_id": "local",
   "mode": "serial-completion-triggered",
-  "state": "story_1_2_E_URI_fixture_patch_frozen_pending_canonical_rerun_D_preparing",
+  "state": "story_1_2_E_canonical_d6_passed_D_backend_build_running_independent_increment_pending",
   "owner_thread_id": "01a14b42-689c-7533-90a3-9bd187d93039",
   "current_story_key": "1-2-隔离执行并保存每次调用事实",
   "current_spec": "_bmad-output/implementation-artifacts/spec-1-2-isolated-calls.md",
@@ -20,7 +20,7 @@
   "acceptance_gate": "not-passed",
   "next_story_key": null,
   "next_thread_id": null,
-  "dispatch_state": "E_active_D_model_verified_preparing_reviewer_medium_ready_runtime_MCP_restored",
+  "dispatch_state": "E_developer_28PG_232nonPG_passed_D_build_running_Step5_increment_preparing_medium_review_active",
   "handoff_id": "3dff3d78-c0f5-42cf-9860-fc2ad4250ab4",
   "handoff_kind": "completed_story_serial_relay",
   "handoff_source_thread_id": "01a14973-8555-7131-8fd2-e9eec12f53fe",
@@ -237,7 +237,7 @@
       "secret_value": "not_recorded"
     }
   },
-  "updated_at": "2026-10-18T09:26:07.7336272+08:00",
+  "updated_at": "2026-10-18T09:53:42.8212498+08:00",
   "handoff_registered_at": "2026-10-18T03:07:41.6004268+08:00",
   "handoff_acceptance_evidence": "AMELIA_RELAY_RELEASE received; target 01a14b42-689c-7533-90a3-9bd187d93039 verified next_thread_id, Story1.2, handoff_id and Story1.1 passed gate, then accepted sole ownership. Source and all Story1.1 child writers released.",
   "implementation_claims": [
@@ -1055,7 +1055,23 @@
         "backend/tests/test_call_dispatch_postgres.py": "bdc14b9117d4fbf194315463aa8c878f53ad41145dfe516fd49567e12606cb82"
       },
       "next_developer_nonpg_selection": "tests/test_call_dispatch.py tests/test_child_supervisor.py tests/test_call_persistence.py tests/test_egress.py tests/test_architecture.py tests/test_uow.py",
-      "runtime_acceptance": "not-passed"
+      "runtime_acceptance": "developer_canonical_d6_passed_independent_increment_pending"
+    },
+    "E_canonical_pass": {
+      "commit": "d6e8a0da94a88199e6c4795f3e10e26c821b454f",
+      "github_and_gitee_main_verified_equal": true,
+      "server_Gitee_fixed_commit_and_source_hash_verified": true,
+      "PG_passed": 28,
+      "nonPG_passed": 232,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "exit_codes": [0, 0],
+      "parent_direct_original_XML_and_source_Git_verified": true,
+      "evidence_index": "_bmad-output/implementation-artifacts/story-1-2-e-canonical-pass-d6e8a0d.json",
+      "evidence_bucket": "/fileOfRag/testOfRAG/metadata/story-1-2/dispatch/E-d6e8a0d",
+      "independent_E_D_and_D_runtime": "pending",
+      "full_story_gate": "not-passed"
     },
     "D_runtime_resume": {
       "agent_id": "01a14c8a-4d7b-7542-a584-db86213f6eb7",
@@ -1069,7 +1085,39 @@
         "deploy/compose.yaml",
         "docs/story-1-2-epoch-deploy.md"
       ],
-      "state": "model_verified_read_only_preparation_released_waiting_E_fixed_commit",
+      "state": "D_RUNTIME_RELEASE_build_running_on_fixed_d6",
+      "fixed_commit": "d6e8a0da94a88199e6c4795f3e10e26c821b454f",
+      "build_job": "job_mvd62ljm_150999443e9b",
+      "image_tag": "rag-story-1-2-api:d6e8a0da",
+      "evidence_root": "/opt/rag-story-1-2/evidence/D-d6e8a0da",
+      "remote_terminal_lease": true,
+      "transport": "controller forwards D developer-authored commands through official Netcatty MCP"
+    },
+    "D_build_attempts": {
+      "first_job": "job_mvd5y714_6eab94d6f211",
+      "first_exit": 1,
+      "first_error": "Bare sha256:image-ID build args were interpreted as docker.io/library/sha256 tags, causing mirror403 rather than selecting the existing local images.",
+      "first_log_preserved": "/opt/rag-story-1-2/evidence/D-d6e8a0da/build.log",
+      "corrective_owner": "D Nash",
+      "retry_job": "job_mvd62ljm_150999443e9b",
+      "retry_log": "/opt/rag-story-1-2/evidence/D-d6e8a0da/build-retry.log",
+      "retry_change": "Use the verified existing full repo@digest image references; same source Dockerfile and commit.",
+      "retry_observed": "Local base metadata loaded and cached steps passed; image dependency uv --locked downloads running.",
+      "D_runtime_gate": "not-passed"
+    },
+    "independent_increment_successor": {
+      "previous_agent_id": "01a14b8d-7d2f-7b62-875b-a324944c561c",
+      "previous_tool_state": "agent not found",
+      "agent_id": "01a14cad-63e8-7540-a01f-603128992ad7",
+      "nickname": "Linnaeus",
+      "requested_model": "stepfun/step-5-preview",
+      "requested_reasoning_effort": null,
+      "observed_model": "stepfun/step-5-preview",
+      "observed_effort": "high",
+      "observed_timestamp": "2026-10-18T01:43:15.633Z",
+      "state": "model_verified_independent_E_D_plan_only_wait_runtime_slot",
+      "scope": "docs/story-1-2-independent-verification.md and task-specific independent evidence",
+      "base311_and_15_not_repeated_or_relabelled": true,
       "remote_terminal_lease": false
     },
     "incremental_review_successor": {
