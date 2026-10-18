@@ -17,6 +17,7 @@ import pytest
 from rag_app.bootstrap.config import Settings
 from rag_app.contracts.errors import MESSAGES, SafeError
 from rag_app.contracts.public import PUBLIC_MODELS, PublicError
+from rag_app.contracts.upload import UPLOAD_MODELS
 from rag_app.entrypoints import api, contract_probe
 
 
@@ -28,6 +29,11 @@ HEADERS = {"X-RAG-Contract-Test": TOKEN}
 RESPONSE_NAMES = {
     "AcceptedResponse", "CompletedResponse", "FailedResponse",
     "OperationResponse", "RetrievalResponse",
+}
+UPLOAD_PATHS = {
+    "/api/v1/web/document-candidates",
+    "/api/v1/web/document-candidates/{candidate_id}",
+    "/api/v1/web/document-candidates/{candidate_id}/original",
 }
 
 
@@ -132,7 +138,9 @@ def assert_failure(response, code):
 
 def test_five_public_response_models_have_authorized_dto_roundtrips(monkeypatch):
     samples = fixtures()
-    assert set(samples) == set(PUBLIC_MODELS)
+    # upload.v1 shares the generated catalog but is served by its own business
+    # routes, not by the isolated caller-controlled fixture probe.
+    assert set(samples) == set(PUBLIC_MODELS) - set(UPLOAD_MODELS)
     with isolated_client(monkeypatch) as client:
         request_ids = set()
         for name in sorted(RESPONSE_NAMES):
@@ -193,9 +201,10 @@ def test_probe_completes_only_the_defaulted_c2_envelope_on_the_wire(monkeypatch)
 def test_helper_dtos_are_not_bare_http_responses(monkeypatch):
     with isolated_client(monkeypatch) as client:
         for name in PUBLIC_MODELS.keys() - RESPONSE_NAMES:
-            assert_failure(client.post(PATH + name, json=fixtures()[name],
+            payload = fixtures().get(name, {"probe": "unordered"})
+            assert_failure(client.post(PATH + name, json=payload,
                                        headers=HEADERS), "RESOURCE_UNAVAILABLE")
-            assert_failure(client.post(PATH + name, json=fixtures()[name]),
+            assert_failure(client.post(PATH + name, json=payload),
                            "AUTH_REQUIRED")
 
 
@@ -443,7 +452,9 @@ def test_openapi_is_model_derived_and_has_no_token_or_business_routes():
     assert schema == default_schema
     raw = json.dumps(schema)
     assert TOKEN not in raw and SECRET not in raw
-    assert set(schema["paths"]) == {"/health", PATH + "{model_name}"}
+    assert set(schema["paths"]) == (
+        {"/health", PATH + "{model_name}"} | UPLOAD_PATHS
+    )
     operation = schema["paths"][PATH + "{model_name}"]["post"]
     assert set(next(p for p in operation["parameters"] if p["name"] == "model_name")
                ["schema"]["enum"]) == RESPONSE_NAMES

@@ -39,7 +39,7 @@ def test_missing_or_inaccessible_namespace_fails_before_application_sql(
 def test_application_sql_uses_explicit_quoted_schema(repository, monkeypatch):
     session = Mock()
     session.execute.return_value.scalar_one_or_none.return_value = True
-    session.execute.return_value.scalar_one.return_value = "0002_isolated_calls"
+    session.execute.return_value.scalar_one.return_value = "0003_library_uploads"
     monkeypatch.setattr(postgres, "verify_versions", Mock())
     instance = repository(session, schema="select")
     instance.check() if repository is postgres.BaselineRepository else instance.add(1, "body")
