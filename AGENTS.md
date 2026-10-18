@@ -22,11 +22,13 @@
 | --- | --- |
 | `GPT-6.1 Sol` | `group/auto-gpt-6-1-sol` |
 | `GPT-5.6 Sol` | `group/auto-gpt-5-6-sol` |
-| `DeepSeek V4.1 Flash` | `zayuapi/deepseek-v4.1-flash` |
+| `DeepSeek V4.1 Flash` | `deepseek-v4.1-flash` |
 | `Kimi K3` | `kimi/kimi-k3` |
 | `Step 5 Preview` | `stepfun/step-5-preview` |
 
 2026-10-17 用户变更：项目主控逻辑、核心后端、简单后端、复杂 RAG 和常规 RAG 的开发全部改由 `DeepSeek V4.1 Flash` 承担，使用模型默认档位；主会话编排仍为 `GPT-6.1 Sol / max`，独立审查仍为全新 `GPT-6.1 Sol / medium` 实例。既有已交付或冻结的实现证据不追溯改写，后续新派发按本表执行。
+
+2026-10-18 用户追加：后端与 RAG 新派发去掉 `zayuapi/` 前缀，使用精确 ID `deepseek-v4.1-flash`，不覆盖模型默认推理档位。旧实例和历史证据保留当时的原始 ID。当前子智能体接口实际返回 `Unknown model`，尚未创建该 ID 的实例；须待接口注册项变化后再核验，不把项目映射已更新当成模型已运行。
 
 - 主会话负责分析、公共契约、开发文档和协作管理，不编写或修改应用代码、测试代码、实现脚本或部署实现。集成和问题修复所需的代码变更也交给对应实现子智能体。
 - 功能分析、接口约定和任务拆分由主会话完成，不再另设功能分析子智能体。

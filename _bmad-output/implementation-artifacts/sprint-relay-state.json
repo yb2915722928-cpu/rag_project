@@ -6,7 +6,7 @@
   "project_path": "E:/aaa-project/rag",
   "host_id": "local",
   "mode": "serial-completion-triggered",
-  "state": "story_1_2_blocked_required_DeepSeek_EOF_checkpoint_saved_review_complete",
+  "state": "story_1_2_blocked_user_bare_DeepSeek_ID_unknown_to_spawn_interface",
   "owner_thread_id": "01a14b42-689c-7533-90a3-9bd187d93039",
   "current_story_key": "1-2-隔离执行并保存每次调用事实",
   "current_spec": "_bmad-output/implementation-artifacts/spec-1-2-isolated-calls.md",
@@ -15,7 +15,7 @@
   "acceptance_gate": "not-passed",
   "next_story_key": null,
   "next_thread_id": null,
-  "dispatch_state": "both_required_DeepSeek_attempts502_closed_base_independent_passed_snapshot_review_zero_new_E_D_open_no_next_Story",
+  "dispatch_state": "user_requested_bare_DeepSeek_ID_attempted_once_unknown_model_no_agent_E_D_still_open",
   "handoff_id": "3dff3d78-c0f5-42cf-9860-fc2ad4250ab4",
   "handoff_kind": "completed_story_serial_relay",
   "handoff_source_thread_id": "01a14973-8555-7131-8fd2-e9eec12f53fe",
@@ -38,20 +38,18 @@
   ],
   "blocked_conditions": [
     {
-      "condition": "Required DeepSeek implementation route returned502 upstream EOF on both fresh E successor and the one bounded retry.",
-      "first_observed": "2026-10-18T06:44:08+08:00",
-      "last_observed": "2026-10-18T07:01:31+08:00",
-      "raw_error": "unexpected status 502 Bad Gateway: DeepSeek: Post \"https://api.zayuapi.com/chat/completions\": EOF, url: http://127.0.0.1:3425/backend-api/codex/responses",
-      "instances": [
-        "01a14bfa-9d40-7f03-a3f7-3c823d20b28c",
-        "01a14c0b-4f69-7131-934e-f06f931cbd1a"
-      ],
-      "actual_turn_context": "Both requested/observed zayuapi/deepseek-v4.1-flash effort=max; no reasoning override. No underlying provider identity beyond route error is asserted.",
-      "impact": "E three-file current defects and developer tests cannot advance using the required implementer; D current startup regression remains unexecuted. Story1.2 original gate stays not-passed.",
-      "source_mutations_by_failed_instances": false,
-      "both_instances_closed": true,
-      "recheck_trigger": "User reports recovery or changes the required route/environment; a new explicit instruction authorizes another bounded attempt. Do not repeatedly probe unchanged failure.",
-      "no_fallback": "No alternate model/channel or controller-authored application/tests/deployment; no new empty relay chat for the same external blocker."
+      "condition": "User-required bare DeepSeek ID is not registered in the subagent spawn interface.",
+      "recorded_at": "2026-10-18T08:40:59.3344572+08:00",
+      "requested_model": "deepseek-v4.1-flash",
+      "requested_reasoning_effort": null,
+      "raw_error": "Unknown model `deepseek-v4.1-flash` for spawn_agent. Available models: group/auto-gpt-6-astra, group/auto-gpt-6-1-sol, group/auto-gpt-5-6-sol, zayuapi/deepseek-v4.1-flash, stepfun/step-5-preview",
+      "agent_created": false,
+      "actual_turn_context": null,
+      "impact": "E code fixes/developer tests and D deployment work remain pending; original Story1.2 gate is not-passed.",
+      "source_mutations": false,
+      "evidence": "_bmad-output/implementation-artifacts/story-1-2-bare-model-dispatch-2026-10-18.json",
+      "recheck_trigger": "Spawn-interface model registration/configuration changes, or the user changes the required route. Do not repeat unchanged Unknown model probes.",
+      "no_fallback": "No silent reuse of the old prefixed ID, alternate implementer, controller-authored implementation, or empty relay chat."
     }
   ],
   "deduplication_rule": "Recheck project threads and this claim before dispatch. Never create a second owner for the same story or retry an ambiguous creation before reconciling it.",
@@ -85,6 +83,23 @@
     }
   ],
   "resolved_or_superseded_conditions": [
+    {
+      "previous_condition": {
+        "condition": "Required prefixed DeepSeek route returned502 upstream EOF on both fresh E successor and the one bounded retry.",
+        "first_observed": "2026-10-18T06:44:08+08:00",
+        "last_observed": "2026-10-18T07:01:31+08:00",
+        "raw_error": "unexpected status 502 Bad Gateway: DeepSeek: Post \"https://api.zayuapi.com/chat/completions\": EOF, url: http://127.0.0.1:3425/backend-api/codex/responses",
+        "instances": [
+          "01a14bfa-9d40-7f03-a3f7-3c823d20b28c",
+          "01a14c0b-4f69-7131-934e-f06f931cbd1a"
+        ],
+        "actual_turn_context": "Both requested/observed zayuapi/deepseek-v4.1-flash effort=max; no reasoning override.",
+        "source_mutations_by_failed_instances": false,
+        "both_instances_closed": true
+      },
+      "resolution": "Superseded as the active route by the user's 2026-10-18 bare-ID instruction; historical EOF failures are preserved and no recovery of the prefixed route is claimed. The bare-ID attempt was rejected before agent creation.",
+      "recorded_at": "2026-10-18T08:40:59.3344572+08:00"
+    },
     {
       "previous_condition": {
         "condition": "B contracts cannot be generated from the existing backend source",
@@ -143,6 +158,23 @@
   "latest_decision_path": "_bmad-output/implementation-artifacts/story-1-1-acceptance-snapshot-2026-10-18.md",
   "pending_prerequisites": [],
   "last_merged_diagnostic": {
+    "recorded_at": "2026-10-18T08:40:59.3344572+08:00",
+    "controller_thread": "01a14b42-689c-7533-90a3-9bd187d93039",
+    "actual_model": "group/auto-gpt-6-1-sol",
+    "actual_effort": "max",
+    "actual_turn_context": "2026-10-18T00:39:23.13Z",
+    "same_project_active_developer_threads": [
+      "01a14b42-689c-7533-90a3-9bd187d93039"
+    ],
+    "local_HEAD": "5e718c2aec1690040d8189eeb3de4b96c7f0746a",
+    "initial_worktree_clean": true,
+    "active_E_D_writers": [],
+    "requested_implementation_model": "deepseek-v4.1-flash",
+    "dispatch_result": "Unknown model; no agent created",
+    "runtime_reprobes": "No unchanged Linux/PG/runtime gate rerun.",
+    "underlying_provider_identity": "not_observed"
+  },
+  "story_1_1_last_merged_diagnostic": {
     "observed_at": "2026-10-17T22:25:29.1358957+08:00",
     "controller_thread": "01a14973-8555-7131-8fd2-e9eec12f53fe",
     "actual_model": "group/auto-gpt-6-1-sol",
@@ -199,7 +231,7 @@
       "secret_value": "not_recorded"
     }
   },
-  "updated_at": "2026-10-18T07:14:27.050963+08:00",
+  "updated_at": "2026-10-18T08:40:59.3344572+08:00",
   "handoff_registered_at": "2026-10-18T03:07:41.6004268+08:00",
   "handoff_acceptance_evidence": "AMELIA_RELAY_RELEASE received; target 01a14b42-689c-7533-90a3-9bd187d93039 verified next_thread_id, Story1.2, handoff_id and Story1.1 passed gate, then accepted sole ownership. Source and all Story1.1 child writers released.",
   "implementation_claims": [
@@ -960,10 +992,19 @@
   "story_1_2": {
     "owner_thread_id": "01a14b42-689c-7533-90a3-9bd187d93039",
     "controller_turn_context": {
-      "timestamp": "2026-10-17T19:06:47.666Z",
+      "timestamp": "2026-10-18T00:39:23.13Z",
       "model": "group/auto-gpt-6-1-sol",
       "effort": "max",
       "provider_identity": "not_independently_visible"
+    },
+    "current_implementation_model": "deepseek-v4.1-flash",
+    "bare_model_dispatch": {
+      "requested_reasoning_effort": null,
+      "status": "rejected_unknown_model_no_agent_created",
+      "agent_id": null,
+      "source_writes": false,
+      "evidence": "_bmad-output/implementation-artifacts/story-1-2-bare-model-dispatch-2026-10-18.json",
+      "historical_prefixed_model_evidence_preserved": true
     },
     "baseline_commit": "96e7fb3ee94c025c3fae804ddabf8ad71d8b08d5",
     "acceptance_gate": "not-passed",

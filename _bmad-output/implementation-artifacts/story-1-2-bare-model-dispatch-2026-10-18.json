@@ -1,0 +1,47 @@
+{
+  "schema_version": "story-model-dispatch.v1",
+  "recorded_at": "2026-10-18T08:40:59.3344572+08:00",
+  "controller_thread_id": "01a14b42-689c-7533-90a3-9bd187d93039",
+  "controller_turn_context": {
+    "timestamp": "2026-10-18T00:39:23.13Z",
+    "model": "group/auto-gpt-6-1-sol",
+    "effort": "max"
+  },
+  "user_instruction": "Remove the zayuapi/ prefix; use deepseek-v4.1-flash and continue.",
+  "tool": "multi_agent_v1.spawn_agent",
+  "requested_model": "deepseek-v4.1-flash",
+  "reasoning_effort_override": null,
+  "scope": "Story1.2 E read-only takeover before model release; three existing E files and delivery document are the planned eventual write set.",
+  "raw_error": "Unknown model `deepseek-v4.1-flash` for spawn_agent. Available models: group/auto-gpt-6-astra, group/auto-gpt-6-1-sol, group/auto-gpt-5-6-sol, zayuapi/deepseek-v4.1-flash, stepfun/step-5-preview",
+  "agent_created": false,
+  "agent_id": null,
+  "child_turn_context": null,
+  "underlying_provider_request": "not_observed",
+  "source_writes": false,
+  "runtime_tests_executed": false,
+  "local_HEAD_before_documentation": "5e718c2aec1690040d8189eeb3de4b96c7f0746a",
+  "initial_worktree_clean": true,
+  "same_project_active_developer_threads": [
+    "01a14b42-689c-7533-90a3-9bd187d93039"
+  ],
+  "source_sha256_after_rejection": {
+    "backend/src/rag_app/application/call_dispatch.py": "2fa30b50f8c2e372f3ebb8502be308f84142b88260dfcc5926a613e85d5126b9",
+    "backend/tests/test_call_dispatch.py": "39965705b0856f148ba6ae75cc61bf4fe973a99d81dd28cf4d03b3a6c9e65bd1",
+    "backend/tests/test_call_dispatch_postgres.py": "ec36f9b496fb037232701b5f8ac145fdba71f7990baee642f7483c8d5f256b8c",
+    "deploy/compose.yaml": "c05e4594a939432e87bba40dd57307d89e185176ecfa852da82efc2e168f77db",
+    "docs/story-1-2-epoch-deploy.md": "26e7a07db095ccb712356cd98e6802f8f331a43a6ad23bffb9962c6263169377"
+  },
+  "source_hashes_match_prior_frozen_values": true,
+  "parent_story_status": "in-progress",
+  "parent_acceptance_gate": "not-passed",
+  "remaining": [
+    "E logical/transport purpose fix and trustworthy success/late-fact tests",
+    "E actual child stop/kill joined to PostgreSQL unknown/no-repeat-grant evidence",
+    "D current-backend epoch startup/restart/negative deployment evidence",
+    "New E/D developer tests, independent verification and related review follow-up"
+  ],
+  "recheck_trigger": "Spawn-interface registration/configuration changes, or user changes the required route.",
+  "historical_evidence_policy": "Preserve the two old prefixed-route EOF errors and their actual model IDs; do not relabel them as bare-ID runs.",
+  "new_relay_thread_created": false,
+  "background_automation_created": false
+}

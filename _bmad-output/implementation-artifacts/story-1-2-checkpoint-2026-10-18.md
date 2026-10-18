@@ -24,7 +24,17 @@
 
 未来1.3限流/permit、1.4资产、1.5总资格工具、身份/真实供应方/P0/目标部署仍按原规划归属，不把不存在的未来业务表作为当前新增前置。当前call/context/fact不复活和不乱改的证明义务保留。
 
-## 必需模型的实际阻塞
+## 当前去前缀ID的实际阻塞
+
+2026-10-18 用户要求去掉 `zayuapi/` 前缀，使用精确 `deepseek-v4.1-flash` 并继续。主控实际模型重新核为 `group/auto-gpt-6-1-sol / max`，本地HEAD `5e718c2aec1690040d8189eeb3de4b96c7f0746a`，无重复Story owner或E/D活动写者。新指令触发一次实际 `spawn_agent`，未设置推理override，接口原始返回：
+
+```text
+Unknown model `deepseek-v4.1-flash` for spawn_agent. Available models: group/auto-gpt-6-astra, group/auto-gpt-6-1-sol, group/auto-gpt-5-6-sol, zayuapi/deepseek-v4.1-flash, stepfun/step-5-preview
+```
+
+接口未返回agent ID，没有子实例turn_context或供应方请求证据。五份E/D源实际hash与历史冻结值一致，记录于[去前缀派发证据](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-2-bare-model-dispatch-2026-10-18.json:1)。项目模型映射已更新；实际运行仍受接口注册项阻塞，原E/D义务与未过状态保持。下一复核触发为接口注册项/配置变化或用户改变路由；不重复同一拒绝探测。
+
+## 历史前缀通道阻塞
 
 两次新实例均按指定 `zayuapi/deepseek-v4.1-flash` 派发、未覆盖推理；实际turn_context均max。首次 `01a14bfa-9d40-7f03-a3f7-3c823d20b28c` 于北京时间06:44:08完成报错；唯一有界重试 `01a14c0b-4f69-7131-934e-f06f931cbd1a` 于07:01:31同错：
 
