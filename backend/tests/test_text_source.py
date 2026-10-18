@@ -577,8 +577,13 @@ def test_markdown_headings_and_fenced_code_keeps_real_hierarchy():
         tuple(node.text for node in chunk.structure_path)
         for chunk in paragraphs
     ] == [
-        ("# 一级标题",),
-        ("# 一级标题", "## 二级标题", "### 三级标题"),
+        ("# 一级标题", "引言"),
+        (
+            "# 一级标题",
+            "## 二级标题",
+            "### 三级标题",
+            "正文",
+        ),
     ]
 
 

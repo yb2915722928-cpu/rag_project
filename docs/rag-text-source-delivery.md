@@ -1,13 +1,13 @@
 # U2a TXT/Markdown 来源解析分块交付
 
-状态：2026-10-18 三文件已可发布；Linux 精确 CPython 3.12.8 开发者测试待主控统一提交后执行，本地未运行项目。父 Story 4.2 与 P0 五格式、embedding、索引集成均未由本交付证明。
+状态：2026-10-18 首轮固定提交 `c5a8cb2` 已实测（1 failed / 60 passed），失败为测试期望错误，已本地定向修正待再次发布；Linux 精确 CPython 3.12.8 的通过运行尚未完成。父 Story 4.2 与 P0 五格式、embedding、索引集成均未由本交付证明。
 
 ## 文件与 hash
 
 | 归属 | 文件 | SHA-256 |
 | --- | --- | --- |
 | 核心 | [text_source.py](/E:/aaa-project/rag/backend/src/rag_app/modules/indexing/text_source.py:1) | `6E8F22B7395C4241FA08E05EC38DF0BAD7F2F2CD288CF4F62B5BF641DC47E60D` |
-| 测试 | [test_text_source.py](/E:/aaa-project/rag/backend/tests/test_text_source.py:1) | `9B4A886A10315D5D5DAB4DB2DC7F1CFBC2F946A5C528D65BF1C2AE64DDA1C327` |
+| 测试 | [test_text_source.py](/E:/aaa-project/rag/backend/tests/test_text_source.py:1) | `18AF053198C3C6CD7453CAE2EF8C83DA45924C9A89A10A824C9F9F954E742C90` |
 
 hash 为本地工作区原文件 hash，随后续任何编辑失效；服务器测试前以主控发布的固定提交重新计算。
 
@@ -49,7 +49,7 @@ parsed = parse_text_source(
 
 ## 测试
 
-`test_text_source.py` 共 29 个测试函数、58 个收集用例（6 组参数化），覆盖规格 I/O 矩阵：
+`test_text_source.py` 共 29 个测试函数、58 个收集用例（6 组参数化）加 3 个架构边界用例，固定提交首轮共收集 61 个用例；覆盖规格 I/O 矩阵：
 
 | AC / 矩阵 | 主要用例 |
 | --- | --- |
@@ -67,9 +67,32 @@ parsed = parse_text_source(
 
 未借鉴或复制 WeKnora/MaxKB 代码，无外部来源引用条目。
 
+## 固定提交 `c5a8cb26bdf373d2f390cc2f2abda48c9fa56710` 实测（失败，保留）
+
+服务器会话 `ea39f441-3b2e-452c-a491-5eccf1f57c96`（Netcatty），检出 `/opt/rag-fastapi-main/repo`，HEAD 为该 commit，`git status --porcelain` 为空；解释器 `/opt/rag-story-1-2/venv-fixed/bin/python` 为 CPython 3.12.8；两文件 sha256 与交付一致（`6e8f22b7...e60d` / `9b4a886a...1c327`）。
+
+命令（工作目录 `/opt/rag-fastapi-main/repo/backend`）：
+
+```bash
+PYTHONPATH=/opt/rag-fastapi-main/repo/backend/src /opt/rag-story-1-2/venv-fixed/bin/python \
+  -m pytest tests/test_text_source.py tests/test_architecture.py \
+  -p no:cacheprovider -q --junitxml=.../junit.xml
+```
+
+结果：退出码 1，61 收集，1 failed / 60 passed，耗时 2.32s。唯一失败：
+
+```text
+FAILED tests/test_text_source.py::test_markdown_headings_and_fenced_code_keeps_real_hierarchy
+At index 0 diff: ('# 一级标题', '引言') != ('# 一级标题',)
+```
+
+归类：测试期望错误。实现将段落自身作为 `structure_path` 末节点（`append_split(..., node_kind="paragraph")`），首段落路径应为 `('# 一级标题', '引言')`，末段落应为 `('# 一级标题','## 二级标题','### 三级标题','正文')`；实现行为符合“结构路径来自实际段落”，不是核心缺陷。已仅修正该期望，核心未改（hash 仍为 `6e8f22b7...e60d`）。修正后测试 hash 为 `18af0531...2c90`。
+
+证据：`/fileOfRag/testOfRAG/metadata/rag-api-mainline/U2a/c5a8cb2/{env-before.txt,pytest.log,exitcode.txt,junit.xml}`。
+
 ## 未完成 / 未验证
 
-- Linux 精确 CPython 3.12.8 的 `test_text_source.py` 与 `test_architecture.py` 实际运行：未执行，待主控提交并同步双远端后拉取固定提交运行。
+- 修正后测试在固定提交上的 Linux 精确 CPython 3.12.8 通过运行：未执行，待主控再次发布。
 - 独立验证与独立审查：未开始；本文件不构成 PASS 或验收结论。
 - 父 Story 4.2 的上传表集成、embedding、索引、发布原子切换，以及 P0 五格式解析：未实现、未验证。
 - 本地只做了 AST 语法解析与必要的静态一致性核对，未运行项目、未运行 pytest。
