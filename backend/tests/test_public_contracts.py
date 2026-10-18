@@ -562,7 +562,10 @@ def test_public_enums_index_keeps_original_identity_and_wire_values():
         "none", "same_key_or_status", "new_operation", "manual_reconcile",
     }
     assert set(PUBLIC_ENUMS) & set(PUBLIC_MODELS) == set()
-    assert len(PUBLIC_MODELS) == 17
+    # upload.v1 joins the same generated catalog; its five projections and
+    # envelope are neither enums nor a second hand-written contract.
+    assert len(PUBLIC_MODELS) == 27
+    assert {"UploadResponse", "Candidate", "IndexGeneration"} <= set(PUBLIC_MODELS)
 
 
 @pytest.mark.parametrize("name,enum", sorted(PUBLIC_ENUMS.items()))

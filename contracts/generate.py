@@ -30,9 +30,11 @@ JSON_SCHEMA_DIALECT = "https://json-schema.org/draft/2020-12/schema"
 
 SOURCE_FILES = (
     "backend/src/rag_app/contracts/public.py",
+    "backend/src/rag_app/contracts/upload.py",
     "backend/src/rag_app/contracts/scalars.py",
     "backend/src/rag_app/contracts/errors.py",
     "backend/src/rag_app/entrypoints/api.py",
+    "backend/src/rag_app/entrypoints/upload_api.py",
     "backend/src/rag_app/entrypoints/contract_probe.py",
     "backend/src/rag_app/entrypoints/json_guard.py",
     "backend/src/rag_app/bootstrap/config.py",
@@ -66,6 +68,17 @@ CAPABILITY_MODELS: dict[str, tuple[str, ...]] = {
         "OperationResponse",
         "PublicError",
         "Usage",
+    ),
+    "upload.v1": (
+        "ActiveVersion",
+        "Candidate",
+        "Cleanup",
+        "IncompleteRange",
+        "IndexGeneration",
+        "Job",
+        "Progress",
+        "Rebuild",
+        "UploadResponse",
     ),
 }
 
@@ -273,12 +286,15 @@ def _render_typescript(
 
 def build_artifacts() -> dict[str, bytes]:
     from rag_app.contracts.public import PUBLIC_ENUMS, PUBLIC_MODELS
+    from rag_app.contracts.upload import UPLOAD_MODELS
+
+    upload_models = {**PUBLIC_MODELS, **UPLOAD_MODELS}
 
     missing = sorted({
         name
         for names in CAPABILITY_MODELS.values()
         for name in names
-        if name not in PUBLIC_MODELS
+        if name not in upload_models
     })
     if missing:
         raise SystemExit(
@@ -296,7 +312,7 @@ def build_artifacts() -> dict[str, bytes]:
     artifacts: dict[str, bytes] = {}
     for capability, names in CAPABILITY_MODELS.items():
         for name in names:
-            model = PUBLIC_MODELS[name]
+            model = upload_models[name]
             for mode in ("validation", "serialization"):
                 raw = _raw_schema(model, mode)
                 schema = copy.deepcopy(raw)
@@ -408,7 +424,7 @@ def build_artifacts() -> dict[str, bytes]:
             "title": openapi.get("info", {}).get("title"),
             "api_version": openapi.get("info", {}).get("version"),
         },
-        "models": sorted(PUBLIC_MODELS),
+        "models": sorted(upload_models),
         "enums": {
             name: [item.value for item in enum]
             for name, enum in sorted(PUBLIC_ENUMS.items())

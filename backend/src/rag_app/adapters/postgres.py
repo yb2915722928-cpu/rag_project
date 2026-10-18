@@ -12,7 +12,7 @@ from sqlalchemy.sql import quoted_name
 from rag_app.application.uow import UnitOfWork
 from rag_app.contracts.errors import SafeError
 
-HEAD_REVISION = "0002_isolated_calls"
+HEAD_REVISION = "0003_library_uploads"
 
 
 def validate_database_url(value: str) -> URL:

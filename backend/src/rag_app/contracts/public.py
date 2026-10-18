@@ -7,14 +7,16 @@ from typing import Annotated, Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, ValidationError, model_validator
 
-from .errors import MESSAGES
+from .errors import BUSINESS_MESSAGES, MESSAGES
 from .scalars import (
     FiniteDecimal, StableId, UtcDateTime, WireText, scalar_length,
     strict_json_loads, validate_wire_values,
 )
 
 NonnegativeInt = Annotated[int, Field(strict=True, ge=0)]
-CapabilityVersion = Literal["answer.v1", "comparison.v1", "retrieval.v1", "operation.v1"]
+CapabilityVersion = Literal[
+    "answer.v1", "comparison.v1", "retrieval.v1", "operation.v1", "upload.v1",
+]
 
 
 class ContractModel(BaseModel):
@@ -146,6 +148,32 @@ ERROR_POLICY: dict[str, tuple[str, int, RetryMode]] = {
     "STARTUP_DEPENDENCY_UNAVAILABLE": (
         MESSAGES["STARTUP_DEPENDENCY_UNAVAILABLE"], 503, RetryMode.NONE,
     ),
+    # Upload/business failures share this one finite dictionary instead of
+    # leaking free-form strings from the upload service.
+    "UPLOAD_CONTENT_CONFLICT": (
+        BUSINESS_MESSAGES["UPLOAD_CONTENT_CONFLICT"], 409, RetryMode.NONE,
+    ),
+    "UPLOAD_EXPIRED": (
+        BUSINESS_MESSAGES["UPLOAD_EXPIRED"], 410, RetryMode.NEW_OPERATION,
+    ),
+    "UPLOAD_IN_PROGRESS": (
+        BUSINESS_MESSAGES["UPLOAD_IN_PROGRESS"], 409, RetryMode.SAME_KEY_OR_STATUS,
+    ),
+    "ORIGINAL_CAPACITY_EXCEEDED": (
+        BUSINESS_MESSAGES["ORIGINAL_CAPACITY_EXCEEDED"], 413, RetryMode.NONE,
+    ),
+    "FILE_LIMIT_EXCEEDED": (
+        BUSINESS_MESSAGES["FILE_LIMIT_EXCEEDED"], 413, RetryMode.NONE,
+    ),
+    "CAPACITY_LEDGER_CONFLICT": (
+        BUSINESS_MESSAGES["CAPACITY_LEDGER_CONFLICT"], 409, RetryMode.MANUAL_RECONCILE,
+    ),
+    "STORAGE_PRESSURE": (
+        BUSINESS_MESSAGES["STORAGE_PRESSURE"], 503, RetryMode.NONE,
+    ),
+    "IDENTITY_UNVERIFIED": (
+        BUSINESS_MESSAGES["IDENTITY_UNVERIFIED"], 403, RetryMode.NONE,
+    ),
 }
 ErrorCode = Literal[
     "AUTH_CHANNEL_CONFLICT", "VALIDATION_ERROR", "AUTH_REQUIRED", "CREDENTIAL_INVALID",
@@ -159,6 +187,9 @@ ErrorCode = Literal[
     "DATABASE_CLEANUP_FAILED", "ONLINE_VALIDATION_REQUIRED", "RUNTIME_VERSION_MISMATCH",
     "DATABASE_REVISION_MISMATCH", "DATABASE_NAMESPACE_UNAVAILABLE",
     "STARTUP_DEPENDENCY_UNAVAILABLE", "METHOD_NOT_ALLOWED", "INTERNAL_ERROR",
+    "UPLOAD_CONTENT_CONFLICT", "UPLOAD_EXPIRED", "UPLOAD_IN_PROGRESS",
+    "ORIGINAL_CAPACITY_EXCEEDED", "FILE_LIMIT_EXCEEDED",
+    "CAPACITY_LEDGER_CONFLICT", "STORAGE_PRESSURE", "IDENTITY_UNVERIFIED",
 ]
 
 
@@ -422,3 +453,9 @@ PUBLIC_MODELS: dict[str, type[ContractModel]] = {
         CompletedResponse, FailedResponse, OperationResponse, RetrievalResponse,
     )
 }
+
+# upload.v1 joins the same generated contract catalog.  The import stays at the
+# bottom because contracts/upload.py builds on ContractModel in this module.
+from .upload import UPLOAD_MODELS as _UPLOAD_MODELS  # noqa: E402
+
+PUBLIC_MODELS.update(_UPLOAD_MODELS)

@@ -12,6 +12,7 @@ from rag_app.contracts.errors import SafeError
 from rag_app.entrypoints.contract_probe import (
     PrivateHttpMiddleware, failure_response, register_contract_probe,
 )
+from rag_app.entrypoints.upload_api import register_upload_routes
 
 
 def create_app(
@@ -64,6 +65,7 @@ def create_app(
     register_contract_probe(
         app, contract_test_token if settings.environment != "production" else None,
     )
+    register_upload_routes(app, settings=settings)
     return app
 
 

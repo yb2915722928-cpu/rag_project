@@ -90,9 +90,14 @@ def register_contract_probe(app: FastAPI, token: SecretStr | None) -> None:
     expected = token.get_secret_value().encode("utf-8") if token is not None else None
     if expected is not None and not 1 <= len(expected) <= 256:
         raise ValueError("Contract test token must contain 1 to 256 UTF-8 bytes.")
+    # Only the canonical C2 responses are fixture-probe operations.  upload.v1
+    # shares PUBLIC_MODELS for generation, but it is a business route and must
+    # not become a second caller-controlled validation endpoint.
     response_models = {
-        name: model for name, model in PUBLIC_MODELS.items()
-        if {"schema_version", "request_id", "status"} <= model.model_fields.keys()
+        name: PUBLIC_MODELS[name] for name in (
+            "AcceptedResponse", "CompletedResponse", "FailedResponse",
+            "OperationResponse", "RetrievalResponse",
+        )
     }
 
     @app.post(PROBE_PATH, response_model=None, tags=["isolated-contract-fixtures"])
