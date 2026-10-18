@@ -238,10 +238,13 @@ def test_feed_splits_input_into_bounded_ipc_chunks(paths, monkeypatch) -> None:
         )
         with writer:
             writer.feed(data)
+            size, digest = writer.finish()
         assert writer.stop_proven
         assert recorded
         assert max(recorded) <= 4096
         assert sum(recorded) == len(data)
+        assert size == len(data)
+        assert digest == hashlib.sha256(data).hexdigest()
         assert paths.final.read_bytes() == data
     finally:
         slot.release()
