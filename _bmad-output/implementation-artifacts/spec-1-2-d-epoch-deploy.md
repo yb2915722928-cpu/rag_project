@@ -22,6 +22,7 @@ review_loop_iteration: 0
 ## Tasks & Acceptance
 
 - [ ] 唯一源归属 [compose.yaml](/E:/aaa-project/rag/deploy/compose.yaml:1)：API/worker传同一准确RAG_EPOCH_CONTROL_FILE，默认落已有`/var/lib/rag/epoch`只读挂载内。
+- [ ] [api.Dockerfile](/E:/aaa-project/rag/deploy/api.Dockerfile:1)归D：修真实发现的COPY继承0700/0600导致服务UID65532读不到源码。镜像内归一化可读/可遍历权限，仍禁组/其他写；以最终UID验证导入及配置/迁移读取，不用root运行或改宿主源码权限代替。
 - [ ] 唯一文档归属 [epoch部署说明](/E:/aaa-project/rag/docs/story-1-2-epoch-deploy.md:1)：显式首次维护步骤、服务UID/目录权限、迁移/镜像初始化/检查顺序；复用现有A函数，不另造资格CLI，不把秘密放argv/log。
 - [ ] 按主控时段仅在Linux，以Gitee固定提交/源码hash构建或复用同源码后端镜像，运行项目专属API/worker最小启动与重启，核epoch/镜像不变；缺失/矛盾新worker有限失败，不实际供应方外发。
 
@@ -44,6 +45,8 @@ review_loop_iteration: 0
 主控已核B实际DeepSeek/max默认路由，采纳预读方案：两服务同变量，默认 `/var/lib/rag/epoch/epoch-control.json`；首次维护临时以服务UID在RW目录0700初始化，之后epoch目录恢复0550、文件0400/65532，普通只读挂载满足既有preflight。部署说明须清楚分开维护与普通启动，不覆盖已有控制记录。A服务器草稿覆盖检出已停用；所有D实测等主控提供新的干净Gitee固定检出，不能直接修改服务器源。
 
 原B/D续跑长时间无新工具输出，主控已关闭并释放写入/RPC；既有两文件均固定96c64fb，见[接替快照](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-2-ed-successor-source-snapshot.json:1)。新同模型DeepSeek仅接尚未执行的运行回归：先只读ready，等D_SUCCESSOR_MODEL_RELEASE核模型/给RPC。复用既有测试PG环境文件（setup.sh第162行指定，root0400）与rag-story-1-1-test网络、postgres-test:5432；不猜rag角色/pgpass，不打印秘密，不重探旧DockerHub阻塞。先看Story1.2专属远程目录/已有后台进程，避免重复构建；旧1.1基镜像构建可复用缓存。代码96c不改，任何新失败先报主控，不server覆盖。
+
+2026-10-18 新D Nash已核前缀DeepSeek/max默认。d6新镜像build成功，但服务UID导入失败；实见root0700源码目录/0600文件。主控据当前启动缺陷放行上述Dockerfile窄修，覆盖“代码96c不改”的旧指令；新源码仍先双远端发布，再Gitee固定提交构建回归。A/E/C保持冻结。
 
 ## Verification
 

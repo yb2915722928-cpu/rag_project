@@ -6,7 +6,7 @@
   "project_path": "E:/aaa-project/rag",
   "host_id": "local",
   "mode": "serial-completion-triggered",
-  "state": "story_1_2_E_canonical_d6_passed_D_backend_build_running_independent_increment_pending",
+  "state": "story_1_2_E_developer_and_independent_runtime_passed_D_image_permissions_patch_frozen",
   "owner_thread_id": "01a14b42-689c-7533-90a3-9bd187d93039",
   "current_story_key": "1-2-隔离执行并保存每次调用事实",
   "current_spec": "_bmad-output/implementation-artifacts/spec-1-2-isolated-calls.md",
@@ -1083,14 +1083,17 @@
       "observed_timestamp": "2026-10-18T01:04:56.085Z",
       "scope": [
         "deploy/compose.yaml",
-        "docs/story-1-2-epoch-deploy.md"
+        "docs/story-1-2-epoch-deploy.md",
+        "deploy/api.Dockerfile"
       ],
-      "state": "D_RUNTIME_RELEASE_build_running_on_fixed_d6",
+      "state": "D_Dockerfile_permissions_patch_SOURCE_FROZEN_pending_fixed_commit_rebuild",
+      "Dockerfile_sha256": "8044d7086d7ecba6874ca91771378a89237fbdb5dfc7d5160aa52a52f6120414",
+      "current_short_spec_o200k_tokens": 1449,
       "fixed_commit": "d6e8a0da94a88199e6c4795f3e10e26c821b454f",
       "build_job": "job_mvd62ljm_150999443e9b",
       "image_tag": "rag-story-1-2-api:d6e8a0da",
       "evidence_root": "/opt/rag-story-1-2/evidence/D-d6e8a0da",
-      "remote_terminal_lease": true,
+      "remote_terminal_lease": false,
       "transport": "controller forwards D developer-authored commands through official Netcatty MCP"
     },
     "D_build_attempts": {
@@ -1102,8 +1105,30 @@
       "retry_job": "job_mvd62ljm_150999443e9b",
       "retry_log": "/opt/rag-story-1-2/evidence/D-d6e8a0da/build-retry.log",
       "retry_change": "Use the verified existing full repo@digest image references; same source Dockerfile and commit.",
-      "retry_observed": "Local base metadata loaded and cached steps passed; image dependency uv --locked downloads running.",
+      "retry_observed": "repo@digest retry build completed exit0; image rag-story-1-2-api:d6e8a0da created.",
       "D_runtime_gate": "not-passed"
+    },
+    "D_service_UID_packaging_failure": {
+      "source_commit": "d6e8a0da94a88199e6c4795f3e10e26c821b454f",
+      "failed_image_id": "sha256:8803390d57bb5a32beb8c9a1da15c79c65da499e2297433371d4c7dd24193f22",
+      "maintenance_job": "job_mvd6dfi1_37369411d7ef",
+      "exit_code": 1,
+      "error": "ModuleNotFoundError: No module named 'rag_app.adapters'",
+      "actual_diagnostic": "Image source package directory inherited root0700 and project files root0600 from checkout. Service UID65532 ls/stat Permission denied; Python sees namespace but cannot import adapters.",
+      "schema_or_epoch_initialized": false,
+      "scope_added": "deploy/api.Dockerfile",
+      "fix_owner": "01a14c8a-4d7b-7542-a584-db86213f6eb7",
+      "required_fix": "Normalize image source permissions and verify imports/readability under final service UID; preserve no group/other write. No host-source chmod, root runtime or server-source overwrite.",
+      "new_fixed_commit_build_and_D_runtime_required": true
+    },
+    "D_packaging_fix": {
+      "file": "deploy/api.Dockerfile",
+      "developer_confirmed_SOURCE_FROZEN": true,
+      "sha256": "8044d7086d7ecba6874ca91771378a89237fbdb5dfc7d5160aa52a52f6120414",
+      "change": "Normalize copied /app modes while retaining no group/other write check; run package/config/migration readability checks under final UID65532.",
+      "runtime_source_untouched": "A/B/C/E and Compose",
+      "regression": "New fixed-commit image build must emit SERVICE_UID_IMPORT_OK; then original D startup/restart/negative matrix.",
+      "acceptance": "not-passed"
     },
     "independent_increment_successor": {
       "previous_agent_id": "01a14b8d-7d2f-7b62-875b-a324944c561c",
