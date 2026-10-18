@@ -1,5 +1,7 @@
 # 通道恢复后续接 Story 1.2
 
+**历史续接说明，已失效：Story1.2现已done/passed。** 当前接力请读[1.3工作集](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-3-working-set.md:1)与relay，不重开1.2；以下保留当时未完成和阻塞记录。
+
 本说明保存未完成工作，**不是已发送的新会话或后台定时任务**。用户最新明确恢复带前缀 `zayuapi/deepseek-v4.1-flash` 继续开发；新E Aquinas已创建、实际route/max默认已核且窄范围写入已放行，当前认领以工作集/relay为准。历史无前缀Unknown model及前缀两次502/EOF保留，不将创建成功当成运行通过。
 
 作为同一rag项目Amelia主控，使用6.1Sol/max；只续Story1.2。先读[短工作集](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-2-working-set.md:1)、[检查点](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-2-checkpoint-2026-10-18.md:1)、AGENTS与relay。1.1已done/passed，1.2未过；所有原AC不缩减，不先开1.3。

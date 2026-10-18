@@ -2,7 +2,7 @@
 title: 'Story 1.2 独立运行验证'
 type: chore
 created: '2026-10-18'
-status: in-progress
+status: done
 route: dispatch
 review_loop_iteration: 0
 ---
@@ -21,11 +21,11 @@ review_loop_iteration: 0
 
 ## Tasks & Acceptance
 
-- [ ] 核 epoch重启/矛盾/缺失与旧fence拒绝；四类能力端口显式假件，无真实外发。
-- [ ] 实际 Linux 子进程故障矩阵涵盖 prepared前后/may_have_sent后/响应前后；grant唯一、unknown=NULL、权限/IPC/停止/槽复用符合AC2。
-- [ ] DNS/HTTPS/host-port/全部A-AAAA/IP绑定/TLS/redirect/Authorization分域/秘密哨兵实际通过AC3测试；不向供应方探测。
-- [ ] 真实PG运行迟到事实/重复/冲突/旧epoch和锁序/事务外等待；迁移up/down/up及本条影响的namespace/启动回归。当前必需负例不可skip。
-- [ ] 对照测试调用路径确认台账每个子句有对应证据；不只转述开发者。报告命令、版本、预期/实际、退出码、JUnit统计、hash和未通过项。
+- [x] 核 epoch重启/矛盾/缺失与旧fence拒绝；四类能力端口显式假件，无真实外发。
+- [x] 实际 Linux 子进程故障矩阵涵盖 prepared前后/may_have_sent后/响应前后；grant唯一、unknown=NULL、权限/IPC/停止/槽复用符合AC2。
+- [x] DNS/HTTPS/host-port/全部A-AAAA/IP绑定/TLS/redirect/Authorization分域/秘密哨兵实际通过AC3测试；不向供应方探测。
+- [x] 真实PG运行迟到事实/重复/冲突/旧epoch和锁序/事务外等待；迁移up/down/up及本条影响的namespace/启动回归。当前必需负例不可skip。
+- [x] 对照测试调用路径确认台账每个子句有对应证据；不只转述开发者。报告命令、版本、预期/实际、退出码、JUnit统计、hash和未通过项。
 
 ## Acceptance Criteria
 

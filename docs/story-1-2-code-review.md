@@ -166,3 +166,81 @@ E13 中直接核到了正常成功及 unknown usage、错误业务用途拒绝�
 **前节范围描述纠正：**此前只查看 PG 文件 diff 就写成“差异仅为 PG 测试文件”，该描述不完整。本次对固定提交三源一起比较，实际为两个测试文件共 10 行新增、3 行删除；[unit 目标假件](/E:/aaa-project/rag/backend/tests/test_call_dispatch.py:64)同样引入 quote 并编码 query SECRET，PG 有两处同类编码，应用源码不变。unit 小补丁也已核对，仍只修合法 URI 输入，未放松 B 守卫；对应 20 unit 已由上述原始 XML 直接确认通过。这一说明修正审查记录，不改写此前历史内容。
 
 本次 **0 新增代码发现**。URI 输入缺陷及既有 F2/E 项的开发者实现与相关运行修复已获上述原始证据支持，相关已知缺陷可关闭；这不代替独立执行验证。索引明确 `independent_E_D=pending`、`D_runtime=pending`、`parent_acceptance_gate=not-passed`，本实例保持这些状态，不审 D，不给父 Story 签 PASS。
+
+### D 实际权限故障：91bac6e 窄静态增量复核
+
+主控提供的实际故障为：d6 镜像 build 成功，但服务源码/配置继承服务器 Git checkout 的 umask 077，出现 root 所有的 0700 目录及 0600 配置；UID 65532 无法读取/遍历，真实维护操作 import `rag_app.adapters` 报 ModuleNotFoundError。此处保留主控的运行故障来源，本实例未自行复现。该实际失败触发本次 D 必要增量复核，不扩展配额或未来验收要求。
+
+受审固定提交 `91bac6eb8e27ea399140eb9a1f3f89462cafa64d`，基线为 `d6e8a0da94a88199e6c4795f3e10e26c821b454f`。本实例直接读取固定提交源码及 diff，确认 backend/deploy 范围仅 [api.Dockerfile](/E:/aaa-project/rag/deploy/api.Dockerfile:26) 变化，增加 12 行；应用、E/A/B/C 与 Compose 无差异。本实例从 Git blob 原始字节计算 Dockerfile SHA256 为 `8044d7086d7ecba6874ca91771378a89237fbdb5dfc7d5160aa52a52f6120414`，与主控提供值一致；双远端同值为主控提供事实，本实例未联网重验。
+
+静态核对结果：
+
+- [归一化步骤](/E:/aaa-project/rag/deploy/api.Dockerfile:30)，范围：30–31，在源码/迁移/配置 COPY 后将镜像 `/app` 所有者归 root，以 `u+rwX,go+rX` 补足服务 UID 的文件读取与目录遍历权限。没有增加 group/other 写权限；原有[无 group/other write 检查](/E:/aaa-project/rag/deploy/api.Dockerfile:33)，范围：33–34，仍在归一化后执行，输入原有可写位不会因本次补权限而绕过该检查。
+- [服务 UID 切换与检查](/E:/aaa-project/rag/deploy/api.Dockerfile:36)，范围：36–41，先执行 `USER 65532:65532`，再实际读取 pyproject、锁、Alembic 配置及迁移文件，并 import epoch_control、postgres、runtime、API、worker 等模块。任一读取/import 失败将使该构建步骤失败，覆盖原先只由 root import 而漏检的实际读取边界；不是仅检查权限字符串。
+- 改动限定镜像构建产物 `/app`，没有修改宿主机 checkout、挂载卷或运行时秘密权限，也未修改依赖锁、解释器或已有应用接口。
+
+本次限定静态增量 **0 新增发现**。已知权限故障的源码修补与对应服务 UID 检查已具备；本实例尚未收到该提交的新 build 及原 D 启动/重启/异常矩阵结果，因此只判定静态修复，不签运行通过。`D_runtime=pending`，相关独立验证仍 pending，父 Story `fullrelease_gate=not-passed`。E 原始成绩继续归属 d6，保留且不重跑、不重标为 91bac6e 运行成绩。后续仅核对此实际 D 修复及原 D 矩阵的新证据。
+
+### 91bac6e 真实运行更新：worker helper 权限失败
+
+主控随后提供 `91bac6eb8e27ea399140eb9a1f3f89462cafa64d` 实际运行结果：镜像 build 的最终 UID 检查已输出 `SERVICE_UID_IMPORT_OK`；schema 迁移、epoch 显式初始化/镜像核对、check-database 均 exit 0。API 和 worker 实际 running，API liveness 返回 200，并有 `DATABASE_BASELINE_OK`。这些结果支持 `/app` 内权限修复有效，但不代替 worker 健康检查或后续重启验收。
+
+随后原 worker 健康脚本 `/usr/local/bin/rag-worker-healthcheck` 报 `Permission denied`，`health_before=2`；主控核实该 COPY 产物同样为 0600，位于 `/app` 之外，未受前节归一化覆盖。[Dockerfile helper COPY](/E:/aaa-project/rag/deploy/api.Dockerfile:24)是该产物来源。本次记录的是已实际发生、已回交 D 的具体缺陷；本实例未自行读取服务器日志或重跑。前次静态检查只确认了 `/app` 的补权限与服务 UID import，未识别该外部 helper 的读取缺口，现按真实失败补充处置记录，保留前次结论的范围和历史。
+
+D 的当前修复归属仅为此具体 helper 可读权限及最终 UID 下实际读取检查。尚未收到修补后的固定提交，不宣称补丁已完成或已审查；不新增其他路径遍历检查或泛化要求。原 91 运行中已通过的步骤保留其提交来源，worker 健康阶段为 **failed**，重启仍 **not-executed**，D 完整运行门不通过，相关 D 独立验证仍待验。
+
+主控另更新 E 与独立 E 已全部通过，本报告按该状态保留 E 成绩；本次没有重跑或重开 E。后续仅在收到新固定提交后复核 helper 权限小补丁及原 D 矩阵相关证据。父 Story `fullrelease_gate=not-passed`，不将 API liveness 或数据库检查的局部成功提升为 D/Story PASS。
+
+### 0162cb52 helper 权限修补：限定静态复核
+
+本实例直接复核固定提交 `0162cb52f4c49265d99777c82d854b3617941941` 相对 `91bac6eb8e27ea399140eb9a1f3f89462cafa64d` 的 Dockerfile 差异，8 行新增、1 行删除；backend/deploy 范围仅该文件变化。从固定提交 Git blob 原始字节计算 SHA256 为 `6e933822a60a317476e20dc77c2f9d882c4c55cc1fa958462edb0008273faf36`，与主控提供值一致。双远端同值为主控提供事实，本实例未联网重验。
+
+[helper 专项权限步骤](/E:/aaa-project/rag/deploy/api.Dockerfile:37)，范围：37–38，只将 `/usr/local/bin/rag-worker-healthcheck` 设为 root:root、0555，补足服务 UID 读取权限且不给 group/other 写权限；原 `/app` 归一化与写权限检查保留。[最终服务 UID 检查](/E:/aaa-project/rag/deploy/api.Dockerfile:43)，范围：43–48，在 USER 65532:65532 后把该具体 helper 加入实际 `open(..., 'rb').read(1)` 清单，读取失败会导致构建失败。该检查覆盖上一节已发生的 helper 不可读缺陷，不等同于执行健康探针成功；探针实际结果仍须由原 D 运行矩阵证明。
+
+本次限定静态增量 **0 新增发现**。helper 权限缺陷的源码修补静态确认，不扩展 PATH、其他资产或新验收门。主控报告 91 的 API/worker 已安全停止、epoch/schema 未变，新 tag 正在 build，之后使用新容器名和同一 epoch 继续原 D 矩阵；这些是主控提供的运行安排，本实例未执行服务器操作。91 的健康失败记录保留，0162cb52 新 build、健康、重启及其余原 D 必需项尚待真实证据，D 运行与独立验证门均不据此放行。
+
+主控明确独立 E 的 20 unit + 28 PG 已通过；E 与独立 E 成绩保留原提交来源，不重测、不改标为本次 Dockerfile 提交运行成绩。父 Story `fullrelease_gate=not-passed`。后续仅根据本修补的新 build 与原 D 相关运行证据更新处置。
+
+### 0162cb52 原始运行证据：两项权限缺陷关闭
+
+本实例已直接读取以下本地工件并计算 SHA256，没有重跑构建、应用、E 或 D 矩阵：
+
+| 直接读取工件 | 本实例计算的 SHA256 | 文件中可直接确认的结果 |
+| --- | --- | --- |
+| [016 build](/C:/Users/29157/AppData/Local/Temp/rag-story12-D-016-build.txt:1) | `95fff4b10b0b31839ade18fb69ef1e3f595c3976b88b5569096def6902c8e34b` | 具体 helper 的 root:root/0555 步骤成功；最终服务 UID 实际读取配置、迁移与 helper 并 import 成功，输出 `SERVICE_UID_IMPORT_OK`；镜像 tag 0162cb52 导出完成，`BUILD_DONE` |
+| [016 start/restart 输出](/C:/Users/29157/AppData/Local/Temp/rag-story12-D-016-start-restart-output.txt:1) | `16103091406196e4505571c7c4b7ebcf28af87cd560d6d9b2357dfb7c7095694` | API/worker running，API liveness 200，两处 `DATABASE_BASELINE_OK`，`worker_health_before=0`，epoch 文件 hash check OK、`MIRROR_UNCHANGED`；末尾两个容器为 exited，保留 CID/image 并输出 `START_RESTART_016_DONE` |
+| [D negative summary](/C:/Users/29157/AppData/Local/Temp/rag-story12-D-negative-summary.txt:1) | `e05691a995b770c3790e4a19cf77bc59ef6c668e221366b0b5c3b688e635f084` | 缺 env、缺 file、不可读、mirror 矛盾四项均 exit 2，有限错误 `STARTUP_DEPENDENCY_UNAVAILABLE`；恢复后 `DATABASE_BASELINE_OK`、epoch hash check OK、两次 mirror 值相同；server HEAD 为 0162cb52，Dockerfile hash 与受审 blob 一致，汇总 exit code 0 |
+
+构建文件中的最终镜像 manifest list digest 为 `sha256:c2a1ebb49f1c23a8ba1bb29ac14288d214f587458e9af6df7681c27e3795cf55`，与 start/restart 输出中两个容器的 image 相同。负例汇总中的 epoch 文件 SHA256 为 `f5d6a325ed0a05a5bdeb6ceeaba93a634d5570a8faa0881408231f4afd784248`，恢复前后 mirror 行一致。上述是直接读到的证据内容，不把 API liveness 单独视为 epoch 资格验证。
+
+主控另提供 build exit 0、start/restart job `job_mvd7dlzt_81edc545e2d9` exit 0、重启前后同 CID/image 且 StartedAt 改变、末尾仅 stop 保留，以及 server checkout clean 的核验结论。提供的本地 start/restart 文件没有展开重启前后 StartedAt 成对原始行，故该细节明确归属主控核验；本实例不宣称在此摘要中直接看到了该成对记录。远程分文件 raw 仍位于主控指定的 D-0162cb52 evidence 目录，桶 `epoch-deploy/D-*` 长 job 归档尚在核对，不标为本实例已直接核完。
+
+**已知项处置更新：**`/app` 源码/配置不可读，以及外部 worker helper 不可读两项，均有最终 UID 构建读取/import 与实际服务 baseline/worker health=0 的运行证据支持，当前已知权限缺陷关闭。91 的失败及其提交来源完整保留，不重标为当时通过。本次无新增发现，不追加检查。
+
+独立 D 仍 **pending**；主控安排 Step 5 使用同最终 image/newroot 验证，本实例不将“即将运行”记为已通过。父 Story `fullrelease_gate=not-passed`，不签完整 Story PASS；E 与独立 E 既有通过成绩保留且不重跑。
+
+### D 开发者完成证据同步（不追加审查轮）
+
+本实例已直接读取[D canonical 开发者通过索引](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-2-d-canonical-developer-pass-0162cb52.json:1)。最终提交 `0162cb52f4c49265d99777c82d854b3617941941`、image `sha256:c2a1ebb49f1c23a8ba1bb29ac14288d214f587458e9af6df7681c27e3795cf55`、Dockerfile SHA256 `6e933822a60a317476e20dc77c2f9d882c4c55cc1fa958462edb0008273faf36` 与既有受审证据对应。只同步现有修复处置，不重审旧源、不新跑或增加检查。
+
+| 当前项 | 处置与证据 |
+| --- | --- |
+| `/app` 读取权限 | 关闭；最终 UID 实际读取/import 成功，最终镜像 API/worker baseline 通过。 |
+| worker helper 读取权限 | 关闭；最终 UID 读取及真实 helper health=0 支持，启动/重启 job exit 0。 |
+| D 开发者原必需矩阵 | 通过；build、维护初始化、启动/重启及负例 jobs 均 exit 0。初始化保留 91 来源和同一 schema/epoch；最终镜像真实重启同 CID/image、StartedAt 改变，epoch hash/mirror 不变；四负例均 exit 2 有限错误，恢复后 baseline/hash/mirror 不变。 |
+| 桶归档 | 索引记录归档 job `job_mvd7o34w_d2cc9724dee5` exit 0，D-d6、D-91、D-016 三部分已核，附最终 manifest；此前“归档核对中”的状态据此更新为完成。 |
+| 静态与历史 | 静态 **0 新增发现**保留；原 d6/91 失败和实际来源不改写，E/独立 E 既有成绩保留，不重跑。 |
+| 独立 D / 父 Story | 最后一次精简独立 D 验证 pending，等待 Step5 最终结果后仅同步状态；父 Story 尚不签 PASS。未到期门不列为当前阻塞。 |
+
+按用户指令停止追加审查轮和假设检查；本次已知两项权限修复及开发者真实运行证据处置完成。
+
+### 最终状态同步：独立 D 已执行，审查门 passed
+
+本实例已直接读取[独立 D 原日志](/C:/Users/29157/AppData/Local/Temp/rag-story12-independent-D-terminal.log:1)，对应主控提供的 job `job_mvd7vw3k_6868ce4ec440`。固定源码仍为 `0162cb52f4c49265d99777c82d854b3617941941`，image 仍为 `sha256:c2a1ebb49f1c23a8ba1bb29ac14288d214f587458e9af6df7681c27e3795cf55`。
+
+| 现有处置项 | 最终同步 |
+| --- | --- |
+| 两项 D 权限缺陷 | 保持关闭；独立日志中正常 API 200、worker health exit 0、baseline exit 0，真实 restart 后相同检查再次通过。 |
+| 独立 D 执行 | 已完成；epoch hash diff exit 0，mirror 前后一致；missing/unreadable/mismatch 三个独立副本负例均返回有限错误、exit 2，inspect 均为 exited 2；末尾 normal 仅 stop，epoch hash 保持。此前“待独立执行”状态据此更新。 |
+| 当前原 AC 范围审查 | 无新增发现，`review_gate=passed`；不重审旧源，不新增审查或测试。base/tree/hash、历史失败及 E 既有证据来源全部保留。 |
+| Step5 最终报告 / 父 Story | 独立执行结果已到，Step5 正在形成最终独立裁决；父 Story 是否 done 由主控结合该裁决决定，本报告不提前签父 Story PASS。 |

@@ -2,7 +2,7 @@
 title: '1.2 D epoch启动接线回归'
 type: bugfix
 created: '2026-10-18'
-status: in-progress
+status: done
 route: dispatch
 review_loop_iteration: 0
 ---
@@ -21,10 +21,10 @@ review_loop_iteration: 0
 
 ## Tasks & Acceptance
 
-- [ ] 唯一源归属 [compose.yaml](/E:/aaa-project/rag/deploy/compose.yaml:1)：API/worker传同一准确RAG_EPOCH_CONTROL_FILE，默认落已有`/var/lib/rag/epoch`只读挂载内。
-- [ ] [api.Dockerfile](/E:/aaa-project/rag/deploy/api.Dockerfile:1)归D：修真实发现的COPY继承0700/0600导致服务UID65532读不到源码。镜像内归一化可读/可遍历权限，仍禁组/其他写；以最终UID验证导入及配置/迁移读取，不用root运行或改宿主源码权限代替。
-- [ ] 唯一文档归属 [epoch部署说明](/E:/aaa-project/rag/docs/story-1-2-epoch-deploy.md:1)：显式首次维护步骤、服务UID/目录权限、迁移/镜像初始化/检查顺序；复用现有A函数，不另造资格CLI，不把秘密放argv/log。
-- [ ] 按主控时段仅在Linux，以Gitee固定提交/源码hash构建或复用同源码后端镜像，运行项目专属API/worker最小启动与重启，核epoch/镜像不变；缺失/矛盾新worker有限失败，不实际供应方外发。
+- [x] 唯一源归属 [compose.yaml](/E:/aaa-project/rag/deploy/compose.yaml:1)：API/worker传同一准确RAG_EPOCH_CONTROL_FILE，默认落已有`/var/lib/rag/epoch`只读挂载内。
+- [x] [api.Dockerfile](/E:/aaa-project/rag/deploy/api.Dockerfile:1)归D：修真实发现的COPY继承0700/0600导致服务UID65532读不到源码。镜像内归一化可读/可遍历权限，仍禁组/其他写；以最终UID验证导入及配置/迁移读取，不用root运行或改宿主源码权限代替。
+- [x] 唯一文档归属 [epoch部署说明](/E:/aaa-project/rag/docs/story-1-2-epoch-deploy.md:1)：显式首次维护步骤、服务UID/目录权限、迁移/镜像初始化/检查顺序；复用现有A函数，不另造资格CLI，不把秘密放argv/log。
+- [x] 按主控时段仅在Linux，以Gitee固定提交/源码hash构建或复用同源码后端镜像，运行项目专属API/worker最小启动与重启，核epoch/镜像不变；缺失/矛盾新worker有限失败，不实际供应方外发。
 
 ## Acceptance Criteria
 

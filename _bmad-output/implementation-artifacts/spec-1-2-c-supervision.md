@@ -2,7 +2,7 @@
 title: '1.2 C 单 call 监督与集成'
 type: feature
 created: '2026-10-18'
-status: in-progress
+status: done
 route: dispatch
 review_loop_iteration: 0
 ---
@@ -24,8 +24,8 @@ review_loop_iteration: 0
 ## Tasks & Acceptance
 
 - [x] [监督领域](/E:/aaa-project/rag/backend/src/rag_app/modules/execution/supervision.py) / [监督适配器](/E:/aaa-project/rag/backend/src/rag_app/adapters/child_supervisor.py) / [child入口](/E:/aaa-project/rag/backend/src/rag_app/entrypoints/call_child.py)：有限IPC与真实Linux监督；96c64fb native22+架构3实测通过。
-- [ ] [call_dispatch.py](/E:/aaa-project/rag/backend/src/rag_app/application/call_dispatch.py)：按A/B公共签名装配，复核资格、持久状态、目标守卫、单grant/响应事实。
-- [ ] [child测试](/E:/aaa-project/rag/backend/tests/test_child_supervisor.py) / [dispatch测试](/E:/aaa-project/rag/backend/tests/test_call_dispatch.py) / [PG集成](/E:/aaa-project/rag/backend/tests/test_call_dispatch_postgres.py)：故障矩阵和集成；[C交付文档](/E:/aaa-project/rag/docs/story-1-2-c-delivery.md)。
+- [x] [call_dispatch.py](/E:/aaa-project/rag/backend/src/rag_app/application/call_dispatch.py)：按A/B公共签名装配，复核资格、持久状态、目标守卫、单grant/响应事实。
+- [x] [child测试](/E:/aaa-project/rag/backend/tests/test_child_supervisor.py) / [dispatch测试](/E:/aaa-project/rag/backend/tests/test_call_dispatch.py) / [PG集成](/E:/aaa-project/rag/backend/tests/test_call_dispatch_postgres.py)：故障矩阵和集成；[C交付文档](/E:/aaa-project/rag/docs/story-1-2-c-delivery.md)。
 
 ## Acceptance Criteria
 

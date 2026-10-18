@@ -2,13 +2,13 @@
 title: 'Story 1.2 隔离执行与调用事实'
 type: feature
 created: '2026-10-18'
-status: in-progress
+status: done
 route: dispatch
 review_loop_iteration: 0
 baseline_commit: '96e7fb3ee94c025c3fae804ddabf8ad71d8b08d5'
 story_key: '1-2-隔离执行并保存每次调用事实'
 review_snapshot_tree: '1eff8cf456f705b8c5e0b21985b87ad9d6a846d2'
-review_gate: 'not-passed; known E fixes and D/E execution pending'
+review_gate: 'passed'
 ---
 
 <frozen-after-approval>
@@ -25,8 +25,8 @@ review_gate: 'not-passed; known E fixes and D/E execution pending'
 
 - [x] A：持久 epoch/fence/call 和 ledger，依 [A 规格](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-2-a-persistence.md:1)。开发者canonical151通过，父独立/审查另列。
 - [x] B：共用 EgressTarget 与绑定连接，依 [B 规格](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-2-b-egress.md:1)。开发者169通过，父独立/审查另列。
-- [ ] C：child/IPC/监督及调用用例集成，依 [C 规格](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-2-c-supervision.md:1)。
-- [ ] 开发者测试、Step 5 独立实测、全新 6.1 Sol/medium 审查及真实问题的最小修复/相关回归；当前必需项未跑不得通过。
+- [x] C：child/IPC/监督及调用用例集成，依 [C 规格](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-2-c-supervision.md:1)，原集成义务由E完整交付。
+- [x] 开发者测试、Step 5 独立实测、全新 6.1 Sol/medium 审查及真实问题的最小修复/相关回归；原必需门全部通过。
 
 ## Acceptance Criteria
 
@@ -61,9 +61,9 @@ C完成native四源后，主控将未冻结的call_dispatch及unit/PG矩阵明�
 
 | 项 | 裁决/路由 |
 | --- | --- |
-| 已知F2 | medium/patch；query业务用途与api传输用途不能强等值，DeepSeek502未修 |
-| 已知E矩阵 | medium/patch；修正确实不一致的输入/断言并补真实child+PG故障证据，未修未验 |
-| D运行 | 必需验证待执行，不臆记源码失败；通道阻塞时不放行 |
+| 已知F2 | 已关闭；d6用途分层经开发者、Step5独立及medium增量审查通过 |
+| 已知E矩阵 | 已关闭；d6真实child/PG/迟到与URI假件修复均有运行证据 |
+| D运行 | 016镜像权限修复、启动重启/三负例、独立复核及审查通过；历史失败保留 |
 
 ## Verification
 

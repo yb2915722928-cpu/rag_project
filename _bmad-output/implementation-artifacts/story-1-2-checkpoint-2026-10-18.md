@@ -1,5 +1,7 @@
 # Story 1.2 阻塞检查点
 
+**历史检查点：下文保留当时状态；当前Story1.2已done/passed。** 最终裁决见[验收快照](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-2-final-acceptance.json:1)，后续接力以relay为准，不重复旧阻塞探测。
+
 日期：2026-10-18（Asia/Shanghai）。父 Story **in-progress / not-passed**；没有放行 1.3，也没有创建相同外部阻塞下的空转新会话或定时自动化。
 
 主控 Amelia：`01a14b42-689c-7533-90a3-9bd187d93039`，实际 `group/auto-gpt-6-1-sol / max`。正式入口仍为 [工作集](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-2-working-set.md:1) 和 [relay](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/sprint-relay-state.json:1)，不重载全部历史。

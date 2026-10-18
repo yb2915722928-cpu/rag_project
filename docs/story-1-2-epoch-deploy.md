@@ -161,30 +161,62 @@ API 的 `create_app` lifespan 只调用 `build_runtime`，不做这项启动检�
   `0550/0400` 与 `65532:65532`，不能把 preflight 对 1.1 根目录的检查冒充为
   对 D 目录的通过。
 
-## 待执行的 Linux 验证（尚未运行）
+## Linux 实际运行回归（2026-10-18）
 
-以下步骤等待主控发布新的干净 `repo-fixed`、固定提交和独占 Netcatty 时段，
-当前未执行，不声称通过：
+固定源码 `0162cb52f4c49265d99777c82d854b3617941941`（GitHub/Gitee `main`
+同值），`repo-fixed` 仅从 Gitee 拉取、clean；最终 Dockerfile SHA-256
+`6e933822a60a317476e20dc77c2f9d882c4c55cc1fa958462edb0008273faf36`。
+范围仅 D 的启动接线与 epoch 隔离。
 
-1. 在 Story 专属 Compose project 下对固定提交构建后端镜像；使用独占 schema
-   与专属 `RAG_EPOCH_ROOT`，不触碰 1.1 容器或数据。
-2. 记录初始化前后的控制文件 SHA-256 与 `rag_epoch_mirror` 值，证明只有首次
-   维护步骤创建记录。
-3. 启动 API/worker，确认健康后停止并按原镜像重启；核对控制文件 hash 与镜像
-   行值不变，证明普通重启不轮换。
-4. 新 worker 分别在控制文件缺失、服务 UID 不可读（如属主/权限使 `65532`
-   无法打开文件）、DB 镜像被改为不同值时启动，确认有限
-   `STARTUP_DEPENDENCY_UNAVAILABLE`、无自动初始化/补造；另以 API 负例证明
-   epoch 缺失时 `/health` 仍为 liveness，但业务派发被有限拒绝。目录属主/
-   模式偏差另由部署前等价 `stat` 检查留证。
-5. 证据（命令、commit、源码 hash、退出码、epoch 前后值、日志）归档到
-   `/fileOfRag/testOfRAG/metadata/story-1-2/epoch-deploy`。
+### 失败与修复
 
-不实际调用任何供应方；本段不生成 S0 可外发资格结论，1.5 仍负责完整 S0
-汇总与隔离探路工具。
+| 提交 | 实际结果 |
+| --- | --- |
+| `d6e8a0da…` | 检出 umask `077` 使 `COPY` 保留 `0600/0700`；构建期 root import 通过，最终 UID `65532` 无法读 `/app/src/rag_app`，维护初始化在 import 失败。镜像与日志保留。 |
+| `91bac6eb…` | 归一化 `/app` 并加最终 UID 校验；维护和启动通过，但 `/usr/local/bin/rag-worker-healthcheck` 仍为 `0600`，worker 健康探测 `Errno 13`。 |
+| `0162cb52…` | 只对该 healthcheck `chown 0:0`+`chmod 0555`，并纳入最终 UID 读取校验。构建 exit 0、`SERVICE_UID_IMPORT_OK`；维护、启动/重启、负例通过。 |
 
-## 未完成
+修复未使用 `777`、未以 root 运行服务、未改宿主 Git 权限或 A/E/C；失败镜像
+与日志均保留，证据目录 `D-d6e8a0da`、`D-91bac6eb`、`D-0162cb52`。
 
-- 本文件与 Compose 改动尚未经过 Linux 启动/重启实测，也没有固定提交。
-- 未执行全仓后端套件、PG 生命周期、前端或 gateway 回归；这些不属于本段
-  受影响范围。
+### 016 实际产物
+
+执行事实以主控合并的真实索引
+[story-1-2-d-canonical-developer-pass-0162cb52.json](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-2-d-canonical-developer-pass-0162cb52.json:1)
+为准；三个证据目录与逐文件 SHA-256 清单已由归档 job 校验通过，桶路径
+`/fileOfRag/testOfRAG/metadata/story-1-2/epoch-deploy`。
+
+| 项 | 结果 |
+| --- | --- |
+| 镜像 | `rag-story-1-2-api:0162cb52`；manifest list `sha256:c2a1ebb49f1c23a8ba1bb29ac14288d214f587458e9af6df7681c27e3795cf55`；config `47a99adc…` |
+| 运行时 | CPython `3.12.8`、uvicorn `0.37.0`、UID `65532`；`uv sync --locked` 41 包 |
+| DB | 独占 schema `d_story12_d6e8a0da`；`0002_isolated_calls`、6 表；PG `180006`、vector `0.8.7` |
+| epoch | `/opt/rag-story-1-2/epoch/epoch-control.json` SHA-256 `f5d6a325…`；目录 `0550`、文件 `0400 65532:65532`；mirror 行 `353e4bcb…` |
+| 环境 | 活动目录本地 ext4；DSN 仅 source 既有 root `0400` env，未打印；经 `rag-story-1-1-test` 访问 `postgres-test:5432` |
+
+### 启动与重启
+
+| 检查 | 结果 |
+| --- | --- |
+| API `/health` | `200 … "check":"liveness"`；仅 liveness |
+| API/worker `check-database` | 均 `DATABASE_BASELINE_OK`；worker 健康脚本 exit `0` |
+| restart | API/worker CID 与 image ID 不变，`StartedAt` 变化 |
+| epoch | `sha256sum -c` 通过，仍 `f5d6a325…`，权限不变 |
+| DB 镜像 | 重启前后一致，`MIRROR_UNCHANGED` |
+
+016 与 91 容器 stop 后保留 `exited`；未删除或改动 1.1 资源。
+
+### 隔离负例
+
+| 类别 | 退出码 | 结果 |
+| --- | --- | --- |
+| 缺失（env 为空 / 文件不存在） | `2` | 有限 `STARTUP_DEPENDENCY_UNAVAILABLE` |
+| 服务 UID 不可读（root `0700`/`0400`） | `2` | 同上 |
+| mirror 矛盾（epoch 改为其他值） | `2` | 同上 |
+
+负例均未自动初始化、未用 DB 补造、未写业务；矛盾后按原 control 恢复，
+`DATABASE_BASELINE_OK`、mirror 原行、`MIRROR_UNCHANGED`、epoch SHA 不变。
+所有负例和辅助容器保留 `exited`。
+
+API `/health` 仅证明 liveness，不证明 epoch 就绪或调用资格；本段不涉及
+S0 资格结论或实际供应方。

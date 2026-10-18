@@ -1,0 +1,129 @@
+{
+  "schema_version": "story-final-acceptance.v1",
+  "story_key": "1-2-隔离执行并保存每次调用事实",
+  "status": "done",
+  "acceptance_gate": "passed",
+  "completed_at": "2026-10-18T02:48:44.845Z",
+  "controller_thread": "01a14b42-689c-7533-90a3-9bd187d93039",
+  "original_denominator": "All substantive clauses of the original four ACs in epics.md Story1.2; no reduced sub-spec substitutes.",
+  "source_commit": "0162cb52f4c49265d99777c82d854b3617941941",
+  "source_snapshot": "_bmad-output/implementation-artifacts/story-1-2-final-source-snapshot.json",
+  "ACs": {
+    "AC1": {
+      "status": "passed",
+      "evidence": [
+        "A canonical epoch/context/PG guards",
+        "C explicit fake capabilities",
+        "E d6 real context/epoch rejection",
+        "D016 startup/restart and three negative classes with Step5 independent confirmation"
+      ]
+    },
+    "AC2": {
+      "status": "passed",
+      "evidence": [
+        "C96 real Linux supervision/IPC and stop/slot proofs",
+        "E d6 developer and independent real child SIGSTOP/KILL, crash/timeouts, single grant, unknown NULL"
+      ]
+    },
+    "AC3": {
+      "status": "passed",
+      "evidence": [
+        "B784 egress target and bound DNS/TLS fake tests",
+        "base96c independent",
+        "E d6 independent target and credential rejection integration"
+      ]
+    },
+    "AC4": {
+      "status": "passed",
+      "evidence": [
+        "A canonical and base96c real PG facts/lock order",
+        "E d6 developer and independent trustworthy late facts, idempotency/conflict, no context revival and no process waiting in transaction"
+      ]
+    }
+  },
+  "developer_evidence": {
+    "A": {
+      "commit": "af6ce5099166960e714a1e8b45f004cc8ac9f77a",
+      "nonPG": 136,
+      "PG": 15
+    },
+    "B": {
+      "commit": "78402858fb003dfd62d57ed481f4f131e69424bf",
+      "passed": 169
+    },
+    "C": {
+      "commit": "96c64fbab0fa8d3d824f2e592196c02570550c70",
+      "passed": 25
+    },
+    "E": {
+      "commit": "d6e8a0da94a88199e6c4795f3e10e26c821b454f",
+      "PG": 28,
+      "nonPG": 232,
+      "index": "_bmad-output/implementation-artifacts/story-1-2-e-canonical-pass-d6e8a0d.json"
+    },
+    "D": {
+      "commit": "0162cb52f4c49265d99777c82d854b3617941941",
+      "status": "passed",
+      "index": "_bmad-output/implementation-artifacts/story-1-2-d-canonical-developer-pass-0162cb52.json"
+    }
+  },
+  "independent_evidence": {
+    "base": {
+      "commit": "96c64fbab0fa8d3d824f2e592196c02570550c70",
+      "nonPG": 311,
+      "PG": 15
+    },
+    "E": {
+      "commit": "d6e8a0da94a88199e6c4795f3e10e26c821b454f",
+      "unit": 20,
+      "PG": 28
+    },
+    "D": {
+      "commit": "0162cb52f4c49265d99777c82d854b3617941941",
+      "status": "passed",
+      "job": "job_mvd7vw3k_6868ce4ec440",
+      "log_sha256": "06d784fee3bfdc9307112288fc8584c1f17a21abf54b239405e1111aaa36261e",
+      "bucket": "/fileOfRag/testOfRAG/metadata/story-1-2/independent/D-0162cb52"
+    },
+    "report": "docs/story-1-2-independent-verification.md",
+    "report_sha256": "2da836a12aa16a69373fae74b42a2b8ed722262ed172b63781b21a2341f14d55"
+  },
+  "review": {
+    "gate": "passed",
+    "fresh_model": "group/auto-gpt-6-1-sol",
+    "effort": "medium",
+    "new_findings": 0,
+    "known_actual_defects": "All closed with their related regressions; initial snapshots and failed runs preserved.",
+    "report": "docs/story-1-2-code-review.md",
+    "report_sha256": "a0ff4e2019fad369a7427351b742cc2e334d2e110dfa6df112b6b0d972d058e3"
+  },
+  "models": {
+    "controller": "group/auto-gpt-6-1-sol/max",
+    "implementation": "zayuapi/deepseek-v4.1-flash/default observed max",
+    "independent": "stepfun/step-5-preview/default observed high",
+    "reviewer": "group/auto-gpt-6-1-sol/medium fresh",
+    "route_and_turn_context_evidence": "sprint-relay-state.json story_1_2",
+    "underlying_provider_identity": "not independently asserted"
+  },
+  "environment": {
+    "transport": "official netcatty-external MCP",
+    "host": "120.53.251.166",
+    "Python": "3.12.8",
+    "PostgreSQL": "18.6",
+    "pgvector": "0.8.7",
+    "uvicorn": "0.37.0",
+    "locked_sync": "passed",
+    "active_filesystem": "ext4",
+    "test_material_mount": "/fileOfRag",
+    "final_backend_image": "sha256:c2a1ebb49f1c23a8ba1bb29ac14288d214f587458e9af6df7681c27e3795cf55"
+  },
+  "evidence_policy": "Each result retains the exact tested commit, original hash and role. Counts from different commits are not combined into a fabricated final full-suite run.",
+  "remaining_current_story_obligations": [],
+  "not_due": [
+    "Story1.3 C8/shared limits and gates",
+    "Story1.4 assets/stop-writer cleanup",
+    "Story1.5 S0 combined qualification",
+    "later real provider/P0/target deployment obligations"
+  ],
+  "next_story": "1-3-证明共享限流与双任务gate不会提前退额"
+}

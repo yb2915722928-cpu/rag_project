@@ -1,0 +1,72 @@
+{
+  "schema_version": "story-runtime-evidence.v1",
+  "story": "1.2 D",
+  "final_source_commit": "0162cb52f4c49265d99777c82d854b3617941941",
+  "final_image": "rag-story-1-2-api:0162cb52",
+  "final_image_id": "sha256:c2a1ebb49f1c23a8ba1bb29ac14288d214f587458e9af6df7681c27e3795cf55",
+  "Dockerfile_sha256": "6e933822a60a317476e20dc77c2f9d882c4c55cc1fa958462edb0008273faf36",
+  "developer": "D Nash / zayuapi/deepseek-v4.1-flash default",
+  "MCP_transport": "controller forwards developer-authored commands through official Netcatty MCP",
+  "build": {
+    "job": "job_mvd78sbo_54a0085b3beb",
+    "exit": 0,
+    "service_UID_check": "SERVICE_UID_IMPORT_OK"
+  },
+  "initialization": {
+    "source_commit": "91bac6eb8e27ea399140eb9a1f3f89462cafa64d",
+    "image": "rag-story-1-2-api:91bac6eb",
+    "job": "job_mvd6qaku_1f090057fe58",
+    "exit": 0,
+    "schema": "d_story12_d6e8a0da",
+    "revision": "0002_isolated_calls",
+    "PG": "18.6",
+    "pgvector": "0.8.7",
+    "original_output": "SCHEMA_CREATED\nrevision 0002_isolated_calls\ntables 6\npg 180006\nvector 0.8.7\nmirror_rows 0\nEPOCH_INITIALIZED rag-story-1-2 1\nmirror rag-story-1-2|1|2026-10-18 02:07:24.690825+00:00|353e4bcb8c072a1ba6729b84d17bbe35\nDATABASE_BASELINE_OK\nSCHEMA_MIGRATE_EPOCH_STAGE_DONE\n",
+    "relationship_to_final": "Backend, migration and epoch implementation blobs unchanged; only Dockerfile helper readability changed. Existing control/schema preserved for final016 startup."
+  },
+  "startup_restart": {
+    "job": "job_mvd7dlzt_81edc545e2d9",
+    "exit": 0,
+    "original_output": "MIRROR_UNCHANGED\n/rag-story-1-2-api-0162cb52 | rag-story-1-2-api:0162cb52 | running\n/rag-story-1-2-worker-0162cb52 | rag-story-1-2-api:0162cb52 | running\n200 {\"status\":\"alive\",\"service\":\"rag-api\",\"check\":\"liveness\"}\nDATABASE_BASELINE_OK\nworker_health_before=0\nDATABASE_BASELINE_OK\n/opt/rag-story-1-2/epoch/epoch-control.json: OK\nmirror rag-story-1-2|1|2026-10-18 02:07:24.690825+00:00|353e4bcb8c072a1ba6729b84d17bbe35\n/rag-story-1-2-api-0162cb52 cid=a5d9f25a5a6387b3ca53328528ee514dede88914fdbf33a9f7b2fdf808a771ad image=sha256:c2a1ebb49f1c23a8ba1bb29ac14288d214f587458e9af6df7681c27e3795cf55 status=exited\n/rag-story-1-2-worker-0162cb52 cid=a139481ae191d138fa2844be90e33955b746236ed7dd1b8cbb9d12635d9b9ee6 image=sha256:c2a1ebb49f1c23a8ba1bb29ac14288d214f587458e9af6df7681c27e3795cf55 status=exited\nSTART_RESTART_016_DONE\n",
+    "assertions": "Same container IDs and image IDs across actual restart; StartedAt changed; API200 liveness, helper exit0, database baselineOK, epoch hash and mirror unchanged; final own containers stopped and preserved"
+  },
+  "negatives": {
+    "job": "job_mvd7ijfz_e4df4aa4f86f",
+    "exit": 0,
+    "cases": [
+      "missing environment",
+      "missing file",
+      "service-UID unreadable",
+      "mirror contradiction"
+    ],
+    "worker_exits": [
+      2,
+      2,
+      2,
+      2
+    ],
+    "finite_error": "STARTUP_DEPENDENCY_UNAVAILABLE",
+    "restore": "DATABASE_BASELINE_OK; MIRROR_UNCHANGED; epoch SHA unchanged",
+    "original_summary": "neg_missing_env_exit=2\nSTARTUP_DEPENDENCY_UNAVAILABLE: Required API server dependency is unavailable or incompatible.\nneg_missing_file_exit=2\nSTARTUP_DEPENDENCY_UNAVAILABLE: Required API server dependency is unavailable or incompatible.\nneg_unreadable_exit=2\nSTARTUP_DEPENDENCY_UNAVAILABLE: Required API server dependency is unavailable or incompatible.\nneg_mirror_exit=2\nSTARTUP_DEPENDENCY_UNAVAILABLE: Required API server dependency is unavailable or incompatible.\nDATABASE_BASELINE_OK\n/opt/rag-story-1-2/epoch/epoch-control.json: OK\nmirror rag-story-1-2|1|2026-10-18 02:07:24.690825+00:00|353e4bcb8c072a1ba6729b84d17bbe35\nmirror rag-story-1-2|1|2026-10-18 02:07:24.690825+00:00|353e4bcb8c072a1ba6729b84d17bbe35\n0162cb52f4c49265d99777c82d854b3617941941\n6e933822a60a317476e20dc77c2f9d882c4c55cc1fa958462edb0008273faf36  /opt/rag-story-1-2/repo-fixed/deploy/api.Dockerfile\nf5d6a325ed0a05a5bdeb6ceeaba93a634d5570a8faa0881408231f4afd784248  /opt/rag-story-1-2/epoch/epoch-control.json\n[exit code: 0]"
+  },
+  "epoch_sha256": "f5d6a325ed0a05a5bdeb6ceeaba93a634d5570a8faa0881408231f4afd784248",
+  "permissions": "directory0550/file0400 UID:GID65532:65532",
+  "earlier_failures_preserved": [
+    "d6 bare image-id reference build error",
+    "d6 COPY0700/0600 service UID import failure",
+    "91 worker helper0600 unreadable"
+  ],
+  "bucket": "/fileOfRag/testOfRAG/metadata/story-1-2/epoch-deploy",
+  "archive": {
+    "job": "job_mvd7o34w_d2cc9724dee5",
+    "exit": 0,
+    "verified_parts": [
+      "D-d6e8a0da",
+      "D-91bac6eb",
+      "D-0162cb52"
+    ],
+    "final_manifest": "3df6925d011e36b1cf4bca9b4091bbce697997b642394b13ec5a6622c866a0ca  ./neg-missing-env.exit\nfbf7b60db4d2be17a108633d65dd28633a41239601cb861832d0c5b26d791f89  ./containers-running-016.txt\nd1a050797572cd17b1893589953b2821cefddf8bf016f07d0bcee8016506ceec  ./api-check-after-restart-016.txt\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./mirror-restart-diff-016.txt\n238cc98f8679792a798ff1c3023ce97c5f3f8567b39135dc1654ccf4ccbd852b  ./worker-id-before-016.txt\na511ae7e58d91203f1d26642ca3bd65eba570f5a04c8992fe83c7a7fc46c84aa  ./worker-image-before-016.txt\nc9a905d8e75548049ff077a9ad3e4cc1d0b76126d13445c68e9701778cc50141  ./neg-missing-file.log\n09c14a271bcdacc69c6e516c1eb3c8a215c7654dbd713822527c0f7625cb9556  ./api-started-after-016.txt\nd1a050797572cd17b1893589953b2821cefddf8bf016f07d0bcee8016506ceec  ./api-check-before-restart-016.txt\ne05f6a17f7c8c041195a527a021b0e9f293b7698b310e948304261732f99ab4f  ./head-start.txt\na511ae7e58d91203f1d26642ca3bd65eba570f5a04c8992fe83c7a7fc46c84aa  ./api-image-after-016.txt\nc9a905d8e75548049ff077a9ad3e4cc1d0b76126d13445c68e9701778cc50141  ./neg-missing-env.log\n2ef57747fa464adccd7c1240f725a8e3668afc842ba4a4691fc25dd0b3746d97  ./image-uid-start.txt\na511ae7e58d91203f1d26642ca3bd65eba570f5a04c8992fe83c7a7fc46c84aa  ./api-image-before-016.txt\n5056b3b65639abc5b8306664d8435785e930ebc21ace40528adcea10d004f371  ./mirror-before-restart-016.txt\n38acdee4d0592393c5b7bb76a0998919fa472c9335969aa99571e735abb907f2  ./base-python-retry.txt\ndca83097655e905df7794e7979ba23eacc33b3c14be60443bf5116eec750db01  ./image-inspect-start.txt\n95a02d3f2294d2f2255e98382fd21189a0a5f5317e31db508613d3941dcb3ca6  ./api-config-image-after-016.txt\n95a02d3f2294d2f2255e98382fd21189a0a5f5317e31db508613d3941dcb3ca6  ./worker-config-image-after-016.txt\nd1a050797572cd17b1893589953b2821cefddf8bf016f07d0bcee8016506ceec  ./worker-check-before-restart-016.txt\nd374aa273f75171a52ae59f3bf51e1712d44908fa35891cca3471d2244dae75b  ./old-91-worker-status.txt\nc943d0c24f00dbaa6c640920a7bc38c5e2bd5ab853b18382ee251deda9454777  ./worker-health-before-restart-016.txt\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./neg-existing-containers.txt\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./status-retry.txt\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./status-start.txt\n5056b3b65639abc5b8306664d8435785e930ebc21ace40528adcea10d004f371  ./mirror-before-negatives.txt\n75eda948464608418adba8ffae4ec901f7be06e8e35b52cde246087a531ce898  ./start-restart-command.sh\n27002a9089e6af4d5ef167a62c528d2d6baccc065a8087300114e897bfdddeaf  ./old-91-worker-image.txt\n5056b3b65639abc5b8306664d8435785e930ebc21ace40528adcea10d004f371  ./mirror-after-restart-016.txt\n5056b3b65639abc5b8306664d8435785e930ebc21ace40528adcea10d004f371  ./mirror-after-negatives.txt\n624cf8f7d398886913c67647ac1d25f1287ae3b2f7208341668f88c269d066b0  ./epoch-before-restart-016.sha256\n97bf8c76b6c86219cdc399e4d5cb654bffa3274e2bee26a322f204352cd45886  ./stop-output-016.txt\nbafee6b3a52da3d3e675e44d25cba573c8f0ceafb49f3e6d78d167497dab95ca  ./neg-mirror.exit\nbdf34d74d5dc096e4e9320b46e729b9a219a459f6fdbd00432c44770b2f9f5fb  ./api-started-before-016.txt\n1274f1d5be0bbb81084374568da1237a890dd9569dadeb1ef714b841ba51d361  ./epoch-after-restart-check-016.txt\n27002a9089e6af4d5ef167a62c528d2d6baccc065a8087300114e897bfdddeaf  ./old-91-api-image.txt\n053f7ee4e7f2374749e3223cbc478b19456b1b0bff1cfa8d5f3a8a6f41443034  ./api-health-before-restart-016.txt\n4488e06497e6a9e020d330b33e84c966b6129ea70b93f62a2897e18343adcf17  ./api-id-after-016.txt\n1274f1d5be0bbb81084374568da1237a890dd9569dadeb1ef714b841ba51d361  ./epoch-after-negatives-check.txt\n4488e06497e6a9e020d330b33e84c966b6129ea70b93f62a2897e18343adcf17  ./api-id-before-016.txt\nc9a905d8e75548049ff077a9ad3e4cc1d0b76126d13445c68e9701778cc50141  ./neg-unreadable.log\ne4cd4aad0a7c671501cebdb7c62c243daf1f2c649debb928aaa99e4658c6f3b4  ./build-retry.log\n95a02d3f2294d2f2255e98382fd21189a0a5f5317e31db508613d3941dcb3ca6  ./api-config-image-before-016.txt\ne9aea5a383f14270e35ede0ed39c70b560e57bd100fc2d490c38dff8a5e05a27  ./worker-started-after-016.txt\nb6f47e595bb369a5a559ff58bfd9c2cfa7a48df041418da9e4b1910eeab70e2d  ./mirror-contradict.log\nb01694c7bc86374b3101ba9a2b28300373be691379695445e56fd854652ea53b  ./build-command.sh\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./mirror-negatives-diff.txt\nd1a050797572cd17b1893589953b2821cefddf8bf016f07d0bcee8016506ceec  ./worker-check-after-restart-016.txt\n053f7ee4e7f2374749e3223cbc478b19456b1b0bff1cfa8d5f3a8a6f41443034  ./api-health-after-restart-016.txt\n61a391e7861dd3596a870aab9a413e883b4cdbdb65afaeeba0de0f386385fb9d  ./neg-unreadable.exit\ne05f6a17f7c8c041195a527a021b0e9f293b7698b310e948304261732f99ab4f  ./head-retry.txt\nd4a66b7d893802ca5db08c7f79f63d1f98c0410e2d8afdbcb4b66792339809e0  ./stat-negative-unreadable.txt\n09740642d6909ef5b7603a152eff94e3d0497ac97bada59a2d4fba681b79365b  ./worker-health-after-restart-016.txt\n3c40300d1be280ce8d7b9c826aab030e08b0b0a92bac6c79a527997d491c2ddd  ./base-uv-retry.txt\n95a02d3f2294d2f2255e98382fd21189a0a5f5317e31db508613d3941dcb3ca6  ./worker-config-image-before-016.txt\n4488e06497e6a9e020d330b33e84c966b6129ea70b93f62a2897e18343adcf17  ./api-container-id-016.txt\n238cc98f8679792a798ff1c3023ce97c5f3f8567b39135dc1654ccf4ccbd852b  ./worker-container-id-016.txt\n6b311d1c43685d8f21f326d17e4b1efe2e868f91e4fe93b9b5928fb4ffb2ef8f  ./start-restart-terminal-output.txt\n04c6fac16eed5b71c26c0d8aa80eac810f8ebf9fe42876b6ba4204dd964ea8e2  ./epoch-file-mode-start.txt\na511ae7e58d91203f1d26642ca3bd65eba570f5a04c8992fe83c7a7fc46c84aa  ./worker-image-after-016.txt\na47de42d5c47f2f7cd967e543e558642501d45af404c1dc133bceecb1ccc35f7  ./epoch-dir-mode-start.txt\nc9a905d8e75548049ff077a9ad3e4cc1d0b76126d13445c68e9701778cc50141  ./neg-mirror.log\n97bf8c76b6c86219cdc399e4d5cb654bffa3274e2bee26a322f204352cd45886  ./restart-output-016.txt\n4fc0ab14a71be76b9d3edcf4e073253e93481daa42ad55b586ae4221d7b4ec35  ./negative-terminal-output.txt\n238cc98f8679792a798ff1c3023ce97c5f3f8567b39135dc1654ccf4ccbd852b  ./worker-id-after-016.txt\n624cf8f7d398886913c67647ac1d25f1287ae3b2f7208341668f88c269d066b0  ./epoch-before-negatives.sha256\ne3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./status-negatives.txt\ne05f6a17f7c8c041195a527a021b0e9f293b7698b310e948304261732f99ab4f  ./head-negatives.txt\nd374aa273f75171a52ae59f3bf51e1712d44908fa35891cca3471d2244dae75b  ./old-91-api-status.txt\n03120bdbbce77e11186ac95238176d72b43d442410db558ef3f971e345798afd  ./worker-started-before-016.txt\nf91e0707b5143fc2952ed5f8a445846c84ebbfbe3d016ce34bccd76c1745eb03  ./image-runtime-start.txt\nd1a050797572cd17b1893589953b2821cefddf8bf016f07d0bcee8016506ceec  ./check-after-mirror-restore.log\n000008b4b0a0a800a8dd7a3febef781e9305c3cf1ad828ec2232d3636019fa23  ./negative-command.sh\n5b891a04028189c6823d1cee1c6c554eef474c6c0dd25f4ced6995510d78311a  ./mirror-restore.log\n69251947d4d4f0ffd842c931d8453f3a04d7dc11ef80587a1524260b28befb42  ./neg-missing-file.exit\n2ae4749df601c096e82c28ade128684f1fc7ca38c9b960f4bdff4489e6be50f6  ./stat-after-restart-016.txt\n7b8ebdec53991105831e97150d3e9a350934f9c13892c5d7378898223b258323  ./containers-stopped-016.txt\n"
+  },
+  "new_independent_D": "pending",
+  "parent_story_gate": "not-passed"
+}

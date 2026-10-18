@@ -1,0 +1,136 @@
+{
+  "source_commit": "0162cb52f4c49265d99777c82d854b3617941941",
+  "baseline_commit": "96e7fb3ee94c025c3fae804ddabf8ad71d8b08d5",
+  "hash_encoding": "Canonical Git blob bytes; not Windows checkout newline conversions",
+  "files": [
+    {
+      "path": "backend/migrations/versions/0002_isolated_calls.py",
+      "sha256": "2e5dd3595e0912e6db966f00e977dd7931719bbae7d759d61edb5fdcbe7b24c5"
+    },
+    {
+      "path": "backend/src/rag_app/adapters/call_postgres.py",
+      "sha256": "b1c155176ae809a5459e4494e7072a1ed0b42d4ef827382745a1d0f31df03a48"
+    },
+    {
+      "path": "backend/src/rag_app/adapters/child_supervisor.py",
+      "sha256": "c647ecd9da5d94f9a3f9bd658c490d1adb9e20ad6fecc64f42b3b8ab86851d10"
+    },
+    {
+      "path": "backend/src/rag_app/adapters/egress.py",
+      "sha256": "de890142ea9f756d2fb218f5fafe685d2492683df858cb5761452e13620a00af"
+    },
+    {
+      "path": "backend/src/rag_app/adapters/epoch_control.py",
+      "sha256": "d88923c461d6da23987357d6f07a02b1b3a7c64e10086379c9b68a3608bccae8"
+    },
+    {
+      "path": "backend/src/rag_app/adapters/postgres.py",
+      "sha256": "78029e21135ebdc1a71f02548073c2e192f15d6ef00be35251160cfe56418fe2"
+    },
+    {
+      "path": "backend/src/rag_app/application/call_dispatch.py",
+      "sha256": "ae8f70488275cec3a88e96ba0e9eea883e8a3d783a2186001925a08045bdb848"
+    },
+    {
+      "path": "backend/src/rag_app/application/call_lifecycle.py",
+      "sha256": "ef6ec6aa1dc58b8c72a8fa8f22f33490ce54959237c71c8056d93c304199da98"
+    },
+    {
+      "path": "backend/src/rag_app/application/uow.py",
+      "sha256": "5ce642298f5732c5c181309a09316e86c46894557c199de15f2c73e18ec49591"
+    },
+    {
+      "path": "backend/src/rag_app/bootstrap/config.py",
+      "sha256": "fefe80d241e9cf1e97014e16ee52953dbbac2af92d49c1e7c2aeefa248ba2b9b"
+    },
+    {
+      "path": "backend/src/rag_app/bootstrap/runtime.py",
+      "sha256": "8ae7309fab211989f4df3546e142f61a129397c9d7ae1f37e47b6f4739d60491"
+    },
+    {
+      "path": "backend/src/rag_app/contracts/errors.py",
+      "sha256": "edd915bc076ba84bb4f2971cee16b19d57a58b664ec6a0e41d3b410d1d81109e"
+    },
+    {
+      "path": "backend/src/rag_app/entrypoints/call_child.py",
+      "sha256": "522a673d90899fad5e31d351c7b3a0a8bd1e84a3987934e9902eeb98c339f89a"
+    },
+    {
+      "path": "backend/src/rag_app/modules/execution/calls.py",
+      "sha256": "2fcc5aba4b2374afb6ffc5167ce8c161e45a68ff948937b3006934e492f32cac"
+    },
+    {
+      "path": "backend/src/rag_app/modules/execution/egress.py",
+      "sha256": "6eb831c5ee88756797b76268ab11fb3a3af03efec2861a1218dd3863f30d757a"
+    },
+    {
+      "path": "backend/src/rag_app/modules/execution/supervision.py",
+      "sha256": "c3de6c829265f34305927b120bb66838644613af2640d147709c5bf0027c569a"
+    },
+    {
+      "path": "backend/src/rag_app/modules/ledger/facts.py",
+      "sha256": "4344b72d309228ef3e2288b4f736ac72649de95baa07f7519119bc2791af6aa9"
+    },
+    {
+      "path": "backend/tests/conftest.py",
+      "sha256": "dafb22f337d8c7897ff478dec4db2799e1af5dd055cda1b2db24a5d836436f16"
+    },
+    {
+      "path": "backend/tests/test_call_dispatch.py",
+      "sha256": "1595bf6b9aba9b877ee8a4135b3006163226af3818752fbc21fd34b3a1de2450"
+    },
+    {
+      "path": "backend/tests/test_call_dispatch_postgres.py",
+      "sha256": "bdc14b9117d4fbf194315463aa8c878f53ad41145dfe516fd49567e12606cb82"
+    },
+    {
+      "path": "backend/tests/test_call_persistence.py",
+      "sha256": "9509af48cd0c9e6aa35f38639a7b6e4e51eda1e343472dc52852b50576c86b09"
+    },
+    {
+      "path": "backend/tests/test_call_postgres.py",
+      "sha256": "c3d13897202dcf380f9c7ad63e24c6aa2227a6272821f407ad85daebef25a84c"
+    },
+    {
+      "path": "backend/tests/test_child_supervisor.py",
+      "sha256": "95480b94297031367e921ee5a3d00c238a3bc31f37d906a24f64e22b89de94e4"
+    },
+    {
+      "path": "backend/tests/test_egress.py",
+      "sha256": "468099fbdc7aee2e51f2860c8b22a311313a4ebdd241763c99ba16b4e5e6a726"
+    },
+    {
+      "path": "backend/tests/test_epoch_control.py",
+      "sha256": "7dc3ed7a36eb7cfe988edf31e56bdb9910b776c741c7b7aee1ab9fa304bec55b"
+    },
+    {
+      "path": "backend/tests/test_namespace.py",
+      "sha256": "7d63d38c5db2d5136e8a57e956e3b01c6b77fffa64d21363612c6b83f90666a3"
+    },
+    {
+      "path": "backend/tests/test_postgres_integration.py",
+      "sha256": "a169e26a0ca4cf5b3d948bfce4b37e417c2659a154f8c5970b3f959af94a5b8b"
+    },
+    {
+      "path": "backend/tests/test_runtime_entrypoints.py",
+      "sha256": "55182dee8a44a8f97d2475c1692f21fada987bf69106311c4f3910582f292e07"
+    },
+    {
+      "path": "backend/tests/test_uow.py",
+      "sha256": "e95c81d4cdbeaa4f45be73b3b2bcee24c0fb0fadd444cbb0206e6b4ef31f9cf4"
+    },
+    {
+      "path": "deploy/api.Dockerfile",
+      "sha256": "6e933822a60a317476e20dc77c2f9d882c4c55cc1fa958462edb0008273faf36"
+    },
+    {
+      "path": "deploy/compose.yaml",
+      "sha256": "c05e4594a939432e87bba40dd57307d89e185176ecfa852da82efc2e168f77db"
+    }
+  ],
+  "runtime_evidence_sources_preserved": {
+    "base": "96c64fbab0fa8d3d824f2e592196c02570550c70",
+    "E": "d6e8a0da94a88199e6c4795f3e10e26c821b454f",
+    "D": "0162cb52f4c49265d99777c82d854b3617941941"
+  }
+}

@@ -1,7 +1,8 @@
-# Story 1.2 独立运行验证报告（partial / base96c）
+# Story 1.2 独立运行验证报告（required verification passed / D016）
 
-状态：`partial` — 仅覆盖稳定基础提交 `96c64fbab0fa8d3d824f2e592196c02570550c70` 上已发布的 A/B/C 基础范围。
-E（本地未发草稿 F2 修订）与 D（既有 Compose epoch 接线回归）**未验证**，本条不构成 Story 1.2 全量通过。
+状态：`required verification passed` — Story 1.2 必需独立验证项已全部取得真实运行证据：base96c 的 A/B/C 基础（第 1–6 节）、E 调用集成与完整故障矩阵（第 7 节，固定 `d6e8a0da...`）、D epoch 启动/重启与缺失/不可读/矛盾负例（第 9 节，固定 `0162cb52f4c49265d99777c82d854b3617941941`）。本条只代表独立验证门，最终 Story 验收由主会话裁决；未到期门（1.3/1.4/1.5、真实供应方、P0/目标部署）不由本条签署。
+
+> 增量补充（2026-10-18）：E 分段已在固定提交 `d6e8a0da94a88199e6c4795f3e10e26c821b454f` 完成独立运行验证（第 7 节）；D 分段已在固定提交 `0162cb52f4c49265d99777c82d854b3617941941` 完成独立运行验证（第 9 节）。第 1–6 节 base96c 基础证据原样保留、不重跑不改标。
 
 - 执行角色：Step 5 Preview，实际模型 `stepfun/step-5-preview` / `high`（主控核，未传推理覆盖）；未参与实现。
 - 执行时间（以归档 JUnit 的 `timestamp`/`time` 属性为准）：非 PG 批次 `2026-10-18T06:46:41.642521+08:00`，`time=13.464`；PG 批次 `2026-10-18T06:47:51.569293+08:00`，`time=9.034`（Asia/Shanghai）
@@ -116,4 +117,124 @@ python -m pytest tests/ -m "postgres" --require-postgres -q --junitxml=base96c-j
 - 本报告为本次验证唯一本地写入。原始日志/JUnit/源码 hash 归档于 `/fileOfRag/testOfRAG/metadata/story-1-2/independent/base96c`。
 - 工具限制记录：终端 RPC 拒绝含 `$(` 的命令替换与 `rm -rf` 模式，已改用直接输出与 `mv` 替代；此为命令语法限制，非环境阻塞。
 - 发现的问题：本报告范围内无未关闭缺陷，实际运行节点全部 passed。E/D 与 C 未冻结部分的缺口按归属报告主控转原开发者，不由本验证修复。
+
+## 7. E 调用集成增量独立验证（固定提交 `d6e8a0d`）
+
+本节为在固定提交 `d6e8a0da94a88199e6c4795f3e10e26c821b454f` 上对 E 分段（[call_dispatch.py](/E:/aaa-project/rag/backend/src/rag_app/application/call_dispatch.py:1) 与 [test_call_dispatch.py](/E:/aaa-project/rag/backend/tests/test_call_dispatch.py:1)、[test_call_dispatch_postgres.py](/E:/aaa-project/rag/backend/tests/test_call_dispatch_postgres.py:1)）的独立增量验证。RPC 由主会话经官方 Netcatty MCP 串行转发，本验证未自行发起远程调用、未与 D 并发；第 1–6 节 base96c 证据原样保留。
+
+### 7.1 基线与环境
+
+| 项 | 预期 | 实际（回传证据） | 结果 |
+| --- | --- | --- | --- |
+| 固定提交 | `d6e8a0da...` | `environment-before`/`git-after` 均 `d6e8a0da94a88199e6c4795f3e10e26c821b454f` | 一致 |
+| 独立根/venv | `/opt/rag-story-1-2/independent/{repo,venv}` | 命令路径同左 | 一致 |
+| CPython | 精确 3.12.8 | `environment-before` = `3.12.8 0.37.0` | 一致 |
+| uvicorn | 0.37.0 | 同左 | 一致 |
+| `uv sync --locked` | exit 0 | `sync.exit` = 0 | 通过 |
+| 远端来源 | 仅 Gitee | `origin` URL 为 Gitee、fetch main 后 detach 至 d6e8a0d（主控实读转发） | 主控转发 |
+
+- 四源运行前后 `sha256sum` 逐行相同（`source-before` == `source-after`）：`call_dispatch.py`=`ae8f7048...b848`、`test_call_dispatch.py`=`1595bf6b...2450`、`test_call_dispatch_postgres.py`=`bdc14b91...cb82`、`uv.lock`=`7ad33ac0...8ed`，并与本机对 `d6e8a0d` blob 的重算值一致。
+- 留证说明：`git fetch/checkout` 原始 stdout 与 `git status --porcelain` 行未包含在主控打包 JSON 内；HEAD 前后相等、四源 hash 逐行相同由打包件直接证明，detach  mechanics 与 clean 状态据主控转发。归档 `evidence-sha256.txt` 逐项列明各文件 SHA-256。
+
+### 7.2 实际运行命令与结果
+
+命令（`commands.txt` 原样，工作目录 `backend/`）：
+
+```bash
+/opt/rag-story-1-2/independent/venv/bin/python -m pytest tests/test_call_dispatch.py -q -p no:cacheprovider --junitxml=/opt/rag-story-1-2/independent/evidence/E-d6e8a0d/unit.xml
+/opt/rag-story-1-2/independent/venv/bin/python -m pytest --require-postgres -m postgres -q -p no:cacheprovider --junitxml=/opt/rag-story-1-2/independent/evidence/E-d6e8a0d/pg.xml
+```
+
+本验证直接解析回传原始 XML（不采信摘要计数）：
+
+- `unit.xml`：`tests=20 failures=0 errors=0 skipped=0 time=0.135`，timestamp `2026-10-18T09:55:56.711888+08:00`，exit 0；20 个 case 全部无 failure/error/skipped。
+- `pg.xml`：`tests=28 failures=0 errors=0 skipped=0 time=14.261`，timestamp `2026-10-18T09:55:57.207249+08:00`，exit 0；28 个 case 全部 passed，750 deselected（不计入执行数）。
+- XML SHA-256：unit `a2d0558b...f6a0`、pg `a394c47d...3eee`，与本机对回传 `.txt` 的重算值一致。
+- `--require-postgres` 门生效：exit 0 证明 conftest 的 12 个必需 PG 节点全部 collected 且 passed（否则 `pytest_sessionfinish` 会置 `TESTS_FAILED`）。
+
+### 7.3 E PG 13 节点（按 classname 拆分逐条核对）
+
+PG 批次按 classname 拆分为 `test_call_dispatch_postgres` 13、`test_call_postgres` 7、`test_postgres_integration` 6、`test_runtime_entrypoints` 2 = 28；其中 E 归属 13 项全部 passed，并与 [E 规格](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/spec-1-2-e-dispatch-integration.md:1) 的验收映射一致：
+
+| E 节点 | 对应原 AC 子句 | 结果 |
+| --- | --- | --- |
+| `test_real_end_to_end_one_grant_and_unknown_usage` | AC1/AC2 单 call 至多一次 grant、unknown 持久且秘密不泄露 | passed |
+| `test_real_terminated_context_and_advanced_attempt_block_business` | AC1 终结/旧 fence 不提交业务；AC4 迟到不复活 | passed |
+| `test_real_old_epoch_blocks_before_any_call` | AC1 旧 epoch 调用前阻断 | passed |
+| `test_real_wrong_business_purpose_is_rejected_by_context` | 用途分层：错误业务用途由真实 context 拒绝，query+api 传输可共存 | passed |
+| `test_real_prepare_crash_leaves_prepared_and_no_grant` | AC2 prepared 崩溃留 prepared、无 grant | passed |
+| `test_real_grant_delivery_crash_is_unknown_null` | AC2 grant 投递崩溃 unknown=NULL | passed |
+| `test_real_response_timeout_is_unknown_and_never_zero` | AC2 响应超时 unknown、不伪造零值 | passed |
+| `test_real_sigstop_child_unknown_null_and_no_second_grant` | AC2 真实 child SIGSTOP+真实 TERM/KILL、unknown、无二 grant | passed |
+| `test_real_response_before_record_is_unknown_plus_late_fact` | AC2/AC4 记录前响应 unknown+可信迟到事实 | passed |
+| `test_real_late_usage_repeat_and_conflict_do_not_revive` | AC4 迟到 usage 幂等、冲突保留双方、不复活 | passed |
+| `test_real_four_fake_capabilities_have_traceable_paths` | AC1 四类能力显式假件、可追溯、无实际外发 | passed |
+| `test_real_rejected_target_and_download_credential_never_dispatch` | AC3 拒绝目标/下载凭据错配无派发 | passed |
+| `test_real_no_pg_transaction_during_child_wait` | AC4 无网络/进程等待占 PG 事务 | passed |
+
+- E unit 20 项与 PG 13 项在同一提交同源运行，覆盖同一批 AC 子句的应用层与真实 Linux/PG/child 端到端两层。
+- 独立性与留证：本验证未修改任何实现/测试/部署/Git；未自行发起 RPC（所有远程命令由主会话串行请求转发）；无并发 RPC、无同文件修改，使用独立检出 `/opt/rag-story-1-2/independent/repo` 与独立虚拟环境 `/opt/rag-story-1-2/independent/venv`。实际执行发生在 D 后台镜像下载等待期间，操作系统进程时间上曾有重叠，但工作目录不同、PG 使用各自随机独占 schema，互不修改对方资源。原始 JUnit/log/env/命令/hash 归档于 `/fileOfRag/testOfRAG/metadata/story-1-2/independent/E-d6e8a0d`，本报告为本次唯一本地写入。
+
+## 8. 更新后的总体状态（E 已过 / D 已过）
+
+- **E 分段（调用集成与完整故障矩阵）**：在固定提交 `d6e8a0da94a88199e6c4795f3e10e26c821b454f` 已由本独立验证真实运行通过——unit 20 + 完整必需 PG 28（含 E 13）全部 0 fail/error/skip、exit 0，前后提交与四源 hash 一致；E 归属 AC 子句取得真实 Linux + 真实 PG + 真实 child 证据。
+- **D（epoch 启动/重启与缺失/不可读/矛盾负例）：独立验证已通过**，见第 9 节（固定提交 `0162cb52f4c49265d99777c82d854b3617941941`）。
+- **Story 1.2 必需独立验证门：`required verification passed`。** A/B/C 基础、E、D 三段均取得真实 Linux/真实 PG 运行证据；最终 Story 验收、正式审查增量以及未到期门（1.3 限流/C8、1.4 writer 清理、1.5 S0 汇总/真实供应方/P0/目标部署）均不由本条签署。真实供应方外发不构成本 Story 新增前置，按原后续 Story 归属保留。
+- base96c 的 311 非 PG + 15 PG 基础证据保留原来源与 hash，不因本次 E/D 增量重标或外推。
+
+## 9. D epoch 启动/重启与负例增量独立验证（固定提交 `0162cb52`）
+
+本节为对 D 分段（[compose.yaml](/E:/aaa-project/rag/deploy/compose.yaml:1) 的 `RAG_EPOCH_CONTROL_FILE` 接线与 [api.Dockerfile](/E:/aaa-project/rag/deploy/api.Dockerfile:37) 的 service-UID 可读性修正）的独立运行验证。RPC 由主会话经官方 Netcatty MCP 串行转发；本验证未自行发起远程调用、未与任何角色并发、未新增 schema/初始化或重建镜像，只对开发者已交付的最终 D 专属实例做一次独立复核。
+
+### 9.1 基线与实例
+
+| 项 | 实际（原始输出） | 结果 |
+| --- | --- | --- |
+| 固定提交 | `git rev-parse HEAD` = `0162cb52f4c49265d99777c82d854b3617941941` | 一致 |
+| 工作区 | `git status --porcelain` 无输出 | 干净 |
+| 镜像 ID | `sha256:c2a1ebb49f1c23a8ba1bb29ac14288d214f587458e9af6df7681c27e3795cf55` | 与交付一致 |
+| 实例镜像 | API/worker 均 `rag-story-1-2-api:0162cb52` | 一致 |
+| 控制文件 | `f5d6a325ed0a05a5bdeb6ceeaba93a634d5570a8faa0881408231f4afd784248` | 记为 before |
+| 控制目录/文件权限 | 目录 `550`、文件 `400`（`stat` 显示 `UNKNOWN:UNKNOWN`，宿主无 UID→名称映射；属主为开发者已核的 numeric `65532`，本验证不新增名称映射门） | 模式符合 |
+
+原始输出：terminal.log（SHA-256 `06d784fee3bfdc9307112288fc8584c1f17a21abf54b239405e1111aaa36261e`）与 command.sh 归档于 `/fileOfRag/testOfRAG/metadata/story-1-2/independent/D-0162cb52`；回传日志与本机重算 hash 一致。
+
+### 9.2 普通启动与重启（原 AC1 合法配置可重启且不轮换）
+
+- `docker start` 后两容器 `running`；`api_health 200`（仅 liveness 陈述）；`worker_hc_exit=0`（helper 可被服务 UID 读取执行）；`check-database` 输出 `DATABASE_BASELINE_OK`、`baseline_exit=0`。
+- 重启后同样 `running`、`api_health_after_restart 200`、`worker_hc_exit_after_restart=0`、`DATABASE_BASELINE_OK`、`baseline_exit_after_restart=0`。
+- 控制文件 hash 在 before / after-start / after-restart / after-stop 四次均为 `f5d6a325...4248`，`epoch_hash_diff_exit=0`，即重启未轮换或重写控制记录。
+- `rag_epoch_mirror` 前后两次均为 `mirror_rows 1 rag-story-1-2 j4DqwH13...Jxg 1`：单行，deployment_id/epoch/maintenance_version 与启动前完全一致，证明普通重启不重建镜像、不换 epoch。
+
+### 9.3 三类负例（原 AC1 缺失/不可读/矛盾隔离）
+
+| 负例 | 实际输出 | 退出码 | 裁决 |
+| --- | --- | --- | --- |
+| 控制文件缺失（`absent.json`） | `STARTUP_DEPENDENCY_UNAVAILABLE`，inspect `exited 2` | 2 | 有限失败 |
+| 服务 UID 不可读（副本 `root:root 0600`） | `STARTUP_DEPENDENCY_UNAVAILABLE`，inspect `exited 2` | 2 | 有限失败 |
+| 与既有镜像矛盾（独立副本不同 epoch：`MISMATCH_CONTROL_OK YA17eGAs...em4` ≠ 镜像 epoch） | `STARTUP_DEPENDENCY_UNAVAILABLE`，inspect `exited 2` | 2 | 有限失败 |
+
+- 三类均未自动初始化、未用 DB 补造控制文件，未改写 D 正常控制记录；矛盾用例只新建独立副本，DB 镜像与正常控制文件保持原值（before/after-stop hash 不变即证）。
+- 负例容器以 `--user 65532:65532` 运行，失败发生在服务 UID 的真实启动检查路径上，而非 root 特权环境。
+
+### 9.4 复原与归档
+
+- 结尾仅 `docker stop` 两个 D 专属容器，inspect 显示 `exited`；控制文件 hash 与 before 一致，DB 镜像未被本验证修改。
+- 归档：`/fileOfRag/testOfRAG/metadata/story-1-2/independent/D-0162cb52`（terminal.log、command.sh、result.json 与 epoch-hash 文件）；无 `--rm`/`rm` 删除，未触碰 1.1 资源或开发者 schema/epoch。
+
+### 9.5 D 三 AC 独立裁决
+
+| D AC | 独立证据 | 裁决 |
+| --- | --- | --- |
+| 已迁移 PG 与显式初始化独立 epoch 下，新源码 API/worker 同配置启动/重启可运行且不轮换/重建控制值，secret 不泄露 | 9.1–9.2 真实 start/restart、两次 baseline OK、四次同 hash、镜像行前后一致、`/health` 仅 liveness | 支持 |
+| 缺失或矛盾控制值时新 worker 启动保持隔离、有限失败，不自动初始化或用 DB 补造 | 9.3 三类负例全部 exit 2 且有限公开码，正常记录未被改写 | 支持 |
+| 既有 1.1 资源不受影响，只使用本 Story 专属测试资源/独占 schema | 9.1/9.4 只操作 D 专属实例、独立副本目录与专属 schema `d_story12_d6e8a0da`；未触碰 1.1 容器/目录/桶 | 支持 |
+
+D 门：**独立验证通过**。开发者交付与其 D 门结果保留原来源，本条为独立复核，不互相替代。
+
+## 10. 未到期门与后续（不作为当前阻塞）
+
+- Story 1.3 限流/C8、Story 1.4 writer 清理、Story 1.5 S0 汇总与真实供应方/P0/目标部署门未到期，按原规划归属，不构成本条阻塞。
+- 正式审查增量复核（全新 `GPT-6.1 Sol / medium`）由主会话安排，其结论不属于本独立验证报告。
+- 最终 Story 1.2 验收由主会话统一裁决；本报告只声明必需独立验证项已通过。
 

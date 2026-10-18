@@ -6,41 +6,30 @@
   "project_path": "E:/aaa-project/rag",
   "host_id": "local",
   "mode": "serial-completion-triggered",
-  "state": "story_1_2_E_passed_D_worker_helper_patch_frozen_preserved_epoch_and_schema",
+  "state": "story_1_2_done_passed_unique_story_1_3_handoff_pending",
   "owner_thread_id": "01a14b42-689c-7533-90a3-9bd187d93039",
   "current_story_key": "1-2-隔离执行并保存每次调用事实",
   "current_spec": "_bmad-output/implementation-artifacts/spec-1-2-isolated-calls.md",
-  "current_implementation_agent_id": "01a14c7b-78ff-7681-80fd-8f1e6155df95",
-  "implementation_write_scope": [
-    "backend/src/rag_app/application/call_dispatch.py",
-    "backend/tests/test_call_dispatch.py",
-    "backend/tests/test_call_dispatch_postgres.py",
-    "docs/story-1-2-dispatch-delivery.md"
-  ],
-  "acceptance_gate": "not-passed",
-  "next_story_key": null,
+  "current_implementation_agent_id": null,
+  "implementation_write_scope": [],
+  "acceptance_gate": "passed",
+  "next_story_key": "1-3-证明共享限流与双任务gate不会提前退额",
   "next_thread_id": null,
-  "dispatch_state": "E_developer_28PG_232nonPG_passed_D_build_running_Step5_increment_preparing_medium_review_active",
-  "handoff_id": "3dff3d78-c0f5-42cf-9860-fc2ad4250ab4",
+  "dispatch_state": "all_Story12_required_gates_passed_all_subagents_closed_pending_single_Story13_chat",
+  "handoff_id": "88707639-db55-47b4-b72e-f7185237eec5",
   "handoff_kind": "completed_story_serial_relay",
-  "handoff_source_thread_id": "01a14973-8555-7131-8fd2-e9eec12f53fe",
-  "handoff_target_story_key": "1-2-隔离执行并保存每次调用事实",
-  "handoff_prompt_path": "_bmad-output/implementation-artifacts/amelia-handoff-story-1-2.md",
+  "handoff_source_thread_id": "01a14b42-689c-7533-90a3-9bd187d93039",
+  "handoff_target_story_key": "1-3-证明共享限流与双任务gate不会提前退额",
+  "handoff_prompt_path": "_bmad-output/implementation-artifacts/amelia-handoff-story-1-3.md",
   "handoff_target_model": "group/auto-gpt-6-1-sol",
   "handoff_target_reasoning_effort": "max",
-  "handoff_reason": "Original Story 1.1 ACs and developer/independent/review gates passed; user requires a fresh Amelia chat for the next Story.",
-  "handoff_accepted": true,
-  "handoff_created_thread_id": "01a14b42-689c-7533-90a3-9bd187d93039",
-  "handoff_source_write_released": true,
+  "handoff_reason": "Story1.2 original four ACs and developer/independent/review/fix-regression gates all passed. Story1.3 sole dependency1.2 is satisfied; user authorizes serial local Amelia relay.",
+  "handoff_accepted": false,
+  "handoff_created_thread_id": null,
+  "handoff_source_write_released": false,
   "handoff_authorization": "2026-10-17 user explicitly authorizes each main Amelia chat to finish one Story, use skills and assigned subagents, and create the next Amelia chat in the same project after completion; repeat within current Sprint until complete or stopped.",
   "automation_id": null,
-  "remaining_parent_obligations": [
-    "Story1.2 original AC1: A canonical151 passed; D new-backend startup regression and E end-to-end/independent evidence pending",
-    "Story1.2 original AC2: C native25 passed; E dispatch crash/timeout matrix and independent evidence pending",
-    "Story1.2 original AC3 EgressTarget: B developer 169 passed at 7840285; C integration and independent verification pending",
-    "Story1.2 original AC4: A real PG facts/lock negatives passed; E real child/transaction/late-fact integration and independent evidence pending",
-    "D/E developer verification, Step5 independent verification, one fresh GPT6.1Sol medium review and actual fix regressions, final acceptance snapshot and next serial relay"
-  ],
+  "remaining_parent_obligations": [],
   "blocked_conditions": [],
   "deduplication_rule": "Recheck project threads and this claim before dispatch. Never create a second owner for the same story or retry an ambiguous creation before reconciling it.",
   "completion_rule": "All required parent-story acceptance and independent review/validation must pass before selecting and dispatching the next dependent story.",
@@ -70,6 +59,15 @@
       "created_thread_id": "01a14973-8555-7131-8fd2-e9eec12f53fe",
       "accepted": true,
       "preserved_before_next_story_handoff": true
+    },
+    {
+      "handoff_id": "3dff3d78-c0f5-42cf-9860-fc2ad4250ab4",
+      "source_thread_id": "01a14973-8555-7131-8fd2-e9eec12f53fe",
+      "target_thread_id": "01a14b42-689c-7533-90a3-9bd187d93039",
+      "target_story_key": "1-2-隔离执行并保存每次调用事实",
+      "accepted": true,
+      "source_write_released": true,
+      "archived_before_Story13": true
     }
   ],
   "resolved_or_superseded_conditions": [
@@ -157,7 +155,7 @@
     }
   ],
   "working_set_path": "_bmad-output/implementation-artifacts/story-1-2-working-set.md",
-  "latest_decision_path": "_bmad-output/implementation-artifacts/story-1-1-acceptance-snapshot-2026-10-18.md",
+  "latest_decision_path": "_bmad-output/implementation-artifacts/story-1-2-final-acceptance.json",
   "pending_prerequisites": [],
   "last_merged_diagnostic": {
     "recorded_at": "2026-10-18T09:05:37.3648929+08:00",
@@ -237,7 +235,7 @@
       "secret_value": "not_recorded"
     }
   },
-  "updated_at": "2026-10-18T09:53:42.8212498+08:00",
+  "updated_at": "2026-10-18T02:56:11.558Z",
   "handoff_registered_at": "2026-10-18T03:07:41.6004268+08:00",
   "handoff_acceptance_evidence": "AMELIA_RELAY_RELEASE received; target 01a14b42-689c-7533-90a3-9bd187d93039 verified next_thread_id, Story1.2, handoff_id and Story1.1 passed gate, then accepted sole ownership. Source and all Story1.1 child writers released.",
   "implementation_claims": [
@@ -622,7 +620,7 @@
     "current_status": "Gitee_no_refs_exit0_GitHub_empty_and_API_write_403",
     "server_pull_not_verified": true
   },
-  "latest_handoff_path": "_bmad-output/implementation-artifacts/amelia-handoff-story-1-2.md",
+  "latest_handoff_path": "_bmad-output/implementation-artifacts/amelia-handoff-story-1-3.md",
   "spec_scope_check": "cl100k_base actual counts: A1 1089, D 1108, B0a 1135, H 1045, runtime 919, HTTP 1114 before one small C2 route clarification, frontend preflight 916, Git hygiene 725. All dispatched short specs below 1600; parent A retained as history and split.; worker-reconcile actual cl100k_base=915, below 1600; counted as documentation tooling, no application run.; contract-enum-source actual cl100k_base=867, below 1600.; build-context-hygiene=797, decimal-zero=927 actual cl100k_base, below 1600.",
   "handoff_source_after_registration": "Read-only verification only; no further project writes or implementation dispatch by the source chat.",
   "persona": "Amelia",
@@ -956,16 +954,16 @@
     "not_new_hardening": true
   },
   "next_story_claim": {
-    "story_key": "1-2-隔离执行并保存每次调用事实",
-    "state": "active_current_story_owner_blocked_no_next_handoff_pending",
-    "handoff_id": "3dff3d78-c0f5-42cf-9860-fc2ad4250ab4",
-    "thread_id": "01a14b42-689c-7533-90a3-9bd187d93039",
-    "parent_dependency": "Story1.1_done_passed",
+    "story_key": "1-3-证明共享限流与双任务gate不会提前退额",
+    "state": "unique_pending_chat_creation_after_Story12_pass",
+    "handoff_id": "88707639-db55-47b4-b72e-f7185237eec5",
+    "thread_id": null,
+    "parent_dependency": "Story1.2_done_passed",
     "deduplicated_project": "61e1f316-4db1-4b50-a56e-62c5604d7d25",
-    "source_metadata_only": true,
-    "activation_signal": "AMELIA_RELAY_RELEASE"
+    "activation_signal": "AMELIA_RELAY_RELEASE",
+    "no_other_story13_chat_in_project_listing": true
   },
-  "next_working_set_path": "_bmad-output/implementation-artifacts/story-1-2-working-set.md",
+  "next_working_set_path": "_bmad-output/implementation-artifacts/story-1-3-working-set.md",
   "final_acceptance": {
     "story_key": "1-1-启动可重建的模块化项目",
     "status": "done",
@@ -1013,7 +1011,7 @@
       "observed_model": "zayuapi/deepseek-v4.1-flash",
       "observed_effort": "max",
       "observed_timestamp": "2026-10-18T00:48:44.169Z",
-      "state": "E_URI_fixture_patch_SOURCE_FROZEN_pending_new_canonical_rerun",
+      "state": "E_done_developer_independent_review_passed_closed",
       "source_frozen": true,
       "source_sha256": {
         "backend/src/rag_app/application/call_dispatch.py": "ae8f70488275cec3a88e96ba0e9eea883e8a3d783a2186001925a08045bdb848",
@@ -1066,7 +1064,10 @@
       "failed": 0,
       "errors": 0,
       "skipped": 0,
-      "exit_codes": [0, 0],
+      "exit_codes": [
+        0,
+        0
+      ],
       "parent_direct_original_XML_and_source_Git_verified": true,
       "evidence_index": "_bmad-output/implementation-artifacts/story-1-2-e-canonical-pass-d6e8a0d.json",
       "evidence_bucket": "/fileOfRag/testOfRAG/metadata/story-1-2/dispatch/E-d6e8a0d",
@@ -1086,7 +1087,7 @@
         "docs/story-1-2-epoch-deploy.md",
         "deploy/api.Dockerfile"
       ],
-      "state": "D_Dockerfile_permissions_patch_SOURCE_FROZEN_pending_fixed_commit_rebuild",
+      "state": "D_done_original_required_matrix_developer_and_independent_passed_closed",
       "Dockerfile_sha256": "8044d7086d7ecba6874ca91771378a89237fbdb5dfc7d5160aa52a52f6120414",
       "current_short_spec_o200k_tokens": 1449,
       "fixed_commit": "d6e8a0da94a88199e6c4795f3e10e26c821b454f",
@@ -1152,7 +1153,10 @@
       "API_and_worker_running": true,
       "worker_helper_error": "python cannot open /usr/local/bin/rag-worker-healthcheck: Errno13 Permission denied; exit2",
       "restart_executed": false,
-      "active_container_names": ["rag-story-1-2-api", "rag-story-1-2-worker"],
+      "active_container_names": [
+        "rag-story-1-2-api",
+        "rag-story-1-2-worker"
+      ],
       "next": "D narrow Dockerfile health-helper readability fix and final-UID read; new tag/containers, preserve initialized schema/epoch and old evidence."
     },
     "D_worker_helper_patch": {
@@ -1179,7 +1183,7 @@
       "observed_model": "stepfun/step-5-preview",
       "observed_effort": "high",
       "observed_timestamp": "2026-10-18T01:43:15.633Z",
-      "state": "model_verified_independent_E_D_plan_only_wait_runtime_slot",
+      "state": "required_verification_passed_E_and_D_closed",
       "scope": "docs/story-1-2-independent-verification.md and task-specific independent evidence",
       "base311_and_15_not_repeated_or_relabelled": true,
       "remote_terminal_lease": false
@@ -1195,7 +1199,7 @@
       "observed_effort": "medium",
       "observed_timestamp": "2026-10-18T00:59:02.447Z",
       "fresh_instance": true,
-      "state": "READY_not_released_waiting_E_source_freeze",
+      "state": "review_gate_passed_closed",
       "scope": "docs/story-1-2-code-review.md; only known E fixes and directly affected current-AC changes",
       "runtime_gates_not_replaced_by_static_review": true
     },
@@ -1223,7 +1227,7 @@
       "historical_prefixed_model_evidence_preserved": true
     },
     "baseline_commit": "96e7fb3ee94c025c3fae804ddabf8ad71d8b08d5",
-    "acceptance_gate": "not-passed",
+    "acceptance_gate": "passed",
     "original_AC_count": 4,
     "spec_tokenizer": "tiktoken o200k encoding",
     "initial_spec_tokens": {
@@ -1629,6 +1633,19 @@
       "RPC_holder": null,
       "new_relay_thread_created": false,
       "background_automation_created": false
-    }
+    },
+    "status": "done",
+    "final_acceptance": {
+      "path": "_bmad-output/implementation-artifacts/story-1-2-final-acceptance.json",
+      "source_commit": "0162cb52f4c49265d99777c82d854b3617941941",
+      "all_original_ACs_passed": true,
+      "developer_gate": "passed",
+      "independent_gate": "passed",
+      "review_gate": "passed",
+      "remaining_required": [],
+      "independent_report_sha256": "2da836a12aa16a69373fae74b42a2b8ed722262ed172b63781b21a2341f14d55",
+      "review_report_sha256": "a0ff4e2019fad369a7427351b742cc2e334d2e110dfa6df112b6b0d972d058e3"
+    },
+    "all_implementation_and_validation_instances_closed": true
   }
 }
