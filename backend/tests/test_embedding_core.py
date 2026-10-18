@@ -200,7 +200,7 @@ def test_profile_fingerprints_change_for_every_compatibility_input():
     assert base.fingerprint != base.compatibility_fingerprint
     assert base.compatibility_fingerprint != base.space_fingerprint
 
-    variants = [
+    space_variants = [
         profile(provider="provider-b"),
         profile(model="embed-model-b"),
         profile(deployment="deployment-b/2026-10-01"),
@@ -208,17 +208,31 @@ def test_profile_fingerprints_change_for_every_compatibility_input():
         profile(tokenizer="tok.v2"),
         profile(preprocessing="preprocess.v2"),
         profile(normalization="none"),
+    ]
+    for variant in space_variants:
+        assert variant.space_fingerprint != base.space_fingerprint
+        assert variant.compatibility_fingerprint != base.compatibility_fingerprint
+        assert variant.fingerprint != base.fingerprint
+
+    purpose_variants = [
         profile(purpose="query"),
         profile(input_prefix="document: "),
+    ]
+    for variant in purpose_variants:
+        assert variant.space_fingerprint == base.space_fingerprint
+        assert variant.compatibility_fingerprint != base.compatibility_fingerprint
+        assert variant.fingerprint != base.fingerprint
+
+    profile_variants = [
         profile(limits=limits(max_tokens_per_batch=21)),
         profile(profile_id="doc-profile.v2"),
         profile(evidence_ref="/other/evidence.json"),
         profile(verified=False, evidence_ref=None),
     ]
-    for variant in variants:
+    for variant in profile_variants:
+        assert variant.space_fingerprint == base.space_fingerprint
+        assert variant.compatibility_fingerprint == base.compatibility_fingerprint
         assert variant.fingerprint != base.fingerprint
-        assert variant.compatibility_fingerprint != base.compatibility_fingerprint
-        assert variant.space_fingerprint != base.space_fingerprint
 
 
 def test_query_and_document_profiles_can_share_one_vector_space():
@@ -300,9 +314,9 @@ def test_plan_respects_item_and_batch_token_byte_and_count_boundaries():
         prof=prof,
         counter=counter,
     )
-    assert [batch.ordinals for batch in result.batches] == [(0, 1, 2), (3, 4)]
-    assert [batch.token_count for batch in result.batches] == [6, 9]
-    assert [batch.utf8_bytes for batch in result.batches] == [6, 9]
+    assert [batch.ordinals for batch in result.batches] == [(0, 1), (2, 3), (4,)]
+    assert [batch.token_count for batch in result.batches] == [3, 7, 5]
+    assert [batch.utf8_bytes for batch in result.batches] == [3, 7, 5]
     assert counter.calls == ["a", "bb", "ccc", "dddd", "eeeee"]
 
 
@@ -318,8 +332,8 @@ def test_plan_byte_limit_can_split_before_token_limit():
         )
     )
     result = plan(["aa", "bb", "cc", "dd", "ee"], prof=prof, counter=counter)
-    assert [batch.ordinals for batch in result.batches] == [(0, 1), (2, 3), (4,)]
-    assert [batch.utf8_bytes for batch in result.batches] == [4, 4, 2]
+    assert [batch.ordinals for batch in result.batches] == [(0, 1, 2, 3), (4,)]
+    assert [batch.utf8_bytes for batch in result.batches] == [8, 2]
 
 
 def test_plan_rejects_a_single_item_above_a_limit_without_echoing_it():
@@ -583,7 +597,9 @@ def test_l2_normalization_is_stable_for_extreme_finite_magnitudes():
         plan=result,
         results=[EmbeddingResult(0, (5e-324, 1e-323, -5e-324))],
     )[0]
-    assert tiny[0] < 0 < tiny[1]
+    assert tiny[0] > 0
+    assert tiny[1] > 0
+    assert tiny[2] < 0
 
 
 def test_none_normalization_preserves_the_exact_finite_values():
