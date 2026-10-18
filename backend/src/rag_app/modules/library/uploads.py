@@ -262,8 +262,12 @@ def parse_uuidv7(value: object) -> tuple[str, datetime]:
     if parsed.version != 7 or parsed.variant != uuid.RFC_4122:
         raise UploadInputError("upload_operation_id must be a UUIDv7")
     try:
-        embedded = datetime.fromtimestamp(parsed.int >> 80, tz=timezone.utc)
-    except (OverflowError, OSError, ValueError):
+        # The leading 48 bits are Unix milliseconds, not seconds.
+        milliseconds = parsed.int >> 80
+        embedded = datetime(1970, 1, 1, tzinfo=timezone.utc) + timedelta(
+            milliseconds=milliseconds,
+        )
+    except (OverflowError, ValueError):
         raise UploadInputError("upload_operation_id time is out of range") from None
     return str(parsed), embedded
 

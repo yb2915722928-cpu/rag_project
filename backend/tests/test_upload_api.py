@@ -11,6 +11,7 @@ from __future__ import annotations
 import asyncio
 from datetime import datetime, timedelta, timezone
 import hashlib
+import json
 import os
 import re
 import secrets
@@ -472,7 +473,6 @@ def test_create_stream_put_get_registers_real_original_once(upload_api):
 
     different_data = data[:-1] + b"!"
     assert len(different_data) == len(data)
-    assert _put(upload_api, candidate_id, different_data).status_code == 409
     _assert_failure(
         _put(upload_api, candidate_id, different_data),
         "UPLOAD_CONTENT_CONFLICT",
@@ -974,7 +974,7 @@ def test_disconnect_is_finite_and_keeps_reserved_bytes(upload_api):
         if message["type"] == "http.response.body"
     )
     assert start["status"] == 400
-    assert __import__("json").loads(body)["error"]["code"] == "REQUEST_STREAM_ERROR"
+    assert json.loads(body)["error"]["code"] == "REQUEST_STREAM_ERROR"
 
     upload = _upload(upload_api.engine, upload_api.schema, operation_id)
     assert upload["state"] == "uploading"

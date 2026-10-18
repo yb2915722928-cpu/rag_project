@@ -638,6 +638,7 @@ def test_real_0003_cycle_with_intent_downgrades_and_reupgrades(upload_pg):
     assert revision == "0003_library_uploads"
     assert candidate_id.startswith("cand_")
 
+    _seed(upload_pg.engine, upload_pg.schema)
     after = _request(data=b"after-cycle")
     created, after_view = _create(upload_pg, after)
     assert created is True
