@@ -1,0 +1,73 @@
+{
+  "schema_version": "story-runtime-evidence.v1",
+  "commit": "f3f1caacc76cd9cf8bc72a8eba1fcd9bc246c36c",
+  "github_and_gitee_main_verified_equal_at_publication": true,
+  "server_source": "Gitee fixed commit only",
+  "checkout": "/opt/rag-story-1-2/repo-fixed",
+  "python": "3.12.8",
+  "uvicorn": "0.37.0",
+  "locked_sync_exit": 0,
+  "test_author": "E Aquinas, zayuapi/deepseek-v4.1-flash default",
+  "execution_transport": "Controller forwarded the E developer pytest command through official Netcatty MCP",
+  "job_id": "job_mvd4xows_36f8da226bc1",
+  "actual_pytest_command": "/opt/rag-story-1-2/venv-fixed/bin/python -m pytest --require-postgres -m postgres -q -p no:cacheprovider --junitxml=/opt/rag-story-1-2/evidence/E-f3f1caa/pg.xml",
+  "result": {
+    "exit_code": 1,
+    "tests": 28,
+    "passed": 16,
+    "failed": 12,
+    "errors": 0,
+    "skipped": 0,
+    "deselected": 750
+  },
+  "modules_from_parent_XML_parse": {
+    "test_call_dispatch_postgres": {
+      "tests": 13,
+      "passed": 1,
+      "failed": 12
+    },
+    "test_call_postgres": {
+      "tests": 7,
+      "failed": 0
+    },
+    "test_postgres_integration": {
+      "tests": 6,
+      "failed": 0
+    },
+    "test_runtime_entrypoints": {
+      "tests": 2,
+      "failed": 0
+    }
+  },
+  "primary_failure": "E PG fixture directly concatenates an opaque placeholder containing braces into the signed request target; B correctly rejects invalid URI target characters before the intended dispatch path.",
+  "same_commit_E_unit_topic": {
+    "tests": 20,
+    "passed": 20,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "exit_code": 0,
+    "parent_read_original_JUnit": true,
+    "JUnit_sha256": "4d3ff771b7b95076b7c8b5517d09a2b09be208b9df3e1c5e28c8042e39752380",
+    "scope": "test_call_dispatch.py at f3f1caa only; not relabeled as the next fixture patch passing"
+  },
+  "fix_owner": "01a14c7b-78ff-7681-80fd-8f1e6155df95",
+  "fix_scope": "E test fixture URI construction only; do not weaken B target validation or modify frozen A/C sources.",
+  "source_before_after_identical": true,
+  "git_before_after_clean": true,
+  "source_sha256": {
+    "backend/src/rag_app/application/call_dispatch.py": "ae8f70488275cec3a88e96ba0e9eea883e8a3d783a2186001925a08045bdb848",
+    "backend/tests/test_call_dispatch.py": "dda9fa70e386d6827628922370a7b6c737661ca055ef43487f0adacf3e509c7f",
+    "backend/tests/test_call_dispatch_postgres.py": "3dc8ea2b5e38ebecaa76df557367f08a28b8118063b04142fab83a0d708078a4",
+    "backend/uv.lock": "7ad33ac08870a9dfb0fccf3716207c4503d5fc745e0215b2adb7baadcea408ed"
+  },
+  "parent_direct_JUnit_parse_and_remote_hash_verified": true,
+  "sha256": {
+    "pg.xml": "870d458be241ab0d31656dabffcf4853c8313e6d429923ca4b658f746955196a",
+    "pg.log": "c9033d01e0e8e97cbe2c4f73f8a1947605b5f909395faac3489458b399aa42fc"
+  },
+  "evidence_root": "/fileOfRag/testOfRAG/metadata/story-1-2/dispatch/E-f3f1caa",
+  "command_record_addendum": "Original pg-command.txt mistakenly contains a literal wrapper variable expression. Preserve it unchanged; pg-command-actual.txt records the actual pytest invocation separately. The executed command and JUnit destination were correct.",
+  "parent_acceptance_gate": "not-passed",
+  "next_step": "Original E developer fixes the fixture locally; publish a new matching GitHub/Gitee commit, then rerun the mandatory PG selection and E topic/necessary regressions."
+}

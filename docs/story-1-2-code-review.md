@@ -85,3 +85,51 @@
 因此本次源码快照审查已完成，可以保存检查点；`fullrelease_gate=not-passed`，`implementation_blocked`。通道错误不改变受审 tree，不等待修补才交报告，不换模型、不由主控或审查者代写，也不再派同类探测。
 
 后续沿用本唯一审查实例，只复核 E/D 的实质增量与相关真实运行证据：F2 用途分层、E 已列输入/断言与故障矩阵、D 本条启动/重启及负例。若影响公共契约，再核受影响边界；没有实质影响则不追加泛化轮或重跑无关已过项。原四 AC 全部必需子句及相应独立验证未齐之前，完整 Story 仍不得放行。
+
+## 2026-10-18 E 固定提交增量复核（源码完成，运行待验）
+
+本节接替原审查实例的相关增量复核，不重开正式审查或扩大范围。上文的原始 tree、diff hash、源码来源、历史 **0 新增**及当时未关闭状态全部保留；本节只更新已知 E 项的静态处置。D 及其运行门不在本次三源增量范围。
+
+### 固定输入与身份
+
+- 放行指令：`REVIEW_E_FROZEN_RELEASE`；开发者已明确三源 `SOURCE_FROZEN`。
+- 增量基线：`e1966b489b84d0a0b53cf0a060f70b22916cb2a4`；固定受审提交：`f3f1caacc76cd9cf8bc72a8eba1fcd9bc246c36c`。仅审两者之间下列三源差异，共 150 行新增、23 行删除；上下文亦从固定提交读取，没有使用工作区源码。
+- 主控核定本接替实例的实际 `turn_context`：`2026-10-18T00:59:02.447Z`、`group/auto-gpt-6-1-sol`、`effort=medium`。本实例未参与该修复的分析或实现；底层供应方身份不据此另作推断。
+- GitHub/Gitee main 同值为主控本次提供的实测结果，本实例未自行联网复核。源码 SHA256 则由本实例直接读取固定提交的 Git blob 原始字节计算，并与该提交内[恢复记录](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-2-prefix-route-resume-2026-10-18.json:1)逐项核对，三项一致。
+
+| 固定提交源码 | 本实例计算的 SHA256 |
+| --- | --- |
+| [call_dispatch.py](/E:/aaa-project/rag/backend/src/rag_app/application/call_dispatch.py:280) | `ae8f70488275cec3a88e96ba0e9eea883e8a3d783a2186001925a08045bdb848` |
+| [test_call_dispatch.py](/E:/aaa-project/rag/backend/tests/test_call_dispatch.py:283) | `dda9fa70e386d6827628922370a7b6c737661ca055ef43487f0adacf3e509c7f` |
+| [test_call_dispatch_postgres.py](/E:/aaa-project/rag/backend/tests/test_call_dispatch_postgres.py:113) | `3dc8ea2b5e38ebecaa76df557367f08a28b8118063b04142fab83a0d708078a4` |
+
+以上链接方便定位；行号结论以固定提交的 `git show` 内容为准。追加前本报告 SHA256 为 `bc59f75da568c34f159ba8d37151e4f1228596712af08277f591bf7e0469e997`，用于标识保留的原报告字节来源，不替换上文原审查 diff hash。
+
+### 已知项处置
+
+| 已知项 | 本次固定源码核对 | 静态处置与运行边界 |
+| --- | --- | --- |
+| F2：业务用途与传输用途强制同值 | [execute](/E:/aaa-project/rag/backend/src/rag_app/application/call_dispatch.py:300)，范围：300–314，删除等值限制，将逻辑 `purpose` 原样交给 A；[PG helper](/E:/aaa-project/rag/backend/tests/test_call_dispatch_postgres.py:113)，范围：113–125，改用 `current.purpose`。单元成功路径同时断言 query 与 API；PG 成功路径检查持久化 query，新增错误业务用途拒绝及匹配 embedding context 成功路径。 | 原 F2 源码缺陷静态关闭；合法成功及错误用途拒绝的真实 PG 运行待验。 |
+| E：正常成功断言错误 | [可信迟到重复/冲突用例](/E:/aaa-project/rag/backend/tests/test_call_dispatch_postgres.py:536)，范围：536–575，将正常成功后的 `fact_recorded` 改为 True，继续保留后续重复、冲突和原 call 状态不变断言。正常成功用例继续要求 True，并保留 unknown usage、NULL 数值及无第二次 grant 的断言。 | 原输入/断言不一致静态关闭；不表示该用例已运行通过。 |
+| E：响应后记录失败缺可信事实输入 | [响应后记录失败用例](/E:/aaa-project/rag/backend/tests/test_call_dispatch_postgres.py:498)，范围：498–533，显式注入 `ResultFact(provider_ref="provider-stop-1", usage=UsageFact("reported",5,2,7), cost=None)`；断言 call unknown/NULL，追加事实含 provider_ref、reported usage、total=7 及 NULL cost。原事实非空约束未放松。 | 原空事实输入问题静态关闭；这是显式可信观察假件，不是实际供应方证据。真实 child + PG 迟到通路运行待验。 |
+| E：真实 child 故障与 PG 同路径证据 | [StopAfterPrepare](/E:/aaa-project/rag/backend/tests/test_call_dispatch_postgres.py:408)，范围：408–437，先调用真实 prepare，再对实际 child 发 SIGSTOP 并观察 `/proc` 的 T 状态；[同路径用例](/E:/aaa-project/rag/backend/tests/test_call_dispatch_postgres.py:440)，范围：440–478，沿用真实 grant/receive/stop，要求真实超时、停止证明、退出码 -SIGKILL、PG unknown/NULL、无 fact 行及原 call 无第二次 grant。 | 原先只有异常包装、没有此同路径用例的源码缺口已补齐；真实 SIGSTOP/KILL、停止证明及 PG 持久化结果尚无本次运行证据，不能关闭运行门。 |
+
+删除用途等值限制没有删除下载 Authorization 守卫：[EgressDispatch 与构造守卫](/E:/aaa-project/rag/backend/src/rag_app/application/call_dispatch.py:76)，范围：76–126，仍按目标传输用途拒绝凭据错配；[既有拒绝测试](/E:/aaa-project/rag/backend/tests/test_call_dispatch.py:517)，范围：517–529，仍要求 DNS 前拒绝。本次没有修改 grant 资格、停止等待与 UoW 的顺序或 call-only 迟到事实实现；复核仅确认新输入接入这些既有分支，没有给未改变实现追加新要求。
+
+### 本次发现与未过门
+
+本次限定增量 **0 新增发现**。已知项静态修复结论见上表，不将其转计为新问题，也不为零发现继续扩大审查。没有要求未来业务表、Story 1.3–1.5 功能或无关已过项重跑。
+
+主控本次提供的新环境事实是：用户修复 Netcatty 后，official MCP `get_environment` 与会话 `94bede36-0e0e-444c-a8b7-f332d2542962` 的实际 execute 已恢复。历史“发现文件缺失/CLI 桥接拒绝连接”仍属于当时的 blocked 证据，不据此声称当前连接继续阻塞；连接恢复本身也不证明测试通过。
+
+截至本次源码复核，尚未收到固定提交的开发者全部必需 PG/E 专题结果及对应独立验证证据，本实例没有运行应用、测试或部署。相关运行门保持 **not-executed / 待验**；若后续实际运行受阻，再按实际错误记录 blocked。原四 AC 的完整运行分母、D 门及独立验证要求保持有效，`fullrelease_gate=not-passed`，不签完整 Story PASS，不放行下一 Story。运行证据到达后仅核对本次相关节点、固定源码与原始结果，不自动扩新轮。
+
+### 同次增量复核：首轮真实 PG 失败更新
+
+主控随后提供 canonical `f3f1caacc76cd9cf8bc72a8eba1fcd9bc246c36c` 首轮 `--require-postgres -m postgres` 运行结果：28 项，**16 passed / 12 failed / 0 error / 0 skipped**。其中旧必需 PG 的 7+6+2=15 项全过，E 13 项为 **1 passed / 12 failed**。主控直接读取 XML 并用 PowerShell XML parser 解析，报告 XML SHA256 为 `870d458be241ab0d31656dabffcf4853c8313e6d429923ca4b658f746955196a`。这是主控核验后提供的运行证据；本实例未直接读取 XML、未自行重跑，也未收到逐节点原始失败明细或 XML 工件路径。
+
+**已知 E 测试输入缺陷，未关闭：**[PG 假件 SECRET](/E:/aaa-project/rag/backend/tests/test_call_dispatch_postgres.py:58)含字面值 `{{SECRET_gtxjjq3p}}`，在[签名 request_target 构造](/E:/aaa-project/rag/backend/tests/test_call_dispatch_postgres.py:71)中未经编码直接拼入 query。主控报告绝大多数失败在 B 的合法 URI 字符守卫处被拒，尚未到达目标调用。该输入与固定源码相符；不能将这些早期拒绝当作 F2、可信迟到路径或 SIGSTOP/KILL 路径的运行验证，也不能未经逐节点证据便将 12 项失败全部归为同一根因。
+
+前次静态复核未识别此假件编码缺陷；“0 新增发现”保留为当时静态检查结果，本节按实际失败修正 E 测试可执行性的判断。此问题已由主控回交原 E 实现者，属于当前 E 已知失败处置，不重复计数或扩大审查范围。拟议修复是在测试构造处使用 `quote(SECRET, safe='')` 编码 opaque query 值；不放松 B 的 URI/凭据守卫，不改 A/C。拟议补丁尚未作为新固定提交交给本实例，故本节不宣称修补已落盘、已静态通过或已运行通过。
+
+运行状态据此由上节时间点的“未执行/待验”更新为本固定提交 **已执行、未通过（failed）**；目标调用路径中被输入拒绝挡住的断言仍未获验证。旧 15 项本轮通过成绩保留在 `f3f1caa` 来源下，不自动转为后续补丁提交通过。F2 及两处原输入/断言修复的窄静态判断保留，E 整体运行门不关闭。待收到小补丁的固定提交/差异及相关重跑原始证据后，继续同次限定增量复核；`fullrelease_gate=not-passed`，不签 E 运行或完整 Story PASS。

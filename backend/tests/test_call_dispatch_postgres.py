@@ -14,6 +14,7 @@ import sys
 import threading
 import time
 import uuid
+from urllib.parse import quote
 
 import pytest
 from sqlalchemy import text
@@ -68,7 +69,9 @@ def api_dispatch(*, stop_after: float = 120.0) -> EgressDispatch:
     )
     target = EgressTarget(
         profile, "api.example.com", 443,
-        "/v1/run?signature=" + SECRET,
+        # Keep the real B guard: opaque test material is percent-encoded into
+        # the visible-ASCII signed target instead of containing raw braces.
+        "/v1/run?signature=" + quote(SECRET, safe=""),
     )
     request = EgressRequest(
         method="POST",
@@ -623,7 +626,8 @@ def test_real_rejected_target_and_download_credential_never_dispatch(
             frozenset({HostPort("download.example.com")}),
         )
         download = EgressTarget(
-            download_profile, "download.example.com", 443, "/file?sig=" + SECRET,
+            download_profile, "download.example.com", 443,
+            "/file?sig=" + quote(SECRET, safe=""),
         )
         with pytest.raises(EgressError) as caught:
             build_egress_dispatch(

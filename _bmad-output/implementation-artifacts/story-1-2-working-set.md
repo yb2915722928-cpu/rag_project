@@ -1,6 +1,6 @@
 # Story 1.2 当前工作集
 
-状态：父Story **in-progress/not-passed，E三源已冻结待固定提交实测，Netcatty已恢复**。Aquinas明确SOURCE_FROZEN且无已知源剩项；主控核三源实际hash，运行仍未签通过。D Nash准备当前启动回归，Hilbert已核6.1medium并ready。A/B/C和稳定基础独立已过；新E/D运行门待执行，历史失败证据保留。
+状态：父Story **in-progress/not-passed，E URI假件补丁已再冻结待重测，Netcatty已恢复**。f3首轮28 PG为16pass/12fail，E单元20pass；原失败保留。Aquinas已在两测试API/下载目标处quote opaque参数，应用代码未变、B/A/C未放宽，已SOURCE_FROZEN。主控发布新提交后重跑必需PG及作者给的六模块专题/回归；D准备回归、Hilbert只审相关补丁。
 
 唯一主控 `01a14b42-689c-7533-90a3-9bd187d93039`，实际 `group/auto-gpt-6-1-sol / max`；接力ID `3dff3d78-c0f5-42cf-9860-fc2ad4250ab4` 已释放/接手。当前认领/证据以 [relay](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/sprint-relay-state.json:1) 为准。主控不写应用/测试/部署实现，只文档/提交/构建测试/编排。
 
@@ -8,7 +8,7 @@
 
 | 角色 | 实例 | 范围/状态 |
 | --- | --- | --- |
-| E Aquinas | `01a14c7b-78ff-7681-80fd-8f1e6155df95` | 实际前缀DeepSeek/max默认；三源SOURCE_FROZEN，仅真实失败/复核修复再放行；负责开发者测试命令/结果和交付文档 |
+| E Aquinas | `01a14c7b-78ff-7681-80fd-8f1e6155df95` | 实际前缀DeepSeek/max默认；URI假件窄修已SOURCE_FROZEN；负责测试命令/结果核对和交付文档 |
 | C Heisenberg | `01a14b57-dbf8-7e11-8a3f-f678f9146dd0` | native四源冻结、25已过，C交付已补；只保留供真实native问题修复，无RPC |
 | 独立 Pascal | `01a14b8d-7d2f-7b62-875b-a324944c561c` | actualStep5/high默认；base96c311非PG+15PG已过、RPC归还；报告partial，后续只补E/D实质新项 |
 | 正式增量审查 Hilbert | `01a14c84-e840-7bb2-afa7-5cee31958892` | 新6.1Sol/medium已核；旧Pasteur在工具中not found，原审查证据不变；等E冻结后仅相关增量 |
@@ -27,7 +27,7 @@
 
 ## 剩余工作/真实阻塞
 
-- E五项窄修已落三源并冻结：purpose分层、PG helper=current.purpose、成功事实断言、可信result_fact晚到工厂、真实SIGSTOP→监督停止+PGunknown/NULL/无二grant用例；正确业务用途仍由A拒绝。主控已核实际diff/hash，A19/C4未动。接下来双远端固定提交→全部必需PG（作者命令 `--require-postgres -m postgres`）→E专题/必要回归；不在本地跑项目、不server覆盖。
+- E五项窄修已在f3冻结并双远端同commit→Gitee固定检出，A19/C4未动。首轮作者PG命令 `--require-postgres -m postgres` 已由主控MCP转发，真实28项16pass/12fail；主控亲读原XML/Git/hash/exit、精确3.12.8/uvicorn0.37/locked sync，前后源码不变。E的SECRET占位含花括号被直接拼URI，B正确提前拒绝，矩阵多项未走到调用；原E只修测试构造，再发布重测。原失败证据见[首轮记录](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-2-e-first-canonical-pg.json:1)，不改写/不记PASS。
 - 当前路由：用户已明确改回前缀ID，原Unknown model不再作为当前指定ID的阻塞。Aquinas实际turn_context `2026-10-18T00:48:44.169Z` 为 `zayuapi/deepseek-v4.1-flash / max`，未传推理override；主控已看到实际function-call outputs及E源修改。无前缀拒绝与旧502保留，不改写旧失败。
 - Netcatty旧连接阻塞已解除：用户报告修复后，官方配置的external MCP stdio启动器认证、initialize/tools/list/get_environment均成功；94b真实命令exit0并确认repo-fixed96c干净、无Story1.2容器。工具传输由主控现有持久MCP客户端负责，终端RPC继续串行；没有本地跑项目/直接SSH。此前缺discovery与CLI端口拒绝保留历史，不再重复探测。
 - 历史前缀错误两次：北京时间06:44:08、07:01:31均502/DeepSeek upstream EOF且实例关闭，证据仍见[no-write proof](/E:/aaa-project/rag/_bmad-output/implementation-artifacts/story-1-2-DeepSeek-blocked-no-write-proof.json:1)。新ID尚未进入供应方请求阶段，不能将本次Unknown model冒充同一502或已恢复。

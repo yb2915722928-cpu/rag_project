@@ -6,7 +6,7 @@
   "project_path": "E:/aaa-project/rag",
   "host_id": "local",
   "mode": "serial-completion-triggered",
-  "state": "story_1_2_E_prefixed_DeepSeek_active_Netcatty_recovered_D_preparing",
+  "state": "story_1_2_E_URI_fixture_patch_frozen_pending_canonical_rerun_D_preparing",
   "owner_thread_id": "01a14b42-689c-7533-90a3-9bd187d93039",
   "current_story_key": "1-2-隔离执行并保存每次调用事实",
   "current_spec": "_bmad-output/implementation-artifacts/spec-1-2-isolated-calls.md",
@@ -237,7 +237,7 @@
       "secret_value": "not_recorded"
     }
   },
-  "updated_at": "2026-10-18T09:05:37.3648929+08:00",
+  "updated_at": "2026-10-18T09:26:07.7336272+08:00",
   "handoff_registered_at": "2026-10-18T03:07:41.6004268+08:00",
   "handoff_acceptance_evidence": "AMELIA_RELAY_RELEASE received; target 01a14b42-689c-7533-90a3-9bd187d93039 verified next_thread_id, Story1.2, handoff_id and Story1.1 passed gate, then accepted sole ownership. Source and all Story1.1 child writers released.",
   "implementation_claims": [
@@ -1013,7 +1013,7 @@
       "observed_model": "zayuapi/deepseek-v4.1-flash",
       "observed_effort": "max",
       "observed_timestamp": "2026-10-18T00:48:44.169Z",
-      "state": "E_three_sources_developer_confirmed_SOURCE_FROZEN_pending_canonical_runtime",
+      "state": "E_URI_fixture_patch_SOURCE_FROZEN_pending_new_canonical_rerun",
       "source_frozen": true,
       "source_sha256": {
         "backend/src/rag_app/application/call_dispatch.py": "ae8f70488275cec3a88e96ba0e9eea883e8a3d783a2186001925a08045bdb848",
@@ -1029,6 +1029,33 @@
       ],
       "remote_terminal_lease": false,
       "provider_identity": "not_independently_visible"
+    },
+    "E_first_canonical_PG": {
+      "commit": "f3f1caacc76cd9cf8bc72a8eba1fcd9bc246c36c",
+      "github_gitee_and_server_commit_verified": true,
+      "tests": 28,
+      "passed": 16,
+      "failed": 12,
+      "errors": 0,
+      "skipped": 0,
+      "old_required_15_passed": true,
+      "parent_direct_XML_source_Git_verified": true,
+      "status": "failed_E_URI_fixture_before_intended_path",
+      "evidence": "_bmad-output/implementation-artifacts/story-1-2-e-first-canonical-pg.json",
+      "bucket_root": "/fileOfRag/testOfRAG/metadata/story-1-2/dispatch/E-f3f1caa",
+      "next": "E local fixture patch, new matching commit, mandatory PG and E topic rerun"
+    },
+    "E_URI_fixture_patch": {
+      "developer_confirmed_SOURCE_FROZEN": true,
+      "application_source_unchanged_from_f3": true,
+      "URI_encoding": "urllib.parse.quote(SECRET, safe='') in E unit and PG API/download request targets",
+      "source_sha256": {
+        "backend/src/rag_app/application/call_dispatch.py": "ae8f70488275cec3a88e96ba0e9eea883e8a3d783a2186001925a08045bdb848",
+        "backend/tests/test_call_dispatch.py": "1595bf6b9aba9b877ee8a4135b3006163226af3818752fbc21fd34b3a1de2450",
+        "backend/tests/test_call_dispatch_postgres.py": "bdc14b9117d4fbf194315463aa8c878f53ad41145dfe516fd49567e12606cb82"
+      },
+      "next_developer_nonpg_selection": "tests/test_call_dispatch.py tests/test_child_supervisor.py tests/test_call_persistence.py tests/test_egress.py tests/test_architecture.py tests/test_uow.py",
+      "runtime_acceptance": "not-passed"
     },
     "D_runtime_resume": {
       "agent_id": "01a14c8a-4d7b-7542-a584-db86213f6eb7",

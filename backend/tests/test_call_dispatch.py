@@ -9,6 +9,7 @@ from __future__ import annotations
 
 from datetime import datetime, timedelta, timezone
 from decimal import Decimal
+from urllib.parse import quote
 
 import pytest
 
@@ -63,7 +64,9 @@ def profile(purpose=EgressPurpose.API) -> EgressProfile:
 def target(purpose=EgressPurpose.API) -> EgressTarget:
     return EgressTarget(
         profile(purpose), "api.example.com", 443,
-        "/v1/run?signature=" + SECRET,
+        # The signed target is a visible-ASCII URI; opaque test values must be
+        # percent-encoded rather than mutating B's stricter wire guard.
+        "/v1/run?signature=" + quote(SECRET, safe=""),
     )
 
 
