@@ -24,7 +24,13 @@
 
 未来1.3限流/permit、1.4资产、1.5总资格工具、身份/真实供应方/P0/目标部署仍按原规划归属，不把不存在的未来业务表作为当前新增前置。当前call/context/fact不复活和不乱改的证明义务保留。
 
-## 当前去前缀ID的实际阻塞
+## 最新恢复前缀派发与运行连接阻塞
+
+用户随后明确指定 `zayuapi/deepseek-v4.1-flash` 继续开发。新E Aquinas `01a14c7b-78ff-7681-80fd-8f1e6155df95` 已创建；主控亲读 `2026-10-18T00:48:44.169Z` 的实际turn_context为该ID/max默认，随后放行三E源及交付文档。主控已看到该实例真实工具输出及E源码变更，当前模型阻塞解除；不追溯改写旧失败。
+
+曾出现Netcatty连接阻塞：官方external MCP启动器缺发现文件，Tool CLI返回 `CONNECT_FAILED: connect ECONNREFUSED 127.0.0.1:51278`。用户随后明确报告修复，主控通过已配置的官方external MCP stdio服务认证，完成initialize/tools/list/get_environment，并在94b实际执行命令exit0：repo-fixed仍96c且干净、无Story1.2容器。该连接阻塞已解除，新E/D测试仍待固定提交后执行；没有本机项目运行或直接SSH代替。
+
+## 历史去前缀ID拒绝
 
 2026-10-18 用户要求去掉 `zayuapi/` 前缀，使用精确 `deepseek-v4.1-flash` 并继续。主控实际模型重新核为 `group/auto-gpt-6-1-sol / max`，本地HEAD `5e718c2aec1690040d8189eeb3de4b96c7f0746a`，无重复Story owner或E/D活动写者。新指令触发一次实际 `spawn_agent`，未设置推理override，接口原始返回：
 

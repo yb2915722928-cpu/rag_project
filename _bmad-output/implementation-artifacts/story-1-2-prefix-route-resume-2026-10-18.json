@@ -1,0 +1,63 @@
+{
+  "schema_version": "story-model-resume.v1",
+  "story": "1.2",
+  "user_instruction": "Use zayuapi/deepseek-v4.1-flash with the prefix and continue development.",
+  "prior_local_HEAD": "e1966b489b84d0a0b53cf0a060f70b22916cb2a4",
+  "controller": {
+    "thread_id": "01a14b42-689c-7533-90a3-9bd187d93039",
+    "model": "group/auto-gpt-6-1-sol",
+    "effort": "max",
+    "turn_context_timestamp": "2026-10-18T00:48:10.312Z"
+  },
+  "E_implementer": {
+    "agent_id": "01a14c7b-78ff-7681-80fd-8f1e6155df95",
+    "requested_model": "zayuapi/deepseek-v4.1-flash",
+    "reasoning_effort_override": null,
+    "observed_model": "zayuapi/deepseek-v4.1-flash",
+    "observed_effort": "max",
+    "turn_context_timestamp": "2026-10-18T00:48:44.169Z",
+    "actual_tool_output_and_source_edits": true,
+    "developer_confirmed_SOURCE_FROZEN": true
+  },
+  "E_source_sha256": {
+    "backend/src/rag_app/application/call_dispatch.py": "ae8f70488275cec3a88e96ba0e9eea883e8a3d783a2186001925a08045bdb848",
+    "backend/tests/test_call_dispatch.py": "dda9fa70e386d6827628922370a7b6c737661ca055ef43487f0adacf3e509c7f",
+    "backend/tests/test_call_dispatch_postgres.py": "3dc8ea2b5e38ebecaa76df557367f08a28b8118063b04142fab83a0d708078a4"
+  },
+  "D_implementer": {
+    "agent_id": "01a14c8a-4d7b-7542-a584-db86213f6eb7",
+    "observed_model": "zayuapi/deepseek-v4.1-flash",
+    "observed_effort": "max",
+    "turn_context_timestamp": "2026-10-18T01:04:56.085Z",
+    "state": "read_only_prepared_waiting_fixed_commit"
+  },
+  "incremental_reviewer": {
+    "agent_id": "01a14c84-e840-7bb2-afa7-5cee31958892",
+    "observed_model": "group/auto-gpt-6-1-sol",
+    "observed_effort": "medium",
+    "turn_context_timestamp": "2026-10-18T00:59:02.447Z",
+    "state": "READY_waiting_frozen_commit"
+  },
+  "Netcatty": {
+    "user_reported_repaired": true,
+    "official_configured_MCP_bootstrap": true,
+    "get_environment": "passed",
+    "selected_session": "94bede36-0e0e-444c-a8b7-f332d2542962",
+    "host": "120.53.251.166",
+    "actual_terminal_execute_exit": 0,
+    "canonical_checkout_at_recovery": "96c64fbab0fa8d3d824f2e592196c02570550c70",
+    "canonical_checkout_clean": true,
+    "active_filesystem": "ext4",
+    "test_material_mount": "/fileOfRag"
+  },
+  "E_changes": [
+    "Separate logical business purpose from API/upload/download transport credential purpose",
+    "Align PG helper with the current persisted purpose and test lawful query plus API and wrong-purpose rejection",
+    "Correct normal-success fact assertion and provide trustworthy provider/usage observations for late facts while preserving unknown NULL cost",
+    "Add actual SIGSTOP child, supervisor stop, PG unknown/NULL and no second grant regression"
+  ],
+  "runtime_status_at_source_freeze": "not-executed",
+  "parent_acceptance_gate": "not-passed",
+  "historical_errors_preserved": true,
+  "new_Story_started": false
+}

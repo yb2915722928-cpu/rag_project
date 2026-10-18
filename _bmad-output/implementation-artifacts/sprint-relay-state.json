@@ -6,16 +6,21 @@
   "project_path": "E:/aaa-project/rag",
   "host_id": "local",
   "mode": "serial-completion-triggered",
-  "state": "story_1_2_blocked_user_bare_DeepSeek_ID_unknown_to_spawn_interface",
+  "state": "story_1_2_E_prefixed_DeepSeek_active_Netcatty_recovered_D_preparing",
   "owner_thread_id": "01a14b42-689c-7533-90a3-9bd187d93039",
   "current_story_key": "1-2-隔离执行并保存每次调用事实",
   "current_spec": "_bmad-output/implementation-artifacts/spec-1-2-isolated-calls.md",
-  "current_implementation_agent_id": null,
-  "implementation_write_scope": [],
+  "current_implementation_agent_id": "01a14c7b-78ff-7681-80fd-8f1e6155df95",
+  "implementation_write_scope": [
+    "backend/src/rag_app/application/call_dispatch.py",
+    "backend/tests/test_call_dispatch.py",
+    "backend/tests/test_call_dispatch_postgres.py",
+    "docs/story-1-2-dispatch-delivery.md"
+  ],
   "acceptance_gate": "not-passed",
   "next_story_key": null,
   "next_thread_id": null,
-  "dispatch_state": "user_requested_bare_DeepSeek_ID_attempted_once_unknown_model_no_agent_E_D_still_open",
+  "dispatch_state": "E_active_D_model_verified_preparing_reviewer_medium_ready_runtime_MCP_restored",
   "handoff_id": "3dff3d78-c0f5-42cf-9860-fc2ad4250ab4",
   "handoff_kind": "completed_story_serial_relay",
   "handoff_source_thread_id": "01a14973-8555-7131-8fd2-e9eec12f53fe",
@@ -36,22 +41,7 @@
     "Story1.2 original AC4: A real PG facts/lock negatives passed; E real child/transaction/late-fact integration and independent evidence pending",
     "D/E developer verification, Step5 independent verification, one fresh GPT6.1Sol medium review and actual fix regressions, final acceptance snapshot and next serial relay"
   ],
-  "blocked_conditions": [
-    {
-      "condition": "User-required bare DeepSeek ID is not registered in the subagent spawn interface.",
-      "recorded_at": "2026-10-18T08:40:59.3344572+08:00",
-      "requested_model": "deepseek-v4.1-flash",
-      "requested_reasoning_effort": null,
-      "raw_error": "Unknown model `deepseek-v4.1-flash` for spawn_agent. Available models: group/auto-gpt-6-astra, group/auto-gpt-6-1-sol, group/auto-gpt-5-6-sol, zayuapi/deepseek-v4.1-flash, stepfun/step-5-preview",
-      "agent_created": false,
-      "actual_turn_context": null,
-      "impact": "E code fixes/developer tests and D deployment work remain pending; original Story1.2 gate is not-passed.",
-      "source_mutations": false,
-      "evidence": "_bmad-output/implementation-artifacts/story-1-2-bare-model-dispatch-2026-10-18.json",
-      "recheck_trigger": "Spawn-interface model registration/configuration changes, or the user changes the required route. Do not repeat unchanged Unknown model probes.",
-      "no_fallback": "No silent reuse of the old prefixed ID, alternate implementer, controller-authored implementation, or empty relay chat."
-    }
-  ],
+  "blocked_conditions": [],
   "deduplication_rule": "Recheck project threads and this claim before dispatch. Never create a second owner for the same story or retry an ambiguous creation before reconciling it.",
   "completion_rule": "All required parent-story acceptance and independent review/validation must pass before selecting and dispatching the next dependent story.",
   "handoff_history": [
@@ -83,6 +73,18 @@
     }
   ],
   "resolved_or_superseded_conditions": [
+    {
+      "previous_condition": "Netcatty external MCP discovery file missing; official CLI status returned CONNECT_FAILED/ECONNREFUSED 127.0.0.1:51278.",
+      "resolution": "User reported Netcatty repaired. Official configured external MCP stdio server authenticated; initialize, tools/list, get_environment and terminal_execute succeeded. Session94b returned exit0 with clean canonical96c checkout. No direct SSH or local project execution used.",
+      "recorded_at": "2026-10-18T09:05:37.3648929+08:00"
+    },
+    {
+      "previous_condition": "User-required bare DeepSeek ID rejected by spawn_agent before creation.",
+      "raw_error": "Unknown model `deepseek-v4.1-flash` for spawn_agent.",
+      "evidence": "_bmad-output/implementation-artifacts/story-1-2-bare-model-dispatch-2026-10-18.json",
+      "resolution": "User explicitly restored zayuapi/deepseek-v4.1-flash. Fresh E Aquinas was created with that ID, actual turn_context verified, and actual function-call outputs observed. No bare-ID registration is claimed.",
+      "recorded_at": "2026-10-18T08:53:26.5854996+08:00"
+    },
     {
       "previous_condition": {
         "condition": "Required prefixed DeepSeek route returned502 upstream EOF on both fresh E successor and the one bounded retry.",
@@ -158,20 +160,24 @@
   "latest_decision_path": "_bmad-output/implementation-artifacts/story-1-1-acceptance-snapshot-2026-10-18.md",
   "pending_prerequisites": [],
   "last_merged_diagnostic": {
-    "recorded_at": "2026-10-18T08:40:59.3344572+08:00",
+    "recorded_at": "2026-10-18T09:05:37.3648929+08:00",
     "controller_thread": "01a14b42-689c-7533-90a3-9bd187d93039",
     "actual_model": "group/auto-gpt-6-1-sol",
     "actual_effort": "max",
-    "actual_turn_context": "2026-10-18T00:39:23.13Z",
+    "actual_turn_context": "2026-10-18T00:48:10.312Z",
     "same_project_active_developer_threads": [
       "01a14b42-689c-7533-90a3-9bd187d93039"
     ],
-    "local_HEAD": "5e718c2aec1690040d8189eeb3de4b96c7f0746a",
+    "local_HEAD": "e1966b489b84d0a0b53cf0a060f70b22916cb2a4",
     "initial_worktree_clean": true,
-    "active_E_D_writers": [],
-    "requested_implementation_model": "deepseek-v4.1-flash",
-    "dispatch_result": "Unknown model; no agent created",
-    "runtime_reprobes": "No unchanged Linux/PG/runtime gate rerun.",
+    "active_E_D_writers": [
+      "01a14c7b-78ff-7681-80fd-8f1e6155df95",
+      "01a14c8a-4d7b-7542-a584-db86213f6eb7"
+    ],
+    "requested_implementation_model": "zayuapi/deepseek-v4.1-flash",
+    "dispatch_result": "E Aquinas route/max verified, released and modifying its scope; D Nash route/max verified, preparation released; fresh incremental reviewer Hilbert route/medium verified and READY.",
+    "runtime_reprobes": "User repair triggered official Netcatty MCP get_environment and actual terminal_execute success; canonical checkout96c clean. No new project tests executed yet.",
+    "netcatty_session": "94bede36-0e0e-444c-a8b7-f332d2542962",
     "underlying_provider_identity": "not_observed"
   },
   "story_1_1_last_merged_diagnostic": {
@@ -231,7 +237,7 @@
       "secret_value": "not_recorded"
     }
   },
-  "updated_at": "2026-10-18T08:40:59.3344572+08:00",
+  "updated_at": "2026-10-18T09:05:37.3648929+08:00",
   "handoff_registered_at": "2026-10-18T03:07:41.6004268+08:00",
   "handoff_acceptance_evidence": "AMELIA_RELAY_RELEASE received; target 01a14b42-689c-7533-90a3-9bd187d93039 verified next_thread_id, Story1.2, handoff_id and Story1.1 passed gate, then accepted sole ownership. Source and all Story1.1 child writers released.",
   "implementation_claims": [
@@ -992,12 +998,83 @@
   "story_1_2": {
     "owner_thread_id": "01a14b42-689c-7533-90a3-9bd187d93039",
     "controller_turn_context": {
-      "timestamp": "2026-10-18T00:39:23.13Z",
+      "timestamp": "2026-10-18T00:48:10.312Z",
       "model": "group/auto-gpt-6-1-sol",
       "effort": "max",
       "provider_identity": "not_independently_visible"
     },
-    "current_implementation_model": "deepseek-v4.1-flash",
+    "current_implementation_model": "zayuapi/deepseek-v4.1-flash",
+    "prefixed_model_resume": {
+      "user_explicitly_restored_prefix": true,
+      "agent_id": "01a14c7b-78ff-7681-80fd-8f1e6155df95",
+      "nickname": "Aquinas",
+      "requested_model": "zayuapi/deepseek-v4.1-flash",
+      "requested_reasoning_effort": null,
+      "observed_model": "zayuapi/deepseek-v4.1-flash",
+      "observed_effort": "max",
+      "observed_timestamp": "2026-10-18T00:48:44.169Z",
+      "state": "E_three_sources_developer_confirmed_SOURCE_FROZEN_pending_canonical_runtime",
+      "source_frozen": true,
+      "source_sha256": {
+        "backend/src/rag_app/application/call_dispatch.py": "ae8f70488275cec3a88e96ba0e9eea883e8a3d783a2186001925a08045bdb848",
+        "backend/tests/test_call_dispatch.py": "dda9fa70e386d6827628922370a7b6c737661ca055ef43487f0adacf3e509c7f",
+        "backend/tests/test_call_dispatch_postgres.py": "3dc8ea2b5e38ebecaa76df557367f08a28b8118063b04142fab83a0d708078a4"
+      },
+      "first_developer_command": "python -m pytest --require-postgres -m postgres -q -p no:cacheprovider --junitxml=<E evidence directory>/pg.xml",
+      "scope": [
+        "backend/src/rag_app/application/call_dispatch.py",
+        "backend/tests/test_call_dispatch.py",
+        "backend/tests/test_call_dispatch_postgres.py",
+        "docs/story-1-2-dispatch-delivery.md"
+      ],
+      "remote_terminal_lease": false,
+      "provider_identity": "not_independently_visible"
+    },
+    "D_runtime_resume": {
+      "agent_id": "01a14c8a-4d7b-7542-a584-db86213f6eb7",
+      "nickname": "Nash",
+      "requested_model": "zayuapi/deepseek-v4.1-flash",
+      "requested_reasoning_effort": null,
+      "observed_model": "zayuapi/deepseek-v4.1-flash",
+      "observed_effort": "max",
+      "observed_timestamp": "2026-10-18T01:04:56.085Z",
+      "scope": [
+        "deploy/compose.yaml",
+        "docs/story-1-2-epoch-deploy.md"
+      ],
+      "state": "model_verified_read_only_preparation_released_waiting_E_fixed_commit",
+      "remote_terminal_lease": false
+    },
+    "incremental_review_successor": {
+      "previous_reviewer": "01a14c16-28e7-7c61-8444-de4c9b2ad09e",
+      "previous_reviewer_tool_result": "agent not found; no new review performed by that ID",
+      "agent_id": "01a14c84-e840-7bb2-afa7-5cee31958892",
+      "nickname": "Hilbert",
+      "requested_model": "group/auto-gpt-6-1-sol",
+      "requested_reasoning_effort": "medium",
+      "observed_model": "group/auto-gpt-6-1-sol",
+      "observed_effort": "medium",
+      "observed_timestamp": "2026-10-18T00:59:02.447Z",
+      "fresh_instance": true,
+      "state": "READY_not_released_waiting_E_source_freeze",
+      "scope": "docs/story-1-2-code-review.md; only known E fixes and directly affected current-AC changes",
+      "runtime_gates_not_replaced_by_static_review": true
+    },
+    "Netcatty_recovery": {
+      "user_reported_repaired": true,
+      "official_configured_MCP_server": "netcatty-remote-hosts",
+      "transport": "official netcatty-external MCP stdio bootstrap via bundled Node; no direct SSH",
+      "initialize_and_tools_list": "passed",
+      "get_environment": "passed",
+      "reported_host_count": 6,
+      "selected_session": "94bede36-0e0e-444c-a8b7-f332d2542962",
+      "selected_host": "120.53.251.166",
+      "terminal_execute_exit_code": 0,
+      "canonical_checkout_HEAD": "96c64fbab0fa8d3d824f2e592196c02570550c70",
+      "canonical_checkout_clean": true,
+      "Story12_containers_at_probe": 0,
+      "terminal_holder": "controller until per-role lease"
+    },
     "bare_model_dispatch": {
       "requested_reasoning_effort": null,
       "status": "rejected_unknown_model_no_agent_created",

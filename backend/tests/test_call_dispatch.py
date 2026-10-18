@@ -284,7 +284,7 @@ def execute(value, **overrides):
     arguments = {
         "slot": slot(), "limits": ChildLimits(),
         "fence": fence(), "holder_id": "holder-1", "space_id": "space-1",
-        "purpose": "api", "stage": ChildStage.EGRESS,
+        "purpose": "query", "stage": ChildStage.EGRESS,
         "config_fingerprint": "config:v1", "request_hash": "request-1",
         "egress": dispatch_input(),
     }
@@ -306,6 +306,8 @@ def test_success_uses_one_grant_and_commits_after_proven_stop():
     assert grant.grant_id == outcome.grant_id
     assert grant.boot_id == "boot-1"
     assert grant.child_instance == "child-1"
+    assert lifecycle.prepared[0]["purpose"] == "query"
+    assert grant.plan.target.profile.purpose is EgressPurpose.API
     assert lifecycle.results[0].provider_ref == "provider-1"
     assert events.index("stop") < events.index("record_result")
     assert events.count("grant") == 1
@@ -538,15 +540,15 @@ def test_unsafe_dns_is_rejected_before_any_call():
     assert caught.value.failure is EgressFailure.DNS_UNSAFE
 
 
-def test_purpose_mismatch_is_rejected_before_any_call():
+def test_business_purpose_is_independent_of_egress_transport_purpose():
     events: list[str] = []
     value, lifecycle, supervisor, _ = assemble(events)
-    with pytest.raises(EgressError) as caught:
-        execute(value, purpose="download")
-    assert caught.value.failure is EgressFailure.PROFILE_INVALID
-    assert events == []
-    assert lifecycle.prepared == []
-    assert supervisor.grants == []
+    outcome = execute(value, purpose="embedding")
+    assert outcome.send_state is SendState.RESPONSE_RECEIVED
+    assert outcome.fact_recorded is True
+    assert lifecycle.prepared[0]["purpose"] == "embedding"
+    assert supervisor.grants[0].plan.target.profile.purpose is EgressPurpose.API
+    assert events.count("grant") == 1
 
 
 def test_egress_dispatch_hides_url_body_and_authorization_from_repr():

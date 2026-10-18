@@ -8,6 +8,8 @@ persisted call/fact rows, not just mock call counts.
 from __future__ import annotations
 
 from datetime import datetime, timedelta, timezone
+import os
+import signal
 import sys
 import threading
 import time
@@ -41,7 +43,7 @@ from rag_app.modules.execution.supervision import (
     SendState,
 )
 from rag_app.modules.ledger.facts import (
-    CostFact, LateFact, UsageFact,
+    CostFact, LateFact, ResultFact, UsageFact,
 )
 
 pytestmark = [
@@ -113,7 +115,7 @@ def execute(dispatch, current, **overrides):
     arguments = {
         "slot": slot(), "limits": limits(), "fence": current.fence(),
         "holder_id": current.holder_id, "space_id": current.space_id,
-        "purpose": "api", "stage": ChildStage.EGRESS,
+        "purpose": current.purpose, "stage": ChildStage.EGRESS,
         "config_fingerprint": current.config_fingerprint,
         "request_hash": "request-" + uuid.uuid4().hex,
         "egress": api_dispatch(),
@@ -141,6 +143,14 @@ def fact_rows(context):
         )).all()
 
 
+def call_purpose(context, call_id):
+    with context.engine.connect() as connection:
+        return connection.execute(text(
+            f'SELECT purpose FROM "{context.schema}".execution_call '
+            f'WHERE call_id = :call_id'
+        ), {"call_id": call_id}).scalar_one()
+
+
 def test_real_end_to_end_one_grant_and_unknown_usage(call_persistence, tmp_path):
     context = call_persistence
     current = context.initialize_context(context_id="context-success")
@@ -157,9 +167,13 @@ def test_real_end_to_end_one_grant_and_unknown_usage(call_persistence, tmp_path)
         assert row[0] == outcome.call_id and row[1] == "responded"
         assert row[2] == outcome.grant_id
         assert row[3] == "unknown" and row[4:7] == (None, None, None)
+        # The logical purpose came from A's current context (query) while the
+        # B plan independently used its API transport/credential purpose.
+        assert call_purpose(context, outcome.call_id) == current.purpose == "query"
         facts = fact_rows(context)
         assert len(facts) == 1 and facts[0][0] == outcome.call_id
-        assert facts[0][4] is None
+        assert facts[0][2] == "unknown" and facts[0][4] is None
+        assert facts[0][5] is None and facts[0][6] is None
         # A restarted controller cannot obtain a second grant for this call.
         assert context.lifecycle.mark_may_have_sent(
             context.uow, call_id=outcome.call_id, fence=current.fence(),
@@ -235,6 +249,29 @@ def test_real_old_epoch_blocks_before_any_call(call_persistence, tmp_path):
             context.control, "_path", context.control_path,
         )
         assert context.control.current().epoch == old_fence.epoch
+    finally:
+        assert supervisor.close() is True
+
+
+def test_real_wrong_business_purpose_is_rejected_by_context(
+    call_persistence, tmp_path,
+):
+    context = call_persistence
+    current = context.initialize_context(context_id="context-purpose")
+    dispatch, supervisor = assemblies(context, tmp_path)
+    try:
+        with pytest.raises(GuardError, match="CALL_FENCE_STALE"):
+            execute(dispatch, current, purpose="embedding")
+        assert call_rows(context) == []
+        assert fact_rows(context) == []
+        # A matching context still accepts the logical purpose while B uses
+        # its independent API transport purpose for the same dispatch.
+        accepted = context.initialize_context(
+            context_id="context-purpose-ok", purpose="embedding",
+        )
+        outcome = execute(dispatch, accepted)
+        assert outcome.send_state is SendState.RESPONSE_RECEIVED
+        assert call_purpose(context, outcome.call_id) == "embedding"
     finally:
         assert supervisor.close() is True
 
@@ -359,6 +396,88 @@ def test_real_response_timeout_is_unknown_and_never_zero(
         assert inner.close() is True
 
 
+def _proc_state(pid: int) -> str | None:
+    try:
+        with open(f"/proc/{pid}/stat", encoding="ascii") as stream:
+            raw = stream.read()
+    except (FileNotFoundError, ProcessLookupError):
+        return None
+    return raw[raw.rfind(")") + 2:].split()[0]
+
+
+class StopAfterPrepare:
+    """Freeze the real child between prepare and grant, then let stop escalate.
+
+    The child has already acknowledged ``prepared`` and is waiting for the
+    grant frame.  SIGSTOP makes it genuinely unrunnable, so the controller's
+    ordinary receive deadline expires while the frame sits in the socket
+    buffer.  The supervisor's real TERM-then-KILL stop must terminate the
+    stopped process group; no synthetic timeout exception is raised.
+    """
+
+    def __init__(self, inner):
+        self.inner = inner
+        self.stopped_pid: int | None = None
+
+    def __getattr__(self, name):
+        return getattr(self.inner, name)
+
+    def prepare(self, identity, command, **kwargs):
+        self.inner.prepare(identity, command, **kwargs)
+        # Stop only the registered child; do not risk signalling the test
+        # runner's process group if an identity were ever inconsistent.
+        os.kill(identity.pid, signal.SIGSTOP)
+        deadline = time.monotonic() + 5.0
+        while time.monotonic() < deadline:
+            state = _proc_state(identity.pid)
+            if state == "T":
+                self.stopped_pid = identity.pid
+                return
+            time.sleep(0.01)
+        raise AssertionError("real child did not enter SIGSTOP state")
+
+
+def test_real_sigstop_child_unknown_null_and_no_second_grant(
+    call_persistence, tmp_path,
+):
+    context = call_persistence
+    current = context.initialize_context(context_id="context-sigstop")
+    inner = LinuxChildSupervisor(state_root=tmp_path / "state")
+    stopper = StopAfterPrepare(inner)
+    dispatch = CallDispatch(
+        context.lifecycle, lambda: context.uow, stopper,
+        clock=now,
+    )
+    try:
+        outcome = execute(dispatch, current, result_timeout_s=0.5)
+        assert outcome.send_state is SendState.MAY_HAVE_SENT
+        assert outcome.failure is ChildFailure.TIMEOUT
+        assert outcome.stop_proof is not None and outcome.stop_proof.proven
+        # SIGTERM stays pending while a process is stopped; only the
+        # supervisor's real SIGKILL escalation can end this child.
+        assert outcome.stop_proof.exit_code == -signal.SIGKILL
+        assert outcome.grant_id is not None
+        assert outcome.fact_recorded is True
+        rows = call_rows(context)
+        assert len(rows) == 1 and rows[0][1] == "unknown"
+        assert rows[0][2] == outcome.grant_id
+        assert rows[0][3] == "unknown" and rows[0][4:7] == (None, None, None)
+        assert fact_rows(context) == []
+        # The frozen child was actually terminated by the supervisor's KILL
+        # escalation, not merely abandoned by a mock.
+        assert stopper.stopped_pid is not None
+        assert _proc_state(stopper.stopped_pid) in {None, "Z"}
+        again = context.lifecycle.mark_may_have_sent(
+            context.uow, call_id=outcome.call_id, fence=current.fence(),
+            boot_id="boot-retry", child_instance="child-retry", now=now(),
+        )
+        assert again is None
+        assert len(call_rows(context)) == 1
+        assert fact_rows(context) == []
+    finally:
+        assert inner.close() is True
+
+
 class ResultFails:
     def __init__(self, inner):
         self.inner = inner
@@ -383,8 +502,15 @@ def test_real_response_before_record_is_unknown_plus_late_fact(
     current = context.initialize_context(context_id="context-after-response")
     inner = LinuxChildSupervisor(state_root=tmp_path / "state")
     lifecycle = ResultFails(context.lifecycle)
+    # The provider's trusted observation must carry its own ref/usage; the
+    # unknown cost is represented only by NULL columns, never a fabricated 0.
     dispatch = CallDispatch(
         lifecycle, lambda: context.uow, inner, clock=now,
+        result_fact=lambda result, received_at: ResultFact(
+            outcome="responded", provider_ref="provider-stop-1",
+            usage=UsageFact("reported", 5, 2, 7), cost=None,
+            at=received_at,
+        ),
     )
     try:
         outcome = execute(dispatch, current)
@@ -399,6 +525,10 @@ def test_real_response_before_record_is_unknown_plus_late_fact(
         )
         facts = fact_rows(context)
         assert len(facts) == 1 and facts[0][7] == "appended"
+        assert facts[0][1] == "provider-stop-1"
+        assert facts[0][2] == "reported"
+        assert facts[0][4] == 7
+        assert facts[0][5] is None and facts[0][6] is None
     finally:
         assert inner.close() is True
 
@@ -411,7 +541,7 @@ def test_real_late_usage_repeat_and_conflict_do_not_revive(
     dispatch, supervisor = assemblies(context, tmp_path)
     try:
         outcome = execute(dispatch, current)
-        assert outcome.fact_recorded is False
+        assert outcome.fact_recorded is True
         before = call_rows(context)[0]
         late = LateFact(
             provider_ref=None,

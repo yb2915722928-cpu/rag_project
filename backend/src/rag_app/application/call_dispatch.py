@@ -27,7 +27,6 @@ from rag_app.modules.execution.egress import (
     EgressErrorCode,
     EgressFailure,
     EgressPlan,
-    EgressPurpose,
     EgressRequest,
     EgressTarget,
     resolve_egress_plan,
@@ -278,7 +277,7 @@ class CallDispatch:
         fence: ExecutionFence,
         holder_id: str,
         space_id: str,
-        purpose: str | EgressPurpose,
+        purpose: str,
         stage: ChildStage,
         config_fingerprint: str,
         request_hash: str,
@@ -293,25 +292,21 @@ class CallDispatch:
             raise ChildSupervisionError(ChildFailure.INVALID_ARGUMENT)
         if slot.attempt != fence.attempt:
             raise ChildSupervisionError(ChildFailure.IDENTITY_MISMATCH)
-        purpose_value = (
-            purpose.value if isinstance(purpose, EgressPurpose) else str(purpose)
-        )
-        if egress.plan.target.profile.purpose.value != purpose_value:
-            raise EgressError(
-                EgressErrorCode.CONFIGURATION_INVALID,
-                EgressFailure.PROFILE_INVALID,
-            )
         # No call is prepared after a known deadline.  This check is before the
         # first UoW and is repeated after spawn/prepare and after the grant.
         if self._monotonic() >= egress.send_stop_by_monotonic:
             raise ChildSupervisionError(ChildFailure.TIMEOUT)
 
+        # The logical business purpose and B's transport/credential purpose
+        # are independent fields.  A checks this value against its persistent
+        # execution context; B's plan separately enforces the API/upload/
+        # download credential rules, including the Authorization guard.
         call_id = self._lifecycle.prepare(
             self._uow_factory(),
             fence=fence,
             holder_id=holder_id,
             space_id=space_id,
-            purpose=purpose_value,
+            purpose=purpose,
             stage=stage.value,
             config_fingerprint=config_fingerprint,
             request_hash=request_hash,
