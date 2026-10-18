@@ -544,6 +544,42 @@ def _setext_underline(line_text: str) -> int | None:
     return 2 if len(match.group(1)) >= 2 else None
 
 
+def _setext_heading(
+    lines: list[_Line], index: int
+) -> tuple[int, int] | None:
+    """Return ``(level, underline_index)`` for a real Setext heading.
+
+    A Setext heading may span several text lines; the underline is the first
+    line that the paragraph scanner would have consumed as ordinary text.
+    Blank lines, fences, ATX headings, tables or list/quote content end the
+    candidate, so an unrelated later underline is never attached to it.
+    """
+
+    if _parse_table(lines, index) is not None:
+        # A table header is ordinary table source, not a Setext title, even
+        # when a later line happens to contain an underline.
+        return None
+    total = len(lines)
+    cursor = index + 1
+    while cursor < total:
+        candidate = lines[cursor]
+        level = _setext_underline(candidate.text)
+        if level is not None:
+            return level, cursor
+        if _is_blank(candidate):
+            return None
+        if _fence_start(candidate.text) is not None:
+            return None
+        if _heading(candidate.text) is not None:
+            return None
+        if _LIST_OR_QUOTE_RE.match(candidate.text):
+            return None
+        if _parse_table(lines, cursor) is not None:
+            return None
+        cursor += 1
+    return None
+
+
 def _fence_start(line_text: str) -> _Fence | None:
     match = _FENCE_OPEN_RE.fullmatch(line_text)
     if match is None:
@@ -771,23 +807,24 @@ def _parse_blocks(text: str, *, markdown: bool) -> list[_Block]:
         if (
             line.text.strip()
             and not _LIST_OR_QUOTE_RE.match(line.text)
-            and index + 1 < total
         ):
-            setext_level = _setext_underline(lines[index + 1].text)
-            if setext_level is not None and not _is_blank(lines[index + 1]):
-                # Setext headings are real headings in Markdown; the title and
-                # underline stay separate exact spans so neither is invented.
+            setext = _setext_heading(lines, index)
+            if setext is not None:
+                setext_level, underline_index = setext
+                # Setext headings are real headings in Markdown, including
+                # multi-line titles.  The whole real range is kept exact, so
+                # no title line or underline is invented or dropped.
                 blocks.append(
                     _Block(
                         kind="heading",
                         start=line.start,
-                        end=lines[index + 1].content_end,
+                        end=lines[underline_index].content_end,
                         line=line,
-                        lines=(line, lines[index + 1]),
+                        lines=tuple(lines[index:underline_index + 1]),
                         level=setext_level,
                     )
                 )
-                index += 2
+                index = underline_index + 1
                 continue
         table = _parse_table(lines, index)
         if table is not None:
@@ -797,8 +834,11 @@ def _parse_blocks(text: str, *, markdown: bool) -> list[_Block]:
                 last_line = previous.lines[-1] if previous.lines else None
                 if last_line is not None:
                     gap = table.header.index - last_line.index
+                    # Extra blank lines do not detach the last real preceding
+                    # paragraph.  A condition still binds across them; any
+                    # intervening block is already ``blocks[-1]`` instead.
                     if gap == 1 or (
-                        gap == 2
+                        gap > 1
                         and _looks_like_condition(
                             text[previous.start:previous.end]
                         )

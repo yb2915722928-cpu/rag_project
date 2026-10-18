@@ -618,6 +618,44 @@ def test_setext_heading_is_recognised_and_body_keeps_it_in_path():
     assert_body_covered(parsed)
 
 
+def test_multi_line_setext_heading_keeps_true_range_and_ancestor():
+    text = "主标题第一行\n第二行\n===\n\n正文"
+    parsed = parse(text.encode("utf-8"), source_format="markdown")
+
+    headings = [chunk for chunk in parsed.chunks if chunk.kind == "heading"]
+    assert len(headings) == 1
+    heading = headings[0]
+    assert heading.spans[0].excerpt == "主标题第一行\n第二行\n==="
+    assert heading.structure_path[-1].kind == "heading"
+    assert heading.structure_path[-1].level == 1
+    assert heading.structure_path[-1].text == (
+        "主标题第一行\n第二行\n==="
+    )
+
+    body = [chunk for chunk in parsed.chunks if chunk.kind == "text"]
+    assert len(body) == 1
+    assert body[0].spans[0].excerpt == "正文"
+    assert body[0].structure_path[0].text == (
+        "主标题第一行\n第二行\n==="
+    )
+    assert_exact(parsed)
+    assert_body_covered(parsed)
+
+
+def test_multi_line_setext_level_two_heading_is_recognised():
+    text = "主标题\n副标题行\n---\n\n正文"
+    parsed = parse(text.encode("utf-8"), source_format="markdown")
+
+    headings = [chunk for chunk in parsed.chunks if chunk.kind == "heading"]
+    assert len(headings) == 1
+    assert headings[0].spans[0].excerpt == "主标题\n副标题行\n---"
+    assert headings[0].structure_path[-1].level == 2
+    body = [chunk for chunk in parsed.chunks if chunk.kind == "text"]
+    assert body[0].structure_path[0].text == "主标题\n副标题行\n---"
+    assert_exact(parsed)
+    assert_body_covered(parsed)
+
+
 def test_atx_heading_marker_requires_separating_whitespace():
     text = "#不是标题\n\n# 是标题"
     parsed = parse(text.encode("utf-8"), source_format="markdown")
@@ -679,6 +717,66 @@ def test_markdown_table_keeps_condition_header_unit_and_rows_as_real_spans():
     assert [
         chunk.spans[0].excerpt for chunk in context_chunks
     ] == ["适用条件：环境温度 0–40 °C。"]
+
+
+def test_table_condition_survives_extra_blank_lines():
+    condition = "适用条件：仅限室内。"
+    text = (
+        condition + "\n\n\n"
+        "| 项目 | 值 |\n"
+        "| --- | --- |\n"
+        "| A | 20 |\n"
+    )
+    parsed = parse(text.encode("utf-8"), source_format="markdown")
+
+    assert_exact(parsed)
+    assert_body_covered(parsed)
+
+    table_chunks = [chunk for chunk in parsed.chunks if chunk.kind == "table"]
+    assert len(table_chunks) == 1
+    table = table_chunks[0]
+    assert table.spans[0].excerpt == condition
+    assert table.structure_path[0].kind == "table_context"
+    assert table.structure_path[0].text == condition
+    assert table.structure_path[1].kind == "table_header"
+    assert "适用条件" in table.text
+
+    context_chunks = [chunk for chunk in parsed.chunks if chunk.kind == "text"]
+    assert [chunk.spans[0].excerpt for chunk in context_chunks] == [
+        condition
+    ]
+
+
+def test_table_condition_does_not_jump_across_an_intervening_block():
+    condition = "适用条件：仅限室内。"
+    text = (
+        condition + "\n\n"
+        "```\ncode\n```\n\n"
+        "| 项目 | 值 |\n"
+        "| --- | --- |\n"
+        "| A | 20 |\n"
+    )
+    parsed = parse(text.encode("utf-8"), source_format="markdown")
+
+    assert_exact(parsed)
+    assert_body_covered(parsed)
+
+    table = next(chunk for chunk in parsed.chunks if chunk.kind == "table")
+    assert condition not in table.text
+    assert all(
+        node.kind != "table_context" for node in table.structure_path
+    )
+    assert [span.excerpt for span in table.spans] == [
+        "| 项目 | 值 |",
+        "| --- | --- |",
+        "| A | 20 |",
+    ]
+    paragraphs = [
+        chunk.spans[0].excerpt
+        for chunk in parsed.chunks
+        if chunk.kind == "text"
+    ]
+    assert condition in paragraphs
 
 
 def test_table_rows_split_without_losing_header_or_unit():
@@ -743,6 +841,13 @@ def test_table_rows_split_without_losing_header_or_unit():
             60,
         ),
         (
+            "适用条件：" + "x" * 100 + "\n\n\n"
+            "| 名称 | 温度 |\n"
+            "| --- | --- |\n"
+            "| 室内 | 20 |\n",
+            60,
+        ),
+        (
             "| 名称 | 温度 |\n"
             "| --- | --- |\n"
             "| 室内 | " + "x" * 100 + " |\n",
@@ -770,6 +875,28 @@ def test_table_syntax_inside_fenced_code_is_not_a_table():
 
     assert [chunk.kind for chunk in parsed.chunks] == ["code"]
     assert "| a | b |" in parsed.chunks[0].text
+    assert_exact(parsed)
+    assert_body_covered(parsed)
+
+
+def test_table_is_not_swallowed_by_a_later_setext_like_line():
+    text = (
+        "| 项目 | 值 |\n"
+        "| --- | --- |\n"
+        "| A | 20 |\n\n"
+        "说明\n"
+        "===\n"
+    )
+    parsed = parse(text.encode("utf-8"), source_format="markdown")
+
+    assert [chunk.kind for chunk in parsed.chunks] == [
+        "table",
+        "heading",
+    ]
+    table = parsed.chunks[0]
+    assert table.spans[0].excerpt == "| 项目 | 值 |"
+    heading = parsed.chunks[1]
+    assert heading.spans[0].excerpt == "说明\n==="
     assert_exact(parsed)
     assert_body_covered(parsed)
 
